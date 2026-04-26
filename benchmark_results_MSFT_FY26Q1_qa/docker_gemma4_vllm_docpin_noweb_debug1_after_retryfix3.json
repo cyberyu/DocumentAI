@@ -1,0 +1,76 @@
+{
+  "generated_at_utc": "2026-04-25T19:28:44Z",
+  "config": {
+    "base_url": "http://localhost:8929",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "document_title_contains": "MSFT_FY26Q1_10Q",
+    "mentioned_document_ids": [
+      4
+    ],
+    "max_questions": 1,
+    "sleep_between": 0.0,
+    "sanitize_questions": true
+  },
+  "summary": {
+    "run": 1,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 0,
+    "number_match_rate": 0.0,
+    "unit_match_count": 0,
+    "unit_match_rate": 0.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 100,
+    "questions_run": 1,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 1,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 0,
+      "unit_match_rate": 0.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [
+    503
+  ],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "Based on the document content retrieved, I need to check the full document for the required financial metric. Since the initial retrieval was truncated and the request requires searching the **full document**, I will need to continue retrieval by targeting sections related to the required accounts.\n\nSince I do not have the ability to perform a targeted search across the entire document content across all chunks in one step (I can only read large chunks at a time, as shown above), and I have exhausted the initial chunk retrieval, I will request the content again, specifying a broader read limit to increase the chances of capturing the necessary table/note, assuming the tool can handle a larger read request.\n\nIf the next attempt still fails to find the specific line item, I will have to state that the information was not locatable even after repeated attempts to access the full content.\n\nGiven the constraint to *not mention tools or file-reading steps*, I will assume the next retrieval *will* contain the answer and will only return the final value. I will retry the read, hoping the system will provide the full content this time.\n\nIf this fails, I cannot fulfill the request strictly under the given rules without explicit access to the full document content at once. I will assume the next call will retrieve enough",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

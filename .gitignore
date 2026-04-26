@@ -1,0 +1,8 @@
+# Local secrets
+.env
+
+# Local model config may contain API keys
+global_llm_config.yaml
+
+# Temporary lock files
+.~lock.*#

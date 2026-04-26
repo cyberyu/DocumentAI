@@ -1,0 +1,100 @@
+{
+  "generated_at_utc": "2026-04-24T14:45:02Z",
+  "config": {
+    "base_url": "http://localhost:8929",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "document_title_contains": null,
+    "mentioned_document_ids": [],
+    "max_questions": 2,
+    "sleep_between": 0.0,
+    "sanitize_questions": true
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 2,
+    "overall_correct_rate": 1.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 2,
+    "number_match_rate": 1.0,
+    "unit_match_count": 2,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.4416666666666667,
+    "questions_total": 100,
+    "questions_run": 2,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 2,
+      "overall_correct_rate": 1.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 2,
+      "number_match_rate": 1.0,
+      "unit_match_count": 2,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.4416666666666667
+    }
+  },
+  "thread_ids_used": [
+    96,
+    97
+  ],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The reported amount for long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025, is $5.0 billion.",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.25,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.4,
+        "primary_value_match": true,
+        "token_f1": 0.08333333333333333,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "<|channel>thought\nThe user is asking for a specific financial figure from the document `MSFT_FY26Q1_10Q.docx.xml`.\nThe request is: \"what is the reported amount or rate for other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.\"\n\nThe instructions are very strict:\n1. Search the full document (already done via `read_file` on the whole content).\n2. Do not mention tools, chunks, file-reading steps, or inability to access content.\n3. If multiple candidates appear, select the value explicitly tied to September 30, 2025.\n4. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels.\n5. Return only one final value with unit and no extra prose.\n\nI need to scan the retrieved content for the specific phrase/concept: \"other receivables related to activities to facilitate the purchase of server components\" and the date \"September 30, 2025\".\n\nScanning the content:\nChunk `7728` states: \"As of September 30, 2025 and June 30, 2025, other receivables related to activities to facilitate the purchase of server components were $14.4 billion and $8.2 billion, respectively,\".\n\nThis chunk directly answers the question. The value for September 30, 2025 is $14.4 billion.\n\nI will return only this value with the unit, as requested.<channel|>$14.4 billion",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    }
+  ]
+}

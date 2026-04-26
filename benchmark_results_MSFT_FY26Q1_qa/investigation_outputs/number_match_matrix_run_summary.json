@@ -1,0 +1,240 @@
+{
+  "included_runs": [
+    {
+      "label": "gemma4e2b_surfsense_docpin_noweb_8/docker_gemma4e2b_vllm_docpin_noweb_check100_locked",
+      "file": "experiment_backups/gemma4e2b_surfsense_docpin_noweb_8/docker_gemma4e2b_vllm_docpin_noweb_check100_locked.json",
+      "questions_with_number_match_metric": 100,
+      "number_match_rate": 0.08,
+      "overall_correct_rate": 0.04
+    },
+    {
+      "label": "gemma4e4b_surfsense_noweb_34/full100_live_rollback_check100",
+      "file": "experiment_backups/gemma4e4b_surfsense_noweb_34/full100_live_rollback_check100.json",
+      "questions_with_number_match_metric": 100,
+      "number_match_rate": 0.34,
+      "overall_correct_rate": 0.18
+    },
+    {
+      "label": "gemma4e4b_vllm_direct_35/vllm_direct_gemma4_check100_corrected",
+      "file": "experiment_backups/gemma4e4b_vllm_direct_35/vllm_direct_gemma4_check100_corrected.json",
+      "questions_with_number_match_metric": 100,
+      "number_match_rate": 0.35,
+      "overall_correct_rate": 0.18
+    },
+    {
+      "label": "gemma4e4b_vllm_direct_39/vllm_direct_gemma4_check10",
+      "file": "experiment_backups/gemma4e4b_vllm_direct_39/vllm_direct_gemma4_check10.json",
+      "questions_with_number_match_metric": 100,
+      "number_match_rate": 0.39,
+      "overall_correct_rate": 0.21
+    },
+    {
+      "label": "gpt4o_openai_direct_37/openai_direct_gpt4o_check100_corrected",
+      "file": "experiment_backups/gpt4o_openai_direct_37/openai_direct_gpt4o_check100_corrected.json",
+      "questions_with_number_match_metric": 100,
+      "number_match_rate": 0.37,
+      "overall_correct_rate": 0.25
+    },
+    {
+      "label": "gpt5nano_openai_direct_37/openai_direct_gpt5nano_backfill72_100",
+      "file": "experiment_backups/gpt5nano_openai_direct_37/openai_direct_gpt5nano_backfill72_100.json",
+      "questions_with_number_match_metric": 100,
+      "number_match_rate": 0.37,
+      "overall_correct_rate": 0.19
+    },
+    {
+      "label": "gpt5nano_surfsense_docpin_noweb_32/docker_gpt5nano_docpin_check100_noweb",
+      "file": "experiment_backups/gpt5nano_surfsense_docpin_noweb_32/docker_gpt5nano_docpin_check100_noweb.json",
+      "questions_with_number_match_metric": 100,
+      "number_match_rate": 0.32,
+      "overall_correct_rate": 0.14
+    },
+    {
+      "label": "benchmark_results_MSFT_FY26Q1_qa/full100_live",
+      "file": "benchmark_results_MSFT_FY26Q1_qa/full100_live.json",
+      "questions_with_number_match_metric": 100,
+      "number_match_rate": 0.46,
+      "overall_correct_rate": 0.26
+    }
+  ],
+  "skipped_runs": [
+    {
+      "file": "experiment_backups/gemma4e2b_surfsense_docpin_noweb_8/benchmark_runner_config.json",
+      "reason": "not_benchmark_results_payload"
+    },
+    {
+      "file": "experiment_backups/gemma4e4b_surfsense_noweb_34/benchmark_runner_config.json",
+      "reason": "not_benchmark_results_payload"
+    },
+    {
+      "file": "experiment_backups/gpt5nano_openai_direct_37/openai_direct_gpt5nano_check100.json",
+      "reason": "duplicate_number_match_vector_of:gpt5nano_openai_direct_37/openai_direct_gpt5nano_backfill72_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/Gemma4_MSFT_FY26Q1_10Q.json",
+      "reason": "partial_run_10_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/docker_gemma4_vllm_docpin_noweb_debug1.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/docker_gemma4_vllm_docpin_noweb_debug1_after_ctxfix.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/docker_gemma4_vllm_docpin_noweb_debug1_after_retryfix.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/docker_gemma4_vllm_docpin_noweb_debug1_after_retryfix2.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/docker_gemma4_vllm_docpin_noweb_debug1_after_retryfix3.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/docker_gemma4_vllm_docpin_noweb_debug1_after_tooldisable.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/docker_gemma4e2b_vllm_docpin_noweb_check100_locked.json",
+      "reason": "duplicate_number_match_vector_of:gemma4e2b_surfsense_docpin_noweb_8/docker_gemma4e2b_vllm_docpin_noweb_check100_locked"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/docker_gpt5nano_docpin_check100_noweb.json",
+      "reason": "duplicate_number_match_vector_of:gpt5nano_surfsense_docpin_noweb_32/docker_gpt5nano_docpin_check100_noweb"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/docker_gpt5nano_docpin_debug1.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/full100_live_rollback_check100.json",
+      "reason": "duplicate_number_match_vector_of:gemma4e4b_surfsense_noweb_34/full100_live_rollback_check100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/full100_live_rollback_test10.json",
+      "reason": "partial_run_10_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/gemma4e2b_sanity_q1.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/openai_direct_gpt5nano_backfill72_100.json",
+      "reason": "duplicate_number_match_vector_of:gpt5nano_openai_direct_37/openai_direct_gpt5nano_backfill72_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/openai_direct_gpt5nano_check10.json",
+      "reason": "partial_run_10_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/openai_direct_gpt5nano_check100.json",
+      "reason": "duplicate_number_match_vector_of:gpt5nano_openai_direct_37/openai_direct_gpt5nano_backfill72_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/openai_direct_gpt5nano_debug1.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/openai_direct_gpt5nano_smoke3.json",
+      "reason": "partial_run_3_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/openai_direct_gpt5nano_smoke3_v2.json",
+      "reason": "partial_run_3_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/openai_gpt4o_check10.json",
+      "reason": "partial_run_10_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/openai_gpt4o_debug1.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/openai_gpt4o_debug1_after_key.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/openai_gpt4o_debug1_after_literal_key.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/openai_gpt4o_debug1_after_patch.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/openai_gpt4o_debug1_docpin.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/openai_gpt4o_debug1_docpin_nosanitize.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/openai_gpt5nano_check10.json",
+      "reason": "partial_run_10_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/openai_gpt5nano_check10_repro.json",
+      "reason": "partial_run_10_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/pin_check.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/pin_verify_10.json",
+      "reason": "partial_run_10_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/rollback_8of10_check_live.json",
+      "reason": "partial_run_10_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/smoke_after_patch.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/smoke_ctx_fix.json",
+      "reason": "partial_run_2_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/smoke_sanitized_prompt.json",
+      "reason": "partial_run_1_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/tmp_g1002_1.json",
+      "reason": "partial_run_2_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/tmp_g1002_2.json",
+      "reason": "partial_run_2_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/tmp_g1002_3.json",
+      "reason": "partial_run_2_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/tmp_g1002_4.json",
+      "reason": "partial_run_2_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/tmp_g1002_5.json",
+      "reason": "partial_run_2_of_100"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/vllm_direct_gemma4_check10.json",
+      "reason": "duplicate_number_match_vector_of:gemma4e4b_vllm_direct_39/vllm_direct_gemma4_check10"
+    },
+    {
+      "file": "benchmark_results_MSFT_FY26Q1_qa/vllm_direct_gemma4_check100_corrected.json",
+      "reason": "duplicate_number_match_vector_of:gemma4e4b_vllm_direct_35/vllm_direct_gemma4_check100_corrected"
+    }
+  ],
+  "included_count": 8,
+  "skipped_count": 44
+}

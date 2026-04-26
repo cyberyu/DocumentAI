@@ -1,0 +1,57 @@
+[2026-04-25T00:19:45Z] Logging in to http://localhost:8929 ...
+[2026-04-25T00:19:45Z] Using search_space_id=1
+[2026-04-25T00:19:45Z] Mentioning document IDs: [4]
+[2026-04-25T00:19:45Z] (1/10) G1-001 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=0.400 pred='The reported amount for long-term accounts receivable, net of allowance for doubtful accounts, as of September 30, 2025, is $5.0 billion.'
+  expected: $5.0 billion USD
+  predicted_exact: The reported amount for long-term accounts receivable, net of allowance for doubtful accounts, as of September 30, 2025, is $5.0 billion.
+[2026-04-25T00:19:59Z] (2/10) G1-002 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=0.286 pred='The reported amount for other receivables related to activities to facilitate the purchase of server components as of September 30, 2025,...'
+  expected: $14.4 billion USD
+  predicted_exact: The reported amount for other receivables related to activities to facilitate the purchase of server components as of September 30, 2025, is $14.4 billion [citation:7728].
+[2026-04-25T00:20:14Z] (3/10) G1-003 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=0.400 pred='The reported amount for financing receivables, net as of September 30, 2025, is $3.9 billion.'
+  expected: $3.9 billion USD
+  predicted_exact: The reported amount for financing receivables, net as of September 30, 2025, is $3.9 billion.
+[2026-04-25T00:20:39Z] (4/10) G1-004 ...
+  eval: strict=N lenient=N num=N unit=N clean=N intent=Y num_f1=0.000 pred=''
+  expected: $4.1 billion USD
+  predicted_exact: 
+[2026-04-25T00:21:19Z] (5/10) G1-005 ...
+  eval: strict=N lenient=N num=N unit=N clean=Y intent=N num_f1=0.000 pred='The reported amount for equity investments without readily determinable fair values, measured at cost with adjustments for observable cha...'
+  expected: $2.9 billion USD
+  predicted_exact: The reported amount for equity investments without readily determinable fair values, measured at cost with adjustments for observable changes in price or impairments, is not specified as a single value in the available content of the document as of September 30, 2025. Instead, these are presented under the category "Other" in the investments section, where they are described as being measured at cost with adjustments for observable changes in price or impairments, using the equity method, or at fair value using net asset value as a practical expedient [citation:7839].
+[2026-04-25T00:21:42Z] (6/10) G1-006 ...
+  eval: strict=N lenient=N num=N unit=N clean=Y intent=N num_f1=0.000 pred='The task of finding the equity investments measured using the equity method as of September 30, 2025, within the document is proving to b...'
+  expected: $1.8 billion USD
+  predicted_exact: The task of finding the equity investments measured using the equity method as of September 30, 2025, within the document is proving to be complex and time-consuming. If this information is crucial, please let me know so I can employ more resources to locate it faster.
+[2026-04-25T00:22:02Z] (7/10) G1-007 ...
+  eval: strict=N lenient=N num=N unit=N clean=Y intent=Y num_f1=0.000 pred="I couldn't locate the specific sentence within our document database or the mentioned file. It might not be present in the extracted text..."
+  expected: $1.0 billion USD
+  predicted_exact: I couldn't locate the specific sentence within our document database or the mentioned file. It might not be present in the extracted text of the document. If you have another specific piece of information or section title from the document, let me know, and I can try searching again.
+[2026-04-25T00:22:19Z] (8/10) G1-008 ...
+  eval: strict=N lenient=N num=N unit=N clean=Y intent=Y num_f1=0.000 pred="I couldn't find the reported amount or rate for Gross derivative assets and liabilities subject to legally enforceable master netting agr..."
+  expected: $376 million USD
+  predicted_exact: I couldn't find the reported amount or rate for Gross derivative assets and liabilities subject to legally enforceable master netting agreements from the document you mentioned. Would you like me to provide an answer from my general knowledge instead?
+[2026-04-25T00:22:42Z] (9/10) G1-009 ...
+  eval: strict=N lenient=N num=N unit=N clean=Y intent=N num_f1=0.000 pred='I couldn\'t find the specific information on the "Depreciation expense as of September 30, 2025" in the MSFT_FY26Q1_10Q document. The deta...'
+  expected: $7.1 billion USD
+  predicted_exact: I couldn't find the specific information on the "Depreciation expense as of September 30, 2025" in the MSFT_FY26Q1_10Q document. The details might be located in sections that were not read or are not searchable due to the structure of the document.
+
+If you want, I can attempt to answer using general knowledge. Would you like that?
+[2026-04-25T00:22:53Z] (10/10) G1-010 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=0.286 pred='The intangible assets amortization expense as of September 30, 2025, is $1.5 billion [citation:7968].'
+  expected: $1.5 billion USD
+  predicted_exact: The intangible assets amortization expense as of September 30, 2025, is $1.5 billion [citation:7968].
+
+Benchmark complete
+  overall_correct: 4 / 10 (40.00%)
+  normalized_exact: 0 / 10 (0.00%)
+  number_match: 4 / 10 (40.00%)
+  unit_match: 4 / 10 (40.00%)
+  mean_token_f1: 0.0573
+  request_failures: 1
+  context_overflow_failures: 0
+  output_json: benchmark_results_MSFT_FY26Q1_qa/openai_gpt4o_check10.json
+  output_md: benchmark_results_MSFT_FY26Q1_qa/openai_gpt4o_check10.md
+

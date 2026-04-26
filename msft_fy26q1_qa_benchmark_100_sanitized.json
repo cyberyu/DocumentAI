@@ -1,0 +1,2635 @@
+{
+  "summary": {
+    "total": 100,
+    "group_counts": {
+      "Group1": 30,
+      "Group2": 40,
+      "Group3": 30
+    },
+    "sanitized_questions": true,
+    "sanitized_source_file": "msft_fy26q1_qa_benchmark_100.json",
+    "sanitized_question_count": 100
+  },
+  "qa_pairs": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "answer": "$5.0 billion USD",
+      "evidence": {
+        "text": "As of September 30, 2025 and June 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion and $5.2 billion, respectively, and is included in other long-term assets in our consolidated balance sheets.",
+        "page_number": 12,
+        "line_number": 234,
+        "start_offset": 119,
+        "end_offset": 123,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"As of September 30, 2025 and June 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion and $5.2 billion, respectively, and is included in other long-term assets in our consolidated balance sheets.\"?"
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "answer": "$14.4 billion USD",
+      "evidence": {
+        "text": "As of September 30, 2025 and June 30, 2025, other receivables related to activities to facilitate the purchase of server components were $14.4 billion and $8.2 billion, respectively, and are included in other current assets in our consolidated balance sheets.",
+        "page_number": 12,
+        "line_number": 235,
+        "start_offset": 137,
+        "end_offset": 142,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"As of September 30, 2025 and June 30, 2025, other receivables related to activities to facilitate the purchase of server components were $14.4 billion and $8.2 billion, respectively, and are included in other current assets in our consolidated balance sheets.\"?"
+    },
+    {
+      "id": "G1-003",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for our financing receivables, net as of September 30, 2025? Return only the value with unit.",
+      "answer": "$3.9 billion USD",
+      "evidence": {
+        "text": "As of September 30, 2025 and June 30, 2025, our financing receivables, net were $3.9 billion and $4.3 billion, respectively, for short-term and long-term financing receivables, which are included in other current assets and other long-term assets in our consolidated balance sheets.",
+        "page_number": 12,
+        "line_number": 236,
+        "start_offset": 80,
+        "end_offset": 84,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"As of September 30, 2025 and June 30, 2025, our financing receivables, net were $3.9 billion and $4.3 billion, respectively, for short-term and long-term financing receivables, which are included in other current assets and other long-term assets in our consolidated balance sheets.\"?"
+    },
+    {
+      "id": "G1-004",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"For the three months ended September 30, 2025 and 2024, other income (expense), net included $4.1 billion and $688 million, respectively, of net losses from investments in OpenAI, primarily net recognized losses on our equity method investment reflected in other, net.\"?",
+      "answer": "$4.1 billion USD",
+      "evidence": {
+        "text": "For the three months ended September 30, 2025 and 2024, other income (expense), net included $4.1 billion and $688 million, respectively, of net losses from investments in OpenAI, primarily net recognized losses on our equity method investment reflected in other, net.",
+        "page_number": 13,
+        "line_number": 267,
+        "start_offset": 93,
+        "end_offset": 97,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"For the three months ended September 30, 2025 and 2024, other income (expense), net included $4.1 billion and $688 million, respectively, of net losses from investments in OpenAI, primarily net recognized losses on our equity method investment reflected in other, net.\"?"
+    },
+    {
+      "id": "G1-005",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments as of September 30, 2025? Return only the value with unit.",
+      "answer": "$2.9 billion USD",
+      "evidence": {
+        "text": "As of both September 30, 2025 and June 30, 2025, equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments were $2.9 billion.",
+        "page_number": 14,
+        "line_number": 329,
+        "start_offset": 195,
+        "end_offset": 199,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"As of both September 30, 2025 and June 30, 2025, equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments were $2.9 billion.\"?"
+    },
+    {
+      "id": "G1-006",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for equity investments measured using the equity method as of September 30, 2025? Return only the value with unit.",
+      "answer": "$1.8 billion USD",
+      "evidence": {
+        "text": "As of September 30, 2025 and June 30, 2025, equity investments measured using the equity method were $1.8 billion and $6.0 billion, respectively.",
+        "page_number": 14,
+        "line_number": 329,
+        "start_offset": 101,
+        "end_offset": 105,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"As of September 30, 2025 and June 30, 2025, equity investments measured using the equity method were $1.8 billion and $6.0 billion, respectively.\"?"
+    },
+    {
+      "id": "G1-007",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"As of September 30, 2025, our long-term unsecured debt rating was AAA, and cash investments were in excess of $1.0 billion.\"?",
+      "answer": "$1.0 billion USD",
+      "evidence": {
+        "text": "As of September 30, 2025, our long-term unsecured debt rating was AAA, and cash investments were in excess of $1.0 billion.",
+        "page_number": 15,
+        "line_number": 374,
+        "start_offset": 110,
+        "end_offset": 114,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"As of September 30, 2025, our long-term unsecured debt rating was AAA, and cash investments were in excess of $1.0 billion.\"?"
+    },
+    {
+      "id": "G1-008",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for Gross derivative assets and liabilities subject to legally enforceable master netting agreements for which we have elected to offset as of September 30, 2025? Return only the value with unit.",
+      "answer": "$376 million USD",
+      "evidence": {
+        "text": "Gross derivative assets and liabilities subject to legally enforceable master netting agreements for which we have elected to offset were $376 million and $802 million, respectively, as of September 30, 2025, and $452 million and $1.8 billion, respectively, as of June 30, 2025.",
+        "page_number": 16,
+        "line_number": 411,
+        "start_offset": 138,
+        "end_offset": 142,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"Gross derivative assets and liabilities subject to legally enforceable master netting agreements for which we have elected to offset were $376 million and $802 million, respectively, as of September 30, 2025, and $452 million and $1.8 billion, respectively, as of June 30, 2025.\"?"
+    },
+    {
+      "id": "G1-009",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for Depreciation expense as of September 30, 2025? Return only the value with unit.",
+      "answer": "$7.1 billion USD",
+      "evidence": {
+        "text": "Depreciation expense was $7.1 billion and $4.7 billion for the three months ended September 30, 2025 and 2024, respectively.",
+        "page_number": 17,
+        "line_number": 452,
+        "start_offset": 25,
+        "end_offset": 29,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"Depreciation expense was $7.1 billion and $4.7 billion for the three months ended September 30, 2025 and 2024, respectively.\"?"
+    },
+    {
+      "id": "G1-010",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for Intangible assets amortization expense as of September 30, 2025? Return only the value with unit.",
+      "answer": "$1.5 billion USD",
+      "evidence": {
+        "text": "Intangible assets amortization expense was $1.5 billion and $1.4 billion for the three months ended September 30, 2025 and 2024, respectively.",
+        "page_number": 18,
+        "line_number": 472,
+        "start_offset": 43,
+        "end_offset": 47,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"Intangible assets amortization expense was $1.5 billion and $1.4 billion for the three months ended September 30, 2025 and 2024, respectively.\"?"
+    },
+    {
+      "id": "G1-011",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for Our effective tax rate as of September 30, 2025? Return only the value with unit.",
+      "answer": "19%",
+      "evidence": {
+        "text": "Our effective tax rate was 19% for both the three months ended September 30, 2025 and 2024.",
+        "page_number": 19,
+        "line_number": 521,
+        "start_offset": 27,
+        "end_offset": 30,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"Our effective tax rate was 19% for both the three months ended September 30, 2025 and 2024.\"?"
+    },
+    {
+      "id": "G1-012",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for unrecognized tax benefits and other income tax liabilities as of September 30, 2025? Return only the value with unit.",
+      "answer": "$28.0 billion USD",
+      "evidence": {
+        "text": "As of September 30, 2025 and June 30, 2025, unrecognized tax benefits and other income tax liabilities were $28.0 billion and $27.4 billion, respectively, and are included in long-term income taxes in our consolidated balance sheets.",
+        "page_number": 20,
+        "line_number": 524,
+        "start_offset": 108,
+        "end_offset": 113,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"As of September 30, 2025 and June 30, 2025, unrecognized tax benefits and other income tax liabilities were $28.0 billion and $27.4 billion, respectively, and are included in long-term income taxes in our consolidated balance sheets.\"?"
+    },
+    {
+      "id": "G1-013",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for In the NOPAs, the IRS as of September 30, 2025? Return only the value with unit.",
+      "answer": "$28.9 billion USD",
+      "evidence": {
+        "text": "In the NOPAs, the IRS is seeking an additional tax payment of $28.9 billion plus penalties and interest.",
+        "page_number": 20,
+        "line_number": 525,
+        "start_offset": 62,
+        "end_offset": 67,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"In the NOPAs, the IRS is seeking an additional tax payment of $28.9 billion plus penalties and interest.\"?"
+    },
+    {
+      "id": "G1-014",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for Revenue allocated to remaining performance obligations, which includes unearned revenue and amounts that will be invoiced and recognized as revenue in future periods as of September 30, 2025? Return only the value with unit.",
+      "answer": "$398 billion USD",
+      "evidence": {
+        "text": "Revenue allocated to remaining performance obligations, which includes unearned revenue and amounts that will be invoiced and recognized as revenue in future periods, was $398 billion as of September 30, 2025, of which $392 billion is related to the commercial portion of revenue.",
+        "page_number": 20,
+        "line_number": 542,
+        "start_offset": 171,
+        "end_offset": 175,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"Revenue allocated to remaining performance obligations, which includes unearned revenue and amounts that will be invoiced and recognized as revenue in future periods, was $398 billion as of September 30, 2025, of which $392 billion is related to the commercial portion of revenue.\"?"
+    },
+    {
+      "id": "G1-015",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"We expect to recognize approximately 40% of our total company remaining performance obligation revenue over the next 12 months and the remainder thereafter.\"?",
+      "answer": "40%",
+      "evidence": {
+        "text": "We expect to recognize approximately 40% of our total company remaining performance obligation revenue over the next 12 months and the remainder thereafter.",
+        "page_number": 20,
+        "line_number": 542,
+        "start_offset": 37,
+        "end_offset": 40,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"We expect to recognize approximately 40% of our total company remaining performance obligation revenue over the next 12 months and the remainder thereafter.\"?"
+    },
+    {
+      "id": "G1-016",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for As of September we accrued aggregate legal liabilities of as of September 30, 2025? Return only the value with unit.",
+      "answer": "$530 million USD",
+      "evidence": {
+        "text": "As of September 30, 2025, we accrued aggregate legal liabilities of $530 million.",
+        "page_number": 22,
+        "line_number": 602,
+        "start_offset": 68,
+        "end_offset": 72,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"As of September 30, 2025, we accrued aggregate legal liabilities of $530 million.\"?"
+    },
+    {
+      "id": "G1-017",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"The above table excludes shares repurchased to settle employee tax withholding related to the vesting of stock awards of $1.7 billion and $1.3 billion for the three months ended September 30, 2025 and 2024, respectively.\"?",
+      "answer": "$1.7 billion USD",
+      "evidence": {
+        "text": "The above table excludes shares repurchased to settle employee tax withholding related to the vesting of stock awards of $1.7 billion and $1.3 billion for the three months ended September 30, 2025 and 2024, respectively.",
+        "page_number": 23,
+        "line_number": 611,
+        "start_offset": 121,
+        "end_offset": 125,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"The above table excludes shares repurchased to settle employee tax withholding related to the vesting of stock awards of $1.7 billion and $1.3 billion for the three months ended September 30, 2025 and 2024, respectively.\"?"
+    },
+    {
+      "id": "G1-018",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"No sales to an individual customer or country other than the United States accounted for more than 10% of revenue for the three months ended September 30, 2025 or 2024.\"?",
+      "answer": "10%",
+      "evidence": {
+        "text": "No sales to an individual customer or country other than the United States accounted for more than 10% of revenue for the three months ended September 30, 2025 or 2024.",
+        "page_number": 26,
+        "line_number": 688,
+        "start_offset": 99,
+        "end_offset": 102,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"No sales to an individual customer or country other than the United States accounted for more than 10% of revenue for the three months ended September 30, 2025 or 2024.\"?"
+    },
+    {
+      "id": "G1-019",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for Our Microsoft Cloud revenue, which includes Microsoft Commercial cloud, Azure and other cloud services, the commercial portion of LinkedIn, and Dynamics as of September 30, 2025? Return only the value with unit.",
+      "answer": "$49.1 billion USD",
+      "evidence": {
+        "text": "Our Microsoft Cloud revenue, which includes Microsoft 365 Commercial cloud, Azure and other cloud services, the commercial portion of LinkedIn, and Dynamics 365, was $49.1 billion and $38.9 billion for the three months ended September 30, 2025 and 2024, respectively.",
+        "page_number": 27,
+        "line_number": 709,
+        "start_offset": 166,
+        "end_offset": 171,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"Our Microsoft Cloud revenue, which includes Microsoft 365 Commercial cloud, Azure and other cloud services, the commercial portion of LinkedIn, and Dynamics 365, was $49.1 billion and $38.9 billion for the three months ended September 30, 2025 and 2024, respectively.\"?"
+    },
+    {
+      "id": "G1-020",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"Under the new agreement, OpenAI has contracted to purchase an incremental $250 billion of Azure services, and Microsoft will no longer have a right of first refusal to be OpenAI's compute provider.\"?",
+      "answer": "$250 billion USD",
+      "evidence": {
+        "text": "Under the new agreement, OpenAI has contracted to purchase an incremental $250 billion of Azure services, and Microsoft will no longer have a right of first refusal to be OpenAI's compute provider.",
+        "page_number": 27,
+        "line_number": 712,
+        "start_offset": 74,
+        "end_offset": 78,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"Under the new agreement, OpenAI has contracted to purchase an incremental $250 billion of Azure services, and Microsoft will no longer have a right of first refusal to be OpenAI's compute provider.\"?"
+    },
+    {
+      "id": "G1-021",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for \u2022Microsoft Cloud revenue increased to as of September 30, 2025? Return only the value with unit.",
+      "answer": "26%",
+      "evidence": {
+        "text": "\u2022Microsoft Cloud revenue increased 26% to $49.1 billion.",
+        "page_number": 30,
+        "line_number": 733,
+        "start_offset": 35,
+        "end_offset": 38,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"\u2022Microsoft Cloud revenue increased 26% to $49.1 billion.\"?"
+    },
+    {
+      "id": "G1-022",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for \u2022Commercial remaining performance obligation increased to as of September 30, 2025? Return only the value with unit.",
+      "answer": "51%",
+      "evidence": {
+        "text": "\u2022Commercial remaining performance obligation increased 51% to $392 billion.",
+        "page_number": 30,
+        "line_number": 734,
+        "start_offset": 55,
+        "end_offset": 58,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"\u2022Commercial remaining performance obligation increased 51% to $392 billion.\"?"
+    },
+    {
+      "id": "G1-023",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for \u2022Microsoft Commercial cloud revenue increased as of September 30, 2025? Return only the value with unit.",
+      "answer": "17%",
+      "evidence": {
+        "text": "\u2022Microsoft 365 Commercial cloud revenue increased 17%.",
+        "page_number": 30,
+        "line_number": 735,
+        "start_offset": 50,
+        "end_offset": 53,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"\u2022Microsoft 365 Commercial cloud revenue increased 17%.\"?"
+    },
+    {
+      "id": "G1-024",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for \u2022Microsoft Consumer cloud revenue increased as of September 30, 2025? Return only the value with unit.",
+      "answer": "26%",
+      "evidence": {
+        "text": "\u2022Microsoft 365 Consumer cloud revenue increased 26%.",
+        "page_number": 30,
+        "line_number": 736,
+        "start_offset": 48,
+        "end_offset": 51,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"\u2022Microsoft 365 Consumer cloud revenue increased 26%.\"?"
+    },
+    {
+      "id": "G1-025",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for \u2022Dynamics revenue increased as of September 30, 2025? Return only the value with unit.",
+      "answer": "18%",
+      "evidence": {
+        "text": "\u2022Dynamics 365 revenue increased 18%.",
+        "page_number": 30,
+        "line_number": 738,
+        "start_offset": 32,
+        "end_offset": 35,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"\u2022Dynamics 365 revenue increased 18%.\"?"
+    },
+    {
+      "id": "G1-026",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for \u2022Azure and other cloud services revenue increased as of September 30, 2025? Return only the value with unit.",
+      "answer": "40%",
+      "evidence": {
+        "text": "\u2022Azure and other cloud services revenue increased 40%.",
+        "page_number": 30,
+        "line_number": 739,
+        "start_offset": 50,
+        "end_offset": 53,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"\u2022Azure and other cloud services revenue increased 40%.\"?"
+    },
+    {
+      "id": "G1-027",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for \u2022Windows OEM and Devices revenue increased as of September 30, 2025? Return only the value with unit.",
+      "answer": "6%",
+      "evidence": {
+        "text": "\u2022Windows OEM and Devices revenue increased 6%.",
+        "page_number": 30,
+        "line_number": 740,
+        "start_offset": 43,
+        "end_offset": 45,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"\u2022Windows OEM and Devices revenue increased 6%.\"?"
+    },
+    {
+      "id": "G1-028",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for \u2022Xbox content and services revenue increased as of September 30, 2025? Return only the value with unit.",
+      "answer": "1%",
+      "evidence": {
+        "text": "\u2022Xbox content and services revenue increased 1%.",
+        "page_number": 30,
+        "line_number": 741,
+        "start_offset": 45,
+        "end_offset": 47,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"\u2022Xbox content and services revenue increased 1%.\"?"
+    },
+    {
+      "id": "G1-029",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for \u2022Search and news advertising revenue excluding traffic acquisition costs increased as of September 30, 2025? Return only the value with unit.",
+      "answer": "16%",
+      "evidence": {
+        "text": "\u2022Search and news advertising revenue excluding traffic acquisition costs increased 16%.",
+        "page_number": 30,
+        "line_number": 742,
+        "start_offset": 83,
+        "end_offset": 86,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"\u2022Search and news advertising revenue excluding traffic acquisition costs increased 16%.\"?"
+    },
+    {
+      "id": "G1-030",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for Revenue increased or with growth across each of our segments as of September 30, 2025? Return only the value with unit.",
+      "answer": "$12.1 billion USD",
+      "evidence": {
+        "text": "Revenue increased $12.1 billion or 18% with growth across each of our segments.",
+        "page_number": 33,
+        "line_number": 791,
+        "start_offset": 18,
+        "end_offset": 23,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"Revenue increased $12.1 billion or 18% with growth across each of our segments.\"?"
+    },
+    {
+      "id": "G2-001",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Common Stock, $0.00000625 par value per share' and return the value in column 4. Return only the value with its unit.",
+      "answer": "7,432,377,655 shares",
+      "evidence": {
+        "text": "Common Stock, $0.00000625 par value per share | | | 7,432,377,655 shares | |",
+        "page_number": 1,
+        "line_number": 32,
+        "start_offset": 52,
+        "end_offset": 72,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Common Stock, $0.00000625 par value per share' under 'column 4'?"
+    },
+    {
+      "id": "G2-002",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Product' and return the value in column 4. Return only the value with its unit.",
+      "answer": "15,922 USD",
+      "evidence": {
+        "text": "Product | | $ | 15,922 | | | $ | 15,272 |",
+        "page_number": 3,
+        "line_number": 63,
+        "start_offset": 16,
+        "end_offset": 22,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Product' under 'column 4'?"
+    },
+    {
+      "id": "G2-003",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Service and other' and return the value in column 4. Return only the value with its unit.",
+      "answer": "61,751 USD million",
+      "evidence": {
+        "text": "Service and other | | | 61,751 | | | | 50,313 |",
+        "page_number": 3,
+        "line_number": 64,
+        "start_offset": 24,
+        "end_offset": 30,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Service and other' under 'column 4'?"
+    },
+    {
+      "id": "G2-004",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Total revenue' and return the value in column 4. Return only the value with its unit.",
+      "answer": "77,673 USD million",
+      "evidence": {
+        "text": "Total revenue | | | 77,673 | | | | 65,585 |",
+        "page_number": 3,
+        "line_number": 65,
+        "start_offset": 20,
+        "end_offset": 26,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Total revenue' under 'column 4'?"
+    },
+    {
+      "id": "G2-005",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Product' and return the value in column 4. Return only the value with its unit.",
+      "answer": "2,922 USD million",
+      "evidence": {
+        "text": "Product | | | 2,922 | | | | 3,294 |",
+        "page_number": 3,
+        "line_number": 67,
+        "start_offset": 14,
+        "end_offset": 19,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Product' under 'column 4'?"
+    },
+    {
+      "id": "G2-006",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Service and other' and return the value in column 4. Return only the value with its unit.",
+      "answer": "21,121 USD million",
+      "evidence": {
+        "text": "Service and other | | | 21,121 | | | | 16,805 |",
+        "page_number": 3,
+        "line_number": 68,
+        "start_offset": 24,
+        "end_offset": 30,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Service and other' under 'column 4'?"
+    },
+    {
+      "id": "G2-007",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Total cost of revenue' and return the value in column 4. Return only the value with its unit.",
+      "answer": "24,043 USD million",
+      "evidence": {
+        "text": "Total cost of revenue | | | 24,043 | | | | 20,099 |",
+        "page_number": 3,
+        "line_number": 69,
+        "start_offset": 28,
+        "end_offset": 34,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Total cost of revenue' under 'column 4'?"
+    },
+    {
+      "id": "G2-008",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Gross margin' and return the value in column 4. Return only the value with its unit.",
+      "answer": "53,630 USD million",
+      "evidence": {
+        "text": "Gross margin | | | 53,630 | | | | 45,486 |",
+        "page_number": 3,
+        "line_number": 70,
+        "start_offset": 19,
+        "end_offset": 25,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Gross margin' under 'column 4'?"
+    },
+    {
+      "id": "G2-009",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Research and development' and return the value in column 4. Return only the value with its unit.",
+      "answer": "8,146 USD million",
+      "evidence": {
+        "text": "Research and development | | | 8,146 | | | | 7,544 |",
+        "page_number": 3,
+        "line_number": 71,
+        "start_offset": 31,
+        "end_offset": 36,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Research and development' under 'column 4'?"
+    },
+    {
+      "id": "G2-010",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Sales and marketing' and return the value in column 4. Return only the value with its unit.",
+      "answer": "5,717 USD million",
+      "evidence": {
+        "text": "Sales and marketing | | | 5,717 | | | | 5,717 |",
+        "page_number": 3,
+        "line_number": 72,
+        "start_offset": 26,
+        "end_offset": 31,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Sales and marketing' under 'column 4'?"
+    },
+    {
+      "id": "G2-011",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'General and administrative' and return the value in column 4. Return only the value with its unit.",
+      "answer": "1,806 USD million",
+      "evidence": {
+        "text": "General and administrative | | | 1,806 | | | | 1,673 |",
+        "page_number": 3,
+        "line_number": 73,
+        "start_offset": 33,
+        "end_offset": 38,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'General and administrative' under 'column 4'?"
+    },
+    {
+      "id": "G2-012",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Operating income' and return the value in column 4. Return only the value with its unit.",
+      "answer": "37,961 USD million",
+      "evidence": {
+        "text": "Operating income | | | 37,961 | | | | 30,552 |",
+        "page_number": 3,
+        "line_number": 74,
+        "start_offset": 23,
+        "end_offset": 29,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Operating income' under 'column 4'?"
+    },
+    {
+      "id": "G2-013",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Income before income taxes' and return the value in column 4. Return only the value with its unit.",
+      "answer": "34,301 USD million",
+      "evidence": {
+        "text": "Income before income taxes | | | 34,301 | | | | 30,269 |",
+        "page_number": 3,
+        "line_number": 76,
+        "start_offset": 33,
+        "end_offset": 39,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Income before income taxes' under 'column 4'?"
+    },
+    {
+      "id": "G2-014",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Provision for income taxes' and return the value in column 4. Return only the value with its unit.",
+      "answer": "6,554 USD million",
+      "evidence": {
+        "text": "Provision for income taxes | | | 6,554 | | | | 5,602 |",
+        "page_number": 3,
+        "line_number": 77,
+        "start_offset": 33,
+        "end_offset": 38,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Provision for income taxes' under 'column 4'?"
+    },
+    {
+      "id": "G2-015",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Net income' and return the value in column 4. Return only the value with its unit.",
+      "answer": "27,747 USD",
+      "evidence": {
+        "text": "Net income | | $ | 27,747 | | | $ | 24,667 |",
+        "page_number": 3,
+        "line_number": 78,
+        "start_offset": 19,
+        "end_offset": 25,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Net income' under 'column 4'?"
+    },
+    {
+      "id": "G2-016",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Basic' and return the value in column 4. Return only the value with its unit.",
+      "answer": "3.73 USD",
+      "evidence": {
+        "text": "Basic | | $ | 3.73 | | | $ | 3.32 |",
+        "page_number": 3,
+        "line_number": 80,
+        "start_offset": 14,
+        "end_offset": 18,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Basic' under 'column 4'?"
+    },
+    {
+      "id": "G2-017",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Diluted' and return the value in column 4. Return only the value with its unit.",
+      "answer": "3.72 USD",
+      "evidence": {
+        "text": "Diluted | | $ | 3.72 | | | $ | 3.30 |",
+        "page_number": 3,
+        "line_number": 81,
+        "start_offset": 16,
+        "end_offset": 20,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Diluted' under 'column 4'?"
+    },
+    {
+      "id": "G2-018",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Basic' and return the value in column 4. Return only the value with its unit.",
+      "answer": "7,433 USD million",
+      "evidence": {
+        "text": "Basic | | | 7,433 | | | | 7,433 |",
+        "page_number": 3,
+        "line_number": 83,
+        "start_offset": 12,
+        "end_offset": 17,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Basic' under 'column 4'?"
+    },
+    {
+      "id": "G2-019",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Diluted' and return the value in column 4. Return only the value with its unit.",
+      "answer": "7,466 USD million",
+      "evidence": {
+        "text": "Diluted | | | 7,466 | | | | 7,470 |",
+        "page_number": 3,
+        "line_number": 84,
+        "start_offset": 14,
+        "end_offset": 19,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Diluted' under 'column 4'?"
+    },
+    {
+      "id": "G2-020",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Net change related to investments' and return the value in column 4. Return only the value with its unit.",
+      "answer": "687 USD million",
+      "evidence": {
+        "text": "Net change related to investments | | | 687 | | | | 1,114 |",
+        "page_number": 5,
+        "line_number": 92,
+        "start_offset": 40,
+        "end_offset": 43,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Net change related to investments' under 'column 4'?"
+    },
+    {
+      "id": "G2-021",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Other comprehensive income' and return the value in column 4. Return only the value with its unit.",
+      "answer": "586 USD million",
+      "evidence": {
+        "text": "Other comprehensive income | | | 586 | | | | 1,408 |",
+        "page_number": 5,
+        "line_number": 94,
+        "start_offset": 33,
+        "end_offset": 36,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Other comprehensive income' under 'column 4'?"
+    },
+    {
+      "id": "G2-022",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Comprehensive income' and return the value in column 4. Return only the value with its unit.",
+      "answer": "28,333 USD",
+      "evidence": {
+        "text": "Comprehensive income | | $ | 28,333 | | | $ | 26,075 |",
+        "page_number": 5,
+        "line_number": 95,
+        "start_offset": 29,
+        "end_offset": 35,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Comprehensive income' under 'column 4'?"
+    },
+    {
+      "id": "G2-023",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Cash and cash equivalents' and return the value in column 4. Return only the value with its unit.",
+      "answer": "28,849 USD",
+      "evidence": {
+        "text": "Cash and cash equivalents | | $ | 28,849 | | | $ | 30,242 |",
+        "page_number": 6,
+        "line_number": 102,
+        "start_offset": 34,
+        "end_offset": 40,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Cash and cash equivalents' under 'column 4'?"
+    },
+    {
+      "id": "G2-024",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Short-term investments' and return the value in column 4. Return only the value with its unit.",
+      "answer": "73,163 USD million",
+      "evidence": {
+        "text": "Short-term investments | | | 73,163 | | | | 64,323 |",
+        "page_number": 6,
+        "line_number": 103,
+        "start_offset": 29,
+        "end_offset": 35,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Short-term investments' under 'column 4'?"
+    },
+    {
+      "id": "G2-025",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Total cash, cash equivalents, and short-term investments' and return the value in column 4. Return only the value with its unit.",
+      "answer": "102,012 USD million",
+      "evidence": {
+        "text": "Total cash, cash equivalents, and short-term investments | | | 102,012 | | | | 94,565 |",
+        "page_number": 6,
+        "line_number": 104,
+        "start_offset": 63,
+        "end_offset": 70,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Total cash, cash equivalents, and short-term investments' under 'column 4'?"
+    },
+    {
+      "id": "G2-026",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Accounts receivable, net of allowance for doubtful accounts of $687 and $944' and return the value in column 4. Return only the value with its unit.",
+      "answer": "52,894 USD",
+      "evidence": {
+        "text": "Accounts receivable, net of allowance for doubtful accounts of $687 and $944 | | | 52,894 | | | | 69,905 |",
+        "page_number": 6,
+        "line_number": 105,
+        "start_offset": 83,
+        "end_offset": 89,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Accounts receivable, net of allowance for doubtful accounts of $687 and $944' under 'column 4'?"
+    },
+    {
+      "id": "G2-027",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Inventories' and return the value in column 4. Return only the value with its unit.",
+      "answer": "1,130 USD million",
+      "evidence": {
+        "text": "Inventories | | | 1,130 | | | | 938 |",
+        "page_number": 6,
+        "line_number": 106,
+        "start_offset": 18,
+        "end_offset": 23,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Inventories' under 'column 4'?"
+    },
+    {
+      "id": "G2-028",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Other current assets' and return the value in column 4. Return only the value with its unit.",
+      "answer": "33,030 USD million",
+      "evidence": {
+        "text": "Other current assets | | | 33,030 | | | | 25,723 |",
+        "page_number": 6,
+        "line_number": 107,
+        "start_offset": 27,
+        "end_offset": 33,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Other current assets' under 'column 4'?"
+    },
+    {
+      "id": "G2-029",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Total current assets' and return the value in column 4. Return only the value with its unit.",
+      "answer": "189,066 USD million",
+      "evidence": {
+        "text": "Total current assets | | | 189,066 | | | | 191,131 |",
+        "page_number": 6,
+        "line_number": 108,
+        "start_offset": 27,
+        "end_offset": 34,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Total current assets' under 'column 4'?"
+    },
+    {
+      "id": "G2-030",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Property and equipment, net of accumulated depreciation of $98,880 and $93,653' and return the value in column 4. Return only the value with its unit.",
+      "answer": "230,861 USD",
+      "evidence": {
+        "text": "Property and equipment, net of accumulated depreciation of $98,880 and $93,653 | | | 230,861 | | | | 204,966 |",
+        "page_number": 6,
+        "line_number": 109,
+        "start_offset": 85,
+        "end_offset": 92,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Property and equipment, net of accumulated depreciation of $98,880 and $93,653' under 'column 4'?"
+    },
+    {
+      "id": "G2-031",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Operating lease right-of-use assets' and return the value in column 4. Return only the value with its unit.",
+      "answer": "24,791 USD million",
+      "evidence": {
+        "text": "Operating lease right-of-use assets | | | 24,791 | | | | 24,823 |",
+        "page_number": 6,
+        "line_number": 110,
+        "start_offset": 42,
+        "end_offset": 48,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Operating lease right-of-use assets' under 'column 4'?"
+    },
+    {
+      "id": "G2-032",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Equity and other investments' and return the value in column 4. Return only the value with its unit.",
+      "answer": "11,465 USD million",
+      "evidence": {
+        "text": "Equity and other investments | | | 11,465 | | | | 15,405 |",
+        "page_number": 6,
+        "line_number": 111,
+        "start_offset": 35,
+        "end_offset": 41,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Equity and other investments' under 'column 4'?"
+    },
+    {
+      "id": "G2-033",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Goodwill' and return the value in column 4. Return only the value with its unit.",
+      "answer": "119,497 USD million",
+      "evidence": {
+        "text": "Goodwill | | | 119,497 | | | | 119,509 |",
+        "page_number": 6,
+        "line_number": 112,
+        "start_offset": 15,
+        "end_offset": 22,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Goodwill' under 'column 4'?"
+    },
+    {
+      "id": "G2-034",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Intangible assets, net' and return the value in column 4. Return only the value with its unit.",
+      "answer": "21,236 USD million",
+      "evidence": {
+        "text": "Intangible assets, net | | | 21,236 | | | | 22,604 |",
+        "page_number": 6,
+        "line_number": 113,
+        "start_offset": 29,
+        "end_offset": 35,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Intangible assets, net' under 'column 4'?"
+    },
+    {
+      "id": "G2-035",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Other long-term assets' and return the value in column 4. Return only the value with its unit.",
+      "answer": "39,435 USD million",
+      "evidence": {
+        "text": "Other long-term assets | | | 39,435 | | | | 40,565 |",
+        "page_number": 6,
+        "line_number": 114,
+        "start_offset": 29,
+        "end_offset": 35,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Other long-term assets' under 'column 4'?"
+    },
+    {
+      "id": "G2-036",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Total assets' and return the value in column 4. Return only the value with its unit.",
+      "answer": "636,351 USD",
+      "evidence": {
+        "text": "Total assets | | $ | 636,351 | | | $ | 619,003 |",
+        "page_number": 6,
+        "line_number": 115,
+        "start_offset": 21,
+        "end_offset": 28,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Total assets' under 'column 4'?"
+    },
+    {
+      "id": "G2-037",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Accounts payable' and return the value in column 4. Return only the value with its unit.",
+      "answer": "32,580 USD",
+      "evidence": {
+        "text": "Accounts payable | | $ | 32,580 | | | $ | 27,724 |",
+        "page_number": 6,
+        "line_number": 118,
+        "start_offset": 25,
+        "end_offset": 31,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Accounts payable' under 'column 4'?"
+    },
+    {
+      "id": "G2-038",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Current portion of long-term debt' and return the value in column 4. Return only the value with its unit.",
+      "answer": "7,832 USD million",
+      "evidence": {
+        "text": "Current portion of long-term debt | | | 7,832 | | | | 2,999 |",
+        "page_number": 6,
+        "line_number": 119,
+        "start_offset": 40,
+        "end_offset": 45,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Current portion of long-term debt' under 'column 4'?"
+    },
+    {
+      "id": "G2-039",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Accrued compensation' and return the value in column 4. Return only the value with its unit.",
+      "answer": "9,201 USD million",
+      "evidence": {
+        "text": "Accrued compensation | | | 9,201 | | | | 13,709 |",
+        "page_number": 6,
+        "line_number": 120,
+        "start_offset": 27,
+        "end_offset": 32,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Accrued compensation' under 'column 4'?"
+    },
+    {
+      "id": "G2-040",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, find the table row named 'Short-term income taxes' and return the value in column 4. Return only the value with its unit.",
+      "answer": "3,655 USD million",
+      "evidence": {
+        "text": "Short-term income taxes | | | 3,655 | | | | 7,211 |",
+        "page_number": 6,
+        "line_number": 121,
+        "start_offset": 30,
+        "end_offset": 35,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Short-term income taxes' under 'column 4'?"
+    },
+    {
+      "id": "G3-001",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Commercial paper' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "9,044.00 USD million",
+      "evidence": {
+        "text": "Row: Commercial paper | | Level 2 | | | $ | 9,044 | | $ | 0 | | $ | 0 | | | $ | 9,044 | | $ | 8,597 | | $ | 447 | | $ | 0 | Computation: 9044.0 - 0.0 = 9,044.00",
+        "page_number": 14,
+        "line_number": 289,
+        "start_offset": 152,
+        "end_offset": 160,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "9,044",
+          "0"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Commercial paper' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-002",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Commercial paper' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "9,044.00 USD million",
+      "evidence": {
+        "text": "Row: Commercial paper | | Level 2 | | | $ | 9,044 | | $ | 0 | | $ | 0 | | | $ | 9,044 | | $ | 8,597 | | $ | 447 | | $ | 0 | Computation: 9044.0 - 0.0 = 9,044.00",
+        "page_number": 14,
+        "line_number": 289,
+        "start_offset": 152,
+        "end_offset": 160,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "9,044",
+          "0"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Commercial paper' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-003",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Certificates of deposit' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "4,478.00 million",
+      "evidence": {
+        "text": "Row: Certificates of deposit | | Level 2 | | | | 4,478 | | | 0 | | | 0 | | | | 4,478 | | | 4,434 | | | 44 | | | 0 | Computation: 4478.0 - 0.0 = 4,478.00",
+        "page_number": 14,
+        "line_number": 290,
+        "start_offset": 144,
+        "end_offset": 152,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "4,478",
+          "0"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Certificates of deposit' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-004",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Certificates of deposit' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "4,478.00 million",
+      "evidence": {
+        "text": "Row: Certificates of deposit | | Level 2 | | | | 4,478 | | | 0 | | | 0 | | | | 4,478 | | | 4,434 | | | 44 | | | 0 | Computation: 4478.0 - 0.0 = 4,478.00",
+        "page_number": 14,
+        "line_number": 290,
+        "start_offset": 144,
+        "end_offset": 152,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "4,478",
+          "0"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Certificates of deposit' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-005",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'U.S. government securities' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "54,630.00 million",
+      "evidence": {
+        "text": "Row: U.S. government securities | | Level 1 | | | | 54,749 | | | 119 | | | (1,238 | ) | | | 53,630 | | | 1,143 | | | 52,487 | | | 0 | Computation: 54749.0 - 119.0 = 54,630.00",
+        "page_number": 14,
+        "line_number": 291,
+        "start_offset": 165,
+        "end_offset": 174,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "54,749",
+          "119"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'U.S. government securities' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-006",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'U.S. government securities' in the relevant table and compute percent change from Unrealized Losses to column 7. If denominator is zero, return n/a. Return only the percentage.",
+      "answer": "45907.56%",
+      "evidence": {
+        "text": "Row: U.S. government securities | | Level 1 | | | | 54,749 | | | 119 | | | (1,238 | ) | | | 53,630 | | | 1,143 | | | 52,487 | | | 0 | Computation: (54749.0 - 119.0) / |119.0| * 100 = 45907.56%",
+        "page_number": 14,
+        "line_number": 291,
+        "start_offset": 183,
+        "end_offset": 192,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_percent_change",
+        "passed": true,
+        "inputs": [
+          "54,749",
+          "119"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the percent change for 'U.S. government securities' from 'Unrealized Losses' to 'column 7'?"
+    },
+    {
+      "id": "G3-007",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'U.S. agency securities' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "5,584.00 million",
+      "evidence": {
+        "text": "Row: U.S. agency securities | | Level 2 | | | | 5,584 | | | 0 | | | 0 | | | | 5,584 | | | 2,100 | | | 3,484 | | | 0 | Computation: 5584.0 - 0.0 = 5,584.00",
+        "page_number": 14,
+        "line_number": 292,
+        "start_offset": 146,
+        "end_offset": 154,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "5,584",
+          "0"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'U.S. agency securities' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-008",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'U.S. agency securities' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "5,584.00 million",
+      "evidence": {
+        "text": "Row: U.S. agency securities | | Level 2 | | | | 5,584 | | | 0 | | | 0 | | | | 5,584 | | | 2,100 | | | 3,484 | | | 0 | Computation: 5584.0 - 0.0 = 5,584.00",
+        "page_number": 14,
+        "line_number": 292,
+        "start_offset": 146,
+        "end_offset": 154,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "5,584",
+          "0"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'U.S. agency securities' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-009",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Foreign government bonds' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "379.00 million",
+      "evidence": {
+        "text": "Row: Foreign government bonds | | Level 2 | | | | 392 | | | 13 | | | (6 | ) | | | 399 | | | 0 | | | 399 | | | 0 | Computation: 392.0 - 13.0 = 379.00",
+        "page_number": 14,
+        "line_number": 293,
+        "start_offset": 142,
+        "end_offset": 148,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "392",
+          "13"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Foreign government bonds' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-010",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Foreign government bonds' in the relevant table and compute percent change from Unrealized Losses to column 7. If denominator is zero, return n/a. Return only the percentage.",
+      "answer": "2915.38%",
+      "evidence": {
+        "text": "Row: Foreign government bonds | | Level 2 | | | | 392 | | | 13 | | | (6 | ) | | | 399 | | | 0 | | | 399 | | | 0 | Computation: (392.0 - 13.0) / |13.0| * 100 = 2915.38%",
+        "page_number": 14,
+        "line_number": 293,
+        "start_offset": 159,
+        "end_offset": 167,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_percent_change",
+        "passed": true,
+        "inputs": [
+          "392",
+          "13"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the percent change for 'Foreign government bonds' from 'Unrealized Losses' to 'column 7'?"
+    },
+    {
+      "id": "G3-011",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Mortgage- and asset-backed securities' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "3,567.00 million",
+      "evidence": {
+        "text": "Row: Mortgage- and asset-backed securities | | Level 2 | | | | 3,587 | | | 20 | | | (23 | ) | | | 3,584 | | | 0 | | | 3,584 | | | 0 | Computation: 3587.0 - 20.0 = 3,567.00",
+        "page_number": 14,
+        "line_number": 294,
+        "start_offset": 163,
+        "end_offset": 171,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "3,587",
+          "20"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Mortgage- and asset-backed securities' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-012",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Mortgage- and asset-backed securities' in the relevant table and compute percent change from Unrealized Losses to column 7. If denominator is zero, return n/a. Return only the percentage.",
+      "answer": "17835.00%",
+      "evidence": {
+        "text": "Row: Mortgage- and asset-backed securities | | Level 2 | | | | 3,587 | | | 20 | | | (23 | ) | | | 3,584 | | | 0 | | | 3,584 | | | 0 | Computation: (3587.0 - 20.0) / |20.0| * 100 = 17835.00%",
+        "page_number": 14,
+        "line_number": 294,
+        "start_offset": 180,
+        "end_offset": 189,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_percent_change",
+        "passed": true,
+        "inputs": [
+          "3,587",
+          "20"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the percent change for 'Mortgage- and asset-backed securities' from 'Unrealized Losses' to 'column 7'?"
+    },
+    {
+      "id": "G3-013",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Corporate notes and bonds' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "12,072.00 million",
+      "evidence": {
+        "text": "Row: Corporate notes and bonds | | Level 2 | | | | 12,246 | | | 174 | | | (70 | ) | | | 12,350 | | | 0 | | | 12,350 | | | 0 | Computation: 12246.0 - 174.0 = 12,072.00",
+        "page_number": 14,
+        "line_number": 295,
+        "start_offset": 157,
+        "end_offset": 166,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "12,246",
+          "174"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Corporate notes and bonds' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-014",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Corporate notes and bonds' in the relevant table and compute percent change from Unrealized Losses to column 7. If denominator is zero, return n/a. Return only the percentage.",
+      "answer": "6937.93%",
+      "evidence": {
+        "text": "Row: Corporate notes and bonds | | Level 2 | | | | 12,246 | | | 174 | | | (70 | ) | | | 12,350 | | | 0 | | | 12,350 | | | 0 | Computation: (12246.0 - 174.0) / |174.0| * 100 = 6937.93%",
+        "page_number": 14,
+        "line_number": 295,
+        "start_offset": 175,
+        "end_offset": 183,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_percent_change",
+        "passed": true,
+        "inputs": [
+          "12,246",
+          "174"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the percent change for 'Corporate notes and bonds' from 'Unrealized Losses' to 'column 7'?"
+    },
+    {
+      "id": "G3-015",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Corporate notes and bonds' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "1,487.00 million",
+      "evidence": {
+        "text": "Row: Corporate notes and bonds | | Level 3 | | | | 2,055 | | | 568 | | | 0 | | | | 2,623 | | | 0 | | | 113 | | | 2,510 | Computation: 2055.0 - 568.0 = 1,487.00",
+        "page_number": 14,
+        "line_number": 296,
+        "start_offset": 151,
+        "end_offset": 159,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "2,055",
+          "568"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Corporate notes and bonds' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-016",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Corporate notes and bonds' in the relevant table and compute percent change from Unrealized Losses to column 7. If denominator is zero, return n/a. Return only the percentage.",
+      "answer": "261.80%",
+      "evidence": {
+        "text": "Row: Corporate notes and bonds | | Level 3 | | | | 2,055 | | | 568 | | | 0 | | | | 2,623 | | | 0 | | | 113 | | | 2,510 | Computation: (2055.0 - 568.0) / |568.0| * 100 = 261.80%",
+        "page_number": 14,
+        "line_number": 296,
+        "start_offset": 169,
+        "end_offset": 176,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_percent_change",
+        "passed": true,
+        "inputs": [
+          "2,055",
+          "568"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the percent change for 'Corporate notes and bonds' from 'Unrealized Losses' to 'column 7'?"
+    },
+    {
+      "id": "G3-017",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Municipal securities' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "161.00 million",
+      "evidence": {
+        "text": "Row: Municipal securities | | Level 2 | | | | 162 | | | 1 | | | (5 | ) | | | 158 | | | 0 | | | 158 | | | 0 | Computation: 162.0 - 1.0 = 161.00",
+        "page_number": 14,
+        "line_number": 297,
+        "start_offset": 136,
+        "end_offset": 142,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "162",
+          "1"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Municipal securities' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-018",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Municipal securities' in the relevant table and compute percent change from Unrealized Losses to column 7. If denominator is zero, return n/a. Return only the percentage.",
+      "answer": "16100.00%",
+      "evidence": {
+        "text": "Row: Municipal securities | | Level 2 | | | | 162 | | | 1 | | | (5 | ) | | | 158 | | | 0 | | | 158 | | | 0 | Computation: (162.0 - 1.0) / |1.0| * 100 = 16100.00%",
+        "page_number": 14,
+        "line_number": 297,
+        "start_offset": 152,
+        "end_offset": 161,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_percent_change",
+        "passed": true,
+        "inputs": [
+          "162",
+          "1"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the percent change for 'Municipal securities' from 'Unrealized Losses' to 'column 7'?"
+    },
+    {
+      "id": "G3-019",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Municipal securities' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "104.00 million",
+      "evidence": {
+        "text": "Row: Municipal securities | | Level 3 | | | | 104 | | | 0 | | | (14 | ) | | | 90 | | | 0 | | | 90 | | | 0 | Computation: 104.0 - 0.0 = 104.00",
+        "page_number": 14,
+        "line_number": 298,
+        "start_offset": 135,
+        "end_offset": 141,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "104",
+          "0"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Municipal securities' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-020",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Municipal securities' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "104.00 million",
+      "evidence": {
+        "text": "Row: Municipal securities | | Level 3 | | | | 104 | | | 0 | | | (14 | ) | | | 90 | | | 0 | | | 90 | | | 0 | Computation: 104.0 - 0.0 = 104.00",
+        "page_number": 14,
+        "line_number": 298,
+        "start_offset": 135,
+        "end_offset": 141,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "104",
+          "0"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Municipal securities' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-021",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Total debt investments' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "91,506.00 USD million",
+      "evidence": {
+        "text": "Row: Total debt investments | | | | | $ | 92,401 | | $ | 895 | | $ | (1,356 | ) | | $ | 91,940 | | $ | 16,274 | | $ | 73,156 | | $ | 2,510 | Computation: 92401.0 - 895.0 = 91,506.00",
+        "page_number": 14,
+        "line_number": 299,
+        "start_offset": 172,
+        "end_offset": 181,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "92,401",
+          "895"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Total debt investments' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-022",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Total debt investments' in the relevant table and compute percent change from Unrealized Losses to column 7. If denominator is zero, return n/a. Return only the percentage.",
+      "answer": "10224.13%",
+      "evidence": {
+        "text": "Row: Total debt investments | | | | | $ | 92,401 | | $ | 895 | | $ | (1,356 | ) | | $ | 91,940 | | $ | 16,274 | | $ | 73,156 | | $ | 2,510 | Computation: (92401.0 - 895.0) / |895.0| * 100 = 10224.13%",
+        "page_number": 14,
+        "line_number": 299,
+        "start_offset": 190,
+        "end_offset": 199,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_percent_change",
+        "passed": true,
+        "inputs": [
+          "92,401",
+          "895"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the percent change for 'Total debt investments' from 'Unrealized Losses' to 'column 7'?"
+    },
+    {
+      "id": "G3-023",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Commercial paper' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "10,880.00 USD million",
+      "evidence": {
+        "text": "Row: Commercial paper | | Level 2 | | | $ | 10,880 | | $ | 0 | | $ | 0 | | | $ | 10,880 | | $ | 9,939 | | $ | 941 | | $ | 0 | Computation: 10880.0 - 0.0 = 10,880.00",
+        "page_number": 14,
+        "line_number": 310,
+        "start_offset": 155,
+        "end_offset": 164,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "10,880",
+          "0"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Commercial paper' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-024",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Certificates of deposit' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "2,653.00 million",
+      "evidence": {
+        "text": "Row: Certificates of deposit | | Level 2 | | | | 2,653 | | | 0 | | | 0 | | | | 2,653 | | | 2,309 | | | 344 | | | 0 | Computation: 2653.0 - 0.0 = 2,653.00",
+        "page_number": 14,
+        "line_number": 311,
+        "start_offset": 145,
+        "end_offset": 153,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "2,653",
+          "0"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Certificates of deposit' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-025",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'U.S. government securities' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "52,807.00 million",
+      "evidence": {
+        "text": "Row: U.S. government securities | | Level 1 | | | | 52,878 | | | 71 | | | (1,462 | ) | | | 51,487 | | | 4,742 | | | 46,745 | | | 0 | Computation: 52878.0 - 71.0 = 52,807.00",
+        "page_number": 14,
+        "line_number": 312,
+        "start_offset": 163,
+        "end_offset": 172,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "52,878",
+          "71"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'U.S. government securities' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-026",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'U.S. government securities' in the relevant table and compute percent change from Unrealized Losses to column 7. If denominator is zero, return n/a. Return only the percentage.",
+      "answer": "74376.06%",
+      "evidence": {
+        "text": "Row: U.S. government securities | | Level 1 | | | | 52,878 | | | 71 | | | (1,462 | ) | | | 51,487 | | | 4,742 | | | 46,745 | | | 0 | Computation: (52878.0 - 71.0) / |71.0| * 100 = 74376.06%",
+        "page_number": 14,
+        "line_number": 312,
+        "start_offset": 180,
+        "end_offset": 189,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_percent_change",
+        "passed": true,
+        "inputs": [
+          "52,878",
+          "71"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the percent change for 'U.S. government securities' from 'Unrealized Losses' to 'column 7'?"
+    },
+    {
+      "id": "G3-027",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'U.S. agency securities' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "2,686.00 million",
+      "evidence": {
+        "text": "Row: U.S. agency securities | | Level 2 | | | | 2,686 | | | 0 | | | 0 | | | | 2,686 | | | 496 | | | 2,190 | | | 0 | Computation: 2686.0 - 0.0 = 2,686.00",
+        "page_number": 14,
+        "line_number": 313,
+        "start_offset": 144,
+        "end_offset": 152,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "2,686",
+          "0"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'U.S. agency securities' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-028",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Foreign government bonds' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "325.00 million",
+      "evidence": {
+        "text": "Row: Foreign government bonds | | Level 2 | | | | 349 | | | 24 | | | (9 | ) | | | 364 | | | 0 | | | 364 | | | 0 | Computation: 349.0 - 24.0 = 325.00",
+        "page_number": 14,
+        "line_number": 314,
+        "start_offset": 142,
+        "end_offset": 148,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "349",
+          "24"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Foreign government bonds' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-029",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Foreign government bonds' in the relevant table and compute percent change from Unrealized Losses to column 7. If denominator is zero, return n/a. Return only the percentage.",
+      "answer": "1354.17%",
+      "evidence": {
+        "text": "Row: Foreign government bonds | | Level 2 | | | | 349 | | | 24 | | | (9 | ) | | | 364 | | | 0 | | | 364 | | | 0 | Computation: (349.0 - 24.0) / |24.0| * 100 = 1354.17%",
+        "page_number": 14,
+        "line_number": 314,
+        "start_offset": 159,
+        "end_offset": 167,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_percent_change",
+        "passed": true,
+        "inputs": [
+          "349",
+          "24"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the percent change for 'Foreign government bonds' from 'Unrealized Losses' to 'column 7'?"
+    },
+    {
+      "id": "G3-030",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, locate 'Mortgage- and asset-backed securities' in the relevant table and compute (column 7 - Unrealized Losses). Return only the numeric result with unit.",
+      "answer": "2,548.00 million",
+      "evidence": {
+        "text": "Row: Mortgage- and asset-backed securities | | Level 2 | | | | 2,558 | | | 10 | | | (27 | ) | | | 2,541 | | | 0 | | | 2,541 | | | 0 | Computation: 2558.0 - 10.0 = 2,548.00",
+        "page_number": 14,
+        "line_number": 315,
+        "start_offset": 163,
+        "end_offset": 171,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "2,558",
+          "10"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Mortgage- and asset-backed securities' between 'column 7' and 'Unrealized Losses'?"
+    }
+  ]
+}

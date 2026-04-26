@@ -1,0 +1,19 @@
+[2026-04-25T00:18:41Z] Logging in to http://localhost:8929 ...
+[2026-04-25T00:18:41Z] Using search_space_id=1
+[2026-04-25T00:18:41Z] Mentioning document IDs: [4]
+[2026-04-25T00:18:41Z] (1/1) G1-001 ...
+  eval: strict=N lenient=N num=N unit=N clean=Y intent=Y num_f1=0.000 pred='$52,894 million'
+  expected: $5.0 billion USD
+  predicted_exact: $52,894 million
+
+Benchmark complete
+  overall_correct: 0 / 1 (0.00%)
+  normalized_exact: 0 / 1 (0.00%)
+  number_match: 0 / 1 (0.00%)
+  unit_match: 0 / 1 (0.00%)
+  mean_token_f1: 0.0000
+  request_failures: 0
+  context_overflow_failures: 0
+  output_json: benchmark_results_MSFT_FY26Q1_qa/openai_gpt4o_debug1_docpin.json
+  output_md: benchmark_results_MSFT_FY26Q1_qa/openai_gpt4o_debug1_docpin.md
+

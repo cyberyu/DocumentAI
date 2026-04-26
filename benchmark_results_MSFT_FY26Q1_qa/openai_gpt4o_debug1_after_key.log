@@ -1,0 +1,19 @@
+[2026-04-25T00:12:26Z] Logging in to http://localhost:8929 ...
+[2026-04-25T00:12:26Z] Using search_space_id=1
+[2026-04-25T00:12:26Z] No matching document IDs found for title filter: None
+[2026-04-25T00:12:26Z] (1/1) G1-001 ...
+  eval: strict=N lenient=N num=N unit=N clean=N intent=Y num_f1=0.000 pred=''
+  expected: $5.0 billion USD
+  predicted_exact: 
+
+Benchmark complete
+  overall_correct: 0 / 1 (0.00%)
+  normalized_exact: 0 / 1 (0.00%)
+  number_match: 0 / 1 (0.00%)
+  unit_match: 0 / 1 (0.00%)
+  mean_token_f1: 0.0000
+  request_failures: 1
+  context_overflow_failures: 0
+  output_json: benchmark_results_MSFT_FY26Q1_qa/openai_gpt4o_debug1_after_key.json
+  output_md: benchmark_results_MSFT_FY26Q1_qa/openai_gpt4o_debug1_after_key.md
+

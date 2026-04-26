@@ -1,0 +1,101 @@
+{
+  "generated_at_utc": "2026-04-24T14:43:53Z",
+  "config": {
+    "base_url": "http://localhost:8929",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "document_title_contains": null,
+    "mentioned_document_ids": [],
+    "max_questions": 2,
+    "sleep_between": 0.0,
+    "sanitize_questions": true
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 1,
+    "number_match_rate": 0.5,
+    "unit_match_count": 0,
+    "unit_match_rate": 0.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 100,
+    "questions_run": 2,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 1,
+      "number_match_rate": 0.5,
+      "unit_match_count": 0,
+      "unit_match_rate": 0.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [
+    91,
+    92,
+    93
+  ],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "I cannot find the specific reported amount or rate for long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025, within the content I have retrieved from the document's index and initial segments. The available chunks primarily contain the table of contents and structural metadata for the 10-Q filing.\n\nTo fulfill your request, I need to retrieve the specific financial statements section containing balance sheet details. I will attempt to read further into the document.",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate for other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "<|channel>thought\nThe user is asking a highly specific question based on the content of a file named `MSFT_FY26Q1_10Q.docx`.\nThe instructions require me to:\n1.  Search the *full* document, not just the first chunk.\n2.  Return *only* the value with its unit.\n3.  Not mention any tool usage, file reading steps, or inability to access content.\n4.  If multiple candidates exist, select the one explicitly tied to September 30, 2025.\n5.  Return a numeric amount or percentage, not qualitative labels.\n\nI have already called `ls` and found that no documents are present in the root `/documents` directory, so the file `MSFT_FY26Q1_10Q.docx` is not available in the knowledge base context.\n\nSince the required document is missing, I cannot fulfill the request as specified. I must adhere to the knowledge base only policy, which means I must inform the user I cannot find the relevant information and then offer to use general knowledge.\n\nHowever, the user's instructions are very strict about *how* I should answer when the answer is found (no prose, only value + unit). Since I cannot find it, I must follow the general protocol for missing KB information.\n\nProtocol for missing KB info:\n1. Inform the user that I could not find relevant information in their knowledge base.\n2. Ask the user: \"Would you like me to answer from my general knowledge instead?\"\n3. ONLY provide a general-knowledge answer AFTER the user explicitly says yes.\n\nI will state that the file was not found in the knowledge base and then ask the follow-up question.<channel|>I could not find the file `MSFT_FY26Q1_10Q.docx` in your knowledge base. Would you like me to answer from my general knowledge instead?",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

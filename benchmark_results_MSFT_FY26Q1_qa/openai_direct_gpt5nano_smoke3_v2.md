@@ -1,0 +1,23 @@
+# SurfSense Benchmark Report: openai_direct_gpt5nano_smoke3_v2
+
+- Generated at: 2026-04-25T01:22:52Z
+- Questions run: 3 / 100
+- Overall correct: 3 (100.00%)
+- Normalized exact: 0 (0.00%)
+- Number match: 3 (100.00%)
+- Unit match: 3 (100.00%)
+- Mean token F1: 0.8000
+
+## Group Metrics
+
+| Group | Run | Correct | Correct % | Norm Exact % | Number Match % | Unit Match % | Mean F1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Group1 | 3 | 3 | 100.00% | 0.00% | 100.00% | 100.00% | 0.8000 |
+
+## First 20 Results
+
+| ID | Group | Overall | Norm Exact | Number | Unit | F1 |
+|---|---|---:|---:|---:|---:|---:|
+| G1-001 | Group1 | Y | N | Y | Y | 0.8000 |
+| G1-002 | Group1 | Y | N | Y | Y | 0.8000 |
+| G1-003 | Group1 | Y | N | Y | Y | 0.8000 |

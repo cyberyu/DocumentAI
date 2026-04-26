@@ -1,0 +1,2229 @@
+{
+  "summary": {
+    "total_questions": 100,
+    "offsets_valid_count": 100,
+    "answer_supported_by_evidence_exact_or_numeric_count": 100,
+    "answer_supported_by_offset_span_exact_or_numeric_count": 100,
+    "source_paragraph_found_count": 100,
+    "page_line_match_in_structured_count": 100,
+    "page_line_checked_in_structured_count": 100,
+    "line_match_in_md_count": 0,
+    "line_checked_count": 0,
+    "questions_with_any_issue_count": 0,
+    "issue_types": [],
+    "limitations": [
+      "Page and line are validated against structured source entries (paragraph_entries/table_entries) when available.",
+      "line_number is validated against MSFT_FY26Q1_10Q_content.md only when that file has enough lines to cover benchmark line_number values."
+    ]
+  },
+  "checks": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "line_number": 234,
+      "page_number": 12,
+      "offsets_valid": true,
+      "extracted_span": "$5.0",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        61
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "line_number": 235,
+      "page_number": 12,
+      "offsets_valid": true,
+      "extracted_span": "$14.4",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        62
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-003",
+      "group": "Group1",
+      "line_number": 236,
+      "page_number": 12,
+      "offsets_valid": true,
+      "extracted_span": "$3.9",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        63
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-004",
+      "group": "Group1",
+      "line_number": 267,
+      "page_number": 13,
+      "offsets_valid": true,
+      "extracted_span": "$4.1",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        76
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-005",
+      "group": "Group1",
+      "line_number": 329,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "$2.9",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        84
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-006",
+      "group": "Group1",
+      "line_number": 329,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "$1.8",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        84
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-007",
+      "group": "Group1",
+      "line_number": 374,
+      "page_number": 15,
+      "offsets_valid": true,
+      "extracted_span": "$1.0",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        104
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-008",
+      "group": "Group1",
+      "line_number": 411,
+      "page_number": 16,
+      "offsets_valid": true,
+      "extracted_span": "$376",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        108
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-009",
+      "group": "Group1",
+      "line_number": 452,
+      "page_number": 17,
+      "offsets_valid": true,
+      "extracted_span": "$7.1",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        114
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-010",
+      "group": "Group1",
+      "line_number": 472,
+      "page_number": 18,
+      "offsets_valid": true,
+      "extracted_span": "$1.5",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        122
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-011",
+      "group": "Group1",
+      "line_number": 521,
+      "page_number": 19,
+      "offsets_valid": true,
+      "extracted_span": "19%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        132,
+        313
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-012",
+      "group": "Group1",
+      "line_number": 524,
+      "page_number": 20,
+      "offsets_valid": true,
+      "extracted_span": "$28.0",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        135
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-013",
+      "group": "Group1",
+      "line_number": 525,
+      "page_number": 20,
+      "offsets_valid": true,
+      "extracted_span": "$28.9",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        136,
+        316,
+        459
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-014",
+      "group": "Group1",
+      "line_number": 542,
+      "page_number": 20,
+      "offsets_valid": true,
+      "extracted_span": "$398",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        141
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-015",
+      "group": "Group1",
+      "line_number": 542,
+      "page_number": 20,
+      "offsets_valid": true,
+      "extracted_span": "40%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        141
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-016",
+      "group": "Group1",
+      "line_number": 602,
+      "page_number": 22,
+      "offsets_valid": true,
+      "extracted_span": "$530",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        154
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-017",
+      "group": "Group1",
+      "line_number": 611,
+      "page_number": 23,
+      "offsets_valid": true,
+      "extracted_span": "$1.7",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        160
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-018",
+      "group": "Group1",
+      "line_number": 688,
+      "page_number": 26,
+      "offsets_valid": true,
+      "extracted_span": "10%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        187
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-019",
+      "group": "Group1",
+      "line_number": 709,
+      "page_number": 27,
+      "offsets_valid": true,
+      "extracted_span": "$49.1",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        190
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-020",
+      "group": "Group1",
+      "line_number": 712,
+      "page_number": 27,
+      "offsets_valid": true,
+      "extracted_span": "$250",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        193
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-021",
+      "group": "Group1",
+      "line_number": 733,
+      "page_number": 30,
+      "offsets_valid": true,
+      "extracted_span": "26%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        214
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-022",
+      "group": "Group1",
+      "line_number": 734,
+      "page_number": 30,
+      "offsets_valid": true,
+      "extracted_span": "51%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        215
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-023",
+      "group": "Group1",
+      "line_number": 735,
+      "page_number": 30,
+      "offsets_valid": true,
+      "extracted_span": "17%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        216
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-024",
+      "group": "Group1",
+      "line_number": 736,
+      "page_number": 30,
+      "offsets_valid": true,
+      "extracted_span": "26%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        217
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-025",
+      "group": "Group1",
+      "line_number": 738,
+      "page_number": 30,
+      "offsets_valid": true,
+      "extracted_span": "18%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        219
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-026",
+      "group": "Group1",
+      "line_number": 739,
+      "page_number": 30,
+      "offsets_valid": true,
+      "extracted_span": "40%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        220
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-027",
+      "group": "Group1",
+      "line_number": 740,
+      "page_number": 30,
+      "offsets_valid": true,
+      "extracted_span": "6%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        221
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-028",
+      "group": "Group1",
+      "line_number": 741,
+      "page_number": 30,
+      "offsets_valid": true,
+      "extracted_span": "1%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        222
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-029",
+      "group": "Group1",
+      "line_number": 742,
+      "page_number": 30,
+      "offsets_valid": true,
+      "extracted_span": "16%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        223
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G1-030",
+      "group": "Group1",
+      "line_number": 791,
+      "page_number": 33,
+      "offsets_valid": true,
+      "extracted_span": "$12.1",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        251
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "paragraph"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-001",
+      "group": "Group2",
+      "line_number": 32,
+      "page_number": 1,
+      "offsets_valid": true,
+      "extracted_span": "7,432,377,655 shares",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        569
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-002",
+      "group": "Group2",
+      "line_number": 63,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "15,922",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        593
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-003",
+      "group": "Group2",
+      "line_number": 64,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "61,751",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        594
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-004",
+      "group": "Group2",
+      "line_number": 65,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "77,673",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        595
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-005",
+      "group": "Group2",
+      "line_number": 67,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "2,922",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        597
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-006",
+      "group": "Group2",
+      "line_number": 68,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "21,121",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        598
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-007",
+      "group": "Group2",
+      "line_number": 69,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "24,043",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        599
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-008",
+      "group": "Group2",
+      "line_number": 70,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "53,630",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        600
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-009",
+      "group": "Group2",
+      "line_number": 71,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "8,146",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        601
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-010",
+      "group": "Group2",
+      "line_number": 72,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "5,717",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        602
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-011",
+      "group": "Group2",
+      "line_number": 73,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "1,806",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        603
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-012",
+      "group": "Group2",
+      "line_number": 74,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "37,961",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        604
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-013",
+      "group": "Group2",
+      "line_number": 76,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "34,301",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        606
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-014",
+      "group": "Group2",
+      "line_number": 77,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "6,554",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        607
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-015",
+      "group": "Group2",
+      "line_number": 78,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "27,747",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        608,
+        617,
+        668
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-016",
+      "group": "Group2",
+      "line_number": 80,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "3.73",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        610
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-017",
+      "group": "Group2",
+      "line_number": 81,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "3.72",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        611
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-018",
+      "group": "Group2",
+      "line_number": 83,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "7,433",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        613
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-019",
+      "group": "Group2",
+      "line_number": 84,
+      "page_number": 3,
+      "offsets_valid": true,
+      "extracted_span": "7,466",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        614
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-020",
+      "group": "Group2",
+      "line_number": 92,
+      "page_number": 5,
+      "offsets_valid": true,
+      "extracted_span": "687",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        620
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-021",
+      "group": "Group2",
+      "line_number": 94,
+      "page_number": 5,
+      "offsets_valid": true,
+      "extracted_span": "586",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        622,
+        722
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-022",
+      "group": "Group2",
+      "line_number": 95,
+      "page_number": 5,
+      "offsets_valid": true,
+      "extracted_span": "28,333",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        623
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-023",
+      "group": "Group2",
+      "line_number": 102,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "28,849",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        628
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-024",
+      "group": "Group2",
+      "line_number": 103,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "73,163",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        629
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-025",
+      "group": "Group2",
+      "line_number": 104,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "102,012",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        630
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-026",
+      "group": "Group2",
+      "line_number": 105,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "52,894",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        631
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-027",
+      "group": "Group2",
+      "line_number": 106,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "1,130",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        632
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-028",
+      "group": "Group2",
+      "line_number": 107,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "33,030",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        633
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-029",
+      "group": "Group2",
+      "line_number": 108,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "189,066",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        634
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-030",
+      "group": "Group2",
+      "line_number": 109,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "230,861",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        635
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-031",
+      "group": "Group2",
+      "line_number": 110,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "24,791",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        636
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-032",
+      "group": "Group2",
+      "line_number": 111,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "11,465",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        637
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-033",
+      "group": "Group2",
+      "line_number": 112,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "119,497",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        638
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-034",
+      "group": "Group2",
+      "line_number": 113,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "21,236",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        639
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-035",
+      "group": "Group2",
+      "line_number": 114,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "39,435",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        640
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-036",
+      "group": "Group2",
+      "line_number": 115,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "636,351",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        641
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-037",
+      "group": "Group2",
+      "line_number": 118,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "32,580",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        644
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-038",
+      "group": "Group2",
+      "line_number": 119,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "7,832",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        645
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-039",
+      "group": "Group2",
+      "line_number": 120,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "9,201",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        646
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G2-040",
+      "group": "Group2",
+      "line_number": 121,
+      "page_number": 6,
+      "offsets_valid": true,
+      "extracted_span": "3,655",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        647
+      ],
+      "source_match_mode": "paragraph_exact",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-001",
+      "group": "Group3",
+      "line_number": 289,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "9,044.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        759
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-002",
+      "group": "Group3",
+      "line_number": 289,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "9,044.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        759
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-003",
+      "group": "Group3",
+      "line_number": 290,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "4,478.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        760
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-004",
+      "group": "Group3",
+      "line_number": 290,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "4,478.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        760
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-005",
+      "group": "Group3",
+      "line_number": 291,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "54,630.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        761
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-006",
+      "group": "Group3",
+      "line_number": 291,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "45907.56%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        761
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-007",
+      "group": "Group3",
+      "line_number": 292,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "5,584.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        762
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-008",
+      "group": "Group3",
+      "line_number": 292,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "5,584.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        762
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-009",
+      "group": "Group3",
+      "line_number": 293,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "379.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        763
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-010",
+      "group": "Group3",
+      "line_number": 293,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "2915.38%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        763
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-011",
+      "group": "Group3",
+      "line_number": 294,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "3,567.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        764
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-012",
+      "group": "Group3",
+      "line_number": 294,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "17835.00%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        764
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-013",
+      "group": "Group3",
+      "line_number": 295,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "12,072.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        765
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-014",
+      "group": "Group3",
+      "line_number": 295,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "6937.93%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        765
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-015",
+      "group": "Group3",
+      "line_number": 296,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "1,487.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        766
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-016",
+      "group": "Group3",
+      "line_number": 296,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "261.80%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        766
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-017",
+      "group": "Group3",
+      "line_number": 297,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "161.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        767
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-018",
+      "group": "Group3",
+      "line_number": 297,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "16100.00%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        767
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-019",
+      "group": "Group3",
+      "line_number": 298,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "104.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        768,
+        789
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-020",
+      "group": "Group3",
+      "line_number": 298,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "104.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        768,
+        789
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-021",
+      "group": "Group3",
+      "line_number": 299,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "91,506.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        769
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-022",
+      "group": "Group3",
+      "line_number": 299,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "10224.13%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        769
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-023",
+      "group": "Group3",
+      "line_number": 310,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "10,880.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        780
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-024",
+      "group": "Group3",
+      "line_number": 311,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "2,653.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        781
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-025",
+      "group": "Group3",
+      "line_number": 312,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "52,807.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        782
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-026",
+      "group": "Group3",
+      "line_number": 312,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "74376.06%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        782
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-027",
+      "group": "Group3",
+      "line_number": 313,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "2,686.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        783
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-028",
+      "group": "Group3",
+      "line_number": 314,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "325.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        784
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-029",
+      "group": "Group3",
+      "line_number": 314,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "1354.17%",
+      "answer_support": "exact",
+      "answer_support_in_extracted_span": "exact",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        784
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    },
+    {
+      "id": "G3-030",
+      "group": "Group3",
+      "line_number": 315,
+      "page_number": 14,
+      "offsets_valid": true,
+      "extracted_span": "2,548.00",
+      "answer_support": "numeric",
+      "answer_support_in_extracted_span": "numeric",
+      "source_paragraph_found": true,
+      "source_paragraph_indices_1based": [
+        785
+      ],
+      "source_match_mode": "paragraph_normalized_contains",
+      "source_kind_matches": [
+        "table_row"
+      ],
+      "page_line_match_in_structured": true,
+      "line_match_in_md": null,
+      "line_excerpt": "",
+      "issues": []
+    }
+  ]
+}
