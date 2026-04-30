@@ -1,0 +1,1524 @@
+{
+  "config": {
+    "key": "local_nodatefilter_k20_top10_chunks20_markers",
+    "label": "No-date / k=20 / top10 / chunks20 / markers ON",
+    "query_rewrite": true,
+    "date_filter": "none",
+    "rrf_k": 20,
+    "top_k": 10,
+    "max_chunks_per_doc": 20,
+    "matched_markers": true
+  },
+  "file_prefix": "llama4_G2_",
+  "llm_model": "llama-4-maverick-17b-128e-instruct",
+  "llm_endpoint": "http://localhost:1234/v1",
+  "generated_at_utc": "2026-04-30T02:58:23Z",
+  "summary": {
+    "run": 40,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 0,
+    "number_match_rate": 0.0,
+    "unit_match_count": 3,
+    "unit_match_rate": 0.075,
+    "mean_token_f1": 0.0
+  },
+  "by_group": {
+    "Group2": {
+      "run": 40,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 3,
+      "unit_match_rate": 0.075,
+      "mean_token_f1": 0.0
+    }
+  },
+  "results": [
+    {
+      "id": "G2-001",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Common Stock, $0.00000625 par value per share? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Common Stock, $0.00000625 par value per share? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "7,432,377,655 shares",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 27,
+        "matched_chunks": 10,
+        "context_chars": 14444,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-002",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Revenue from Product at September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Revenue from Product at September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "15,922 USD",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 15727,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-003",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the revenue for 'Service and other' at September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the revenue for 'Service and other' at September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "61,751 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 15609,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-004",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Total revenue reported at September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Total revenue reported at September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "77,673 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 15727,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-005",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Cost of Revenue from Product at September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Cost of Revenue from Product at September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "2,922 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 14814,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-006",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Cost of revenue for 'Service and other' at September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Cost of revenue for 'Service and other' at September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "21,121 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 15646,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-007",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Total cost of revenue at September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Total cost of revenue at September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "24,043 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 15727,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-008",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Gross margin at September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Gross margin at September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "53,630 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 29,
+        "matched_chunks": 10,
+        "context_chars": 15917,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-009",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Research and development expense under Operating expenses in the Consolidated Statements of Income for the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Research and development expense under Operating expenses in the Consolidated Statements of Income for the three months ended September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "8,146 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10002,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-010",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Sales and marketing expense under Operating expenses in the Consolidated Statements of Income for the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Sales and marketing expense under Operating expenses in the Consolidated Statements of Income for the three months ended September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "5,717 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 11864,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-011",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Basic earnings per share in the Consolidated Statements of Income for the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Basic earnings per share in the Consolidated Statements of Income for the three months ended September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "3.73 USD",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 15684,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-012",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Diluted earnings per share in the Consolidated Statements of Income for the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Diluted earnings per share in the Consolidated Statements of Income for the three months ended September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "3.72 USD",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 15771,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-013",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Net change related to investments in Other Comprehensive Income (Loss) for the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Net change related to investments in Other Comprehensive Income (Loss) for the three months ended September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "687 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 13333,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-014",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Cash and cash equivalents on the Consolidated Balance Sheets as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Cash and cash equivalents on the Consolidated Balance Sheets as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "28,849 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 15303,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-015",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Total current assets on the Consolidated Balance Sheets as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Total current assets on the Consolidated Balance Sheets as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "189,066 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 29,
+        "matched_chunks": 10,
+        "context_chars": 11318,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-016",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Accounts payable under Current liabilities on the Consolidated Balance Sheets as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Accounts payable under Current liabilities on the Consolidated Balance Sheets as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "32,580 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 11541,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-017",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Adjusted Cost Basis of debt investments due in one year or less as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Adjusted Cost Basis of debt investments due in one year or less as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "37,304 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 29,
+        "matched_chunks": 10,
+        "context_chars": 13203,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-018",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the notional amount of Foreign exchange contracts sold that are Not Designated as Hedging Instruments as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the notional amount of Foreign exchange contracts sold that are Not Designated as Hedging Instruments as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "33,053 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 16032,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-019",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the gain or loss on Equity contracts that are Not Designated as Hedging Instruments recognized in other income (expense), net for the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the gain or loss on Equity contracts that are Not Designated as Hedging Instruments recognized in other income (expense), net for the three months ended September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "1,579 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 12504,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-020",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the gross value of Buildings and improvements under Property and Equipment as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the gross value of Buildings and improvements under Property and Equipment as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "152,433 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 29,
+        "matched_chunks": 10,
+        "context_chars": 16217,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-021",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Total property and equipment, net (after accumulated depreciation) as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Total property and equipment, net (after accumulated depreciation) as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "230,861 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 29,
+        "matched_chunks": 10,
+        "context_chars": 15728,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-022",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Net Carrying Amount of Marketing-related intangible assets as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Net Carrying Amount of Marketing-related intangible assets as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "12,401 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 29,
+        "matched_chunks": 10,
+        "context_chars": 14390,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-023",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the estimated future amortization expense for intangible assets in the fiscal year ending June 30, 2027? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the estimated future amortization expense for intangible assets in the fiscal year ending June 30, 2027? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "2,932 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 16270,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-024",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the total long-term debt (including current portion) maturing in the fiscal year ending June 30, 2027? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the total long-term debt (including current portion) maturing in the fiscal year ending June 30, 2027? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "9,250 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 29,
+        "matched_chunks": 10,
+        "context_chars": 11669,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-025",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Unearned revenue for the Productivity and Business Processes segment as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Unearned revenue for the Productivity and Business Processes segment as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "46,357 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 14149,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-026",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Unearned revenue for the Intelligent Cloud segment as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Unearned revenue for the Intelligent Cloud segment as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "12,659 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 11112,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-027",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Recognition of unearned revenue during the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Recognition of unearned revenue during the three months ended September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "50,029 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 13883,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-028",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Operating lease cost under lease expense for the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Operating lease cost under lease expense for the three months ended September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "1,656 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 15688,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-029",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Total finance lease cost for the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Total finance lease cost for the three months ended September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "1,719 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 15900,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-030",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Operating lease right-of-use assets on the balance sheet as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Operating lease right-of-use assets on the balance sheet as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "24,791 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 11411,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-031",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Total finance lease liabilities on the balance sheet as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Total finance lease liabilities on the balance sheet as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "54,434 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 13958,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-032",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what are the Finance lease payments due in the fiscal year ending June 30, 2027? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what are the Finance lease payments due in the fiscal year ending June 30, 2027? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "5,862 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 29,
+        "matched_chunks": 10,
+        "context_chars": 13706,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-033",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the total dollar amount of common stock repurchased in the First Quarter of Fiscal Year 2026 under the share repurchase program? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the total dollar amount of common stock repurchased in the First Quarter of Fiscal Year 2026 under the share repurchase program? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "3,955 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 15588,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-034",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the total dividend amount declared on September 15, 2025 for Fiscal Year 2026? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the total dividend amount declared on September 15, 2025 for Fiscal Year 2026? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "6,765 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 14091,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-035",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Intelligent Cloud segment revenue for the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Intelligent Cloud segment revenue for the three months ended September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "30,897 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10399,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-036",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the More Personal Computing segment operating income for the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the More Personal Computing segment operating income for the three months ended September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "4,163 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 14833,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-037",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the Productivity and Business Processes segment cost of revenue for the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the Productivity and Business Processes segment cost of revenue for the three months ended September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "5,721 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 15768,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-038",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the revenue from Other countries (outside the United States) for the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the revenue from Other countries (outside the United States) for the three months ended September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "37,596 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 16447,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-039",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the revenue from Gaming products and services for the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the revenue from Gaming products and services for the three months ended September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "5,508 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 14841,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-040",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the revenue from Search and news advertising for the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the revenue from Search and news advertising for the three months ended September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "3,697 USD million",
+      "predicted_answer": "ERROR: <urlopen error [Errno 111] Connection refused>",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 14843,
+        "llm_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "metrics": {
+        "cleaned_prediction": "ERROR: <urlopen error [Errno 111] Connection refused>",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+[2026-04-30T16:49:37Z] Logging in to http://localhost:8929 ...
+[2026-04-30T16:49:38Z] Using search_space_id=1
+[2026-04-30T16:49:38Z] Mentioning document IDs: [4]
+[2026-04-30T16:49:38Z] (1/100) G1-001 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=0.500 pred='$5.0 billion [citation:7727]'
+  expected: $5.0 billion USD
+  predicted_exact: $5.0 billion [citation:7727]
+[2026-04-30T16:50:43Z] (2/100) G1-002 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=0.500 pred='$14.4 billion [citation:7728]'
+  expected: $14.4 billion USD
+  predicted_exact: $14.4 billion [citation:7728]
+[2026-04-30T16:51:33Z] (3/100) G1-003 ...
+  eval: strict=N lenient=N num=N unit=N clean=Y intent=Y num_f1=0.000 pred='N/A'
+  expected: $3.9 billion USD
+  predicted_exact: N/A
+[2026-04-30T16:54:07Z] (4/100) G1-004 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$4.1 billion'
+  expected: $4.1 billion USD
+  predicted_exact: $4.1 billion
+[2026-04-30T16:55:07Z] (5/100) G1-005 ...
+  eval: strict=N lenient=N num=N unit=N clean=Y intent=Y num_f1=0.000 pred='11,465 million [citation:1757]'
+  expected: $2.9 billion USD
+  predicted_exact: 11,465 million [citation:1757]
+[2026-04-30T16:56:42Z] (6/100) G1-006 ...
+  warning: request failed for G1-006: /api/v1/new_chat stream error: Error during chat: Recursion limit of 80 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/GRAPH_RECURSION_LIMIT
+  eval: strict=N lenient=N num=N unit=N clean=N intent=Y num_f1=0.000 pred=''
+  expected: $1.8 billion USD
+  predicted_exact: 
+[2026-04-30T16:59:01Z] (7/100) G1-007 ...
+  eval: strict=N lenient=N num=Y unit=Y clean=Y intent=Y num_f1=0.000 pred='$102,012 million [citation:7623]'
+  expected: AAA
+  predicted_exact: $102,012 million [citation:7623]
+[2026-04-30T17:00:52Z] (8/100) G1-008 ...
+  warning: request failed for G1-008: /api/v1/new_chat stream error: Error during chat: Recursion limit of 80 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/GRAPH_RECURSION_LIMIT
+  eval: strict=N lenient=N num=N unit=N clean=N intent=Y num_f1=0.000 pred=''
+  expected: $376 million USD
+  predicted_exact: 
+[2026-04-30T17:04:00Z] (9/100) G1-009 ...
+  eval: strict=N lenient=N num=N unit=N clean=Y intent=Y num_f1=0.000 pred='13,061 million [citation:7644]'
+  expected: $7.1 billion USD
+  predicted_exact: 13,061 million [citation:7644]
+[2026-04-30T17:04:57Z] (10/100) G1-010 ...
+  eval: strict=N lenient=N num=N unit=N clean=Y intent=Y num_f1=0.000 pred='N/A'
+  expected: $1.5 billion USD
+  predicted_exact: N/A
+[2026-04-30T17:08:38Z] (11/100) G1-011 ...
+  eval: strict=N lenient=N num=N unit=Y clean=Y intent=N num_f1=0.000 pred='19.11% [citation:7612]'
+  expected: 19%
+  predicted_exact: 19.11% [citation:7612]
+[2026-04-30T17:09:54Z] (12/100) G1-012 ...
+  eval: strict=N lenient=N num=N unit=N clean=Y intent=Y num_f1=0.000 pred='N/A'
+  expected: $28.0 billion USD
+  predicted_exact: N/A
+[2026-04-30T17:11:46Z] (13/100) G1-013 ...

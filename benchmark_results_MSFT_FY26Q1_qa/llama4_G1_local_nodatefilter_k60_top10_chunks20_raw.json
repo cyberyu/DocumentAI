@@ -1,0 +1,1154 @@
+{
+  "config": {
+    "key": "local_nodatefilter_k60_top10_chunks20_raw",
+    "label": "No-date / k=60 / top10 / chunks20 / raw-Q",
+    "query_rewrite": false,
+    "date_filter": "none",
+    "rrf_k": 60,
+    "top_k": 10,
+    "max_chunks_per_doc": 20,
+    "matched_markers": true
+  },
+  "file_prefix": "llama4_G1_",
+  "llm_model": "llama-4-maverick-17b-128e-instruct",
+  "llm_endpoint": "http://localhost:1234/v1",
+  "generated_at_utc": "2026-04-30T02:30:03Z",
+  "summary": {
+    "run": 30,
+    "overall_correct_count": 16,
+    "overall_correct_rate": 0.5333333333333333,
+    "normalized_exact_count": 13,
+    "normalized_exact_rate": 0.43333333333333335,
+    "number_match_count": 28,
+    "number_match_rate": 0.9333333333333333,
+    "unit_match_count": 29,
+    "unit_match_rate": 0.9666666666666667,
+    "mean_token_f1": 0.839047619047619
+  },
+  "by_group": {
+    "Group1": {
+      "run": 30,
+      "overall_correct_count": 16,
+      "overall_correct_rate": 0.5333333333333333,
+      "normalized_exact_count": 13,
+      "normalized_exact_rate": 0.43333333333333335,
+      "number_match_count": 28,
+      "number_match_rate": 0.9333333333333333,
+      "unit_match_count": 29,
+      "unit_match_rate": 0.9666666666666667,
+      "mean_token_f1": 0.839047619047619
+    }
+  },
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "$5.0 billion",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10905,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$5.0 billion",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "$14.4 billion",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10581,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$14.4 billion",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-003",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is our financing receivables, net as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is our financing receivables, net as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$3.9 billion USD",
+      "predicted_answer": "$3.9 billion",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 29,
+        "matched_chunks": 10,
+        "context_chars": 11103,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$3.9 billion",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-004",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the net loss from investments in OpenAI for the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the net loss from investments in OpenAI for the three months ended September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$4.1 billion USD",
+      "predicted_answer": "$3.086 billion",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 11179,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$3.086 billion",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.4,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-005",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$2.9 billion USD",
+      "predicted_answer": "$2.9 billion",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10455,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$2.9 billion",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-006",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is equity investments measured using the equity method as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is equity investments measured using the equity method as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$1.8 billion USD",
+      "predicted_answer": "$1.8 billion",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10392,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$1.8 billion",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-007",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the long-term unsecured debt rating as of September 30, 2025? Return only the rating.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the long-term unsecured debt rating as of September 30, 2025? Return only the rating.",
+      "gold_answer": "AAA",
+      "predicted_answer": "AAA",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10097,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "AAA",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-008",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Gross derivative assets and liabilities subject to legally enforceable master netting agreements for which we have elected to offset as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Gross derivative assets and liabilities subject to legally enforceable master netting agreements for which we have elected to offset as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$376 million USD",
+      "predicted_answer": "$376 million, $802 million",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10170,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$376 million, $802 million",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.5,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.6666666666666666,
+        "primary_value_match": true,
+        "token_f1": 0.5714285714285715,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-009",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Depreciation expense as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Depreciation expense as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$7.1 billion USD",
+      "predicted_answer": "$7.1 billion",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 11043,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$7.1 billion",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-010",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Intangible assets amortization expense as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Intangible assets amortization expense as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$1.5 billion USD",
+      "predicted_answer": "$1.5 billion",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10059,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$1.5 billion",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-011",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Our effective tax rate as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Our effective tax rate as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "19%",
+      "predicted_answer": "19%",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10038,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "19%",
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-012",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is unrecognized tax benefits and other income tax liabilities as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is unrecognized tax benefits and other income tax liabilities as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$28.0 billion USD",
+      "predicted_answer": "$28.0 billion",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10011,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$28.0 billion",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-013",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is In the NOPAs, the IRS as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is In the NOPAs, the IRS as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$28.9 billion USD",
+      "predicted_answer": "$28.9 billion",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10523,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$28.9 billion",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-014",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Revenue allocated to remaining performance obligations, which includes unearned revenue and amounts that will be invoiced and recognized as revenue in future periods as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Revenue allocated to remaining performance obligations, which includes unearned revenue and amounts that will be invoiced and recognized as revenue in future periods as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$398 billion USD",
+      "predicted_answer": "$398 billion",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 11553,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$398 billion",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-015",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what percentage of total company remaining performance obligation revenue is expected to be recognized over the next 12 months? Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what percentage of total company remaining performance obligation revenue is expected to be recognized over the next 12 months? Return only the percentage.",
+      "gold_answer": "40%",
+      "predicted_answer": "40%",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 12699,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "40%",
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-016",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is As of September we accrued aggregate legal liabilities of as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is As of September we accrued aggregate legal liabilities of as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$530 million USD",
+      "predicted_answer": "$530 million",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10985,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$530 million",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-017",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what was the amount of shares repurchased to settle employee tax withholding related to vesting of stock awards for the three months ended September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what was the amount of shares repurchased to settle employee tax withholding related to vesting of stock awards for the three months ended September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$1.7 billion USD",
+      "predicted_answer": "$1.7 billion",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10169,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$1.7 billion",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-018",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the revenue concentration threshold that no individual customer or country other than the United States exceeded for the three months ended September 30, 2025? Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the revenue concentration threshold that no individual customer or country other than the United States exceeded for the three months ended September 30, 2025? Return only the percentage.",
+      "gold_answer": "10%",
+      "predicted_answer": "10%",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 16538,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "10%",
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-019",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Our Microsoft Cloud revenue, which includes Microsoft Commercial cloud, Azure and other cloud services, the commercial portion of LinkedIn, and Dynamics as of September 30, 2025? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Our Microsoft Cloud revenue, which includes Microsoft Commercial cloud, Azure and other cloud services, the commercial portion of LinkedIn, and Dynamics as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$49.1 billion USD",
+      "predicted_answer": "$49.1 billion",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10467,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$49.1 billion",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-020",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the incremental amount of Azure services OpenAI contracted to purchase under the new agreement? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the incremental amount of Azure services OpenAI contracted to purchase under the new agreement? Return only the value with unit.",
+      "gold_answer": "$250 billion USD",
+      "predicted_answer": "$250 billion",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10380,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$250 billion",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-021",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, by what percentage did Microsoft Cloud revenue increase? Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, by what percentage did Microsoft Cloud revenue increase? Return only the percentage.",
+      "gold_answer": "26%",
+      "predicted_answer": "26%",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10574,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "26%",
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-022",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, by what percentage did commercial remaining performance obligation increase? Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, by what percentage did commercial remaining performance obligation increase? Return only the percentage.",
+      "gold_answer": "51%",
+      "predicted_answer": "51%",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 11845,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "51%",
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-023",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, by what percentage did Microsoft 365 Commercial cloud revenue increase? Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, by what percentage did Microsoft 365 Commercial cloud revenue increase? Return only the percentage.",
+      "gold_answer": "17%",
+      "predicted_answer": "17%",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10457,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "17%",
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-024",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, by what percentage did Microsoft 365 Consumer cloud revenue increase? Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, by what percentage did Microsoft 365 Consumer cloud revenue increase? Return only the percentage.",
+      "gold_answer": "26%",
+      "predicted_answer": "26%",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10457,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "26%",
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-025",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, by what percentage did Dynamics 365 revenue increase? Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, by what percentage did Dynamics 365 revenue increase? Return only the percentage.",
+      "gold_answer": "18%",
+      "predicted_answer": "18%",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10279,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "18%",
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-026",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, by what percentage did Azure and other cloud services revenue increase? Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, by what percentage did Azure and other cloud services revenue increase? Return only the percentage.",
+      "gold_answer": "40%",
+      "predicted_answer": "40%",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10550,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "40%",
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-027",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, by what percentage did Windows OEM and Devices revenue increase? Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, by what percentage did Windows OEM and Devices revenue increase? Return only the percentage.",
+      "gold_answer": "6%",
+      "predicted_answer": "6%",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 12963,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "6%",
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-028",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, by what percentage did Xbox content and services revenue increase? Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, by what percentage did Xbox content and services revenue increase? Return only the percentage.",
+      "gold_answer": "1%",
+      "predicted_answer": "1%",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10689,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "1%",
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-029",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, by what percentage did Search and news advertising revenue excluding traffic acquisition costs increase? Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, by what percentage did Search and news advertising revenue excluding traffic acquisition costs increase? Return only the percentage.",
+      "gold_answer": "16%",
+      "predicted_answer": "16%",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 9986,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "16%",
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-030",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, by how much did revenue increase? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, by how much did revenue increase? Return only the value with unit.",
+      "gold_answer": "$12.1 billion USD",
+      "predicted_answer": "$580 million",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 10488,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "$580 million",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

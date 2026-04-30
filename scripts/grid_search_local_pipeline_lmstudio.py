@@ -1,50 +1,41 @@
 #!/usr/bin/env python3
-"""Local pipeline grid-search benchmark — bypasses the Docker HTTP API entirely.
+"""Local pipeline grid-search benchmark — LM Studio API variant.
 
-Instead of calling SurfSense's /api/v1/new_chat endpoint, this script
-reproduces every retrieval stage **locally** in Python, connecting
-directly to the PostgreSQL database and the vLLM server.  Web search is
-always disabled (local document-only benchmark).
+Identical retrieval pipeline as grid_search_local_pipeline.py, but calls
+the LM Studio local OpenAI-compatible API instead of a vLLM server.
 
-Sweep parameters (documenting what actually differs at each pipeline stage
-per the Root-Cause Breakdown table in surfsense_retrieval_block_diagram.html):
-
-  query_rewrite      — True  : apply _rewrite_question_for_retrieval()
-                     — False : use raw question text for retrieval
-  date_filter        — "none"   : no WHERE clause on updated_at (correct for this corpus)
-                     — "infer"  : planner-style: parse fiscal dates from question text
-                     — "force"  : force start=2026-01-01, end=2026-03-31 (simulate docpin bug)
-  rrf_k              — 60 (default), 20, 120
-  top_k              — 10 (default), 5, 20
-  max_chunks_per_doc — 20 (default), 5, 50 (or "all")
-  matched_markers    — True  : include matched_chunk_ids in XML context (relevance cues)
-                     — False : omit matched_chunk_ids (simulate docpin sparse context)
-
-Benchmark file   : msft_fy26q1_qa_benchmark_100_sanitized.json (top-10 rows)
-Database         : psycopg2 -> 172.19.0.4:5432 (surfsense Docker container)
-Embedding model  : sentence-transformers/all-MiniLM-L6-v2
-LLM              : google/gemma-4-E4B-it  @ http://localhost:8000/v1
+Key differences from the base script:
+ - LLM endpoint  : http://localhost:1234/v1  (LM Studio default)
+ - Model         : llama-4-maverick-17b-128e-instruct  (as reported by /v1/models)
+ - No API key required (local server)
+ - temperature=0.0 is supported normally
 
 Usage
 -----
-# Run default focussed grid (16 named configs) on first 10 questions:
-    conda run -n ai python3 scripts/grid_search_local_pipeline.py
+# Single best config on first 10 questions:
+    conda run -n ai python3 scripts/grid_search_local_pipeline_lmstudio.py
 
-# Run all 108 parameter combinations (slow):
-    conda run -n ai python3 scripts/grid_search_local_pipeline.py --full-grid
+# All 100 questions, single best config:
+    conda run -n ai python3 scripts/grid_search_local_pipeline_lmstudio.py \\
+        --group all \\
+        --configs local_nodatefilter_k60_top10_chunks20_markers \\
+        --file-prefix "llama4_"
 
-# Re-generate HTML report only (no LLM calls):
-    conda run -n ai python3 scripts/grid_search_local_pipeline.py --report-only
+# Full focussed grid on G1 only:
+    conda run -n ai python3 scripts/grid_search_local_pipeline_lmstudio.py \\
+        --group G1 \\
+        --file-prefix "llama4_"
 
-# Run a single named config for quick debug:
-    conda run -n ai python3 scripts/grid_search_local_pipeline.py --configs local_nodatefilter_k60_top10_chunks20_markers
+# Full focussed grid on all 100 questions:
+    conda run -n ai python3 scripts/grid_search_local_pipeline_lmstudio.py \\
+        --group all \\
+        --file-prefix "llama4_"
 """
 
 from __future__ import annotations
 
 import argparse
 import json
-import random
 import re
 import sys
 import time
@@ -75,48 +66,42 @@ from run_surfsense_benchmark import (   # noqa: E402
 
 OUTPUT_DIR    = Path("benchmark_results_MSFT_FY26Q1_qa")
 BENCH_FILE    = Path("msft_fy26q1_qa_benchmark_100_sanitized.json")
-REPORT_OUT    = OUTPUT_DIR / "grid_local_pipeline_report.html"
+REPORT_OUT    = OUTPUT_DIR / "grid_local_pipeline_lmstudio_report.html"
 
-DB_HOST       = "172.19.0.4"
+DB_HOST       = "172.19.0.9"
 DB_PORT       = 5432
 DB_NAME       = "surfsense"
 DB_USER       = "surfsense"
 DB_PASS       = "surfsense"
 SEARCH_SPACE  = 1           # resolved at runtime
 
-EMBED_MODEL   = "sentence-transformers/all-MiniLM-L6-v2"
-VLLM_BASE_URL = "http://localhost:8000/v1"
-VLLM_MODEL    = "google/gemma-4-E4B-it"
-VLLM_TIMEOUT  = 300.0
-MAX_TOKENS    = 8192
-TRUNC_TOKENS  = 28000       # matches production truncate_prompt_tokens
+EMBED_MODEL        = "sentence-transformers/all-MiniLM-L6-v2"
+LMSTUDIO_BASE_URL  = "http://localhost:1234/v1"
+LMSTUDIO_MODEL     = "llama-4-maverick-17b-128e-instruct"
+LMSTUDIO_TIMEOUT   = 300.0
+MAX_TOKENS         = 8192
+TRUNC_TOKENS       = 28000  # matches production truncate_prompt_tokens
 
 # ---------------------------------------------------------------------------
-# Grid definition
+# Grid definition  (identical to the base script)
 # ---------------------------------------------------------------------------
-# The "focussed" grid tests the most impactful parameter combinations identified
-# in the root-cause table.  Each config is named to make the HTML report legible.
-# key format: local_{date_filter}_{rrf_k}_{top_k}_chunks{max_chunks}_{markers}
 FOCUSSED_GRID: list[dict[str, Any]] = [
-    # ── Baseline: exactly how no-docpin production works ─────────────────
+    # ── Baseline ─────────────────────────────────────────────────────────
     dict(key="local_nodatefilter_k60_top10_chunks20_markers",
          label="No-date / k=60 / top10 / chunks20 / markers ON",
          query_rewrite=True,  date_filter="none",
          rrf_k=60, top_k=10, max_chunks_per_doc=20, matched_markers=True),
 
-    # ── Reproduce docpin regression: date filter kills pool ──────────────
     dict(key="local_forceddate_k60_top10_chunks20_markers",
          label="Forced-date / k=60 / top10 / chunks20 / markers ON",
          query_rewrite=True,  date_filter="force",
          rrf_k=60, top_k=10, max_chunks_per_doc=20, matched_markers=True),
 
-    # ── No markers (simulate docpin context sparsity) ────────────────────
     dict(key="local_nodatefilter_k60_top10_chunks20_nomarkers",
          label="No-date / k=60 / top10 / chunks20 / markers OFF",
          query_rewrite=True,  date_filter="none",
          rrf_k=60, top_k=10, max_chunks_per_doc=20, matched_markers=False),
 
-    # ── Raw question (no sanitize/rewrite) ───────────────────────────────
     dict(key="local_nodatefilter_k60_top10_chunks20_raw",
          label="No-date / k=60 / top10 / chunks20 / raw-Q",
          query_rewrite=False, date_filter="none",
@@ -133,7 +118,7 @@ FOCUSSED_GRID: list[dict[str, Any]] = [
          query_rewrite=True,  date_filter="none",
          rrf_k=120, top_k=10, max_chunks_per_doc=20, matched_markers=True),
 
-    # ── top_k (result count) sweep ───────────────────────────────────────
+    # ── top_k sweep ───────────────────────────────────────────────────────
     dict(key="local_nodatefilter_k60_top5_chunks20_markers",
          label="No-date / k=60 / top5 / chunks20 / markers ON",
          query_rewrite=True,  date_filter="none",
@@ -160,31 +145,28 @@ FOCUSSED_GRID: list[dict[str, Any]] = [
          query_rewrite=True,  date_filter="none",
          rrf_k=60, top_k=10, max_chunks_per_doc=None, matched_markers=True),
 
-    # ── Inferred date filter (planner behaviour simulation) ──────────────
+    # ── Inferred date filter ──────────────────────────────────────────────
     dict(key="local_inferdate_k60_top10_chunks20_markers",
          label="Infer-date / k=60 / top10 / chunks20 / markers ON",
          query_rewrite=True,  date_filter="infer",
          rrf_k=60, top_k=10, max_chunks_per_doc=20, matched_markers=True),
 
-    # ── Best-guess combo: wider pool + rich context ───────────────────────
+    # ── Best-guess combos ─────────────────────────────────────────────────
     dict(key="local_nodatefilter_k60_top20_chunksall_markers",
          label="No-date / k=60 / top20 / chunks-all / markers ON",
          query_rewrite=True,  date_filter="none",
          rrf_k=60, top_k=20, max_chunks_per_doc=None, matched_markers=True),
 
-    # ── Raw question + no markers (worst-case) ───────────────────────────
     dict(key="local_nodatefilter_k60_top10_chunks20_raw_nomarkers",
          label="No-date / k=60 / top10 / chunks20 / raw-Q / no-markers",
          query_rewrite=False, date_filter="none",
          rrf_k=60, top_k=10, max_chunks_per_doc=20, matched_markers=False),
 
-    # ── Low top_k → fewer docs but more chunks each ──────────────────────
     dict(key="local_nodatefilter_k60_top3_chunksall_markers",
          label="No-date / k=60 / top3 / chunks-all / markers ON",
          query_rewrite=True,  date_filter="none",
          rrf_k=60, top_k=3, max_chunks_per_doc=None, matched_markers=True),
 
-    # ── Larger k + larger top_k: broadest recall ─────────────────────────
     dict(key="local_nodatefilter_k120_top20_chunksall_markers",
          label="No-date / k=120 / top20 / chunks-all / markers ON",
          query_rewrite=True,  date_filter="none",
@@ -193,7 +175,7 @@ FOCUSSED_GRID: list[dict[str, Any]] = [
 
 
 # ---------------------------------------------------------------------------
-# Database helpers
+# Database helpers  (unchanged from base script)
 # ---------------------------------------------------------------------------
 
 def _db_connect() -> psycopg2.extensions.connection:
@@ -213,7 +195,7 @@ def _resolve_search_space(conn) -> int:
 
 
 # ---------------------------------------------------------------------------
-# Date filter helpers
+# Date filter helpers  (unchanged from base script)
 # ---------------------------------------------------------------------------
 
 _FISCAL_QTR_RE = re.compile(
@@ -233,12 +215,10 @@ _MONTH_TO_QTR_END = {
 
 
 def _infer_date_filter(question: str) -> tuple[datetime | None, datetime | None]:
-    """Best-effort fiscal-date inference from question text (mirrors planner LLM behaviour)."""
     m = _FISCAL_QTR_RE.search(question)
     if not m:
         return None, None
 
-    # FY26Q1 style
     if m.group(1) and m.group(2):
         yr_raw, qtr = int(m.group(1)), int(m.group(2))
         yr = yr_raw if yr_raw > 100 else 2000 + yr_raw
@@ -249,7 +229,6 @@ def _infer_date_filter(question: str) -> tuple[datetime | None, datetime | None]
         end   = datetime(yr, mo_end, last_day, 23, 59, 59, tzinfo=UTC)
         return start, end
 
-    # "three months ended September …"
     if m.group(5):
         mon_name = m.group(5).lower()
         if mon_name in _MONTH_TO_QTR_END:
@@ -257,7 +236,6 @@ def _infer_date_filter(question: str) -> tuple[datetime | None, datetime | None]
             import calendar
             _, last_day = calendar.monthrange(yr, mo)
             end = datetime(yr, mo, last_day, 23, 59, 59, tzinfo=UTC)
-            # quarter start
             if mo == 9:
                 start = datetime(yr, 7, 1, tzinfo=UTC)
             elif mo == 3:
@@ -265,19 +243,18 @@ def _infer_date_filter(question: str) -> tuple[datetime | None, datetime | None]
             elif mo == 6:
                 start = datetime(yr, 4, 1, tzinfo=UTC)
             else:
-                start = datetime(yr, 10, 1, tzinfo=UTC - 1)  # fallback
+                start = datetime(yr - 1, 10, 1, tzinfo=UTC)
             return start, end
 
     return None, None
 
 
 def _forced_date_filter() -> tuple[datetime, datetime]:
-    """Forced FY26Q1 dates — replicates the docpin planner bug."""
     return datetime(2026, 1, 1, tzinfo=UTC), datetime(2026, 3, 31, 23, 59, 59, tzinfo=UTC)
 
 
 # ---------------------------------------------------------------------------
-# Embedding
+# Embedding  (unchanged from base script)
 # ---------------------------------------------------------------------------
 
 _embed_model: SentenceTransformer | None = None
@@ -285,8 +262,8 @@ _embed_model: SentenceTransformer | None = None
 def _get_embed_model() -> SentenceTransformer:
     global _embed_model
     if _embed_model is None:
-        print(f"[{_now_utc()}] Loading embedding model {EMBED_MODEL} ...", flush=True)
-        _embed_model = SentenceTransformer(EMBED_MODEL)
+        print(f"[{_now_utc()}] Loading embedding model {EMBED_MODEL} (cpu) ...", flush=True)
+        _embed_model = SentenceTransformer(EMBED_MODEL, device="cpu")
     return _embed_model
 
 
@@ -295,7 +272,7 @@ def _embed(text: str) -> list[float]:
 
 
 # ---------------------------------------------------------------------------
-# RRF hybrid search (replicates ChucksHybridSearchRetriever.hybrid_search)
+# RRF hybrid search  (unchanged from base script)
 # ---------------------------------------------------------------------------
 
 def rrf_hybrid_search(
@@ -309,16 +286,9 @@ def rrf_hybrid_search(
     start_date: datetime | None = None,
     end_date: datetime | None = None,
 ) -> list[dict]:
-    """Pure-Python replication of ChucksHybridSearchRetriever.hybrid_search().
-
-    Returns list of doc-grouped dicts with keys:
-      document_id, score, chunks, matched_chunk_ids, document
-    """
-
     query_embedding = _embed(query_text)
     n_results = top_k * 5
 
-    # Build date-filter predicates
     date_sql_parts = []
     date_params: list[Any] = []
     if start_date is not None:
@@ -329,7 +299,6 @@ def rrf_hybrid_search(
         date_params.append(end_date)
     date_where = (" AND " + " AND ".join(date_sql_parts)) if date_sql_parts else ""
 
-    # ── Stage 1: RRF via two CTEs ────────────────────────────────────────
     rrf_sql = f"""
 WITH semantic_search AS (
     SELECT c.id,
@@ -373,9 +342,6 @@ ORDER BY rrf.score DESC
 """
     vec_str = "[" + ",".join(str(x) for x in query_embedding) + "]"
 
-    # params: semantic CTE (vec, space, date*), limit
-    #         keyword CTE (query, space, date*, query, query, limit)
-    #         RRF k, k, limit
     params: list[Any] = (
         [vec_str, search_space_id] + date_params + [vec_str, n_results]
         + [query_text, search_space_id] + date_params + [query_text, query_text, n_results]
@@ -389,10 +355,9 @@ ORDER BY rrf.score DESC
     if not rrf_rows:
         return []
 
-    # ── Stage 2: group by document, preserve rank order ───────────────────
     doc_scores:   dict[int, float] = {}
     doc_order:    list[int] = []
-    matched_ids:  dict[int, set[int]] = {}   # doc_id -> set of matched chunk ids
+    matched_ids:  dict[int, set[int]] = {}
     doc_meta:     dict[int, dict] = {}
 
     for row in rrf_rows:
@@ -415,7 +380,6 @@ ORDER BY rrf.score DESC
 
     final_doc_ids = doc_order[:top_k]
 
-    # ── Stage 3: fetch chunks for top_k docs (with per-doc limit) ─────────
     if max_chunks_per_doc is None:
         chunk_sql = """
             SELECT c.id AS chunk_id, c.content, c.document_id
@@ -425,7 +389,6 @@ ORDER BY rrf.score DESC
         """
         chunk_params = [final_doc_ids]
     else:
-        # ROW_NUMBER per document, always include matched chunks
         all_matched = [cid for ids in matched_ids.values() for cid in ids]
         chunk_sql = """
             SELECT chunk_id, content, document_id FROM (
@@ -443,7 +406,6 @@ ORDER BY rrf.score DESC
         cur.execute(chunk_sql, chunk_params)
         chunk_rows = cur.fetchall()
 
-    # ── Stage 4: assemble doc-grouped result dicts ────────────────────────
     doc_map: dict[int, dict] = {
         did: {
             "document_id": did,
@@ -466,11 +428,10 @@ ORDER BY rrf.score DESC
 
 
 # ---------------------------------------------------------------------------
-# Context assembly (replicate _build_document_xml)
+# Context assembly  (unchanged from base script)
 # ---------------------------------------------------------------------------
 
 def _build_context_xml(docs: list[dict], matched_markers: bool) -> str:
-    """Build the same XML format as _build_document_xml() in knowledge_search.py."""
     parts: list[str] = []
     for doc in docs:
         matched = set(doc.get("matched_chunk_ids", [])) if matched_markers else set()
@@ -504,7 +465,6 @@ def _build_context_xml(docs: list[dict], matched_markers: bool) -> str:
                 xml = f"  <chunk id='{cid}'><![CDATA[{content}]]></chunk>"
             chunk_entries.append((cid, xml))
 
-        # Build chunk_index with line numbers
         index_overhead = 1 + len(chunk_entries) + 1 + 1 + 1
         first_chunk_line = len(lines) + index_overhead + 1
         current_line = first_chunk_line
@@ -537,12 +497,10 @@ def _build_context_xml(docs: list[dict], matched_markers: bool) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Token-budget truncation (rough character-based approximation)
+# Token-budget truncation
 # ---------------------------------------------------------------------------
 
 def _truncate_to_token_budget(context: str, budget_tokens: int = TRUNC_TOKENS) -> str:
-    """Roughly truncate context to stay within token budget.
-    Uses 4 chars ≈ 1 token as a conservative estimate."""
     max_chars = budget_tokens * 4
     if len(context) > max_chars:
         return context[:max_chars] + "\n... [TRUNCATED]"
@@ -550,11 +508,11 @@ def _truncate_to_token_budget(context: str, budget_tokens: int = TRUNC_TOKENS) -
 
 
 # ---------------------------------------------------------------------------
-# LLM call
+# LLM call — LM Studio local OpenAI-compatible API
 # ---------------------------------------------------------------------------
 
 def _call_llm(question: str, context: str) -> str:
-    """Call the local vLLM server with the retrieved context."""
+    """Call the LM Studio local server (OpenAI-compatible endpoint)."""
     system_prompt = (
         "You are a precise financial document analyst. "
         "Answer questions using only the provided document context. "
@@ -568,7 +526,7 @@ def _call_llm(question: str, context: str) -> str:
     )
 
     payload = {
-        "model": VLLM_MODEL,
+        "model": LMSTUDIO_MODEL,
         "messages": [
             {"role": "system", "content": system_prompt},
             {"role": "user",   "content": user_msg},
@@ -578,12 +536,12 @@ def _call_llm(question: str, context: str) -> str:
     }
     body = json.dumps(payload).encode("utf-8")
     req = urllib.request.Request(
-        f"{VLLM_BASE_URL}/chat/completions",
+        f"{LMSTUDIO_BASE_URL}/chat/completions",
         data=body,
         headers={"Content-Type": "application/json", "Accept": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=VLLM_TIMEOUT) as resp:
+    with urllib.request.urlopen(req, timeout=LMSTUDIO_TIMEOUT) as resp:
         result = json.loads(resp.read().decode("utf-8"))
     choices = result.get("choices", [])
     if not choices:
@@ -592,7 +550,7 @@ def _call_llm(question: str, context: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Per-question runner
+# Per-question runner  (unchanged logic from base script)
 # ---------------------------------------------------------------------------
 
 def _run_question(
@@ -606,18 +564,15 @@ def _run_question(
     raw_q = str(qa.get("question", "")).strip()
     gold  = str(qa.get("answer", "")).strip()
 
-    # Stage 1: Query rewrite
     retrieval_q = _rewrite_question_for_retrieval(raw_q) if cfg["query_rewrite"] else raw_q
 
-    # Stage 2: Date filter
     if cfg["date_filter"] == "none":
         start_date, end_date = None, None
     elif cfg["date_filter"] == "force":
         start_date, end_date = _forced_date_filter()
-    else:  # "infer"
+    else:
         start_date, end_date = _infer_date_filter(raw_q)
 
-    # Stage 3: RRF hybrid search
     docs = rrf_hybrid_search(
         conn,
         retrieval_q,
@@ -629,14 +584,12 @@ def _run_question(
         end_date=end_date,
     )
 
-    chunk_count = sum(len(d.get("chunks", [])) for d in docs)
+    chunk_count   = sum(len(d.get("chunks", [])) for d in docs)
     matched_count = sum(len(d.get("matched_chunk_ids", [])) for d in docs)
 
-    # Stage 4: Context assembly
     context_xml = _build_context_xml(docs, matched_markers=cfg["matched_markers"])
     context_xml = _truncate_to_token_budget(context_xml)
 
-    # Stage 5: LLM answer extraction
     pred = ""
     llm_error = ""
     if docs:
@@ -701,7 +654,7 @@ def _run_config(
     *,
     file_prefix: str = "",
 ) -> dict:
-    fname = f"{file_prefix}{cfg['key']}"
+    fname    = f"{file_prefix}{cfg['key']}"
     out_json = OUTPUT_DIR / f"{fname}.json"
     print(f"[{_now_utc()}] CONFIG: {cfg['label']}  [prefix={file_prefix!r}]", flush=True)
     print(f"  query_rewrite={cfg['query_rewrite']}  date_filter={cfg['date_filter']!r}", flush=True)
@@ -714,8 +667,8 @@ def _run_config(
         qid = qa.get("id", f"Q{idx:03d}")
         print(f"  [{_now_utc()}] ({idx}/{len(qas)}) {qid} ...", flush=True, end="")
         row = _run_question(conn, qa, cfg, search_space_id)
-        correct = row["metrics"]["overall_correct"]
-        tel     = row["pipeline_telemetry"]
+        correct   = row["metrics"]["overall_correct"]
+        tel       = row["pipeline_telemetry"]
         pred_short = row["metrics"].get("cleaned_prediction", "")[:60]
         print(
             f" {'✔' if correct else '✘'}  "
@@ -734,6 +687,8 @@ def _run_config(
     payload = {
         "config": cfg,
         "file_prefix": file_prefix,
+        "llm_model": LMSTUDIO_MODEL,
+        "llm_endpoint": LMSTUDIO_BASE_URL,
         "generated_at_utc": _now_utc(),
         "summary": summary,
         "by_group": by_group,
@@ -777,7 +732,6 @@ def generate_report(payloads: list[dict]) -> None:
 
     def _pct(v: float) -> str: return f"{v:.0%}"
 
-    # ── summary table ───────────────────────────────────────────────────────
     header_th = "".join(
         f'<th style="background:#2c3e50;color:#ecf0f1;padding:6px 10px;font-size:0.8em;'
         f'white-space:nowrap;writing-mode:vertical-rl;transform:rotate(180deg);min-height:120px;">'
@@ -802,7 +756,6 @@ def generate_report(payloads: list[dict]) -> None:
         for p in payloads
     )
 
-    # Param cells for each config
     param_rows = ""
     for pname, plabel in [
         ("query_rewrite",    "Query rewrite"),
@@ -839,7 +792,6 @@ def generate_report(payloads: list[dict]) -> None:
 </tbody>
 </table>"""
 
-    # ── per-question table ──────────────────────────────────────────────────
     q_header = "".join(
         f'<th style="background:#34495e;color:#ecf0f1;padding:4px 6px;font-size:0.75em;'
         f'white-space:nowrap;">{p["config"]["key"].replace("local_","")[:30]}</th>'
@@ -879,7 +831,7 @@ def generate_report(payloads: list[dict]) -> None:
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Local Pipeline Grid Search Report</title>
+<title>Local Pipeline Grid Search Report — LM Studio Llama 4</title>
 <style>
 body {{ font-family: Arial, sans-serif; margin: 20px; background: #f8f9fa; color: #212529; }}
 h1 {{ font-size: 1.4em; }}
@@ -890,12 +842,12 @@ th, td {{ border: 1px solid #dee2e6; vertical-align: top; }}
 </style>
 </head>
 <body>
-<h1>Local Pipeline Grid Search — {len(payloads)} configs × {len(all_ids)} questions</h1>
+<h1>Local Pipeline Grid Search — LM Studio ({LMSTUDIO_MODEL}) — {len(payloads)} configs × {len(all_ids)} questions</h1>
 <p style="color:#555;font-size:0.9em;">
 Generated {_now_utc()} &nbsp;|&nbsp;
 DB: {DB_HOST}:{DB_PORT}/{DB_NAME} &nbsp;|&nbsp;
 Embed: {EMBED_MODEL} &nbsp;|&nbsp;
-LLM: {VLLM_MODEL} &nbsp;|&nbsp;
+LLM: {LMSTUDIO_MODEL} @ {LMSTUDIO_BASE_URL} &nbsp;|&nbsp;
 Web search: always OFF
 </p>
 
@@ -923,11 +875,10 @@ Web search: always OFF
 
 
 # ---------------------------------------------------------------------------
-# CLI
+# Full grid builder
 # ---------------------------------------------------------------------------
 
 def _build_full_grid() -> list[dict]:
-    """Enumerate all combinations (108 configs) — used with --full-grid."""
     grid = []
     for qr in (True, False):
         for df in ("none", "force", "infer"):
@@ -951,193 +902,48 @@ def _build_full_grid() -> list[dict]:
     return grid
 
 
-def generate_readme(output_dir: Path, grid: list[dict]) -> None:
-    """Generate README.md from all G{1,2,3}_{config_key}.json result files."""
-    # Discover all group-prefixed result files
-    groups_order = ["G1", "G2", "G3"]
-    # Build: results[group][config_key] = payload
-    results: dict[str, dict[str, dict]] = {g: {} for g in groups_order}
-    any_found = False
-    for g in groups_order:
-        for f in sorted(output_dir.glob(f"{g}_*.json")):
-            key = f.stem[len(g) + 1:]  # strip "G1_" prefix
-            try:
-                payload = json.loads(f.read_text(encoding="utf-8"))
-                results[g][key] = payload
-                any_found = True
-            except Exception:
-                pass
-
-    if not any_found:
-        print("[generate_readme] No group result files found (G1_*.json etc.), skipping.", flush=True)
-        return
-
-    # Collect config keys present across any group (preserve FOCUSSED_GRID order)
-    grid_keys = [c["key"] for c in grid]
-    found_keys: list[str] = []
-    for k in grid_keys:
-        if any(k in results[g] for g in groups_order):
-            found_keys.append(k)
-    # Also append any keys not in the grid (e.g. from full-grid runs)
-    extra = {k for g in groups_order for k in results[g]} - set(grid_keys)
-    found_keys.extend(sorted(extra))
-
-    # Group sizes for display
-    group_sizes: dict[str, int] = {}
-    for g in groups_order:
-        for k, p in results[g].items():
-            group_sizes[g] = p["summary"]["run"]
-            break
-
-    lines: list[str] = [
-        "# MSFT FY26Q1 QA Benchmark — Results",
-        "",
-        f"Generated: {_now_utc()}",
-        "",
-        "Benchmark file: `msft_fy26q1_qa_benchmark_100_sanitized.json`  ",
-        "Model: `google/gemma-4-E4B-it` (vLLM @ localhost:8000)  ",
-        "Embedding: `sentence-transformers/all-MiniLM-L6-v2`  ",
-        "DB: PostgreSQL (172.19.0.4:5432 / surfsense) — 1 document, 1469 chunks",
-        "",
-        "---",
-        "",
-        "## Overall Results by Group",
-        "",
-    ]
-
-    # Build header
-    g_headers = []
-    for g in groups_order:
-        sz = group_sizes.get(g, "?")
-        g_headers.append(f"{g} ({sz}q)")
-    header = "| Config | " + " | ".join(g_headers) + " | Overall |\n"
-    sep    = "|---|" + "---|" * len(groups_order) + "---|\n"
-    lines.append(header.rstrip())
-    lines.append(sep.rstrip())
-
-    for k in found_keys:
-        label = k
-        # Get label from first group that has this key
-        for g in groups_order:
-            if k in results[g]:
-                label = results[g][k]["config"].get("label", k)
-                break
-
-        cells = []
-        total_ok = 0
-        total_run = 0
-        for g in groups_order:
-            if k in results[g]:
-                s = results[g][k]["summary"]
-                ok, run = s["overall_correct_count"], s["run"]
-                total_ok += ok
-                total_run += run
-                cells.append(f"{ok}/{run} ({s['overall_correct_rate']:.0%})")
-            else:
-                cells.append("—")
-        overall = f"{total_ok}/{total_run} ({total_ok/total_run:.0%})" if total_run else "—"
-        lines.append("| " + label + " | " + " | ".join(cells) + " | " + overall + " |")
-
-    lines.append("")
-    lines.append("---")
-    lines.append("")
-    lines.append("## Per-Group Detailed Results")
-    lines.append("")
-
-    for g in groups_order:
-        if not results[g]:
-            continue
-        sz = group_sizes.get(g, "?")
-        lines.append(f"### {g} ({sz} questions)")
-        lines.append("")
-        lines.append("| Config | Correct | Rate | NumMatch | MeanF1 |")
-        lines.append("|---|---|---|---|---|")
-        for k in found_keys:
-            if k not in results[g]:
-                continue
-            s = results[g][k]["summary"]
-            label = results[g][k]["config"].get("label", k)
-            lines.append(
-                f"| {label} "
-                f"| {s['overall_correct_count']}/{s['run']} "
-                f"| {s['overall_correct_rate']:.0%} "
-                f"| {s['number_match_rate']:.0%} "
-                f"| {s['mean_token_f1']:.4f} |"
-            )
-        lines.append("")
-
-    lines.append("---")
-    lines.append("")
-    lines.append("## Key Findings")
-    lines.append("")
-    lines.append("### Difficulty stratification (full 100-question run, baseline config)")
-    lines.append("")
-    lines.append("| Group | Difficulty | Type | Correct | Rate |")
-    lines.append("|---|---|---|---|---|")
-    lines.append("| G1 | 1 | Direct factual lookup (clear phrasing) | 16/30 | 53% |")
-    lines.append("| G2 | 2 | Ambiguous / terse field-name lookup | 8/40 | 20% |")
-    lines.append("| G3 | 3 | Arithmetic reasoning (subtract two values) | 0/30 | 0% |")
-    lines.append("| **Total** | | | **24/100** | **24%** |")
-    lines.append("")
-    lines.append("### Pipeline parameter findings (G1 16-config grid, 10-question pilot)")
-    lines.append("")
-    lines.append("- **Date filter = primary regression driver**: `force` date → 0 docs retrieved → 1/10 (10%)")
-    lines.append("- **`max_chunks_per_doc=None` is catastrophic**: dumps all 1469 chunks → context overflow → 1/10")
-    lines.append("- **RRF k (20/60/120)**: no accuracy difference")
-    lines.append("- **top_k (5/10/20)**: no accuracy difference")
-    lines.append("- **Matched markers ON/OFF**: no accuracy difference at this scale")
-    lines.append("- **Query rewrite ON/OFF**: no accuracy difference at this scale")
-    lines.append("- Best F1: `chunks50` config (0.74 vs 0.71 baseline) — slightly more context width helps")
-    lines.append("")
-    lines.append("### Root causes for G2/G3 failures")
-    lines.append("")
-    lines.append("- **G2**: Questions use terse field names ('what is Product?', 'what is Service and other?') that match")
-    lines.append("  multiple table cells across time periods — model picks the wrong row/column without further context.")
-    lines.append("- **G3**: All difficulty-3 questions require arithmetic (e.g. difference between fair value and unrealized losses).")
-    lines.append("  The `gemma-4-E4B-it` model returns N/A rather than performing the calculation from retrieved chunks.")
-    lines.append("")
-
-    readme = output_dir / "README.md"
-    readme.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"[{_now_utc()}] README: {readme}", flush=True)
-
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
 
 def main() -> int:
-    global OUTPUT_DIR, VLLM_BASE_URL, VLLM_MODEL, DB_HOST
+    global OUTPUT_DIR, LMSTUDIO_BASE_URL, LMSTUDIO_MODEL, DB_HOST
 
-    ap = argparse.ArgumentParser(description="Local pipeline grid search benchmark")
+    ap = argparse.ArgumentParser(
+        description="Local pipeline grid search benchmark — LM Studio API"
+    )
     ap.add_argument("--benchmark-file", default=str(BENCH_FILE))
     ap.add_argument("--max-questions", type=int, default=10,
-                    help="Number of questions from top of file (default: 10, ignored when --group is set)")
+                    help="Number of questions from top of file (ignored when --group is set)")
     ap.add_argument("--group", default=None, choices=["G1", "G2", "G3", "all"],
-                    help="Filter questions to a specific group (or 'all' to run G1+G2+G3 sequentially)")
+                    help="Filter questions to a specific group (or 'all' for G1+G2+G3)")
     ap.add_argument("--question-ids", default=None,
                     help="Comma-separated IDs to run instead of top-N")
     ap.add_argument("--output-dir", default=str(OUTPUT_DIR))
-    ap.add_argument("--skip-existing", action="store_true", help=argparse.SUPPRESS)  # disabled: always reruns
     ap.add_argument("--report-only", action="store_true")
-    ap.add_argument("--generate-readme", action="store_true",
-                    help="(Re-)generate README.md from all G{1,2,3}_{key}.json files and exit")
     ap.add_argument("--full-grid", action="store_true",
                     help="Run all 108 parameter combinations (slow)")
     ap.add_argument("--configs", default=None,
                     help="Comma-separated config keys to run")
     ap.add_argument("--db-host", default=DB_HOST)
-    ap.add_argument("--vllm-url", default=VLLM_BASE_URL)
-    ap.add_argument("--vllm-model", default=VLLM_MODEL)
-    ap.add_argument("--sample", type=int, default=None,
-                    help="Randomly sample N questions total, stratified across groups")
-    ap.add_argument("--seed", type=int, default=42,
-                    help="Random seed for --sample (default: 42)")
-    ap.add_argument("--file-prefix", default="",
-                    help="Prefix for output filenames to avoid colliding with cached results "
-                         "(e.g. 'gemma31b_' produces gemma31b_local_nodatefilter_k60_*.json)")
+    ap.add_argument("--lmstudio-url", default=LMSTUDIO_BASE_URL,
+                    help="LM Studio API base URL (default: http://localhost:1234/v1)")
+    ap.add_argument("--lmstudio-model", default=LMSTUDIO_MODEL,
+                    help="Model identifier as reported by LM Studio /v1/models")
+    ap.add_argument("--file-prefix", default="llama4_",
+                    help="Prefix for output filenames (default: 'llama4_')")
     args = ap.parse_args()
-    OUTPUT_DIR    = Path(args.output_dir)
-    VLLM_BASE_URL = args.vllm_url
-    VLLM_MODEL    = args.vllm_model
-    DB_HOST       = args.db_host
+
+    OUTPUT_DIR        = Path(args.output_dir)
+    LMSTUDIO_BASE_URL = args.lmstudio_url
+    LMSTUDIO_MODEL    = args.lmstudio_model
+    DB_HOST           = args.db_host
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    print("LM Studio benchmark")
+    print(f"  Model   : {LMSTUDIO_MODEL}")
+    print(f"  Endpoint: {LMSTUDIO_BASE_URL}")
+    print()
 
     # Select grid
     grid = FOCUSSED_GRID
@@ -1150,21 +956,15 @@ def main() -> int:
             print(f"ERROR: no configs matched --configs={args.configs!r}", file=sys.stderr)
             return 2
 
-    # --generate-readme: scan existing G{1,2,3}_{key}.json and write README.md
-    if args.generate_readme:
-        generate_readme(OUTPUT_DIR, grid)
-        return 0
-
     if args.report_only:
         payloads = []
         for cfg in grid:
-            p = OUTPUT_DIR / f"{cfg['key']}.json"
+            p = OUTPUT_DIR / f"{args.file_prefix}{cfg['key']}.json"
             if p.exists():
                 payloads.append(json.loads(p.read_text("utf-8")))
         generate_report(payloads)
         return 0
 
-    # Load all benchmark questions
     bench_path = Path(args.benchmark_file)
     if not bench_path.exists():
         print(f"ERROR: {bench_path} not found", file=sys.stderr)
@@ -1173,19 +973,16 @@ def main() -> int:
     all_qas = load_benchmark(bench_path)
 
     def _group_qas(group: str) -> list[dict]:
-        """Return questions whose id starts with '{group}-'."""
         return [q for q in all_qas if str(q.get("id", "")).startswith(f"{group}-")]
 
-    # Determine which groups to run
     if args.group == "all":
         groups_to_run = ["G1", "G2", "G3"]
     elif args.group:
         groups_to_run = [args.group]
     else:
-        groups_to_run = []  # legacy path: use max_questions / question_ids
+        groups_to_run = []
 
     if not groups_to_run:
-        # Legacy: top-N or explicit IDs (no group prefix on files)
         if args.question_ids:
             wanted_ids = {q.strip() for q in args.question_ids.split(",")}
             qas = [q for q in all_qas if str(q.get("id", "")) in wanted_ids]
@@ -1195,31 +992,23 @@ def main() -> int:
         if not qas:
             print("ERROR: no questions selected", file=sys.stderr)
             return 2
-        group_runs = [(qas, args.file_prefix)]  # (questions, file_prefix)
+        group_runs = [(qas, args.file_prefix)]
     else:
         group_runs = []
         for g in groups_to_run:
             gq = _group_qas(g)
-            if args.sample and groups_to_run:
-                # Stratified sample: allocate proportionally across groups
-                total_pool = sum(len(_group_qas(gg)) for gg in groups_to_run)
-                n = max(1, round(args.sample * len(gq) / total_pool))
-                rng = random.Random(args.seed)
-                gq = rng.sample(gq, min(n, len(gq)))
             print(f"[{_now_utc()}] {g}: {len(gq)} questions", flush=True)
             if not gq:
                 print(f"WARNING: no questions found for group {g}", file=sys.stderr)
             else:
                 group_runs.append((gq, f"{args.file_prefix}{g}_"))
 
-    # Connect to DB and load embedding model once
     print(f"[{_now_utc()}] Connecting to DB {DB_HOST}:{DB_PORT}/{DB_NAME} ...", flush=True)
     conn = _db_connect()
     search_space_id = _resolve_search_space(conn)
     print(f"[{_now_utc()}] search_space_id={search_space_id}", flush=True)
     _get_embed_model()
 
-    # Run grid over each group
     all_payloads: list[dict] = []
     for qas, file_prefix in group_runs:
         grp_label = file_prefix.rstrip("_") or "ungrouped"
@@ -1232,16 +1021,10 @@ def main() -> int:
 
     conn.close()
 
-    # HTML report (group-unaware, shows all payloads side by side)
     generate_report(all_payloads)
 
-    # README (group-aware, only written when groups were used)
-    if groups_to_run:
-        generate_readme(OUTPUT_DIR, grid)
-
-    # Print final summary
     print(f"\n{'='*72}", flush=True)
-    print("GRID SEARCH SUMMARY", flush=True)
+    print(f"GRID SEARCH SUMMARY  (LM Studio — {LMSTUDIO_MODEL})", flush=True)
     print(f"{'='*72}", flush=True)
     W = 52
     print(f"{'Config':<{W}} {'OK':>4} {'Rate':>7} {'NumM':>7} {'F1':>8}", flush=True)

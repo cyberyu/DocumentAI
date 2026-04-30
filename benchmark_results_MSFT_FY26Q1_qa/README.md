@@ -1,6 +1,6 @@
 # MSFT FY26Q1 QA Benchmark — Results
 
-Generated: 2026-04-29T23:53:39Z
+Generated: 2026-04-30T00:59:02Z
 
 Benchmark file: `msft_fy26q1_qa_benchmark_100_sanitized.json`  
 Model: `google/gemma-4-E4B-it` (vLLM @ localhost:8000)  
