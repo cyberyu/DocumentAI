@@ -1,0 +1,1152 @@
+{
+  "config": {
+    "key": "local_nodatefilter_k60_top10_chunks20_raw",
+    "label": "No-date / k=60 / top10 / chunks20 / raw-Q",
+    "query_rewrite": false,
+    "date_filter": "none",
+    "rrf_k": 60,
+    "top_k": 10,
+    "max_chunks_per_doc": 20,
+    "matched_markers": true
+  },
+  "file_prefix": "G3_",
+  "generated_at_utc": "2026-04-28T01:40:44Z",
+  "summary": {
+    "run": 30,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 0,
+    "number_match_rate": 0.0,
+    "unit_match_count": 0,
+    "unit_match_rate": 0.0,
+    "mean_token_f1": 0.0
+  },
+  "by_group": {
+    "Group3": {
+      "run": 30,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 0,
+      "unit_match_rate": 0.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "results": [
+    {
+      "id": "G3-001",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Commercial paper? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Commercial paper? Return only the numeric result with unit.",
+      "gold_answer": "9,044.00 USD million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 14416,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-002",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Commercial paper? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Commercial paper? Return only the numeric result with unit.",
+      "gold_answer": "9,044.00 USD million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 14416,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-003",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Certificates of deposit? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Certificates of deposit? Return only the numeric result with unit.",
+      "gold_answer": "4,478.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 16747,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-004",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Certificates of deposit? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Certificates of deposit? Return only the numeric result with unit.",
+      "gold_answer": "4,478.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 16747,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-005",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for U.S. government securities? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for U.S. government securities? Return only the numeric result with unit.",
+      "gold_answer": "54,630.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 20112,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-006",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for U.S. government securities? If denominator is zero, return n/a. Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for U.S. government securities? If denominator is zero, return n/a. Return only the percentage.",
+      "gold_answer": "45907.56%",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 18658,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-007",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for U.S. agency securities? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for U.S. agency securities? Return only the numeric result with unit.",
+      "gold_answer": "5,584.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 17958,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-008",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for U.S. agency securities? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for U.S. agency securities? Return only the numeric result with unit.",
+      "gold_answer": "5,584.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 17958,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-009",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Foreign government bonds? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Foreign government bonds? Return only the numeric result with unit.",
+      "gold_answer": "379.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 19048,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-010",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for Foreign government bonds? If denominator is zero, return n/a. Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for Foreign government bonds? If denominator is zero, return n/a. Return only the percentage.",
+      "gold_answer": "2915.38%",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 13297,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-011",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Mortgage- and asset-backed securities? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Mortgage- and asset-backed securities? Return only the numeric result with unit.",
+      "gold_answer": "3,567.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 15791,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-012",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for Mortgage- and asset-backed securities? If denominator is zero, return n/a. Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for Mortgage- and asset-backed securities? If denominator is zero, return n/a. Return only the percentage.",
+      "gold_answer": "17835.00%",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 13188,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-013",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Corporate notes and bonds? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Corporate notes and bonds? Return only the numeric result with unit.",
+      "gold_answer": "12,072.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 19048,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-014",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for Corporate notes and bonds? If denominator is zero, return n/a. Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for Corporate notes and bonds? If denominator is zero, return n/a. Return only the percentage.",
+      "gold_answer": "6937.93%",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 14364,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-015",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Corporate notes and bonds? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Corporate notes and bonds? Return only the numeric result with unit.",
+      "gold_answer": "1,487.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 19048,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-016",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for Corporate notes and bonds? If denominator is zero, return n/a. Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for Corporate notes and bonds? If denominator is zero, return n/a. Return only the percentage.",
+      "gold_answer": "261.80%",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 14364,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-017",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Municipal securities? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Municipal securities? Return only the numeric result with unit.",
+      "gold_answer": "161.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 18975,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-018",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for Municipal securities? If denominator is zero, return n/a. Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for Municipal securities? If denominator is zero, return n/a. Return only the percentage.",
+      "gold_answer": "16100.00%",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 19843,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-019",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Municipal securities? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Municipal securities? Return only the numeric result with unit.",
+      "gold_answer": "104.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 18975,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-020",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Municipal securities? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Municipal securities? Return only the numeric result with unit.",
+      "gold_answer": "104.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 18975,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-021",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Total debt investments? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Total debt investments? Return only the numeric result with unit.",
+      "gold_answer": "91,506.00 USD million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 19048,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-022",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for Total debt investments? If denominator is zero, return n/a. Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for Total debt investments? If denominator is zero, return n/a. Return only the percentage.",
+      "gold_answer": "10224.13%",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 17642,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-023",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Commercial paper? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Commercial paper? Return only the numeric result with unit.",
+      "gold_answer": "10,880.00 USD million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 14416,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-024",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Certificates of deposit? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Certificates of deposit? Return only the numeric result with unit.",
+      "gold_answer": "2,653.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 16747,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-025",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for U.S. government securities? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for U.S. government securities? Return only the numeric result with unit.",
+      "gold_answer": "52,807.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 20112,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-026",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for U.S. government securities? If denominator is zero, return n/a. Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for U.S. government securities? If denominator is zero, return n/a. Return only the percentage.",
+      "gold_answer": "74376.06%",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 18658,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-027",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for U.S. agency securities? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for U.S. agency securities? Return only the numeric result with unit.",
+      "gold_answer": "2,686.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 17958,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-028",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Foreign government bonds? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Foreign government bonds? Return only the numeric result with unit.",
+      "gold_answer": "325.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 19048,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-029",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for Foreign government bonds? If denominator is zero, return n/a. Return only the percentage.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the percent change from unrealized losses to fair value for Foreign government bonds? If denominator is zero, return n/a. Return only the percentage.",
+      "gold_answer": "1354.17%",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 13297,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G3-030",
+      "group": "Group3",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Mortgage- and asset-backed securities? Return only the numeric result with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Mortgage- and asset-backed securities? Return only the numeric result with unit.",
+      "gold_answer": "2,548.00 million",
+      "predicted_answer": "N/A",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": null,
+          "end": null
+        },
+        "docs_retrieved": 1,
+        "chunks_total": 30,
+        "matched_chunks": 10,
+        "context_chars": 15791,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

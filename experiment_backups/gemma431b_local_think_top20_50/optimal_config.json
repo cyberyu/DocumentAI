@@ -1,0 +1,29 @@
+{
+  "key": "local_nodatefilter_k60_top20_chunks20_markers",
+  "label": "No-date / k=60 / top20 / chunks20 / markers ON",
+  "query_rewrite": true,
+  "date_filter": "none",
+  "rrf_k": 60,
+  "top_k": 20,
+  "max_chunks_per_doc": 20,
+  "matched_markers": true,
+  "model": "gemma-4-31b-it@q8_0",
+  "thinking_mode": true,
+  "lm_studio_url": "http://localhost:1234/v1",
+  "max_tokens": 8192,
+  "vllm_timeout": 300,
+  "embedding": "sentence-transformers/all-MiniLM-L6-v2",
+  "db": "172.19.0.4:5432/surfsense",
+  "benchmark_file": "msft_fy26q1_qa_benchmark_100_sanitized.json",
+  "results": {
+    "G1_correct": "17/30 (57%)",
+    "G2_correct": "11/40 (28%)",
+    "G3_correct": "0/30 (0%)",
+    "total_correct": "28/100 (28%)",
+    "total_number_match": "50/100 (50%)",
+    "G1_num_match": "29/30 (97%)",
+    "G2_num_match": "21/40 (52%)",
+    "G3_num_match": "0/30 (0%)"
+  },
+  "selection_reason": "Best overall num_match (50%) with thinking mode enabled. Beats E4B top20 (49%). G1 near-perfect at 97% num_match. G3 remains 0% — likely requires table/figure parsing not available in text chunks."
+}

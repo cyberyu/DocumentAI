@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SurfSense Retrieval Flow — Detailed Pipeline</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #F0F4F8;
+  padding: 36px 24px 60px;
+  color: #111;
+  min-width: 780px;
+}
+h1 {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 5px;
+}
+h2.sub {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 30px;
+}
+
+/* ── generic block ── */
+.block {
+  border-radius: 10px;
+  padding: 12px 16px;
+  text-align: center;
+  line-height: 1.5;
+  width: 100%;
+}
+.block .title  { font-size: 18px; font-weight: 700; margin-bottom: 3px; }
+.block .detail { font-size: 14px; font-style: italic; color: #333; margin-bottom: 2px; }
+.block .note   { font-size: 13px; font-style: italic; color: #555; }
+.block .code   { font-family: 'Consolas','Courier New',monospace; font-size: 13px;
+                 background:rgba(0,0,0,0.07); border-radius:4px; padding:2px 6px;
+                 display:inline-block; margin-top:4px; }
+
+/* ── entry block ── */
+.entry { background:#E8EDF5; border:2.5px solid #4A6FA5; max-width:560px; margin:0 auto 4px; }
+
+/* ── diamond ── */
+.diamond-wrap { display:flex; flex-direction:column; align-items:center; margin:4px 0; }
+.diamond {
+  width:240px; height:100px;
+  background:#FFF8DC; border:2.5px solid #9A7D0A;
+  transform:rotate(45deg); border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  margin:18px 0;
+}
+.diamond-text {
+  transform:rotate(-45deg); text-align:center;
+  font-size:15px; font-weight:700; color:#2d2d2d;
+  line-height:1.4; width:200px;
+}
+.arrow-v  { display:flex; justify-content:center; font-size:28px; color:#555; line-height:1; }
+.arrow-v.green { color:#155724; }
+.arrow-v.red   { color:#721c24; }
+.arrow-v.blue  { color:#004085; }
+.arrow-v.gray  { color:#555; }
+
+/* ── branch row ── */
+.branch-row { display:flex; justify-content:space-around; max-width:900px; margin:0 auto; padding:4px 0 8px; }
+.branch-label { font-size:17px; font-weight:700; padding:4px 16px; border-radius:20px; }
+.branch-label.no  { background:#C3E6CB; color:#155724; }
+.branch-label.yes { background:#F5C6CB; color:#721c24; }
+
+/* ── shared-stage band ── */
+.shared-band {
+  max-width:900px; margin:0 auto 4px;
+  background:rgba(200,220,255,0.3); border:2px dashed #4A6FA5;
+  border-radius:12px; padding:10px 14px 6px;
+}
+.shared-band .band-label {
+  text-align:center; font-size:13px; font-weight:600;
+  color:#4A6FA5; letter-spacing:.5px; text-transform:uppercase;
+  margin-bottom:6px;
+}
+
+/* ── lanes ── */
+.lanes { display:flex; gap:24px; max-width:900px; margin:0 auto; align-items:stretch; }
+.lane {
+  flex:1; border-radius:14px; padding:14px 12px;
+  display:flex; flex-direction:column; align-items:center; gap:0;
+}
+.lane.green { background:rgba(212,237,218,0.4); border:2px solid #28A745; }
+.lane.red   { background:rgba(248,215,218,0.4); border:2px solid #DC3545; }
+.lane-title { font-size:14px; font-weight:700; margin-bottom:10px; text-align:center; }
+.lane.green .lane-title { color:#155724; }
+.lane.red   .lane-title { color:#721c24; }
+
+.block.green { background:#C3E6CB; border:2.5px solid #28A745; }
+.block.red   { background:#F5C6CB; border:2.5px solid #DC3545; }
+.block.blue  { background:#D6E8FB; border:2.5px solid #004085; }
+.block.amber { background:#FFF3CD; border:2.5px solid #856404; }
+.block.gray  { background:#E9ECEF; border:2.5px solid #6C757D; }
+
+/* ── diff badge ── */
+.diff {
+  display:inline-block; font-size:11px; font-weight:700;
+  border-radius: 4px; padding:2px 7px; margin-top:5px;
+  text-transform:uppercase; letter-spacing:.5px;
+}
+.diff.same  { background:#d1ecf1; color:#0c5460; }
+.diff.diff  { background:#f8d7da; color:#721c24; }
+.diff.only  { background:#fff3cd; color:#856404; }
+
+/* ── merge arrows ── */
+.merge-arrows { display:flex; max-width:900px; margin:0 auto; justify-content:space-around; }
+.merge-arrow  { font-size:28px; font-weight:700; padding-top:2px; }
+.merge-arrow.green { color:#155724; }
+.merge-arrow.red   { color:#721c24; }
+
+/* ── outputs ── */
+.outputs { display:flex; gap:24px; max-width:900px; margin:0 auto; }
+.block.out-green { background:#C3E6CB; border:2.5px solid #28A745; flex:1; }
+.block.out-red   { background:#F5C6CB; border:2.5px solid #DC3545; flex:1; }
+
+/* ── key ── */
+.key-section { max-width:900px; margin:30px auto 0; }
+.key-section h3 { font-size:16px; font-weight:700; color:#1a1a2e; margin-bottom:10px; }
+.key-table { width:100%; border-collapse:collapse; font-size:14px; }
+.key-table th { background:#1a1a2e; color:#fff; padding:8px 12px; text-align:left; }
+.key-table td { padding:8px 12px; border-bottom:1px solid #ddd; vertical-align:top; }
+.key-table tr:nth-child(even) td { background:#f8f9fa; }
+.key-table td code { font-family:'Consolas','Courier New',monospace; font-size:12px;
+  background:#e9ecef; border-radius:3px; padding:1px 5px; }
+.key-table td .badge { font-size:11px; font-weight:700; border-radius:3px;
+  padding:1px 6px; margin-right:4px; }
+.badge.same  { background:#d1ecf1; color:#0c5460; }
+.badge.diff  { background:#f8d7da; color:#721c24; }
+.badge.only  { background:#fff3cd; color:#856404; }
+
+/* ── legend ── */
+.legend { display:flex; justify-content:center; gap:22px; flex-wrap:wrap; margin-top:28px; }
+.legend-item { display:flex; align-items:center; gap:8px; font-size:14px; color:#333; }
+.legend-swatch { width:20px; height:20px; border-radius:4px; flex-shrink:0; }
+</style>
+</head>
+<body>
+
+<h1>SurfSense Docker — Detailed Retrieval Pipeline</h1>
+<h2 class="sub">Why <code>mentioned_document_ids</code> is only the trigger — full causal chain</h2>
+
+<!-- ENTRY -->
+<div class="block entry">
+  <div class="title">Benchmark Runner — POST /api/v1/new_chat</div>
+  <div class="detail">question + search_space_id</div>
+  <div class="note">+ <strong>mentioned_document_ids</strong> (optional) — this is the only input that differs</div>
+</div>
+<div class="arrow-v gray">&#8595;</div>
+
+<!-- SHARED: PLANNER -->
+<div class="shared-band">
+  <div class="band-label">&#9632;&nbsp; Shared Stage 1 — Planner <span class="diff same">same code path</span></div>
+  <div class="block blue" style="max-width:100%">
+    <div class="title">LLM Query Rewriter &amp; Date Inferencer&nbsp; <span class="diff same">identical for both paths</span></div>
+    <div class="detail">Prompt: rewrite query for retrieval + infer start/end date from question text</div>
+    <div class="note">Returns: <span class="code">optimized_query, start_date, end_date, is_recency_query</span></div>
+    <div class="note" style="margin-top:5px;color:#721c24;font-weight:600;">
+      &#9888;&nbsp; Financial 10-Q questions imply a fiscal quarter &rarr; planner infers date bounds (e.g. 2026-01-01 / 2026-03-31) for <em>both</em> paths
+    </div>
+  </div>
+</div>
+<div class="arrow-v gray">&#8595;</div>
+
+<!-- DIAMOND -->
+<div class="diamond-wrap">
+  <div class="diamond">
+    <div class="diamond-text">mentioned_<br>document_ids<br>present?</div>
+  </div>
+</div>
+<div class="branch-row">
+  <div class="branch-label no">&#8600;&nbsp; No</div>
+  <div class="branch-label yes">Yes &nbsp;&#8599;</div>
+</div>
+
+<!-- LANES -->
+<div class="lanes">
+
+  <!-- NO-DOCPIN LANE -->
+  <div class="lane green">
+    <div class="lane-title">No-docpin &nbsp;(mentioned&nbsp;= 0) — Recall Mode</div>
+
+    <div class="block gray" style="background:#e9f5ea;border-color:#aaa;">
+      <div class="title">fetch_mentioned_documents</div>
+      <div class="detail">Not called &nbsp;&#10008;</div>
+      <span class="diff same">skipped</span>
+    </div>
+    <div class="arrow-v green">&#8595;</div>
+
+    <div class="block green">
+      <div class="title">search_knowledge_base &nbsp;<span class="diff diff">date filter applied</span></div>
+      <div class="detail">Hybrid RRF: vector + full-text search</div>
+      <div class="note"><span class="code">WHERE Document.updated_at BETWEEN start AND end</span></div>
+      <div class="note" style="margin-top:5px;">
+        Planner returned <strong>null/null</strong> for this financial question<br>
+        &rarr; No date filter &rarr; full search space candidate pool
+      </div>
+      <div class="note"><span class="code">retriever_top_k = min(10×3, 30) = 30</span></div>
+    </div>
+    <div class="arrow-v green">&#8595;</div>
+
+    <div class="block green">
+      <div class="title">Hit Rate &nbsp;<span class="diff diff">high</span></div>
+      <div class="detail">RRF returns ≈ 30 matched chunks across document</div>
+      <div class="note">10 top docs ranked by RRF score</div>
+      <div class="note" style="color:#155724;font-weight:600;">results = 30</div>
+    </div>
+    <div class="arrow-v green">&#8595;</div>
+
+    <div class="block green">
+      <div class="title">Context Assembly — Rich &nbsp;<span class="diff diff">full chunks</span></div>
+      <div class="detail">Up to 20 chunks per doc, <code>matched_chunk_ids</code> set</div>
+      <div class="note">LLM gets relevance markers &rarr; jumps to right section</div>
+      <div class="note"><span class="code">_MAX_FETCH_CHUNKS_PER_DOC = 20</span></div>
+    </div>
+  </div>
+
+  <!-- DOCPIN LANE -->
+  <div class="lane red">
+    <div class="lane-title">Docpin &nbsp;(mentioned&nbsp;= 1) — Precision Mode</div>
+
+    <div class="block red">
+      <div class="title">fetch_mentioned_documents &nbsp;<span class="diff only">docpin only</span></div>
+      <div class="detail">Fetches <strong>all</strong> chunks of pinned doc — no date filter, no ranking</div>
+      <div class="note"><span class="code">score = 1.0</span>&nbsp;&nbsp;<span class="code">matched_chunk_ids = []</span></div>
+      <div class="note" style="margin-top:5px;">LLM has no relevance markers &rarr; must scan from doc start</div>
+    </div>
+    <div class="arrow-v red">&#8595;</div>
+
+    <div class="block red">
+      <div class="title">search_knowledge_base &nbsp;<span class="diff diff">date filter kills pool</span></div>
+      <div class="detail">Hybrid RRF: vector + full-text search</div>
+      <div class="note"><span class="code">WHERE Document.updated_at BETWEEN start AND end</span></div>
+      <div class="note" style="margin-top:5px;color:#721c24;font-weight:600;">
+        Planner inferred Q1 FY26 date range from question text<br>
+        BUT <code>updated_at</code> = index timestamp ≠ document content period<br>
+        &rarr; WHERE clause eliminates all rows &rarr; RRF returns 0
+      </div>
+      <div class="note"><span class="code">retriever_top_k = min(10×3, 30) = 30 &rarr; actual = 0</span></div>
+    </div>
+    <div class="arrow-v red">&#8595;</div>
+
+    <div class="block red">
+      <div class="title">Hit Rate &nbsp;<span class="diff diff">collapsed</span></div>
+      <div class="detail">RRF returns 0 matched chunks from search</div>
+      <div class="note">Only source: pinned doc from step 1 (unranked)</div>
+      <div class="note" style="color:#721c24;font-weight:600;">results = 0 from search</div>
+    </div>
+    <div class="arrow-v red">&#8595;</div>
+
+    <div class="block red">
+      <div class="title">Context Assembly — Sparse &nbsp;<span class="diff diff">no match markers</span></div>
+      <div class="detail">All pinned doc chunks, but <code>matched_chunk_ids = []</code></div>
+      <div class="note">LLM has no guidance on where answer is located</div>
+      <div class="note" style="color:#721c24;">Token budget (28k) may truncate mid-document</div>
+    </div>
+  </div>
+</div>
+
+<!-- MERGE ARROWS -->
+<div class="merge-arrows" style="margin-top:4px;">
+  <div class="merge-arrow green">&#8601;</div>
+  <div class="merge-arrow red">&#8600;</div>
+</div>
+
+<!-- MERGE STAGE -->
+<div class="shared-band" style="margin-bottom:4px;">
+  <div class="band-label">&#9632;&nbsp; Merge (dedup by doc_id): mentioned_results first, then search_results</div>
+</div>
+<div class="arrow-v gray">&#8595;</div>
+
+<!-- SHARED: INFERENCE -->
+<div class="shared-band">
+  <div class="band-label">&#9632;&nbsp; Shared Stage 2 — LLM Inference <span class="diff same">same code path</span></div>
+  <div class="block blue" style="max-width:100%">
+    <div class="title">Gemma E4B via vLLM &nbsp;<span class="diff same">identical model &amp; config</span></div>
+    <div class="detail"><span class="code">truncate_prompt_tokens: 28000</span>&nbsp;&nbsp;<span class="code">max_tokens: 256</span></div>
+    <div class="note" style="margin-top:5px;color:#004085;font-weight:600;">
+      Answer quality is entirely determined by what context assembly put in the prompt
+    </div>
+  </div>
+</div>
+
+<!-- OUTPUT ARROWS -->
+<div class="merge-arrows" style="margin-top:4px;">
+  <div class="merge-arrow green">&#8601;</div>
+  <div class="merge-arrow red">&#8600;</div>
+</div>
+
+<!-- OUTPUTS -->
+<div class="outputs">
+  <div class="block out-green">
+    <div class="title">&#10004;&nbsp; Correct Numeric Answer</div>
+    <div class="detail">Relevant chunks highlighted → model extracts exact number</div>
+    <div class="note">e.g. "Revenue was $31.3B" ✓</div>
+  </div>
+  <div class="block out-red">
+    <div class="title">&#10008;&nbsp; Chatter / "Not Found"</div>
+    <div class="detail">No relevance markers → model narrates instead</div>
+    <div class="note">e.g. "I could not find the information …" ✗</div>
+  </div>
+</div>
+
+<!-- KEY TABLE -->
+<div class="key-section">
+  <h3>Root-Cause Breakdown — What Actually Differs at Each Stage</h3>
+  <table class="key-table">
+    <thead>
+      <tr>
+        <th>Stage</th>
+        <th>Code</th>
+        <th>No-docpin</th>
+        <th>Docpin</th>
+        <th>Impact</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Query rewrite</strong></td>
+        <td><code>_plan_search_inputs()</code></td>
+        <td>Same LLM call, same prompt</td>
+        <td>Same LLM call, same prompt</td>
+        <td><span class="badge same">same</span> Code identical — but LLM output can differ based on question</td>
+      </tr>
+      <tr>
+        <td><strong>Date filter inference</strong></td>
+        <td><code>KBSearchPlan.start_date</code></td>
+        <td>Planner returns null/null for factual Q&amp;A</td>
+        <td>Planner may infer fiscal quarter from question text</td>
+        <td><span class="badge diff">diverges</span> Behavioral difference in same planner LLM</td>
+      </tr>
+      <tr>
+        <td><strong>Date filter application</strong></td>
+        <td><code>Document.updated_at</code></td>
+        <td>No WHERE clause on dates</td>
+        <td>WHERE updated_at BETWEEN start AND end</td>
+        <td><span class="badge diff">critical</span> updated_at = index timestamp ≠ content period</td>
+      </tr>
+      <tr>
+        <td><strong>RRF hybrid search</strong></td>
+        <td><code>ChucksHybridSearchRetriever</code></td>
+        <td>RRF runs on full pool: k=60, n=top_k×5</td>
+        <td>RRF runs on empty pool after date filter → 0</td>
+        <td><span class="badge diff">collapse</span> Same algorithm, empty input</td>
+      </tr>
+      <tr>
+        <td><strong>Hit rate (results count)</strong></td>
+        <td><code>retriever_top_k = 30</code></td>
+        <td>≈ 30 chunks matched, 10 docs returned</td>
+        <td>0 chunks from search</td>
+        <td><span class="badge diff">30 → 0</span> Observed directly in PERF logs</td>
+      </tr>
+      <tr>
+        <td><strong>fetch_mentioned_documents</strong></td>
+        <td><code>fetch_mentioned_documents()</code></td>
+        <td>Not called</td>
+        <td>All chunks of pinned doc, no date filter, score=1.0</td>
+        <td><span class="badge only">docpin only</span> Bypasses RRF entirely</td>
+      </tr>
+      <tr>
+        <td><strong>Chunk count per doc</strong></td>
+        <td><code>_MAX_FETCH_CHUNKS_PER_DOC = 20</code></td>
+        <td>Up to 20 ranked chunks per doc × 10 docs</td>
+        <td>All chunks of pinned doc (unranked); 0 from search</td>
+        <td><span class="badge diff">diverges</span> Quantity and ordering differ</td>
+      </tr>
+      <tr>
+        <td><strong>matched_chunk_ids</strong></td>
+        <td><code>matched_chunk_ids</code> in XML</td>
+        <td>Set for all RRF-matched chunks → LLM jumps to relevant section</td>
+        <td>Empty [] → LLM must scan doc sequentially from start</td>
+        <td><span class="badge diff">critical</span> No relevance guidance for LLM</td>
+      </tr>
+      <tr>
+        <td><strong>Context assembly</strong></td>
+        <td><code>_build_document_xml()</code></td>
+        <td>Rich, targeted, relevance-annotated XML</td>
+        <td>Full doc, all chunks, no match markers</td>
+        <td><span class="badge diff">diverges</span> LLM prompt quality gap</td>
+      </tr>
+      <tr>
+        <td><strong>Token budget</strong></td>
+        <td><code>truncate_prompt_tokens: 28000</code></td>
+        <td>Relevant chunks appear early → survive truncation</td>
+        <td>Answer may be mid-doc → cut off by 28k limit</td>
+        <td><span class="badge diff">risk</span> Truncation hides the answer</td>
+      </tr>
+      <tr>
+        <td><strong>LLM model &amp; config</strong></td>
+        <td>Gemma E4B, vLLM</td>
+        <td>Same</td>
+        <td>Same</td>
+        <td><span class="badge same">same</span> Not a factor</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-swatch" style="background:#C3E6CB;border:2px solid #28A745"></div>
+    No-docpin — recall mode, results ≈ 30, higher accuracy
+  </div>
+  <div class="legend-item">
+    <div class="legend-swatch" style="background:#F5C6CB;border:2px solid #DC3545"></div>
+    Docpin — precision mode, date filter collapses search to 0
+  </div>
+  <div class="legend-item">
+    <div class="legend-swatch" style="background:#D6E8FB;border:2px solid #004085"></div>
+    Shared stage — identical code path for both
+  </div>
+  <div class="legend-item">
+    <div class="legend-swatch" style="background:#d1ecf1;border:2px solid #0c5460"></div>
+    <span style="font-size:12px;font-weight:700;background:#d1ecf1;color:#0c5460;padding:2px 6px;border-radius:3px;">SAME</span>
+    &nbsp;No difference between paths
+  </div>
+  <div class="legend-item">
+    <div class="legend-swatch" style="background:#f8d7da;border:2px solid #721c24"></div>
+    <span style="font-size:12px;font-weight:700;background:#f8d7da;color:#721c24;padding:2px 6px;border-radius:3px;">DIFF</span>
+    &nbsp;Paths diverge here
+  </div>
+</div>
+
+</body>
+</html>

@@ -8,6 +8,7 @@
   "BENCHMARK_FILE": "msft_fy26q1_qa_benchmark_100_sanitized.json",
   "DOCUMENT_TITLE_CONTAINS": "",
   "RUN_NAME": "full100_live_rollback",
+  "DELAY_PER_REQUEST": 0,
   "SANITIZE_QUESTIONS": true,
   "DISABLED_TOOLS": ["web_search", "scrape_webpage"]
 }

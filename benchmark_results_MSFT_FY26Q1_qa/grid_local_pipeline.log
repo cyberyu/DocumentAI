@@ -1,0 +1,290 @@
+[2026-04-27T23:33:12Z] 10 questions selected from msft_fy26q1_qa_benchmark_100_sanitized.json
+[2026-04-27T23:33:12Z] Connecting to DB 172.19.0.4:5432/surfsense ...
+[2026-04-27T23:33:12Z] search_space_id=1
+[2026-04-27T23:33:12Z] Loading embedding model sentence-transformers/all-MiniLM-L6-v2 ...
+[2026-04-27T23:33:14Z] SKIP local_nodatefilter_k60_top10_chunks20_markers (--skip-existing)
+
+========================================================================
+[2026-04-27T23:33:14Z] CONFIG: Forced-date / k=60 / top10 / chunks20 / markers ON
+  query_rewrite=True  date_filter='force'
+  rrf_k=60  top_k=10  max_chunks=20  matched_markers=True
+========================================================================
+  [2026-04-27T23:33:14Z] (1/10) G1-001 ... ✘  docs=0 chunks=0 matched=0  pred='N/A (no chunks retrieved)'
+  [2026-04-27T23:33:14Z] (2/10) G1-002 ... ✘  docs=0 chunks=0 matched=0  pred='N/A (no chunks retrieved)'
+  [2026-04-27T23:33:14Z] (3/10) G1-003 ... ✘  docs=0 chunks=0 matched=0  pred='N/A (no chunks retrieved)'
+  [2026-04-27T23:33:14Z] (4/10) G1-004 ... ✘  docs=0 chunks=0 matched=0  pred='N/A (no chunks retrieved)'
+  [2026-04-27T23:33:14Z] (5/10) G1-005 ... ✘  docs=0 chunks=0 matched=0  pred='N/A (no chunks retrieved)'
+  [2026-04-27T23:33:14Z] (6/10) G1-006 ... ✘  docs=0 chunks=0 matched=0  pred='N/A (no chunks retrieved)'
+  [2026-04-27T23:33:14Z] (7/10) G1-007 ... ✔  docs=0 chunks=0 matched=0  pred='N/A (no chunks retrieved)'
+  [2026-04-27T23:33:14Z] (8/10) G1-008 ... ✘  docs=0 chunks=0 matched=0  pred='N/A (no chunks retrieved)'
+  [2026-04-27T23:33:14Z] (9/10) G1-009 ... ✘  docs=0 chunks=0 matched=0  pred='N/A (no chunks retrieved)'
+  [2026-04-27T23:33:14Z] (10/10) G1-010 ... ✘  docs=0 chunks=0 matched=0  pred='N/A (no chunks retrieved)'
+[2026-04-27T23:33:14Z] local_forceddate_k60_top10_chunks20_markers → 1/10 correct (10%)
+
+========================================================================
+[2026-04-27T23:33:14Z] CONFIG: No-date / k=60 / top10 / chunks20 / markers OFF
+  query_rewrite=True  date_filter='none'
+  rrf_k=60  top_k=10  max_chunks=20  matched_markers=False
+========================================================================
+  [2026-04-27T23:33:14Z] (1/10) G1-001 ... ✔  docs=1 chunks=29 matched=10  pred='$5.0 billion'
+  [2026-04-27T23:33:15Z] (2/10) G1-002 ... ✔  docs=1 chunks=30 matched=10  pred='$14.4 billion'
+  [2026-04-27T23:33:16Z] (3/10) G1-003 ... ✔  docs=1 chunks=29 matched=10  pred='$3.9 billion'
+  [2026-04-27T23:33:17Z] (4/10) G1-004 ... ✘  docs=1 chunks=30 matched=10  pred='$3,086 million'
+  [2026-04-27T23:33:18Z] (5/10) G1-005 ... ✔  docs=1 chunks=30 matched=10  pred='$2.9 billion'
+  [2026-04-27T23:33:19Z] (6/10) G1-006 ... ✔  docs=1 chunks=30 matched=10  pred='$1.8 billion'
+  [2026-04-27T23:33:19Z] (7/10) G1-007 ... ✔  docs=1 chunks=29 matched=10  pred='AAA'
+  [2026-04-27T23:33:20Z] (8/10) G1-008 ... ✔  docs=1 chunks=30 matched=10  pred='$376 million and $802 million'
+  [2026-04-27T23:33:21Z] (9/10) G1-009 ... ✔  docs=1 chunks=30 matched=10  pred='$7.1 billion'
+  [2026-04-27T23:33:22Z] (10/10) G1-010 ... ✔  docs=1 chunks=30 matched=10  pred='$1.5 billion'
+[2026-04-27T23:33:23Z] local_nodatefilter_k60_top10_chunks20_nomarkers → 9/10 correct (90%)
+
+========================================================================
+[2026-04-27T23:33:23Z] CONFIG: No-date / k=60 / top10 / chunks20 / raw-Q
+  query_rewrite=False  date_filter='none'
+  rrf_k=60  top_k=10  max_chunks=20  matched_markers=True
+========================================================================
+  [2026-04-27T23:33:23Z] (1/10) G1-001 ... ✔  docs=1 chunks=30 matched=10  pred='$5.0 billion'
+  [2026-04-27T23:33:24Z] (2/10) G1-002 ... ✔  docs=1 chunks=30 matched=10  pred='$14.4 billion'
+  [2026-04-27T23:33:25Z] (3/10) G1-003 ... ✔  docs=1 chunks=29 matched=10  pred='$3.9 billion'
+  [2026-04-27T23:33:26Z] (4/10) G1-004 ... ✘  docs=1 chunks=30 matched=10  pred='3,086 million'
+  [2026-04-27T23:33:26Z] (5/10) G1-005 ... ✔  docs=1 chunks=30 matched=10  pred='$2.9 billion'
+  [2026-04-27T23:33:27Z] (6/10) G1-006 ... ✔  docs=1 chunks=30 matched=10  pred='$1.8 billion'
+  [2026-04-27T23:33:28Z] (7/10) G1-007 ... ✔  docs=1 chunks=30 matched=10  pred='AAA'
+  [2026-04-27T23:33:29Z] (8/10) G1-008 ... ✔  docs=1 chunks=30 matched=10  pred='$376 million and $802 million'
+  [2026-04-27T23:33:30Z] (9/10) G1-009 ... ✔  docs=1 chunks=30 matched=10  pred='$7.1 billion'
+  [2026-04-27T23:33:31Z] (10/10) G1-010 ... ✔  docs=1 chunks=30 matched=10  pred='$1.5 billion'
+[2026-04-27T23:33:31Z] local_nodatefilter_k60_top10_chunks20_raw → 9/10 correct (90%)
+
+========================================================================
+[2026-04-27T23:33:31Z] CONFIG: No-date / k=20 / top10 / chunks20 / markers ON
+  query_rewrite=True  date_filter='none'
+  rrf_k=20  top_k=10  max_chunks=20  matched_markers=True
+========================================================================
+  [2026-04-27T23:33:31Z] (1/10) G1-001 ... ✔  docs=1 chunks=29 matched=10  pred='$5.0 billion'
+  [2026-04-27T23:33:32Z] (2/10) G1-002 ... ✔  docs=1 chunks=30 matched=10  pred='$14.4 billion'
+  [2026-04-27T23:33:32Z] (3/10) G1-003 ... ✔  docs=1 chunks=29 matched=10  pred='$3.9 billion'
+  [2026-04-27T23:33:33Z] (4/10) G1-004 ... ✘  docs=1 chunks=30 matched=10  pred='$3,086 million'
+  [2026-04-27T23:33:33Z] (5/10) G1-005 ... ✔  docs=1 chunks=30 matched=10  pred='$2.9 billion'
+  [2026-04-27T23:33:34Z] (6/10) G1-006 ... ✔  docs=1 chunks=30 matched=10  pred='$1.8 billion'
+  [2026-04-27T23:33:34Z] (7/10) G1-007 ... ✔  docs=1 chunks=29 matched=10  pred='AAA'
+  [2026-04-27T23:33:34Z] (8/10) G1-008 ... ✔  docs=1 chunks=30 matched=10  pred='$376 million and $802 million'
+  [2026-04-27T23:33:35Z] (9/10) G1-009 ... ✔  docs=1 chunks=30 matched=10  pred='$7.1 billion'
+  [2026-04-27T23:33:36Z] (10/10) G1-010 ... ✔  docs=1 chunks=30 matched=10  pred='$1.5 billion'
+[2026-04-27T23:33:36Z] local_nodatefilter_k20_top10_chunks20_markers → 9/10 correct (90%)
+
+========================================================================
+[2026-04-27T23:33:36Z] CONFIG: No-date / k=120 / top10 / chunks20 / markers ON
+  query_rewrite=True  date_filter='none'
+  rrf_k=120  top_k=10  max_chunks=20  matched_markers=True
+========================================================================
+  [2026-04-27T23:33:36Z] (1/10) G1-001 ... ✔  docs=1 chunks=29 matched=10  pred='$5.0 billion'
+  [2026-04-27T23:33:37Z] (2/10) G1-002 ... ✔  docs=1 chunks=30 matched=10  pred='$14.4 billion'
+  [2026-04-27T23:33:37Z] (3/10) G1-003 ... ✔  docs=1 chunks=29 matched=10  pred='$3.9 billion'
+  [2026-04-27T23:33:37Z] (4/10) G1-004 ... ✘  docs=1 chunks=30 matched=10  pred='$3,086 million'
+  [2026-04-27T23:33:38Z] (5/10) G1-005 ... ✔  docs=1 chunks=30 matched=10  pred='$2.9 billion'
+  [2026-04-27T23:33:38Z] (6/10) G1-006 ... ✔  docs=1 chunks=30 matched=10  pred='$1.8 billion'
+  [2026-04-27T23:33:39Z] (7/10) G1-007 ... ✔  docs=1 chunks=29 matched=10  pred='AAA'
+  [2026-04-27T23:33:39Z] (8/10) G1-008 ... ✔  docs=1 chunks=30 matched=10  pred='$376 million and $802 million'
+  [2026-04-27T23:33:40Z] (9/10) G1-009 ... ✔  docs=1 chunks=30 matched=10  pred='$7.1 billion'
+  [2026-04-27T23:33:40Z] (10/10) G1-010 ... ✔  docs=1 chunks=30 matched=10  pred='$1.5 billion'
+[2026-04-27T23:33:41Z] local_nodatefilter_k120_top10_chunks20_markers → 9/10 correct (90%)
+
+========================================================================
+[2026-04-27T23:33:41Z] CONFIG: No-date / k=60 / top5 / chunks20 / markers ON
+  query_rewrite=True  date_filter='none'
+  rrf_k=60  top_k=5  max_chunks=20  matched_markers=True
+========================================================================
+  [2026-04-27T23:33:41Z] (1/10) G1-001 ... ✔  docs=1 chunks=24 matched=5  pred='$5.0 billion'
+  [2026-04-27T23:33:41Z] (2/10) G1-002 ... ✔  docs=1 chunks=25 matched=5  pred='$14.4 billion'
+  [2026-04-27T23:33:42Z] (3/10) G1-003 ... ✔  docs=1 chunks=24 matched=5  pred='$3.9 billion'
+  [2026-04-27T23:33:43Z] (4/10) G1-004 ... ✘  docs=1 chunks=25 matched=5  pred='3,086 million'
+  [2026-04-27T23:33:44Z] (5/10) G1-005 ... ✔  docs=1 chunks=25 matched=5  pred='$2.9 billion'
+  [2026-04-27T23:33:45Z] (6/10) G1-006 ... ✔  docs=1 chunks=25 matched=5  pred='$1.8 billion'
+  [2026-04-27T23:33:45Z] (7/10) G1-007 ... ✔  docs=1 chunks=25 matched=5  pred='N/A'
+  [2026-04-27T23:33:46Z] (8/10) G1-008 ... ✔  docs=1 chunks=25 matched=5  pred='$376 million and $802 million'
+  [2026-04-27T23:33:47Z] (9/10) G1-009 ... ✔  docs=1 chunks=25 matched=5  pred='$7.1 billion'
+  [2026-04-27T23:33:48Z] (10/10) G1-010 ... ✔  docs=1 chunks=25 matched=5  pred='$1.5 billion'
+[2026-04-27T23:33:49Z] local_nodatefilter_k60_top5_chunks20_markers → 9/10 correct (90%)
+
+========================================================================
+[2026-04-27T23:33:49Z] CONFIG: No-date / k=60 / top20 / chunks20 / markers ON
+  query_rewrite=True  date_filter='none'
+  rrf_k=60  top_k=20  max_chunks=20  matched_markers=True
+========================================================================
+  [2026-04-27T23:33:49Z] (1/10) G1-001 ... ✔  docs=1 chunks=39 matched=20  pred='$5.0 billion'
+  [2026-04-27T23:33:50Z] (2/10) G1-002 ... ✔  docs=1 chunks=40 matched=20  pred='$14.4 billion'
+  [2026-04-27T23:33:51Z] (3/10) G1-003 ... ✔  docs=1 chunks=39 matched=20  pred='$3.9 billion'
+  [2026-04-27T23:33:53Z] (4/10) G1-004 ... ✘  docs=1 chunks=40 matched=20  pred='$3,086 million'
+  [2026-04-27T23:33:54Z] (5/10) G1-005 ... ✔  docs=1 chunks=40 matched=20  pred='$2.9 billion'
+  [2026-04-27T23:33:56Z] (6/10) G1-006 ... ✔  docs=1 chunks=38 matched=20  pred='$1.8 billion'
+  [2026-04-27T23:33:57Z] (7/10) G1-007 ... ✔  docs=1 chunks=39 matched=20  pred='AAA'
+  [2026-04-27T23:33:58Z] (8/10) G1-008 ... ✔  docs=1 chunks=39 matched=20  pred='$376 million and $802 million'
+  [2026-04-27T23:33:59Z] (9/10) G1-009 ... ✔  docs=1 chunks=39 matched=20  pred='$7.1 billion'
+  [2026-04-27T23:34:00Z] (10/10) G1-010 ... ✔  docs=1 chunks=40 matched=20  pred='$1.5 billion'
+[2026-04-27T23:34:02Z] local_nodatefilter_k60_top20_chunks20_markers → 9/10 correct (90%)
+
+========================================================================
+[2026-04-27T23:34:02Z] CONFIG: No-date / k=60 / top10 / chunks5 / markers ON
+  query_rewrite=True  date_filter='none'
+  rrf_k=60  top_k=10  max_chunks=5  matched_markers=True
+========================================================================
+  [2026-04-27T23:34:02Z] (1/10) G1-001 ... ✔  docs=1 chunks=15 matched=10  pred='$5.0 billion'
+  [2026-04-27T23:34:02Z] (2/10) G1-002 ... ✔  docs=1 chunks=15 matched=10  pred='$14.4 billion'
+  [2026-04-27T23:34:03Z] (3/10) G1-003 ... ✔  docs=1 chunks=15 matched=10  pred='$3.9 billion'
+  [2026-04-27T23:34:04Z] (4/10) G1-004 ... ✘  docs=1 chunks=15 matched=10  pred='$3,086 million'
+  [2026-04-27T23:34:05Z] (5/10) G1-005 ... ✔  docs=1 chunks=15 matched=10  pred='$2.9 billion'
+  [2026-04-27T23:34:05Z] (6/10) G1-006 ... ✔  docs=1 chunks=15 matched=10  pred='$1.8 billion'
+  [2026-04-27T23:34:06Z] (7/10) G1-007 ... ✔  docs=1 chunks=15 matched=10  pred='AAA'
+  [2026-04-27T23:34:06Z] (8/10) G1-008 ... ✔  docs=1 chunks=15 matched=10  pred='$376 million and $802 million'
+  [2026-04-27T23:34:07Z] (9/10) G1-009 ... ✔  docs=1 chunks=15 matched=10  pred='$7.1 billion'
+  [2026-04-27T23:34:08Z] (10/10) G1-010 ... ✔  docs=1 chunks=15 matched=10  pred='$1.5 billion'
+[2026-04-27T23:34:09Z] local_nodatefilter_k60_top10_chunks5_markers → 9/10 correct (90%)
+
+========================================================================
+[2026-04-27T23:34:09Z] CONFIG: No-date / k=60 / top10 / chunks50 / markers ON
+  query_rewrite=True  date_filter='none'
+  rrf_k=60  top_k=10  max_chunks=50  matched_markers=True
+========================================================================
+  [2026-04-27T23:34:09Z] (1/10) G1-001 ... ✔  docs=1 chunks=59 matched=10  pred='$5.0 billion'
+  [2026-04-27T23:34:11Z] (2/10) G1-002 ... ✔  docs=1 chunks=58 matched=10  pred='$14.4 billion'
+  [2026-04-27T23:34:12Z] (3/10) G1-003 ... ✔  docs=1 chunks=58 matched=10  pred='$3.9 billion'
+  [2026-04-27T23:34:14Z] (4/10) G1-004 ... ✘  docs=1 chunks=60 matched=10  pred='$3,086 million'
+  [2026-04-27T23:34:16Z] (5/10) G1-005 ... ✔  docs=1 chunks=60 matched=10  pred='$2.9 billion'
+  [2026-04-27T23:34:18Z] (6/10) G1-006 ... ✔  docs=1 chunks=59 matched=10  pred='$1.8 billion'
+  [2026-04-27T23:34:20Z] (7/10) G1-007 ... ✔  docs=1 chunks=58 matched=10  pred='AAA'
+  [2026-04-27T23:34:21Z] (8/10) G1-008 ... ✔  docs=1 chunks=59 matched=10  pred='$376 million'
+  [2026-04-27T23:34:23Z] (9/10) G1-009 ... ✔  docs=1 chunks=59 matched=10  pred='$7.1 billion'
+  [2026-04-27T23:34:24Z] (10/10) G1-010 ... ✔  docs=1 chunks=60 matched=10  pred='$1.5 billion'
+[2026-04-27T23:34:26Z] local_nodatefilter_k60_top10_chunks50_markers → 9/10 correct (90%)
+
+========================================================================
+[2026-04-27T23:34:26Z] CONFIG: No-date / k=60 / top10 / chunks-all / markers ON
+  query_rewrite=True  date_filter='none'
+  rrf_k=60  top_k=10  max_chunks=None  matched_markers=True
+========================================================================
+  [2026-04-27T23:34:26Z] (1/10) G1-001 ... ✘  docs=1 chunks=1469 matched=10  pred='N/A'
+  [2026-04-27T23:34:40Z] (2/10) G1-002 ... ✘  docs=1 chunks=1469 matched=10  pred='N/A'
+  [2026-04-27T23:34:53Z] (3/10) G1-003 ... ✘  docs=1 chunks=1469 matched=10  pred='N/A'
+  [2026-04-27T23:35:07Z] (4/10) G1-004 ... ✘  docs=1 chunks=1469 matched=10  pred='N/A'
+  [2026-04-27T23:35:20Z] (5/10) G1-005 ... ✘  docs=1 chunks=1469 matched=10  pred='11,465 million'
+  [2026-04-27T23:35:33Z] (6/10) G1-006 ... ✘  docs=1 chunks=1469 matched=10  pred='$11,465 million'
+  [2026-04-27T23:35:47Z] (7/10) G1-007 ... ✔  docs=1 chunks=1469 matched=10  pred='N/A'
+  [2026-04-27T23:36:00Z] (8/10) G1-008 ... ✘  docs=1 chunks=1469 matched=10  pred='N/A'
+  [2026-04-27T23:36:13Z] (9/10) G1-009 ... ✘  docs=1 chunks=1469 matched=10  pred='N/A'
+  [2026-04-27T23:36:26Z] (10/10) G1-010 ... ✘  docs=1 chunks=1469 matched=10  pred='N/A'
+[2026-04-27T23:36:39Z] local_nodatefilter_k60_top10_chunksall_markers → 1/10 correct (10%)
+
+========================================================================
+[2026-04-27T23:36:39Z] CONFIG: Infer-date / k=60 / top10 / chunks20 / markers ON
+  query_rewrite=True  date_filter='infer'
+  rrf_k=60  top_k=10  max_chunks=20  matched_markers=True
+========================================================================
+  [2026-04-27T23:36:39Z] (1/10) G1-001 ... ✔  docs=1 chunks=29 matched=10  pred='$5.0 billion'
+  [2026-04-27T23:36:39Z] (2/10) G1-002 ... ✔  docs=1 chunks=30 matched=10  pred='$14.4 billion'
+  [2026-04-27T23:36:40Z] (3/10) G1-003 ... ✔  docs=1 chunks=29 matched=10  pred='$3.9 billion'
+  [2026-04-27T23:36:40Z] (4/10) G1-004 ... ✘  docs=0 chunks=0 matched=0  pred='N/A (no chunks retrieved)'
+  [2026-04-27T23:36:40Z] (5/10) G1-005 ... ✔  docs=1 chunks=30 matched=10  pred='$2.9 billion'
+  [2026-04-27T23:36:41Z] (6/10) G1-006 ... ✔  docs=1 chunks=30 matched=10  pred='$1.8 billion'
+  [2026-04-27T23:36:41Z] (7/10) G1-007 ... ✔  docs=1 chunks=29 matched=10  pred='AAA'
+  [2026-04-27T23:36:41Z] (8/10) G1-008 ... ✔  docs=1 chunks=30 matched=10  pred='$376 million and $802 million'
+  [2026-04-27T23:36:42Z] (9/10) G1-009 ... ✔  docs=1 chunks=30 matched=10  pred='$7.1 billion'
+  [2026-04-27T23:36:42Z] (10/10) G1-010 ... ✔  docs=1 chunks=30 matched=10  pred='$1.5 billion'
+[2026-04-27T23:36:43Z] local_inferdate_k60_top10_chunks20_markers → 9/10 correct (90%)
+
+========================================================================
+[2026-04-27T23:36:43Z] CONFIG: No-date / k=60 / top20 / chunks-all / markers ON
+  query_rewrite=True  date_filter='none'
+  rrf_k=60  top_k=20  max_chunks=None  matched_markers=True
+========================================================================
+  [2026-04-27T23:36:43Z] (1/10) G1-001 ... ✘  docs=1 chunks=1469 matched=20  pred='N/A'
+  [2026-04-27T23:36:56Z] (2/10) G1-002 ... ✘  docs=1 chunks=1469 matched=20  pred='N/A'
+  [2026-04-27T23:37:09Z] (3/10) G1-003 ... ✘  docs=1 chunks=1469 matched=20  pred='N/A'
+  [2026-04-27T23:37:21Z] (4/10) G1-004 ... ✘  docs=1 chunks=1469 matched=20  pred='N/A'
+  [2026-04-27T23:37:34Z] (5/10) G1-005 ... ✘  docs=1 chunks=1469 matched=20  pred='$11,465 million'
+  [2026-04-27T23:37:47Z] (6/10) G1-006 ... ✘  docs=1 chunks=1469 matched=20  pred='$11,465 million'
+  [2026-04-27T23:38:00Z] (7/10) G1-007 ... ✔  docs=1 chunks=1469 matched=20  pred='N/A'
+  [2026-04-27T23:38:13Z] (8/10) G1-008 ... ✘  docs=1 chunks=1469 matched=20  pred='N/A'
+  [2026-04-27T23:38:26Z] (9/10) G1-009 ... ✘  docs=1 chunks=1469 matched=20  pred='N/A'
+  [2026-04-27T23:38:39Z] (10/10) G1-010 ... ✘  docs=1 chunks=1469 matched=20  pred='N/A'
+[2026-04-27T23:38:52Z] local_nodatefilter_k60_top20_chunksall_markers → 1/10 correct (10%)
+
+========================================================================
+[2026-04-27T23:38:52Z] CONFIG: No-date / k=60 / top10 / chunks20 / raw-Q / no-markers
+  query_rewrite=False  date_filter='none'
+  rrf_k=60  top_k=10  max_chunks=20  matched_markers=False
+========================================================================
+  [2026-04-27T23:38:52Z] (1/10) G1-001 ... ✔  docs=1 chunks=30 matched=10  pred='$5.0 billion'
+  [2026-04-27T23:38:53Z] (2/10) G1-002 ... ✔  docs=1 chunks=30 matched=10  pred='$14.4 billion'
+  [2026-04-27T23:38:53Z] (3/10) G1-003 ... ✔  docs=1 chunks=29 matched=10  pred='$3.9 billion'
+  [2026-04-27T23:38:54Z] (4/10) G1-004 ... ✘  docs=1 chunks=30 matched=10  pred='3,086 million'
+  [2026-04-27T23:38:55Z] (5/10) G1-005 ... ✔  docs=1 chunks=30 matched=10  pred='$2.9 billion'
+  [2026-04-27T23:38:56Z] (6/10) G1-006 ... ✔  docs=1 chunks=30 matched=10  pred='$1.8 billion'
+  [2026-04-27T23:38:57Z] (7/10) G1-007 ... ✔  docs=1 chunks=30 matched=10  pred='AAA'
+  [2026-04-27T23:38:57Z] (8/10) G1-008 ... ✔  docs=1 chunks=30 matched=10  pred='$376 million and $802 million'
+  [2026-04-27T23:38:58Z] (9/10) G1-009 ... ✔  docs=1 chunks=30 matched=10  pred='$7.1 billion'
+  [2026-04-27T23:38:59Z] (10/10) G1-010 ... ✔  docs=1 chunks=30 matched=10  pred='$1.5 billion'
+[2026-04-27T23:39:00Z] local_nodatefilter_k60_top10_chunks20_raw_nomarkers → 9/10 correct (90%)
+
+========================================================================
+[2026-04-27T23:39:00Z] CONFIG: No-date / k=60 / top3 / chunks-all / markers ON
+  query_rewrite=True  date_filter='none'
+  rrf_k=60  top_k=3  max_chunks=None  matched_markers=True
+========================================================================
+  [2026-04-27T23:39:00Z] (1/10) G1-001 ... ✘  docs=1 chunks=1469 matched=3  pred='N/A'
+  [2026-04-27T23:39:13Z] (2/10) G1-002 ... ✘  docs=1 chunks=1469 matched=3  pred='N/A'
+  [2026-04-27T23:39:26Z] (3/10) G1-003 ... ✘  docs=1 chunks=1469 matched=3  pred='N/A'
+  [2026-04-27T23:39:39Z] (4/10) G1-004 ... ✘  docs=1 chunks=1469 matched=3  pred='N/A'
+  [2026-04-27T23:39:51Z] (5/10) G1-005 ... ✘  docs=1 chunks=1469 matched=3  pred='11,465 million'
+  [2026-04-27T23:40:05Z] (6/10) G1-006 ... ✘  docs=1 chunks=1469 matched=3  pred='$11,465 million'
+  [2026-04-27T23:40:18Z] (7/10) G1-007 ... ✔  docs=1 chunks=1469 matched=3  pred='N/A'
+  [2026-04-27T23:40:29Z] (8/10) G1-008 ... ✘  docs=1 chunks=1469 matched=3  pred='N/A'
+  [2026-04-27T23:40:43Z] (9/10) G1-009 ... ✘  docs=1 chunks=1469 matched=3  pred='N/A'
+  [2026-04-27T23:40:55Z] (10/10) G1-010 ... ✘  docs=1 chunks=1469 matched=3  pred='N/A'
+[2026-04-27T23:41:07Z] local_nodatefilter_k60_top3_chunksall_markers → 1/10 correct (10%)
+
+========================================================================
+[2026-04-27T23:41:07Z] CONFIG: No-date / k=120 / top20 / chunks-all / markers ON
+  query_rewrite=True  date_filter='none'
+  rrf_k=120  top_k=20  max_chunks=None  matched_markers=True
+========================================================================
+  [2026-04-27T23:41:07Z] (1/10) G1-001 ... ✘  docs=1 chunks=1469 matched=20  pred='N/A'
+  [2026-04-27T23:41:07Z] (2/10) G1-002 ... ✘  docs=1 chunks=1469 matched=20  pred='N/A'
+  [2026-04-27T23:41:07Z] (3/10) G1-003 ... ✘  docs=1 chunks=1469 matched=20  pred='N/A'
+  [2026-04-27T23:41:08Z] (4/10) G1-004 ... ✘  docs=1 chunks=1469 matched=20  pred='N/A'
+  [2026-04-27T23:41:08Z] (5/10) G1-005 ... ✘  docs=1 chunks=1469 matched=20  pred='$11,465 million'
+  [2026-04-27T23:41:09Z] (6/10) G1-006 ... ✘  docs=1 chunks=1469 matched=20  pred='$11,465 million'
+  [2026-04-27T23:41:10Z] (7/10) G1-007 ... ✔  docs=1 chunks=1469 matched=20  pred='N/A'
+  [2026-04-27T23:41:10Z] (8/10) G1-008 ... ✘  docs=1 chunks=1469 matched=20  pred='N/A'
+  [2026-04-27T23:41:10Z] (9/10) G1-009 ... ✘  docs=1 chunks=1469 matched=20  pred='N/A'
+  [2026-04-27T23:41:11Z] (10/10) G1-010 ... ✘  docs=1 chunks=1469 matched=20  pred='N/A'
+[2026-04-27T23:41:11Z] local_nodatefilter_k120_top20_chunksall_markers → 1/10 correct (10%)
+[2026-04-27T23:41:11Z] Report: benchmark_results_MSFT_FY26Q1_qa/grid_local_pipeline_report.html
+
+========================================================================
+GRID SEARCH SUMMARY
+========================================================================
+Config                                                 OK    Rate    NumM       F1
+----------------------------------------------------------------------------------
+No-date / k=60 / top10 / chunks20 / markers ON        9/10  90.0%  90.0%   0.7100
+Forced-date / k=60 / top10 / chunks20 / markers ON    1/10  10.0%  10.0%   0.0000
+No-date / k=60 / top10 / chunks20 / markers OFF       9/10  90.0%  90.0%   0.7100
+No-date / k=60 / top10 / chunks20 / raw-Q             9/10  90.0%  90.0%   0.7100
+No-date / k=20 / top10 / chunks20 / markers ON        9/10  90.0%  90.0%   0.7100
+No-date / k=120 / top10 / chunks20 / markers ON       9/10  90.0%  90.0%   0.7100
+No-date / k=60 / top5 / chunks20 / markers ON         9/10  90.0%  90.0%   0.6100
+No-date / k=60 / top20 / chunks20 / markers ON        9/10  90.0%  90.0%   0.7100
+No-date / k=60 / top10 / chunks5 / markers ON         9/10  90.0%  90.0%   0.7100
+No-date / k=60 / top10 / chunks50 / markers ON        9/10  90.0%  90.0%   0.7400
+No-date / k=60 / top10 / chunks-all / markers ON      1/10  10.0%  10.0%   0.0000
+Infer-date / k=60 / top10 / chunks20 / markers ON     9/10  90.0%  90.0%   0.7100
+No-date / k=60 / top20 / chunks-all / markers ON      1/10  10.0%  10.0%   0.0000
+No-date / k=60 / top10 / chunks20 / raw-Q / no-markers  9/10  90.0%  90.0%   0.7100
+No-date / k=60 / top3 / chunks-all / markers ON       1/10  10.0%  10.0%   0.0000
+No-date / k=120 / top20 / chunks-all / markers ON     1/10  10.0%  10.0%   0.0000
+
+------------------------+------------+--+-
+
+    (8.0) - (12.0)
+    
+
+

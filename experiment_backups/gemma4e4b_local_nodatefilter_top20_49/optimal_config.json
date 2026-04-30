@@ -1,0 +1,26 @@
+{
+  "key": "local_nodatefilter_k60_top20_chunks20_markers",
+  "label": "No-date / k=60 / top20 / chunks20 / markers ON",
+  "query_rewrite": true,
+  "date_filter": "none",
+  "rrf_k": 60,
+  "top_k": 20,
+  "max_chunks_per_doc": 20,
+  "matched_markers": true,
+  "model": "google/gemma-4-E4B-it",
+  "vllm_url": "http://localhost:8000/v1",
+  "embedding": "sentence-transformers/all-MiniLM-L6-v2",
+  "db": "172.19.0.4:5432/surfsense",
+  "benchmark_file": "msft_fy26q1_qa_benchmark_100_sanitized.json",
+  "results": {
+    "G1_correct": "16/30 (53%)",
+    "G2_correct": "14/40 (35%)",
+    "G3_correct": "0/30 (0%)",
+    "total_correct": "30/100 (30%)",
+    "total_number_match": "49/100 (49%)",
+    "G1_mean_f1": 0.8367,
+    "G2_mean_f1": 0.2350,
+    "G3_mean_f1": 0.0
+  },
+  "selection_reason": "Best G1+G2 combined accuracy (30/70, 42.9%) in 16-config focused grid search"
+}

@@ -1,0 +1,1522 @@
+{
+  "config": {
+    "key": "local_forceddate_k60_top10_chunks20_markers",
+    "label": "Forced-date / k=60 / top10 / chunks20 / markers ON",
+    "query_rewrite": true,
+    "date_filter": "force",
+    "rrf_k": 60,
+    "top_k": 10,
+    "max_chunks_per_doc": 20,
+    "matched_markers": true
+  },
+  "file_prefix": "G2_",
+  "generated_at_utc": "2026-04-28T01:04:42Z",
+  "summary": {
+    "run": 40,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 0,
+    "number_match_rate": 0.0,
+    "unit_match_count": 10,
+    "unit_match_rate": 0.25,
+    "mean_token_f1": 0.0
+  },
+  "by_group": {
+    "Group2": {
+      "run": 40,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 10,
+      "unit_match_rate": 0.25,
+      "mean_token_f1": 0.0
+    }
+  },
+  "results": [
+    {
+      "id": "G2-001",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Common Stock, $0.00000625 par value per share? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Common Stock, $0.00000625 par value per share? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "7,432,377,655 shares",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-002",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Product? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Product? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "15,922 USD",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-003",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Service and other? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Service and other? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "61,751 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-004",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Total revenue? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Total revenue? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "77,673 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-005",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Product? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Product? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "2,922 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-006",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Service and other? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Service and other? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "21,121 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-007",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Total cost of revenue? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Total cost of revenue? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "24,043 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-008",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Gross margin? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Gross margin? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "53,630 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-009",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Research and development? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Research and development? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "8,146 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-010",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Sales and marketing? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Sales and marketing? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "5,717 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-011",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is General and administrative? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is General and administrative? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "1,806 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-012",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Operating income? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Operating income? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "37,961 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-013",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Income before income taxes? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Income before income taxes? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "34,301 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-014",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Provision for income taxes? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Provision for income taxes? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "6,554 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-015",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Net income? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Net income? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "27,747 USD",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-016",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Basic? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Basic? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "3.73 USD",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-017",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Diluted? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Diluted? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "3.72 USD",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-018",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Basic? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Basic? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "7,433 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-019",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Diluted? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Diluted? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "7,466 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-020",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Net change related to investments? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Net change related to investments? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "687 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-021",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Other comprehensive income? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Other comprehensive income? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "586 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-022",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Comprehensive income? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Comprehensive income? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "28,333 USD",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-023",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Cash and cash equivalents? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Cash and cash equivalents? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "28,849 USD",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-024",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Short-term investments? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Short-term investments? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "73,163 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-025",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Total cash, cash equivalents, and short-term investments? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Total cash, cash equivalents, and short-term investments? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "102,012 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-026",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Accounts receivable, net of allowance for doubtful accounts of $687 and $944? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Accounts receivable, net of allowance for doubtful accounts of $687 and $944? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "52,894 USD",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-027",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Inventories? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Inventories? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "1,130 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-028",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Other current assets? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Other current assets? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "33,030 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-029",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Total current assets? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Total current assets? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "189,066 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-030",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Property and equipment, net of accumulated depreciation of $98,880 and $93,653? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Property and equipment, net of accumulated depreciation of $98,880 and $93,653? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "230,861 USD",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-031",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Operating lease right-of-use assets? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Operating lease right-of-use assets? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "24,791 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-032",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Equity and other investments? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Equity and other investments? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "11,465 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-033",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Goodwill? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Goodwill? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "119,497 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-034",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Intangible assets, net? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Intangible assets, net? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "21,236 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-035",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Other long-term assets? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Other long-term assets? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "39,435 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-036",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Total assets? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Total assets? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "636,351 USD",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-037",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Accounts payable? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Accounts payable? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "32,580 USD",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-038",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Current portion of long-term debt? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Current portion of long-term debt? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "7,832 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-039",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Accrued compensation? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Accrued compensation? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "9,201 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G2-040",
+      "group": "Group2",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Short-term income taxes? Return only the value with unit.",
+      "retrieval_query": "In MSFT_FY26Q1_10Q.docx, what is Short-term income taxes? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Return only one final value with unit and no extra prose.",
+      "gold_answer": "3,655 USD million",
+      "predicted_answer": "N/A (no chunks retrieved)",
+      "pipeline_telemetry": {
+        "date_filter": {
+          "start": "2026-01-01T00:00:00+00:00",
+          "end": "2026-03-31T23:59:59+00:00"
+        },
+        "docs_retrieved": 0,
+        "chunks_total": 0,
+        "matched_chunks": 0,
+        "context_chars": 0,
+        "llm_error": ""
+      },
+      "metrics": {
+        "cleaned_prediction": "N/A (no chunks retrieved)",
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

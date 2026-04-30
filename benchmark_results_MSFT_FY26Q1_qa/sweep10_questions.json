@@ -1,0 +1,266 @@
+{
+  "qa_pairs": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "answer": "$5.0 billion USD",
+      "evidence": {
+        "text": "As of September 30, 2025 and June 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion and $5.2 billion, respectively, and is included in other long-term assets in our consolidated balance sheets.",
+        "page_number": 12,
+        "line_number": 234,
+        "start_offset": 119,
+        "end_offset": 123,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"As of September 30, 2025 and June 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion and $5.2 billion, respectively, and is included in other long-term assets in our consolidated balance sheets.\"?"
+    },
+    {
+      "id": "G1-011",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Our effective tax rate as of September 30, 2025? Return only the value with unit.",
+      "answer": "19%",
+      "evidence": {
+        "text": "Our effective tax rate was 19% for both the three months ended September 30, 2025 and 2024.",
+        "page_number": 19,
+        "line_number": 521,
+        "start_offset": 27,
+        "end_offset": 30,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"Our effective tax rate was 19% for both the three months ended September 30, 2025 and 2024.\"?"
+    },
+    {
+      "id": "G1-021",
+      "group": "Group1",
+      "difficulty": 1,
+      "question": "In MSFT_FY26Q1_10Q.docx, by what percentage did Microsoft Cloud revenue increase? Return only the percentage.",
+      "answer": "26%",
+      "evidence": {
+        "text": "\u2022Microsoft Cloud revenue increased 26% to $49.1 billion.",
+        "page_number": 30,
+        "line_number": 733,
+        "start_offset": 35,
+        "end_offset": 38,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "evidence_contains_answer",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported amount or rate in this sentence: \"\u2022Microsoft Cloud revenue increased 26% to $49.1 billion.\"?"
+    },
+    {
+      "id": "G2-001",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Common Stock, $0.00000625 par value per share? Return only the value with unit.",
+      "answer": "7,432,377,655 shares",
+      "evidence": {
+        "text": "Common Stock, $0.00000625 par value per share | | | 7,432,377,655 shares | |",
+        "page_number": 1,
+        "line_number": 32,
+        "start_offset": 52,
+        "end_offset": 72,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Common Stock, $0.00000625 par value per share' under 'column 4'?"
+    },
+    {
+      "id": "G2-011",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "In MSFT_FY26Q1_10Q.docx, what is General and administrative? Return only the value with unit.",
+      "answer": "1,806 USD million",
+      "evidence": {
+        "text": "General and administrative | | | 1,806 | | | | 1,673 |",
+        "page_number": 3,
+        "line_number": 73,
+        "start_offset": 33,
+        "end_offset": 38,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'General and administrative' under 'column 4'?"
+    },
+    {
+      "id": "G2-021",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Other comprehensive income? Return only the value with unit.",
+      "answer": "586 USD million",
+      "evidence": {
+        "text": "Other comprehensive income | | | 586 | | | | 1,408 |",
+        "page_number": 5,
+        "line_number": 94,
+        "start_offset": 33,
+        "end_offset": 36,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Other comprehensive income' under 'column 4'?"
+    },
+    {
+      "id": "G2-031",
+      "group": "Group2",
+      "difficulty": 2,
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Operating lease right-of-use assets? Return only the value with unit.",
+      "answer": "24,791 USD million",
+      "evidence": {
+        "text": "Operating lease right-of-use assets | | | 24,791 | | | | 24,823 |",
+        "page_number": 6,
+        "line_number": 110,
+        "start_offset": 42,
+        "end_offset": 48,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "table_row_column_lookup",
+        "passed": true
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the reported value for 'Operating lease right-of-use assets' under 'column 4'?"
+    },
+    {
+      "id": "G3-001",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Commercial paper? Return only the numeric result with unit.",
+      "answer": "9,044.00 USD million",
+      "evidence": {
+        "text": "Row: Commercial paper | | Level 2 | | | $ | 9,044 | | $ | 0 | | $ | 0 | | | $ | 9,044 | | $ | 8,597 | | $ | 447 | | $ | 0 | Computation: 9044.0 - 0.0 = 9,044.00",
+        "page_number": 14,
+        "line_number": 289,
+        "start_offset": 152,
+        "end_offset": 160,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "9,044",
+          "0"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Commercial paper' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-011",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Mortgage- and asset-backed securities? Return only the numeric result with unit.",
+      "answer": "3,567.00 million",
+      "evidence": {
+        "text": "Row: Mortgage- and asset-backed securities | | Level 2 | | | | 3,587 | | | 20 | | | (23 | ) | | | 3,584 | | | 0 | | | 3,584 | | | 0 | Computation: 3587.0 - 20.0 = 3,567.00",
+        "page_number": 14,
+        "line_number": 294,
+        "start_offset": 163,
+        "end_offset": 171,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "3,587",
+          "20"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Mortgage- and asset-backed securities' between 'column 7' and 'Unrealized Losses'?"
+    },
+    {
+      "id": "G3-021",
+      "group": "Group3",
+      "difficulty": 3,
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the difference between fair value and unrealized losses for Total debt investments? Return only the numeric result with unit.",
+      "answer": "91,506.00 USD million",
+      "evidence": {
+        "text": "Row: Total debt investments | | | | | $ | 92,401 | | $ | 895 | | $ | (1,356 | ) | | $ | 91,940 | | $ | 16,274 | | $ | 73,156 | | $ | 2,510 | Computation: 92401.0 - 895.0 = 91,506.00",
+        "page_number": 14,
+        "line_number": 299,
+        "start_offset": 172,
+        "end_offset": 181,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "verification": {
+        "method": "arithmetic_diff",
+        "passed": true,
+        "inputs": [
+          "92,401",
+          "895"
+        ]
+      },
+      "original_question": "According to the MSFT_FY26Q1_10Q.docx file, what is the absolute difference for 'Total debt investments' between 'column 7' and 'Unrealized Losses'?"
+    }
+  ]
+}
