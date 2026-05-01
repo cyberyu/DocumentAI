@@ -17,8 +17,8 @@
   },
   "summary": {
     "run": 100,
-    "overall_correct_count": 18,
-    "overall_correct_rate": 0.18,
+    "overall_correct_count": 26,
+    "overall_correct_rate": 0.26,
     "normalized_exact_count": 2,
     "normalized_exact_rate": 0.02,
     "number_match_count": 34,
@@ -444,7 +444,7 @@
       "predicted_answer": "19%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -455,9 +455,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -544,7 +544,7 @@
       "predicted_answer": "40%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -555,9 +555,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -694,7 +694,7 @@
       "predicted_answer": "$49.1 billion",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -719,7 +719,7 @@
       "predicted_answer": "Based on the document, the reported amount for Commercial remaining performance obligation increased to as of September 30, 2025, is $392 billion.",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -769,7 +769,7 @@
       "predicted_answer": "Microsoft 365 Consumer cloud revenue increased 26%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": true,
@@ -780,9 +780,9 @@
         "numeric_f1": 0.6666666666666666,
         "primary_value_match": true,
         "token_f1": 0.25,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -794,7 +794,7 @@
       "predicted_answer": "Dynamics 365 revenue increased 18% as of September 30, 2025.",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": true,
@@ -805,9 +805,9 @@
         "numeric_f1": 0.33333333333333337,
         "primary_value_match": true,
         "token_f1": 0.18181818181818182,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -819,7 +819,7 @@
       "predicted_answer": "Azure and other cloud services revenue increased 40%.",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": true,
@@ -830,9 +830,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 0.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -844,7 +844,7 @@
       "predicted_answer": "Windows OEM and Devices revenue increased 6%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": true,
@@ -855,9 +855,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 0.25,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -869,7 +869,7 @@
       "predicted_answer": "The reported amount for Xbox content and services revenue increase as of September 30, 2025, was 1%.",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": true,
@@ -880,9 +880,9 @@
         "numeric_f1": 0.4,
         "primary_value_match": true,
         "token_f1": 0.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -894,7 +894,7 @@
       "predicted_answer": "Search and news advertising revenue excluding traffic acquisition costs increased 16%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": true,
@@ -905,9 +905,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 0.16666666666666669,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -2069,7 +2069,7 @@
       "predicted_answer": "There is no column explicitly labeled 'U.S. government securities' in the tables provided in the document. The tables summarize different financial metrics (Revenue, Net Income, Investments, etc.) for Microsoft Corporation.\n\nTo perform the requested calculation, please specify which table or row you intended to reference for 'U.S. government securities'.",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2169,7 +2169,7 @@
       "predicted_answer": "Since the initial chunk only contained introductory and administrative information, and I need to find specific financial data in a table, I will continue reading chunks to locate the required table.<channel|>The table structure is quite complex and scattered across multiple chunks, but the relevant data appears to be in the sections detailing debt/investments around the required date.\n\nI found the following potential table sections that might contain the necessary data:\n1.  Chunk `7843`: \"Unrealized Losses on Debt Investments\"\n2.  Chunks `7901`, `7934`, `7937`, `7977`, `7978`, `7979`, `7980`, `7981`, `7987`, `7988`, `7989`, `7990`, `7991`, `7992`, `7993`, `7994`, `7995`, `7996`, `7997`, `7998`, `7999`, `8000`, `8001` which detail various debt instruments across different maturity dates.\n3.  Chunk `8370`: Contains a \"Percentage Change\" table with \"Net losses from investments in OpenAI, net of tax\".\n\nThe request specifically asks",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2269,7 +2269,7 @@
       "predicted_answer": "I do not see a table labeled 'Corporate notes and bonds' or a specific column labeled 'Unrealized Losses' in the retrieved chunks of the document. Therefore, I cannot compute the requested percent change.",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2319,7 +2319,7 @@
       "predicted_answer": "I found a table containing financial data for the three months ended September 30, 2025.\n\nThe values for 'Unrealized Losses' in the \"Net unrealized gains (losses) on investments still held\" row are:\n*   **2025:** $(\\text{635 million})$\n*   **2024:** $412 \\text{ million}$\n\nThe column 7 of the table (which corresponds to the \"2024\" column in the \"Three Months Ended September 30, 2025\" section, if we consider the entire table structure) and the 'Unrealized Losses' for September 30, 2025, are:\n*   **Unrealized Loss (2025):** $-635$ (in millions)\n*   **Column 7 (2024):** $412$ (in millions)\n\nThe percent change is calculated as:\n$$\\text{Percent Change} = \\left( \\frac{\\text{Value}_{2025} - \\text{Value}_{2024}}{\\text{Value}_{2024}} \\right)",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2469,7 +2469,7 @@
       "predicted_answer": "The required data is not explicitly presented in a single table structure that allows for the direct computation requested based on the retrieved chunks.\n\nSpecifically, the request asks to:\n1.  Locate 'Total debt investments' in a relevant table.\n2.  Compute the percent change from 'Unrealized Losses' to 'Column 7'.\n3.  Select the value tied to 'September 30, 2025'.\n4.  Return *only* the percentage.\n\nThe retrieved chunks contain tables related to:\n*   Net recognized gains (losses) on investments (Chunk 7763), which shows unrealized losses but doesn't immediately point to \"Total debt investments\" or a clear \"Column 7\" for comparison.\n*   Accumulated Other Comprehensive Income (Loss) (Chunk 8370), which shows 'Net losses from investments in OpenAI' but this is not \"Total debt investments.\"\n\nSince the specific data points ('Total debt investments' amount, 'Unrealized Losses' amount, and the value in 'Column 7' for the specific date) required to perform the calculation are not clearly and consecutively present or cross-referenced within the retrieved content, I cannot compute the percentage",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2569,7 +2569,7 @@
       "predicted_answer": "The calculation requires specific data points from the table structure found in the document, specifically for \"U.S. government securities,\" for the date September 30, 2025, comparing the value for \"Unrealized Losses\" to \"Column 7\" (which based on the table structure appears to be a percentage change column or a similar metric related to change).\n\nBased on the retrieved content:\n1.  **U.S. government securities** is not explicitly listed in the visible tables. The tables detail:\n    *   Realized gains/losses on debt investments (Chunk 7760).\n    *   Net realized/unrealized gains/losses on equity investments (Chunk 7763).\n    *   Accumulated other comprehensive income (loss) by component (Chunk 8093).\n    *   General financial metrics like Revenue, Gross margin, Net income, etc. (Chunks 8252, 8253).\n    *   Other income (expense) related to OpenAI investments (Chunks 8367, 8370).\n\n2.  The request asks to locate 'U.S. government securities' in a \"relevant table",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,

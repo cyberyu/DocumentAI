@@ -17,8 +17,8 @@
   },
   "summary": {
     "run": 100,
-    "overall_correct_count": 18,
-    "overall_correct_rate": 0.18,
+    "overall_correct_count": 26,
+    "overall_correct_rate": 0.26,
     "normalized_exact_count": 4,
     "normalized_exact_rate": 0.04,
     "number_match_count": 35,
@@ -330,7 +330,7 @@
       "predicted_answer": "19 %",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -342,8 +342,8 @@
         "primary_value_match": true,
         "token_f1": 0.0,
         "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -430,7 +430,7 @@
       "predicted_answer": "40%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -441,9 +441,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -505,7 +505,7 @@
       "predicted_answer": "10%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -516,9 +516,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -580,7 +580,7 @@
       "predicted_answer": "$49.1 billion",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -605,7 +605,7 @@
       "predicted_answer": "$392 billion",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -630,7 +630,7 @@
       "predicted_answer": "$49.1 billion",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -655,7 +655,7 @@
       "predicted_answer": "$2,204 million",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -680,7 +680,7 @@
       "predicted_answer": "18 %",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -692,8 +692,8 @@
         "primary_value_match": true,
         "token_f1": 0.0,
         "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -705,7 +705,7 @@
       "predicted_answer": "40 %",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -717,8 +717,8 @@
         "primary_value_match": true,
         "token_f1": 0.0,
         "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -730,7 +730,7 @@
       "predicted_answer": "6 %",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -742,8 +742,8 @@
         "primary_value_match": true,
         "token_f1": 0.0,
         "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -755,7 +755,7 @@
       "predicted_answer": "1%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -766,9 +766,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -780,7 +780,7 @@
       "predicted_answer": "16 %",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -792,8 +792,8 @@
         "primary_value_match": true,
         "token_f1": 0.0,
         "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -1955,7 +1955,7 @@
       "predicted_answer": "",
       "metrics": {
         "answer_clean": false,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2055,7 +2055,7 @@
       "predicted_answer": "4.76%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2105,7 +2105,7 @@
       "predicted_answer": "n/a",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2155,7 +2155,7 @@
       "predicted_answer": "n/a",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2205,7 +2205,7 @@
       "predicted_answer": "n/a",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2255,7 +2255,7 @@
       "predicted_answer": "n/a",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2355,7 +2355,7 @@
       "predicted_answer": "n/a",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2455,7 +2455,7 @@
       "predicted_answer": "",
       "metrics": {
         "answer_clean": false,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2530,7 +2530,7 @@
       "predicted_answer": "133.33%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,

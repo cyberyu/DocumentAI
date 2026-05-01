@@ -19,8 +19,8 @@
   },
   "summary": {
     "run": 90,
-    "overall_correct_count": 33,
-    "overall_correct_rate": 0.36666666666666664,
+    "overall_correct_count": 45,
+    "overall_correct_rate": 0.5,
     "normalized_exact_count": 10,
     "normalized_exact_rate": 0.1111111111111111,
     "number_match_count": 54,
@@ -173,7 +173,7 @@
       "predicted_answer": "19%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -184,9 +184,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -273,7 +273,7 @@
       "predicted_answer": "40%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -284,9 +284,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -348,7 +348,7 @@
       "predicted_answer": "10%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -359,9 +359,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -423,7 +423,7 @@
       "predicted_answer": "26%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -434,9 +434,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -448,7 +448,7 @@
       "predicted_answer": "51%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -459,9 +459,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -473,7 +473,7 @@
       "predicted_answer": "17%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -484,9 +484,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -498,7 +498,7 @@
       "predicted_answer": "26%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -509,9 +509,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -523,7 +523,7 @@
       "predicted_answer": "18%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -534,9 +534,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -548,7 +548,7 @@
       "predicted_answer": "33%\n\nWait \u2014 let me confirm the exact figure from the document.\n\nThe document states: \"Azure and other cloud services revenue increased 40%.\" [citation:8298]\n\n**40%**",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": true,
@@ -559,9 +559,9 @@
         "numeric_f1": 0.33333333333333337,
         "primary_value_match": true,
         "token_f1": 0.07999999999999999,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -573,7 +573,7 @@
       "predicted_answer": "6%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -584,9 +584,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -598,7 +598,7 @@
       "predicted_answer": "2%\n\nWait \u2014 let me confirm the exact figure tied to the quarter ending September 30, 2025.\n\nThe document states Xbox content and services revenue increased **2%** \u2014 but the direct statement reads \"increased 1%.\" Let me verify the precise line.1%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": true,
@@ -609,9 +609,9 @@
         "numeric_f1": 0.25,
         "primary_value_match": true,
         "token_f1": 0.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -623,7 +623,7 @@
       "predicted_answer": "16%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -634,9 +634,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -1798,7 +1798,7 @@
       "predicted_answer": "For September 30, 2025, U.S. government and agency securities:\n- **Total Unrealized Losses** = $(1,238) million\n- **Total Fair Value** = $32,937 million\n\nPercent change from unrealized losses to fair value:\n\n$$\\frac{32{,}937 - (-1{,}238)}{-1{,}238} \\times 100 = \\frac{34{,}175}{-1{,}238} \\times 100 \\approx -2,760.5\\%$$\n\n-2,760.5%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -1898,7 +1898,7 @@
       "predicted_answer": "**2,600.00%**",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -1948,7 +1948,7 @@
       "predicted_answer": "For September 30, 2025, the Mortgage- and asset-backed securities row shows:\n- **Total Fair Value** = 264\n- **Total Unrealized Losses** = (23)\n\nPercent change from unrealized losses to fair value = (264 \u2212 (\u221223)) / (\u221223) \u00d7 100\n\nBut the question asks for the percent change **from** unrealized losses **to** fair value, meaning:\n\n$$\\frac{\\text{Fair Value} - \\text{Unrealized Losses}}{\\text{Unrealized Losses}} \\times 100 = \\frac{264 - (-23)}{-23} \\times 100 = \\frac{287}{-23} \\times 100 \\approx -1247.83\\%$$\n\nWait \u2014 re-reading: \"percent change from unrealized losses to fair value\" most naturally means:\n\n$$\\frac{\\text{Fair Value} - \\text{Unrealized Losses}}{\\|\\text{Unrealized Losses}\\|} \\times 100$$\n\nUsing the absolute value of the denominator (unrealized losses = \u221223, so |\u221223| = 23):\n\n$$\\frac{264 - (-23)}{23} \\times 100 = \\frac{287}{23} \\times 100 \\approx 1247.83\\%$$\n\nBut \"percent change from A to B\" standardly = (B \u2212 A) / |A| \u00d7 100:\n\n- A = unrealized losses = \u221223\n- B = fair value = 264\n- (264 \u2212 (\u221223)) / |\u221223| \u00d7 100 = 287 / 23 \u00d7 100 \u2248 **1,247.83%**\n\n**1,247.83%**",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -1998,7 +1998,7 @@
       "predicted_answer": "For **Corporate notes and bonds** as of **September 30, 2025**:\n\n- **Total Unrealized Losses** = $(70) million\n- **Total Fair Value** = $3,003 million\n\nPercent change = $\\dfrac{(70)}{3{,}003} \\times 100$\n\n$$= -2.33\\%$$\n\n**-2.33%**",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2048,7 +2048,7 @@
       "predicted_answer": "For **September 30, 2025**, Corporate notes and bonds:\n\n- **Total Unrealized Losses** = $(70) million\n- **Total Fair Value** = $3,003 million\n\nPercent change from unrealized losses to fair value:\n\n$$\\frac{3003 - (-70)}{|-70|} \\times 100 = \\frac{3073}{70} \\times 100 \\approx 4390\\%$$\n\n**+4,390.00%**",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2098,7 +2098,7 @@
       "predicted_answer": "Now I need to identify the date context for the two Municipal securities rows. The bold values (chunk 7855) appear to be for September 30, 2025, and the non-bold values (chunk 7871) for June 30, 2025. Let me confirm by checking the surrounding context.The September 30, 2025 section for Municipal securities shows:\n- **Total Unrealized Losses** = **(19)** \u2192 i.e., \u201319\n- **Total Fair Value** = **167**\n\nPercent change from unrealized losses to fair value:\n\n$$\\frac{\\text{Fair Value} - \\text{Unrealized Losses}}{\\text{Unrealized Losses}} \\times 100 = \\frac{167 - (-19)}{-19} \\times 100 = \\frac{186}{-19} \\times 100 \\approx -978.95\\%$$\n\nWait \u2014 the question asks for the percent change *from* unrealized losses *to* fair value, meaning:\n\n$$\\frac{\\text{Fair Value} - \\text{Unrealized Losses}}{\\lvert\\text{Unrealized Losses}\\rvert} \\times 100 = \\frac{167 - (-19)}{19} \\times 100 = \\frac{186}{19} \\times 100 \\approx 978.95\\%$$\n\nOr interpreted as a standard percent change (new minus old, divided by old):\n\n$$\\frac{167 - (-19)}{-19} \\times 100 = \\frac{186}{-19} \\approx -978.95\\%$$\n\nUsing the standard percent change formula (from unrealized losses as base to fair value as new value):\n\n$$\\frac{167 - (-19)}{-19} \\times 100 = -978.95\\%$$\n\n-978.95%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2198,7 +2198,7 @@
       "predicted_answer": "**+2,793.3%**",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2298,7 +2298,7 @@
       "predicted_answer": "From the September 30, 2025 table for U.S. government and agency securities:\n\n- **Total Unrealized Losses** = $(1,238) million\n- **Total Fair Value** = $32,937 million\n\nPercent change from unrealized losses to fair value:\n\n$$\\frac{32{,}937 - (-1{,}238)}{-1{,}238} \\times 100 = \\frac{34{,}175}{-1{,}238} \\times 100 \\approx -2,760.5\\%$$\n\n**-2,760.50%**",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2373,7 +2373,7 @@
       "predicted_answer": "From the September 30, 2025 table (chunk 7852), for Foreign government bonds:\n\n- **Total Fair Value** = **150**\n- **Total Unrealized Losses** = **(6)**\n\nPercent change = (Fair Value \u2212 Unrealized Losses) / |Unrealized Losses| \u00d7 100\n= (150 \u2212 (\u22126)) / |\u22126| \u00d7 100\n= 156 / 6 \u00d7 100\n= **2,600%**\n\n**2,600%**",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,

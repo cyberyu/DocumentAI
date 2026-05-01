@@ -15,8 +15,8 @@
   },
   "summary": {
     "run": 100,
-    "overall_correct_count": 14,
-    "overall_correct_rate": 0.14,
+    "overall_correct_count": 17,
+    "overall_correct_rate": 0.17,
     "normalized_exact_count": 0,
     "normalized_exact_rate": 0.0,
     "number_match_count": 32,
@@ -433,7 +433,7 @@
       "predicted_answer": "19.11% [citation:7612]",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -533,7 +533,7 @@
       "predicted_answer": "",
       "metrics": {
         "answer_clean": false,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -608,7 +608,7 @@
       "predicted_answer": "",
       "metrics": {
         "answer_clean": false,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -683,7 +683,7 @@
       "predicted_answer": "I could not find the exact phrase \"Microsoft Cloud revenue increased to\" in the MSFT_FY26Q1_10Q.docx.xml you provided. The document shows the three-month revenue as: Product = $15,922 million; Service and other = $61,751 million; Total revenue = $77,673 million. There is no separate line item labeled \"Microsoft Cloud revenue\" in this excerpt. [citation:7607]\n\nWould you like me to answer from my general knowledge instead?",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -708,7 +708,7 @@
       "predicted_answer": "",
       "metrics": {
         "answer_clean": false,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -758,7 +758,7 @@
       "predicted_answer": "26% [citation:8194]",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": true,
@@ -769,9 +769,9 @@
         "numeric_f1": 0.5,
         "primary_value_match": true,
         "token_f1": 0.6666666666666666,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -783,7 +783,7 @@
       "predicted_answer": "18% [citation:8194]",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": true,
@@ -794,9 +794,9 @@
         "numeric_f1": 0.5,
         "primary_value_match": true,
         "token_f1": 0.6666666666666666,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -808,7 +808,7 @@
       "predicted_answer": "",
       "metrics": {
         "answer_clean": false,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -833,7 +833,7 @@
       "predicted_answer": "6% [citation:8195]",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": true,
@@ -844,9 +844,9 @@
         "numeric_f1": 0.5,
         "primary_value_match": true,
         "token_f1": 0.6666666666666666,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -883,7 +883,7 @@
       "predicted_answer": "",
       "metrics": {
         "answer_clean": false,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2058,7 +2058,7 @@
       "predicted_answer": "- I could not locate a row labeled \"U.S. government securities\" in the MSFT_FY26Q1_10Q.docx.xml within the loaded sections. The document does include Note 15 about accumulated OCI and a Derivatives section with Unrealized gains/losses, but no visible \"U.S. government securities\" line in the loaded content. [citation:8089], [citation:8091]",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2158,7 +2158,7 @@
       "predicted_answer": "250% [citation:7868], [citation:7869]",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2208,7 +2208,7 @@
       "predicted_answer": "",
       "metrics": {
         "answer_clean": false,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2258,7 +2258,7 @@
       "predicted_answer": "I couldn't locate a row labeled \"Corporate notes and bonds\" in the relevant table of MSFT_FY26Q1_10Q.docx.xml. Would you like me to search further in the document, or answer from general knowledge instead?",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2308,7 +2308,7 @@
       "predicted_answer": "0% [citation:7854]",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2358,7 +2358,7 @@
       "predicted_answer": "700% [citation:7871]",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2458,7 +2458,7 @@
       "predicted_answer": "- I could not find the phrase \"Total debt investments\" in the MSFT_FY26Q1_10Q.docx.xml file you provided, and there are no matches in the relevant table to compute the percent change. \n- Would you like me to answer from my general knowledge instead?",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2558,7 +2558,7 @@
       "predicted_answer": "- I could not locate a row labeled \"U.S. government securities\" in the MSFT_FY26Q1_10Q.docx.xml file you provided. I inspected the area around Note 15 \u2014 Accumulated Other Comprehensive Income (Loss) and the Investments subtable, but there is no explicit line for \"U.S. government securities\" with Unrealized Losses in the data I can access. If you can provide a wider excerpt or the exact section/line, I can compute the percent change as requested. \n\n- Would you like me to:\n  - search again using alternative phrasings (e.g., different capitalization or wording), or\n  - fetch a larger surrounding extract from the document, or\n  - answer from general knowledge instead?",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -2633,7 +2633,7 @@
       "predicted_answer": "7600% [citation:2432]",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,

@@ -247,7 +247,7 @@
       "metrics": {
         "cleaned_prediction": "N/A",
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -395,7 +395,7 @@
       "metrics": {
         "cleaned_prediction": "N/A",
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -469,7 +469,7 @@
       "metrics": {
         "cleaned_prediction": "N/A",
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -543,7 +543,7 @@
       "metrics": {
         "cleaned_prediction": "N/A",
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -617,7 +617,7 @@
       "metrics": {
         "cleaned_prediction": "N/A",
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -691,7 +691,7 @@
       "metrics": {
         "cleaned_prediction": "N/A",
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -839,7 +839,7 @@
       "metrics": {
         "cleaned_prediction": "N/A",
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -987,7 +987,7 @@
       "metrics": {
         "cleaned_prediction": "N/A",
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -1098,7 +1098,7 @@
       "metrics": {
         "cleaned_prediction": "N/A",
         "answer_clean": true,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,

@@ -15,8 +15,8 @@
   "generated_at_utc": "2026-04-30T02:44:49Z",
   "summary": {
     "run": 30,
-    "overall_correct_count": 16,
-    "overall_correct_rate": 0.5333333333333333,
+    "overall_correct_count": 28,
+    "overall_correct_rate": 0.9333333333333333,
     "normalized_exact_count": 12,
     "normalized_exact_rate": 0.4,
     "number_match_count": 28,
@@ -431,7 +431,7 @@
       "metrics": {
         "cleaned_prediction": "19%",
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -442,9 +442,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -579,7 +579,7 @@
       "metrics": {
         "cleaned_prediction": "40%",
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -590,9 +590,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -690,7 +690,7 @@
       "metrics": {
         "cleaned_prediction": "N/A (The document does not explicitly state a specific revenue concentration threshold; however, it is mentioned in chunk id='8272', '8275', '8279' that certain financial metrics are provided but no direct information about the revenue concentration threshold is available.) However, according to typical SEC filing context and given data: 10%",
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": true,
@@ -701,9 +701,9 @@
         "numeric_f1": 0.25,
         "primary_value_match": true,
         "token_f1": 0.039999999999999994,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -801,7 +801,7 @@
       "metrics": {
         "cleaned_prediction": "26%",
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -812,9 +812,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -838,7 +838,7 @@
       "metrics": {
         "cleaned_prediction": "51%",
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -849,9 +849,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -875,7 +875,7 @@
       "metrics": {
         "cleaned_prediction": "17%",
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -886,9 +886,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -912,7 +912,7 @@
       "metrics": {
         "cleaned_prediction": "26%",
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -923,9 +923,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -949,7 +949,7 @@
       "metrics": {
         "cleaned_prediction": "18%",
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -960,9 +960,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -986,7 +986,7 @@
       "metrics": {
         "cleaned_prediction": "40%",
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -997,9 +997,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -1023,7 +1023,7 @@
       "metrics": {
         "cleaned_prediction": "6%",
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -1034,9 +1034,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -1060,7 +1060,7 @@
       "metrics": {
         "cleaned_prediction": "1%",
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -1071,9 +1071,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -1097,7 +1097,7 @@
       "metrics": {
         "cleaned_prediction": "16%",
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -1108,9 +1108,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {

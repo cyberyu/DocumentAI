@@ -149,7 +149,7 @@ def _choose_better_prediction(first: str, second: str) -> str:
 
 def _infer_expected_answer_type(question: str) -> str:
     q = question.lower()
-    if any(k in q for k in ["percent", "percentage", "rate", "bps", "basis points"]):
+    if any(k in q for k in ["percent", "percentage", "rate", "bps", "basis points", "%"]):
         return "rate"
     if "ratio" in q:
         return "ratio"

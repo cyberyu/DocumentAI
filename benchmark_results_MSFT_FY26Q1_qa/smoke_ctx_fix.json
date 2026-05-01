@@ -60,7 +60,10 @@
         "number_match": false,
         "unit_match": false,
         "token_f1": 0.0,
-        "overall_correct": false
+        "overall_correct": false,
+        "lenient_correct": false,
+        "strict_correct": false,
+        "semantic_intent_ok": true
       }
     },
     {
@@ -76,7 +79,10 @@
         "number_match": true,
         "unit_match": true,
         "token_f1": 0.00816326530612245,
-        "overall_correct": false
+        "overall_correct": false,
+        "lenient_correct": false,
+        "strict_correct": false,
+        "semantic_intent_ok": true
       }
     }
   ]

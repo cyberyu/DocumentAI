@@ -12,8 +12,8 @@
   },
   "summary": {
     "run": 100,
-    "overall_correct_count": 62,
-    "overall_correct_rate": 0.62,
+    "overall_correct_count": 73,
+    "overall_correct_rate": 0.73,
     "normalized_exact_count": 13,
     "normalized_exact_rate": 0.13,
     "number_match_count": 92,
@@ -324,7 +324,7 @@
       "predicted_answer": "19%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -335,9 +335,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -424,7 +424,7 @@
       "predicted_answer": "40%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -435,9 +435,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -499,7 +499,7 @@
       "predicted_answer": "10%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -510,9 +510,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -574,7 +574,7 @@
       "predicted_answer": "",
       "metrics": {
         "answer_clean": false,
-        "semantic_intent_ok": true,
+        "semantic_intent_ok": false,
         "strict_exact": false,
         "normalized_exact": false,
         "contains_gold": false,
@@ -599,7 +599,7 @@
       "predicted_answer": "51%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -610,9 +610,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -624,7 +624,7 @@
       "predicted_answer": "17%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -635,9 +635,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -649,7 +649,7 @@
       "predicted_answer": "26%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -660,9 +660,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -674,7 +674,7 @@
       "predicted_answer": "18%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -685,9 +685,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -699,7 +699,7 @@
       "predicted_answer": "40%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -710,9 +710,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -724,7 +724,7 @@
       "predicted_answer": "6%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -735,9 +735,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -749,7 +749,7 @@
       "predicted_answer": "1%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -760,9 +760,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
@@ -774,7 +774,7 @@
       "predicted_answer": "16%",
       "metrics": {
         "answer_clean": true,
-        "semantic_intent_ok": false,
+        "semantic_intent_ok": true,
         "strict_exact": true,
         "normalized_exact": true,
         "contains_gold": true,
@@ -785,9 +785,9 @@
         "numeric_f1": 1.0,
         "primary_value_match": true,
         "token_f1": 1.0,
-        "strict_correct": false,
-        "lenient_correct": false,
-        "overall_correct": false
+        "strict_correct": true,
+        "lenient_correct": true,
+        "overall_correct": true
       }
     },
     {
