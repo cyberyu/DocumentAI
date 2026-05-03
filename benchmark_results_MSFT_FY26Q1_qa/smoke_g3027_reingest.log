@@ -1,0 +1,19 @@
+[2026-05-02T14:29:26Z] Logging in to http://localhost:8929 ...
+[2026-05-02T14:29:26Z] Using search_space_id=1
+[2026-05-02T14:29:26Z] No matching document IDs found for title filter: None
+[2026-05-02T14:29:26Z] (1/1) G3-027 ...
+  eval: strict=N lenient=N num=N unit=Y clean=Y intent=Y num_f1=0.000 pred='+$1,543 million'
+  expected: 1,155 USD million
+  predicted_exact: +$1,543 million
+
+Benchmark complete
+  overall_correct: 0 / 1 (0.00%)
+  normalized_exact: 0 / 1 (0.00%)
+  number_match: 0 / 1 (0.00%)
+  unit_match: 1 / 1 (100.00%)
+  mean_token_f1: 0.4000
+  request_failures: 0
+  context_overflow_failures: 0
+  output_json: benchmark_results_MSFT_FY26Q1_qa/smoke_g3027_reingest.json
+  output_md: benchmark_results_MSFT_FY26Q1_qa/smoke_g3027_reingest.md
+

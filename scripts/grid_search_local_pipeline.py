@@ -91,6 +91,13 @@ VLLM_TIMEOUT  = 300.0
 MAX_TOKENS    = 8192
 TRUNC_TOKENS  = 28000       # matches production truncate_prompt_tokens
 
+_MAX_KEYWORD_TERMS = 12
+_KEYWORD_STOPWORDS = {
+    "in", "the", "a", "an", "of", "for", "to", "from", "and", "or",
+    "by", "on", "with", "between", "what", "was", "is", "are", "return",
+    "only", "numeric", "sign", "unit", "docx",
+}
+
 # ---------------------------------------------------------------------------
 # Grid definition
 # ---------------------------------------------------------------------------
@@ -294,6 +301,26 @@ def _embed(text: str) -> list[float]:
     return _get_embed_model().encode(text, normalize_embeddings=True).tolist()
 
 
+def _build_keyword_tsquery(query_text: str) -> str:
+    """Build OR tsquery text from query for robust keyword ranking."""
+    tokens = re.findall(r"[A-Za-z0-9_.-]+", query_text.lower())
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for raw in tokens:
+        token = raw.strip("._-")
+        if not token or token in seen:
+            continue
+        if "." in raw and any(ch.isalpha() for ch in raw):
+            continue
+        if len(token) < 2 or token in _KEYWORD_STOPWORDS:
+            continue
+        seen.add(token)
+        normalized.append(token)
+        if len(normalized) >= _MAX_KEYWORD_TERMS:
+            break
+    return " | ".join(normalized)
+
+
 # ---------------------------------------------------------------------------
 # RRF hybrid search (replicates ChucksHybridSearchRetriever.hybrid_search)
 # ---------------------------------------------------------------------------
@@ -316,6 +343,9 @@ def rrf_hybrid_search(
     """
 
     query_embedding = _embed(query_text)
+    keyword_tsquery = _build_keyword_tsquery(query_text)
+    if not keyword_tsquery:
+        return []
     n_results = top_k * 5
 
     # Build date-filter predicates
@@ -344,14 +374,15 @@ WITH semantic_search AS (
 keyword_search AS (
     SELECT c.id,
            RANK() OVER (ORDER BY ts_rank_cd(to_tsvector('english', c.content),
-                                            plainto_tsquery('english', %s)) DESC) AS rank
+                                                                                        to_tsquery('english', %s)) DESC) AS rank
     FROM chunks c
     JOIN documents d ON c.document_id = d.id
     WHERE d.search_space_id = %s
       {date_where}
-      AND to_tsvector('english', c.content) @@ plainto_tsquery('english', %s)
+            AND ts_rank_cd(to_tsvector('english', c.content),
+                                         to_tsquery('english', %s)) > 0
     ORDER BY ts_rank_cd(to_tsvector('english', c.content),
-                        plainto_tsquery('english', %s)) DESC
+                                                to_tsquery('english', %s)) DESC
     LIMIT %s
 ),
 rrf AS (
@@ -378,7 +409,7 @@ ORDER BY rrf.score DESC
     #         RRF k, k, limit
     params: list[Any] = (
         [vec_str, search_space_id] + date_params + [vec_str, n_results]
-        + [query_text, search_space_id] + date_params + [query_text, query_text, n_results]
+        + [keyword_tsquery, search_space_id] + date_params + [keyword_tsquery, keyword_tsquery, n_results]
         + [rrf_k, rrf_k, top_k]
     )
 

@@ -12,12 +12,14 @@ Mirrors run_openai_direct_benchmark.py but uses DeepSeek's chat/completions endp
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import getpass
 import html
 import json
 import os
 import re
 import sys
+import threading
 import time
 import urllib.error
 import urllib.request
@@ -62,12 +64,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--model",
         default="deepseek-v4-flash",
-        help="DeepSeek model id (default: deepseek-v4-flash)",
+        help="DeepSeek model id: deepseek-v4-flash | deepseek-v4-pro (default: deepseek-v4-flash)",
     )
     parser.add_argument(
         "--deepseek-url",
         default="https://api.deepseek.com",
-        help="DeepSeek API base URL",
+        help="DeepSeek API base URL (default: https://api.deepseek.com)",
     )
     parser.add_argument(
         "--max-questions",
@@ -136,6 +138,22 @@ def build_arg_parser() -> argparse.ArgumentParser:
         type=float,
         default=None,
         help="Optional sampling temperature",
+    )
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=1,
+        help="Number of parallel threads for API calls (default: 1 = sequential)",
+    )
+    parser.add_argument(
+        "--thinking",
+        default="true",
+        help="Enable DeepSeek thinking mode: {\"type\": \"enabled\"} (default: true)",
+    )
+    parser.add_argument(
+        "--reasoning-effort",
+        default="high",
+        help="DeepSeek reasoning_effort: low|medium|high (default: high). Empty string to omit.",
     )
     return parser
 
@@ -211,6 +229,8 @@ def call_deepseek_chat(
     context_chunks: list[str],
     temperature: float | None,
     timeout: float,
+    thinking_enabled: bool = True,
+    reasoning_effort: str = "high",
 ) -> str:
     context_blob = "\n\n".join(
         [f"[chunk {i + 1}]\n{chunk}" for i, chunk in enumerate(context_chunks)]
@@ -240,6 +260,10 @@ def call_deepseek_chat(
     }
     if temperature is not None:
         body["temperature"] = temperature
+    if thinking_enabled:
+        body["thinking"] = {"type": "enabled"}
+    if reasoning_effort:
+        body["reasoning_effort"] = reasoning_effort
 
     url = base_url.rstrip("/") + "/chat/completions"
     data = json.dumps(body).encode("utf-8")
@@ -360,22 +384,28 @@ def main() -> int:
     print(f"[{_now_utc()}] Reading document text from {doc_path}")
     full_text = read_document_text(doc_path)
     chunks = chunk_text(full_text, args.chunk_chars, args.chunk_overlap)
+    thinking_enabled = args.thinking.strip().lower() in {"1", "true", "yes", "y", "on"}
+    reasoning_effort = args.reasoning_effort.strip()
+
     print(f"[{_now_utc()}] Prepared {len(chunks)} chunks for lexical retrieval")
-    print(f"[{_now_utc()}] Model: {args.model} @ {args.deepseek_url}")
+    print(f"[{_now_utc()}] Model: {args.model} @ {args.deepseek_url}  workers={args.workers}")
+    print(f"[{_now_utc()}] thinking={thinking_enabled}  reasoning_effort={reasoning_effort or '(omitted)'}")
 
-    results: list[dict[str, Any]] = []
-    failures = 0
+    _print_lock = threading.Lock()
 
-    for idx, qa in enumerate(qas, start=1):
+    def _run_one(indexed_qa: tuple[int, dict[str, Any]]) -> dict[str, Any]:
+        idx, qa = indexed_qa
         global_idx = start_idx + idx
         qid = str(qa.get("id", f"Q{global_idx:03d}"))
         group = str(qa.get("group", "unknown"))
         question = str(qa.get("question", "")).strip()
         gold = str(qa.get("answer", "")).strip()
 
-        print(f"[{_now_utc()}] ({global_idx}/{total_qas}) {qid} ...", flush=True)
+        with _print_lock:
+            print(f"[{_now_utc()}] ({global_idx}/{total_qas}) {qid} ...", flush=True)
 
         pred = ""
+        failed = False
         try:
             selected = rank_chunks(question, chunks, args.top_k)
             pred = call_deepseek_chat(
@@ -386,64 +416,78 @@ def main() -> int:
                 context_chunks=selected,
                 temperature=args.temperature,
                 timeout=args.request_timeout,
+                thinking_enabled=thinking_enabled,
+                reasoning_effort=reasoning_effort,
             )
             if not pred:
-                failures += 1
+                failed = True
         except Exception as exc:  # noqa: BLE001
-            failures += 1
+            failed = True
             pred = ""
-            print(f"  warning: request failed for {qid}: {exc}", file=sys.stderr)
+            with _print_lock:
+                print(f"  warning: request failed for {qid}: {exc}", file=sys.stderr)
 
         metrics = evaluate_answer(gold=gold, pred=pred)
         pred_preview = metrics.cleaned_prediction.replace("\n", " ").strip()
         if len(pred_preview) > 140:
             pred_preview = pred_preview[:137] + "..."
 
-        print(
-            "  eval: "
-            f"strict={'Y' if metrics.strict_correct else 'N'} "
-            f"lenient={'Y' if metrics.lenient_correct else 'N'} "
-            f"num={'Y' if metrics.number_match else 'N'} "
-            f"unit={'Y' if metrics.unit_match else 'N'} "
-            f"clean={'Y' if metrics.answer_clean else 'N'} "
-            f"intent={'Y' if metrics.semantic_intent_ok else 'N'} "
-            f"num_f1={metrics.numeric_f1:.3f} "
-            f"pred={pred_preview!r}",
-            flush=True,
-        )
-        print(f"  expected: {gold}", flush=True)
-        print(f"  predicted_exact: {pred}", flush=True)
+        with _print_lock:
+            print(
+                f"  {qid}: "
+                f"strict={'Y' if metrics.strict_correct else 'N'} "
+                f"lenient={'Y' if metrics.lenient_correct else 'N'} "
+                f"num={'Y' if metrics.number_match else 'N'} "
+                f"unit={'Y' if metrics.unit_match else 'N'} "
+                f"num_f1={metrics.numeric_f1:.3f} "
+                f"pred={pred_preview!r}",
+                flush=True,
+            )
+            print(f"    expected: {gold}", flush=True)
 
-        results.append(
-            {
-                "id": qid,
-                "group": group,
-                "question": question,
-                "asked_question": question,
-                "gold_answer": gold,
-                "predicted_answer": pred,
-                "metrics": {
-                    "answer_clean": metrics.answer_clean,
-                    "semantic_intent_ok": metrics.semantic_intent_ok,
-                    "strict_exact": metrics.strict_exact,
-                    "normalized_exact": metrics.normalized_exact,
-                    "contains_gold": metrics.contains_gold,
-                    "number_match": metrics.number_match,
-                    "unit_match": metrics.unit_match,
-                    "numeric_precision": metrics.numeric_precision,
-                    "numeric_recall": metrics.numeric_recall,
-                    "numeric_f1": metrics.numeric_f1,
-                    "primary_value_match": metrics.primary_value_match,
-                    "token_f1": metrics.token_f1,
-                    "strict_correct": metrics.strict_correct,
-                    "lenient_correct": metrics.lenient_correct,
-                    "overall_correct": metrics.overall_correct,
-                },
-            }
-        )
+        return {
+            "_order": global_idx,
+            "_failed": failed,
+            "id": qid,
+            "group": group,
+            "question": question,
+            "asked_question": question,
+            "gold_answer": gold,
+            "predicted_answer": pred,
+            "metrics": {
+                "answer_clean": metrics.answer_clean,
+                "semantic_intent_ok": metrics.semantic_intent_ok,
+                "strict_exact": metrics.strict_exact,
+                "normalized_exact": metrics.normalized_exact,
+                "contains_gold": metrics.contains_gold,
+                "number_match": metrics.number_match,
+                "unit_match": metrics.unit_match,
+                "numeric_precision": metrics.numeric_precision,
+                "numeric_recall": metrics.numeric_recall,
+                "numeric_f1": metrics.numeric_f1,
+                "primary_value_match": metrics.primary_value_match,
+                "token_f1": metrics.token_f1,
+                "strict_correct": metrics.strict_correct,
+                "lenient_correct": metrics.lenient_correct,
+                "overall_correct": metrics.overall_correct,
+            },
+        }
 
-        if args.sleep_between > 0:
-            time.sleep(args.sleep_between)
+    workers = max(1, args.workers)
+    indexed = list(enumerate(qas, start=1))
+    raw_results: list[dict[str, Any]]
+    if workers == 1:
+        raw_results = [_run_one(item) for item in indexed]
+    else:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
+            raw_results = list(pool.map(_run_one, indexed))
+
+    # Restore benchmark order (thread pool may complete out of order).
+    raw_results.sort(key=lambda r: r["_order"])
+    failures = sum(1 for r in raw_results if r.pop("_failed"))
+    for r in raw_results:
+        r.pop("_order", None)
+    results = raw_results
 
     final_results = results
     if args.merge_from_json:
@@ -489,6 +533,9 @@ def main() -> int:
             "top_k": args.top_k,
             "chunk_chars": args.chunk_chars,
             "chunk_overlap": args.chunk_overlap,
+            "workers": workers,
+            "thinking_enabled": thinking_enabled,
+            "reasoning_effort": reasoning_effort or None,
         },
         "summary": summary,
         "by_group": by_group,

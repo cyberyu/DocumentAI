@@ -59,6 +59,10 @@ services:
     volumes:
       - shared_temp:/shared_tmp
       - ./global_llm_config.yaml:/app/app/config/global_llm_config.yaml:ro
+      - ./backend_config_init_override.py:/app/app/config/__init__.py:ro
+      - ./llm_config_patched.py:/app/app/agents/new_chat/llm_config.py:ro
+      - ./document_chunker_patch.py:/app/app/indexing_pipeline/document_chunker.py:ro
+      - ./chunks_hybrid_search_patched.py:/app/app/retriever/chunks_hybrid_search.py:ro
     env_file:
       - .env
     environment:
@@ -72,12 +76,16 @@ services:
       UNSTRUCTURED_HAS_PATCHED_LOOP: "1"
       NEXT_FRONTEND_URL: ${NEXT_FRONTEND_URL:-http://localhost:${FRONTEND_PORT:-3929}}
       SEARXNG_DEFAULT_HOST: ${SEARXNG_DEFAULT_HOST-}
+      CHUNKER_CHUNK_SIZE: "256"
+      RETRIEVAL_MODE: "hybrid"
       # Daytona Sandbox – uncomment and set credentials to enable cloud code execution
       # DAYTONA_SANDBOX_ENABLED: "TRUE"
       # DAYTONA_API_KEY: ${DAYTONA_API_KEY:-}
       # DAYTONA_API_URL: ${DAYTONA_API_URL:-https://app.daytona.io/api}
       # DAYTONA_TARGET: ${DAYTONA_TARGET:-us}
       SERVICE_ROLE: api
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
@@ -98,6 +106,10 @@ services:
     volumes:
       - shared_temp:/shared_tmp
       - ./global_llm_config.yaml:/app/app/config/global_llm_config.yaml:ro
+      - ./backend_config_init_override.py:/app/app/config/__init__.py:ro
+      - ./llm_config_patched.py:/app/app/agents/new_chat/llm_config.py:ro
+      - ./document_chunker_patch.py:/app/app/indexing_pipeline/document_chunker.py:ro
+      - ./chunks_hybrid_search_patched.py:/app/app/retriever/chunks_hybrid_search.py:ro
     env_file:
       - .env
     environment:
@@ -108,7 +120,11 @@ services:
       CELERY_TASK_DEFAULT_QUEUE: surfsense
       PYTHONPATH: /app
       SEARXNG_DEFAULT_HOST: ${SEARXNG_DEFAULT_HOST-}
+      CHUNKER_CHUNK_SIZE: "256"
+      RETRIEVAL_MODE: "hybrid"
       SERVICE_ROLE: worker
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
       db:
         condition: service_healthy

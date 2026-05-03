@@ -39,7 +39,7 @@ DOCX/PDF/etc.
 | **2. Chunking** | `RecursiveChunker(chunk_size=512)` from chonkie, no overlap | `chonkie` · `RecursiveChunker` · chunk_size = embedding model `max_seq_length` (512) |
 | **3. Embedding** | `sentence-transformers/all-MiniLM-L6-v2` via fastembed, 384-dim, batch API | `fastembed` · `sentence-transformers/all-MiniLM-L6-v2` · local inference · 384-dim · 512 token max |
 | **4. Storage** | Full PostgreSQL schema (`chunks` + `documents`), HNSW index for vectors, GIN index for BM25 | `PostgreSQL 17` · `pgvector` extension · HNSW cosine ops · GIN `tsvector` · `asyncpg` · `SQLAlchemy` async |
-| **5. Retrieval** | Full RRF SQL query, `k=60`, per-doc 20-chunk cap, optional reranker | `pgvector` `<=>` operator · `plainto_tsquery` · RRF `k=60` · optional `flashrank` reranker |
+| **5. Retrieval** | Full RRF SQL query, `k=60`, per-doc 20-chunk cap, optional reranker | `pgvector` `<=>` operator · normalized `to_tsquery` OR terms · RRF `k=60` · optional `flashrank` reranker |
 | **6. LLM** | OpenAI-compatible endpoint, required vLLM flags | `vLLM` · `Qwen/Qwen2.5-7B-Instruct` · `litellm` · `langchain-litellm` · flags: `--enable-auto-tool-choice --tool-call-parser hermes` |
 | **7. Minimal example** | End-to-end Python code to ingest a DOCX and run a search query | `docling` · `chonkie` · `fastembed` · `SQLAlchemy` async · `asyncpg` |
 | **8. Known limitations** | Table chunking problem + fix options, embedding model recommendations, missing overlap | Fix: swap to `docling` `HybridChunker`, or set `ETL_SERVICE=UNSTRUCTURED` in `.env` |
@@ -233,7 +233,7 @@ async def store_document_and_chunks(
 SurfSense uses **Reciprocal Rank Fusion (RRF)** to merge results from two independent searches:
 
 1. **Vector search** — cosine similarity via pgvector HNSW index (`embedding <=> query_embedding`)
-2. **Keyword search** — PostgreSQL `plainto_tsquery` BM25 full-text ranking
+2. **Keyword search** — PostgreSQL full-text ranking with normalized OR-term `to_tsquery`
 
 ```sql
 -- Simplified RRF query (actual query uses CTEs)
@@ -246,12 +246,12 @@ WITH semantic AS (
     LIMIT :n
 ),
 keyword AS (
-    SELECT id, rank() OVER (ORDER BY ts_rank_cd(to_tsvector('english', content), plainto_tsquery('english', :query)) DESC) AS rank
+    SELECT id, rank() OVER (ORDER BY ts_rank_cd(to_tsvector('english', content), to_tsquery('english', :normalized_tsquery)) DESC) AS rank
     FROM chunks
     JOIN documents ON chunks.document_id = documents.id
     WHERE documents.search_space_id = :space_id
-      AND to_tsvector('english', content) @@ plainto_tsquery('english', :query)
-    ORDER BY ts_rank_cd(to_tsvector('english', content), plainto_tsquery('english', :query)) DESC
+            AND ts_rank_cd(to_tsvector('english', content), to_tsquery('english', :normalized_tsquery)) > 0
+        ORDER BY ts_rank_cd(to_tsvector('english', content), to_tsquery('english', :normalized_tsquery)) DESC
     LIMIT :n
 )
 SELECT
@@ -265,6 +265,18 @@ LIMIT :top_k;
 ```
 
 **RRF constant**: `k = 60` (standard value)
+
+### Keyword normalization policy
+
+The keyword branch now builds a normalized tsquery from the user prompt before ranking:
+
+- Keep only compact alphanumeric tokens (plus `_`, `-`, `.`), deduplicate, and cap term count.
+- Drop filename-like prompt tokens (for example `foo.docx`) and short/noise terms.
+- Remove instruction-heavy stopwords (for example `return`, `numeric`, `only`) that often appear in benchmark prompts but not in source chunks.
+- Build an OR tsquery string (`term1 | term2 | ...`) and rank by `ts_rank_cd(...)`.
+- Include chunks when `ts_rank_cd(...) > 0` instead of strict `@@ plainto_tsquery(...)` all-term matching.
+
+This prevents keyword-branch collapse on noisy long-form prompts, so hybrid RRF can combine semantic and keyword signals more consistently.
 
 **Post-retrieval grouping**: results are grouped by document. Per document, at most `_MAX_FETCH_CHUNKS_PER_DOC = 20` chunks are sent to the LLM. This improves coherence for large documents but means the first 20 chunks by `id` (insertion order) are always included alongside the matched chunks.
 

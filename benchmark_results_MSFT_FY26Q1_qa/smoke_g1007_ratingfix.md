@@ -1,0 +1,21 @@
+# SurfSense Benchmark Report: smoke_g1007_ratingfix
+
+- Generated at: 2026-05-02T21:50:40Z
+- Questions run: 1 / 100
+- Overall correct: 1 (100.00%)
+- Normalized exact: 1 (100.00%)
+- Number match: 1 (100.00%)
+- Unit match: 1 (100.00%)
+- Mean token F1: 1.0000
+
+## Group Metrics
+
+| Group | Run | Correct | Correct % | Norm Exact % | Number Match % | Unit Match % | Mean F1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Group1 | 1 | 1 | 100.00% | 100.00% | 100.00% | 100.00% | 1.0000 |
+
+## First 20 Results
+
+| ID | Group | Overall | Norm Exact | Number | Unit | F1 |
+|---|---|---:|---:|---:|---:|---:|
+| G1-007 | Group1 | Y | Y | Y | Y | 1.0000 |

@@ -1,0 +1,428 @@
+[2026-05-02T12:34:02Z] Logging in to http://localhost:8929 ...
+[2026-05-02T12:34:02Z] Using search_space_id=1
+[2026-05-02T12:34:02Z] Mentioning document IDs: [7]
+[2026-05-02T12:34:02Z] (1/100) G1-001 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$5.0 billion'
+  expected: $5.0 billion USD
+  predicted_exact: $5.0 billion
+[2026-05-02T12:34:25Z] (2/100) G1-002 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$14.4 billion'
+  expected: $14.4 billion USD
+  predicted_exact: $14.4 billion
+[2026-05-02T12:34:39Z] (3/100) G1-003 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$3.9 billion'
+  expected: $3.9 billion USD
+  predicted_exact: $3.9 billion
+[2026-05-02T12:34:53Z] (4/100) G1-004 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$4,061 million'
+  expected: $4.1 billion USD
+  predicted_exact: $4,061 million
+[2026-05-02T12:35:11Z] (5/100) G1-005 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$2.9 billion'
+  expected: $2.9 billion USD
+  predicted_exact: $2.9 billion
+[2026-05-02T12:35:29Z] (6/100) G1-006 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$1.8 billion'
+  expected: $1.8 billion USD
+  predicted_exact: $1.8 billion
+[2026-05-02T12:35:40Z] (7/100) G1-007 ...
+  eval: strict=N lenient=N num=Y unit=Y clean=Y intent=Y num_f1=0.000 pred='$1.0 billion'
+  expected: AAA
+  predicted_exact: $1.0 billion
+[2026-05-02T12:36:05Z] (8/100) G1-008 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=0.667 pred='$376 million and $802 million'
+  expected: $376 million USD
+  predicted_exact: $376 million and $802 million
+[2026-05-02T12:36:22Z] (9/100) G1-009 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$7.1 billion'
+  expected: $7.1 billion USD
+  predicted_exact: $7.1 billion
+[2026-05-02T12:36:57Z] (10/100) G1-010 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$1.5 billion'
+  expected: $1.5 billion USD
+  predicted_exact: $1.5 billion
+[2026-05-02T12:37:12Z] (11/100) G1-011 ...
+  eval: strict=Y lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='19%'
+  expected: 19%
+  predicted_exact: 19%
+[2026-05-02T12:37:25Z] (12/100) G1-012 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$28.0 billion'
+  expected: $28.0 billion USD
+  predicted_exact: $28.0 billion
+[2026-05-02T12:37:39Z] (13/100) G1-013 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$28.9 billion'
+  expected: $28.9 billion USD
+  predicted_exact: $28.9 billion
+[2026-05-02T12:37:57Z] (14/100) G1-014 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$398 billion'
+  expected: $398 billion USD
+  predicted_exact: $398 billion
+[2026-05-02T12:38:11Z] (15/100) G1-015 ...
+  eval: strict=Y lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='40%'
+  expected: 40%
+  predicted_exact: 40%
+[2026-05-02T12:38:26Z] (16/100) G1-016 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$530 million'
+  expected: $530 million USD
+  predicted_exact: $530 million
+[2026-05-02T12:38:38Z] (17/100) G1-017 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$1.7 billion'
+  expected: $1.7 billion USD
+  predicted_exact: $1.7 billion
+[2026-05-02T12:38:56Z] (18/100) G1-018 ...
+  eval: strict=Y lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='The threshold is **10%**.'
+  expected: 10%
+  predicted_exact: The threshold is **10%**.
+[2026-05-02T12:39:16Z] (19/100) G1-019 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$49.1 billion'
+  expected: $49.1 billion USD
+  predicted_exact: $49.1 billion
+[2026-05-02T12:39:33Z] (20/100) G1-020 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$250 billion'
+  expected: $250 billion USD
+  predicted_exact: $250 billion
+[2026-05-02T12:39:49Z] (21/100) G1-021 ...
+  eval: strict=Y lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='26%'
+  expected: 26%
+  predicted_exact: 26%
+[2026-05-02T12:40:10Z] (22/100) G1-022 ...
+  eval: strict=Y lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='51%'
+  expected: 51%
+  predicted_exact: 51%
+[2026-05-02T12:40:25Z] (23/100) G1-023 ...
+  eval: strict=Y lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='17%'
+  expected: 17%
+  predicted_exact: 17%
+[2026-05-02T12:40:44Z] (24/100) G1-024 ...
+  eval: strict=Y lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='26%'
+  expected: 26%
+  predicted_exact: 26%
+[2026-05-02T12:41:00Z] (25/100) G1-025 ...
+  eval: strict=Y lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='18%'
+  expected: 18%
+  predicted_exact: 18%
+[2026-05-02T12:41:18Z] (26/100) G1-026 ...
+  eval: strict=Y lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='40%'
+  expected: 40%
+  predicted_exact: 40%
+[2026-05-02T12:41:38Z] (27/100) G1-027 ...
+  eval: strict=Y lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='6%'
+  expected: 6%
+  predicted_exact: 6%
+[2026-05-02T12:41:58Z] (28/100) G1-028 ...
+  eval: strict=Y lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='1%'
+  expected: 1%
+  predicted_exact: 1%
+[2026-05-02T12:42:17Z] (29/100) G1-029 ...
+  eval: strict=Y lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='16%'
+  expected: 16%
+  predicted_exact: 16%
+[2026-05-02T12:42:45Z] (30/100) G1-030 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$12,088 million'
+  expected: $12.1 billion USD
+  predicted_exact: $12,088 million
+[2026-05-02T12:43:15Z] (31/100) G2-001 ...
+  warning: request failed for G2-001: /api/v1/new_chat stream error: Error during chat: Recursion limit of 80 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/GRAPH_RECURSION_LIMIT
+  eval: strict=N lenient=N num=N unit=N clean=N intent=Y num_f1=0.000 pred=''
+  expected: 7,432,377,655 shares
+  predicted_exact: 
+[2026-05-02T12:44:36Z] (32/100) G2-002 ...
+  eval: strict=N lenient=N num=Y unit=Y clean=Y intent=Y num_f1=0.000 pred='$15,922 million'
+  expected: 15,922 USD
+  predicted_exact: $15,922 million
+[2026-05-02T12:44:59Z] (33/100) G2-003 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$61,751 million'
+  expected: 61,751 USD million
+  predicted_exact: $61,751 million
+[2026-05-02T12:45:17Z] (34/100) G2-004 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$77,673 million'
+  expected: 77,673 USD million
+  predicted_exact: $77,673 million
+[2026-05-02T12:45:38Z] (35/100) G2-005 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$2,922 million'
+  expected: 2,922 USD million
+  predicted_exact: $2,922 million
+[2026-05-02T12:45:59Z] (36/100) G2-006 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$21,121 million'
+  expected: 21,121 USD million
+  predicted_exact: $21,121 million
+[2026-05-02T12:46:21Z] (37/100) G2-007 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$24,043 million'
+  expected: 24,043 USD million
+  predicted_exact: $24,043 million
+[2026-05-02T12:46:36Z] (38/100) G2-008 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$53,630 million'
+  expected: 53,630 USD million
+  predicted_exact: $53,630 million
+[2026-05-02T12:47:10Z] (39/100) G2-009 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$8,146 million'
+  expected: 8,146 USD million
+  predicted_exact: $8,146 million
+[2026-05-02T12:47:30Z] (40/100) G2-010 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$5,717 million'
+  expected: 5,717 USD million
+  predicted_exact: $5,717 million
+[2026-05-02T12:47:55Z] (41/100) G2-011 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$3.73'
+  expected: 3.73 USD
+  predicted_exact: $3.73
+[2026-05-02T12:48:22Z] (42/100) G2-012 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$3.72'
+  expected: 3.72 USD
+  predicted_exact: $3.72
+[2026-05-02T12:48:39Z] (43/100) G2-013 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$687 million'
+  expected: 687 USD million
+  predicted_exact: $687 million
+[2026-05-02T12:48:58Z] (44/100) G2-014 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$28,849 million'
+  expected: 28,849 USD million
+  predicted_exact: $28,849 million
+[2026-05-02T12:49:16Z] (45/100) G2-015 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$189,066 million'
+  expected: 189,066 USD million
+  predicted_exact: $189,066 million
+[2026-05-02T12:49:33Z] (46/100) G2-016 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$32,580 million'
+  expected: 32,580 USD million
+  predicted_exact: $32,580 million
+[2026-05-02T12:49:54Z] (47/100) G2-017 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$37,304 million'
+  expected: 37,304 USD million
+  predicted_exact: $37,304 million
+[2026-05-02T12:50:09Z] (48/100) G2-018 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='The notional amount is **$33,053 million**.'
+  expected: 33,053 USD million
+  predicted_exact: The notional amount is **$33,053 million**.
+[2026-05-02T12:50:23Z] (49/100) G2-019 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='Let me look at those specific sections around the "Not Designated as Hedging Instruments" tables.$1,579 million'
+  expected: 1,579 USD million
+  predicted_exact: Let me look at those specific sections around the "Not Designated as Hedging Instruments" tables.$1,579 million
+[2026-05-02T12:50:44Z] (50/100) G2-020 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$152,433 million'
+  expected: 152,433 USD million
+  predicted_exact: $152,433 million
+[2026-05-02T12:51:04Z] (51/100) G2-021 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$230,861 million'
+  expected: 230,861 USD million
+  predicted_exact: $230,861 million
+[2026-05-02T12:51:19Z] (52/100) G2-022 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$12,401 million'
+  expected: 12,401 USD million
+  predicted_exact: $12,401 million
+[2026-05-02T12:51:33Z] (53/100) G2-023 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$2,932 million'
+  expected: 2,932 USD million
+  predicted_exact: $2,932 million
+[2026-05-02T12:51:45Z] (54/100) G2-024 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$9,250 million'
+  expected: 9,250 USD million
+  predicted_exact: $9,250 million
+[2026-05-02T12:52:06Z] (55/100) G2-025 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$46,357 million'
+  expected: 46,357 USD million
+  predicted_exact: $46,357 million
+[2026-05-02T12:52:20Z] (56/100) G2-026 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$12,659 million'
+  expected: 12,659 USD million
+  predicted_exact: $12,659 million
+[2026-05-02T12:52:36Z] (57/100) G2-027 ...
+  eval: strict=N lenient=N num=N unit=Y clean=Y intent=Y num_f1=0.000 pred='$(50,029)$ million'
+  expected: 50,029 USD million
+  predicted_exact: $(50,029)$ million
+[2026-05-02T12:52:49Z] (58/100) G2-028 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$1,656 million'
+  expected: 1,656 USD million
+  predicted_exact: $1,656 million
+[2026-05-02T12:53:08Z] (59/100) G2-029 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$1,719 million'
+  expected: 1,719 USD million
+  predicted_exact: $1,719 million
+[2026-05-02T12:53:24Z] (60/100) G2-030 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$24,791 million'
+  expected: 24,791 USD million
+  predicted_exact: $24,791 million
+[2026-05-02T12:53:38Z] (61/100) G2-031 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$54,434 million'
+  expected: 54,434 USD million
+  predicted_exact: $54,434 million
+[2026-05-02T12:53:56Z] (62/100) G2-032 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$5,862 million'
+  expected: 5,862 USD million
+  predicted_exact: $5,862 million
+[2026-05-02T12:54:20Z] (63/100) G2-033 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$3,955 million'
+  expected: 3,955 USD million
+  predicted_exact: $3,955 million
+[2026-05-02T12:54:55Z] (64/100) G2-034 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$6,765 million'
+  expected: 6,765 USD million
+  predicted_exact: $6,765 million
+[2026-05-02T12:55:19Z] (65/100) G2-035 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$30,897 million'
+  expected: 30,897 USD million
+  predicted_exact: $30,897 million
+[2026-05-02T12:55:51Z] (66/100) G2-036 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$4,163 million'
+  expected: 4,163 USD million
+  predicted_exact: $4,163 million
+[2026-05-02T12:56:09Z] (67/100) G2-037 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$5,721 million'
+  expected: 5,721 USD million
+  predicted_exact: $5,721 million
+[2026-05-02T12:56:33Z] (68/100) G2-038 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$37,596 million'
+  expected: 37,596 USD million
+  predicted_exact: $37,596 million
+[2026-05-02T12:56:49Z] (69/100) G2-039 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$5,508 million'
+  expected: 5,508 USD million
+  predicted_exact: $5,508 million
+[2026-05-02T12:57:17Z] (70/100) G2-040 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$3,697 million'
+  expected: 3,697 USD million
+  predicted_exact: $3,697 million
+[2026-05-02T12:57:33Z] (71/100) G3-001 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$12,088 million'
+  expected: 12,088 USD million
+  predicted_exact: +$12,088 million
+[2026-05-02T12:57:54Z] (72/100) G3-002 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$11,438 million'
+  expected: 11,438 USD million
+  predicted_exact: +$11,438 million
+[2026-05-02T12:58:21Z] (73/100) G3-003 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$8,144 million'
+  expected: 8,144 USD million
+  predicted_exact: +$8,144 million
+[2026-05-02T12:58:42Z] (74/100) G3-004 ...
+  eval: strict=Y lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+7,409 USD millions'
+  expected: 7,409 USD million
+  predicted_exact: +7,409 USD millions
+[2026-05-02T12:59:15Z] (75/100) G3-005 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$3,080 million'
+  expected: 3,080 USD million
+  predicted_exact: +$3,080 million
+[2026-05-02T12:59:54Z] (76/100) G3-006 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$0.41'
+  expected: 0.41 USD
+  predicted_exact: $0.41
+[2026-05-02T13:00:34Z] (77/100) G3-007 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$6,805 million'
+  expected: 6,805 USD million
+  predicted_exact: +$6,805 million
+[2026-05-02T13:01:03Z] (78/100) G3-008 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$2,888 million'
+  expected: 2,888 USD million
+  predicted_exact: +$2,888 million
+[2026-05-02T13:01:26Z] (79/100) G3-009 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$3,700 million'
+  expected: 3,700 USD million
+  predicted_exact: +$3,700 million
+[2026-05-02T13:01:49Z] (80/100) G3-010 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$4,703 million'
+  expected: 4,703 USD million
+  predicted_exact: +$4,703 million
+[2026-05-02T13:02:15Z] (81/100) G3-011 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$3,891 million'
+  expected: 3,891 USD million
+  predicted_exact: +$3,891 million
+[2026-05-02T13:02:34Z] (82/100) G3-012 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$6,717 million'
+  expected: 6,717 USD million
+  predicted_exact: +$6,717 million
+[2026-05-02T13:02:51Z] (83/100) G3-013 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$3,517 million'
+  expected: 3,517 USD million
+  predicted_exact: +$3,517 million
+[2026-05-02T13:03:09Z] (84/100) G3-014 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='-$113 million'
+  expected: -113 USD million
+  predicted_exact: -$113 million
+[2026-05-02T13:03:29Z] (85/100) G3-015 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$6,164 million'
+  expected: 6,164 USD million
+  predicted_exact: +$6,164 million
+[2026-05-02T13:03:45Z] (86/100) G3-016 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$8,840 million'
+  expected: 8,840 USD million
+  predicted_exact: +$8,840 million
+[2026-05-02T13:03:58Z] (87/100) G3-017 ...
+  eval: strict=N lenient=N num=N unit=Y clean=Y intent=Y num_f1=0.000 pred='The Accounts receivable (net) on June 30, 2025 was $69,905 million and on September 30, 2025 was $52,894 million [citation:10019]. The ch...'
+  expected: -17,011 USD million
+  predicted_exact: The Accounts receivable (net) on June 30, 2025 was $69,905 million and on September 30, 2025 was $52,894 million [citation:10019]. The change is $52,894 − $69,905 = **−$17,011 million**.
+[2026-05-02T13:04:15Z] (88/100) G3-018 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='$17,348 million'
+  expected: 17,348 USD million
+  predicted_exact: $17,348 million
+[2026-05-02T13:04:43Z] (89/100) G3-019 ...
+  eval: strict=Y lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+17,142 USD millions'
+  expected: 17,142 USD million
+  predicted_exact: +17,142 USD millions
+[2026-05-02T13:05:04Z] (90/100) G3-020 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=0.143 pred='The question is clear now. From the Consolidated Balance Sheets: - September 30, 2025: **$32,580** - June 30, 2025: **$27,724** The value...'
+  expected: 4,856 USD million
+  predicted_exact: The question is clear now. From the Consolidated Balance Sheets:
+
+- September 30, 2025: **$32,580**
+- June 30, 2025: **$27,724**
+
+The values are in millions of USD (standard for Microsoft 10-Q filings). The change is $32,580 − $27,724 = +$4,856 million.
+
++$4,856 million
+[2026-05-02T13:05:31Z] (91/100) G3-021 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='＋$25,895 million'
+  expected: 25,895 USD million
+  predicted_exact: ＋$25,895 million
+[2026-05-02T13:06:20Z] (92/100) G3-022 ...
+  eval: strict=N lenient=N num=N unit=Y clean=Y intent=Y num_f1=0.000 pred='Based on the balance sheet, Total unearned revenue is the sum of short-term and long-term portions: - **September 30, 2025**: $58,987M (s...'
+  expected: -5,732 USD million
+  predicted_exact: Based on the balance sheet, Total unearned revenue is the sum of short-term and long-term portions:
+
+- **September 30, 2025**: $58,987M (short-term) + $2,546M (long-term) = **$61,533M**
+- **June 30, 2025**: $64,555M (short-term) + $2,710M (long-term) = **$67,265M**
+
+-$3,732 million
+[2026-05-02T13:06:45Z] (93/100) G3-023 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='-$4,210 million'
+  expected: -4,210 USD million
+  predicted_exact: -$4,210 million
+[2026-05-02T13:07:03Z] (94/100) G3-024 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$748 million'
+  expected: 748 USD million
+  predicted_exact: +$748 million
+[2026-05-02T13:07:21Z] (95/100) G3-025 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$495 million'
+  expected: 495 USD million
+  predicted_exact: +$495 million
+[2026-05-02T13:07:39Z] (96/100) G3-026 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$8,262 million'
+  expected: 8,262 USD million
+  predicted_exact: +$8,262 million
+[2026-05-02T13:07:58Z] (97/100) G3-027 ...
+  eval: strict=N lenient=N num=N unit=Y clean=Y intent=Y num_f1=0.000 pred='+1,543 million USD'
+  expected: 1,155 USD million
+  predicted_exact: +1,543 million USD
+[2026-05-02T13:08:35Z] (98/100) G3-028 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='+$595 million'
+  expected: 595 USD million
+  predicted_exact: +$595 million
+[2026-05-02T13:08:55Z] (99/100) G3-029 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='-$10,254 million'
+  expected: -10,254 USD million
+  predicted_exact: -$10,254 million
+[2026-05-02T13:09:14Z] (100/100) G3-030 ...
+  eval: strict=N lenient=Y num=Y unit=Y clean=Y intent=Y num_f1=1.000 pred='-$12 million'
+  expected: -12 USD million
+  predicted_exact: -$12 million
+
+Benchmark complete
+  overall_correct: 93 / 100 (93.00%)
+  normalized_exact: 11 / 100 (11.00%)
+  number_match: 95 / 100 (95.00%)
+  unit_match: 99 / 100 (99.00%)
+  mean_token_f1: 0.4781
+  request_failures: 1
+  context_overflow_failures: 0
+  output_json: benchmark_results_MSFT_FY26Q1_qa/deepseekflash_surfsense_full100_allfixes.json
+  output_md: benchmark_results_MSFT_FY26Q1_qa/deepseekflash_surfsense_full100_allfixes.md

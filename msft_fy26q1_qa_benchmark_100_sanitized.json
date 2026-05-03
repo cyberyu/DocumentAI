@@ -765,7 +765,7 @@
       "id": "G2-001",
       "group": "Group2",
       "difficulty": 2,
-      "question": "In MSFT_FY26Q1_10Q.docx, what is Common Stock, $0.00000625 par value per share? Return only the value with unit.",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is Common Stock number of shares outstanding as of October 23, 2025? Return only the value with unit.",
       "answer": "7,432,377,655 shares",
       "evidence": {
         "text": "Common Stock, $0.00000625 par value per share | | | 7,432,377,655 shares | |",
@@ -791,7 +791,7 @@
       "group": "Group2",
       "difficulty": 2,
       "question": "In MSFT_FY26Q1_10Q.docx, what is the Revenue from Product at September 30, 2025? Return only the value with unit.",
-      "answer": "15,922 USD",
+      "answer": "15,922 USD million",
       "evidence": {
         "text": "Product | | $ | 15,922 | | | $ | 15,272 |",
         "page_number": 3,

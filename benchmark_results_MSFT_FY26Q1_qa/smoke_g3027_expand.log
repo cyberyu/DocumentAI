@@ -1,0 +1,21 @@
+[2026-05-02T14:12:39Z] Logging in to http://localhost:8929 ...
+[2026-05-02T14:12:39Z] Using search_space_id=1
+[2026-05-02T14:12:39Z] No matching document IDs found for title filter: None
+[2026-05-02T14:12:39Z] (1/1) G3-027 ...
+  eval: strict=N lenient=N num=N unit=Y clean=Y intent=Y num_f1=0.000 pred="From the cash flow statement in MSFT's FY26 Q1 10-Q, common stock repurchases were $5,650 million for the three months ended September 30..."
+  expected: 1,155 USD million
+  predicted_exact: From the cash flow statement in MSFT's FY26 Q1 10-Q, common stock repurchases were $5,650 million for the three months ended September 30, 2025 (FY26 Q1) and $4,107 million for the three months ended September 30, 2024 (FY25 Q1) [citation:10035].
+
++$1,543 million
+
+Benchmark complete
+  overall_correct: 0 / 1 (0.00%)
+  normalized_exact: 0 / 1 (0.00%)
+  number_match: 0 / 1 (0.00%)
+  unit_match: 1 / 1 (100.00%)
+  mean_token_f1: 0.0444
+  request_failures: 0
+  context_overflow_failures: 0
+  output_json: benchmark_results_MSFT_FY26Q1_qa/smoke_g3027_expand.json
+  output_md: benchmark_results_MSFT_FY26Q1_qa/smoke_g3027_expand.md
+

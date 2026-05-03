@@ -13,12 +13,24 @@ def chunk_text(text: str, use_code_chunker: bool = False) -> list[str]:
     return [c.text for c in chunker.chunk(text)]
 
 
+# Save reference before chunk_text is rebound to chunk_text_hybrid below.
+_chunk_text_recursive = chunk_text
+
+
 def chunk_text_hybrid(text: str, use_code_chunker: bool = False) -> list[str]:
     """Markdown-aware chunker that preserves complete Markdown tables as single chunks.
 
     Each Markdown table is stored as one self-contained chunk regardless of size,
     so the LLM always receives all rows and columns for aggregation and cross-row
     comparison queries.
+
+    Context sandwich: the last non-empty line of the preceding prose block
+    (typically a heading or a caption like "We repurchased the following shares…")
+    is prepended to each table chunk, and the first non-empty line of the following
+    prose block is appended.  Together these give the retrieval embedding both
+    upstream and downstream context so tables are not orphaned from explanatory text
+    (e.g. footnotes like "For the three months ended September 30, 2025 and 2024, we
+    repurchased 8 million shares … for $4.0 billion and $2.8 billion").
 
     Embedding note: the embedding model (all-MiniLM-L6-v2) truncates input at 512
     tokens when computing vectors.  For large tables the embedding therefore
@@ -48,19 +60,39 @@ def chunk_text_hybrid(text: str, use_code_chunker: bool = False) -> list[str]:
     if current_lines:
         blocks.append(("table" if in_table else "prose", "".join(current_lines)))
 
-    # Process each block
+    # Process each block.
+    # - last_prose_tail: last non-empty line of the preceding prose block → prepended to table.
+    # - last_table_chunk_idx: index in `chunks` of the most recent table chunk, so that
+    #   when the next prose block arrives we can append its first sentence as post-context.
     chunks: list[str] = []
+    last_prose_tail: str = ""
+    last_table_chunk_idx: int = -1
 
     for kind, block in blocks:
         if kind != "table":
-            chunks.extend(chunk_text(block, use_code_chunker=use_code_chunker))
+            non_empty = [ln.rstrip() for ln in block.splitlines() if ln.strip()]
+            # Append first non-empty line of this prose block to the preceding table chunk
+            # so the table has downstream context (e.g. footnote explaining the columns).
+            if non_empty and last_table_chunk_idx >= 0:
+                chunks[last_table_chunk_idx] += "\n" + non_empty[0]
+            last_table_chunk_idx = -1
+            if non_empty:
+                last_prose_tail = non_empty[-1]
+            # Empty blocks (blank lines between prose and table) do NOT reset
+            # last_prose_tail — the preceding caption should still apply.
+            chunks.extend(_chunk_text_recursive(block, use_code_chunker=use_code_chunker))
         else:
-            # Always keep the entire table as one chunk.
-            # The full text is stored for the LLM; the embedding may truncate
-            # at the model's token limit but the header rows — which uniquely
-            # identify the table — always fall within that window.
             stripped = block.strip()
-            if stripped:
-                chunks.append(stripped)
+            if not stripped:
+                continue
+            # Prepend the preceding prose tail (heading / caption) when present.
+            if last_prose_tail:
+                stripped = last_prose_tail + "\n" + stripped
+                last_prose_tail = ""  # consume once per table
+            chunks.append(stripped)
+            last_table_chunk_idx = len(chunks) - 1
 
     return [c for c in chunks if c.strip()]
+
+
+# chunk_text_hybrid is available but chunk_text remains the original recursive splitter.

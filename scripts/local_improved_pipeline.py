@@ -299,6 +299,7 @@ def chunk_text(text: str, chunk_chars: int, overlap: int) -> list[str]:
 
 
 _recursive_chunkers: dict[int, Any] = {}
+_recursive_chunkers_tokens: dict[int, Any] = {}
 
 def _get_recursive_chunker(chunk_size: int = 5000):
     """Lazy-load chonkie.RecursiveChunker with the given chunk_size (character tokenizer)."""
@@ -308,16 +309,37 @@ def _get_recursive_chunker(chunk_size: int = 5000):
     return _recursive_chunkers[chunk_size]
 
 
-def chunk_text_hybrid(text: str, chunk_chars: int, overlap: int) -> list[str]:
-    """Markdown-aware chunker that mirrors the Docker document_chunker_patch.py.
+def _get_recursive_chunker_tokens(token_size: int):
+    """Lazy-load chonkie.RecursiveChunker with token-based sizing using all-MiniLM-L6-v2.
+
+    Matches what the SurfSense Docker production pipeline does:
+        RecursiveChunker(chunk_size=<token_size>)  # default WordPiece tokenizer
+    Old pipeline: chunk_size=256 tokens.  Doubling to 512 tokens is what this tests.
+    """
+    if token_size not in _recursive_chunkers_tokens:
+        from chonkie import RecursiveChunker
+        print(
+            f"  [table_hybrid] Loading RecursiveChunker(chunk_size={token_size} tokens, "
+            f"tokenizer=all-MiniLM-L6-v2) ...",
+            flush=True,
+        )
+        _recursive_chunkers_tokens[token_size] = RecursiveChunker(
+            tokenizer="sentence-transformers/all-MiniLM-L6-v2",
+            chunk_size=token_size,
+        )
+    return _recursive_chunkers_tokens[token_size]
+
+
+def chunk_text_hybrid(text: str, chunk_chars: int, overlap: int, token_size: int = 0) -> list[str]:
+    """Markdown-aware chunker that mirrors document_chunker_patch.py.
 
     - Each contiguous block of pipe-table lines is kept as ONE chunk (whole
       table = header + all data rows together).
-    - Prose sections are split with chonkie.RecursiveChunker(chunk_size=256)
-      — exactly what SurfSense uses at ETL time after docling.
-
-    This reproduces the server-side hybrid chunker without requiring the full
-    SurfSense app stack.
+    - Prose sections are split with RecursiveChunker:
+        * token_size > 0 : use all-MiniLM-L6-v2 WordPiece tokenizer with that
+          token limit (e.g. 256 = old pipeline, 512 = doubled token limit)
+        * token_size == 0: use character tokenizer with chunk_chars (default,
+          no model download needed)
     """
     _TABLE_LINE = re.compile(r"^\s*\|")
 
@@ -337,7 +359,8 @@ def chunk_text_hybrid(text: str, chunk_chars: int, overlap: int) -> list[str]:
     if current_lines:
         blocks.append(("table" if in_table else "prose", "".join(current_lines)))
 
-    chunker = _get_recursive_chunker(chunk_size=chunk_chars)
+    chunker = (_get_recursive_chunker_tokens(token_size) if token_size > 0
+               else _get_recursive_chunker(chunk_size=chunk_chars))
     chunks: list[str] = []
     for kind, block in blocks:
         if kind == "table":
@@ -885,6 +908,18 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--db-name", default="surfsense", help="PostgreSQL database name (default: surfsense)")
     parser.add_argument("--db-user", default="surfsense", help="PostgreSQL user (default: surfsense)")
     parser.add_argument("--db-pass", default="surfsense", help="PostgreSQL password (default: surfsense)")
+    # table_hybrid token mode
+    parser.add_argument(
+        "--table-hybrid-tokens",
+        type=int,
+        default=0,
+        help=(
+            "When --ablation table_hybrid: use token-based RecursiveChunker with this many "
+            "WordPiece tokens (all-MiniLM-L6-v2) instead of characters. "
+            "0 = use --configs chunk_chars with character tokenizer (default). "
+            "256 = old Docker pipeline. 512 = doubled token limit."
+        ),
+    )
     parser.add_argument(
         "--md-file",
         default="MSFT_FY26Q1_10Q_content.md",
@@ -1053,16 +1088,21 @@ def main() -> int:
                 flush=True,
             )
         elif args.ablation == "table_hybrid":
-            # Whole tables as single chunks + RecursiveChunker(256 tokens) for prose.
+            # Whole tables as single chunks + RecursiveChunker for prose.
             # Mirrors document_chunker_patch.py (the server-side fix to the standard ETL).
+            token_size = args.table_hybrid_tokens
+            if token_size > 0:
+                mode_desc = f"token-based RecursiveChunker({token_size} tokens, all-MiniLM-L6-v2)"
+            else:
+                mode_desc = f"char-based RecursiveChunker({cfg['chunk_chars']} chars)"
             print(
-                f"[{_now_utc()}] Loading chonkie.RecursiveChunker(256) for prose sections ...",
+                f"[{_now_utc()}] table_hybrid prose chunker: {mode_desc}",
                 flush=True,
             )
-            chunks = chunk_text_hybrid(full_text, cfg["chunk_chars"], cfg["chunk_overlap"])
+            chunks = chunk_text_hybrid(full_text, cfg["chunk_chars"], cfg["chunk_overlap"], token_size=token_size)
             print(
                 f"[{_now_utc()}] Chunks: {len(chunks)} "
-                f"(ablation=table_hybrid: whole tables + RecursiveChunker(256) prose)",
+                f"(ablation=table_hybrid: whole tables + {mode_desc})",
                 flush=True,
             )
         else:
