@@ -6,3 +6,4 @@
 - **Never run benchmarks or long-running scripts in the background** (`&`) unless the user explicitly asks.
 - Always run commands **in the foreground** so output is visible in the terminal.
 - When activating a conda environment, use `conda activate <env>` on its own line first, then run the Python command on a separate line — do **not** use `conda run -n <env> python3 ...` (it suppresses debug output).
+- **Never open a new terminal session** when an existing terminal is available. Always reuse the existing terminal.

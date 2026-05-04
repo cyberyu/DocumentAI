@@ -53,7 +53,7 @@ services:
       retries: 5
 
   backend:
-    image: ghcr.io/modsetter/surfsense-backend:${SURFSENSE_VERSION:-latest}
+    image: shiyu688/surfsense-backend:hybrid-patch-99pct
     ports:
       - "${BACKEND_PORT:-8929}:8000"
     volumes:
@@ -63,6 +63,7 @@ services:
       - ./llm_config_patched.py:/app/app/agents/new_chat/llm_config.py:ro
       - ./document_chunker_patch.py:/app/app/indexing_pipeline/document_chunker.py:ro
       - ./chunks_hybrid_search_patched.py:/app/app/retriever/chunks_hybrid_search.py:ro
+      - ./stream_new_chat_patched.py:/app/app/tasks/chat/stream_new_chat.py:ro
     env_file:
       - .env
     environment:
@@ -78,6 +79,7 @@ services:
       SEARXNG_DEFAULT_HOST: ${SEARXNG_DEFAULT_HOST-}
       CHUNKER_CHUNK_SIZE: "256"
       RETRIEVAL_MODE: "hybrid"
+      NOLOGIN_MODE_ENABLED: "TRUE"
       # Daytona Sandbox – uncomment and set credentials to enable cloud code execution
       # DAYTONA_SANDBOX_ENABLED: "TRUE"
       # DAYTONA_API_KEY: ${DAYTONA_API_KEY:-}
@@ -102,7 +104,7 @@ services:
       start_period: 200s
 
   celery_worker:
-    image: ghcr.io/modsetter/surfsense-backend:${SURFSENSE_VERSION:-latest}
+    image: shiyu688/surfsense-backend:hybrid-patch-99pct-worker
     volumes:
       - shared_temp:/shared_tmp
       - ./global_llm_config.yaml:/app/app/config/global_llm_config.yaml:ro
@@ -110,6 +112,7 @@ services:
       - ./llm_config_patched.py:/app/app/agents/new_chat/llm_config.py:ro
       - ./document_chunker_patch.py:/app/app/indexing_pipeline/document_chunker.py:ro
       - ./chunks_hybrid_search_patched.py:/app/app/retriever/chunks_hybrid_search.py:ro
+      - ./stream_new_chat_patched.py:/app/app/tasks/chat/stream_new_chat.py:ro
     env_file:
       - .env
     environment:
@@ -137,7 +140,7 @@ services:
     restart: unless-stopped
 
   celery_beat:
-    image: ghcr.io/modsetter/surfsense-backend:${SURFSENSE_VERSION:-latest}
+    image: shiyu688/surfsense-backend:hybrid-patch-99pct-worker
     volumes:
       - ./global_llm_config.yaml:/app/app/config/global_llm_config.yaml:ro
     env_file:
@@ -207,7 +210,7 @@ services:
       retries: 5
 
   frontend:
-    image: ghcr.io/modsetter/surfsense-web:${SURFSENSE_VERSION:-latest}
+    image: shiyu688/surfsense-web:hybrid-patch-99pct
     ports:
       - "${FRONTEND_PORT:-3929}:3000"
     entrypoint: ["/bin/sh", "/app/docker-entrypoint-custom.sh"]

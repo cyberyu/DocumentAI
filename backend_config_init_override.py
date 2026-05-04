@@ -245,6 +245,22 @@ def initialize_openrouter_integration():
         print(f"Warning: Failed to initialize OpenRouter integration: {e}")
 
 
+def initialize_pricing_registration():
+    """
+    Teach LiteLLM the per-token cost of every deployment in
+    config.GLOBAL_LLM_CONFIGS. Must run AFTER initialize_openrouter_integration()
+    and BEFORE the first LLM call. Failures are logged but never raised.
+    """
+    try:
+        from app.services.pricing_registration import (
+            register_pricing_from_global_configs,
+        )
+
+        register_pricing_from_global_configs()
+    except Exception as e:
+        print(f"Warning: Failed to register LiteLLM pricing: {e}")
+
+
 def initialize_llm_router():
     """
     Initialize the LLM Router service for Auto mode.
@@ -388,11 +404,19 @@ class Config:
 
     # Premium token quota settings
     PREMIUM_TOKEN_LIMIT = int(os.getenv("PREMIUM_TOKEN_LIMIT", "3000000"))
+    PREMIUM_CREDIT_MICROS_LIMIT = int(
+        os.getenv("PREMIUM_CREDIT_MICROS_LIMIT")
+        or os.getenv("PREMIUM_TOKEN_LIMIT", "5000000")
+    )
     STRIPE_PREMIUM_TOKEN_PRICE_ID = os.getenv("STRIPE_PREMIUM_TOKEN_PRICE_ID")
     STRIPE_TOKENS_PER_UNIT = int(os.getenv("STRIPE_TOKENS_PER_UNIT", "1000000"))
+    STRIPE_CREDIT_MICROS_PER_UNIT = int(os.getenv("STRIPE_CREDIT_MICROS_PER_UNIT") or os.getenv("STRIPE_TOKENS_PER_UNIT", "1000000"))
     STRIPE_TOKEN_BUYING_ENABLED = (
         os.getenv("STRIPE_TOKEN_BUYING_ENABLED", "FALSE").upper() == "TRUE"
     )
+
+    # Safety ceiling on per-call premium reservation
+    QUOTA_MAX_RESERVE_MICROS = int(os.getenv("QUOTA_MAX_RESERVE_MICROS", "1000000"))
 
     # Anonymous / no-login mode settings
     NOLOGIN_MODE_ENABLED = os.getenv("NOLOGIN_MODE_ENABLED", "FALSE").upper() == "TRUE"
@@ -405,6 +429,9 @@ class Config:
 
     # Default quota reserve tokens when not specified per-model
     QUOTA_MAX_RESERVE_PER_CALL = int(os.getenv("QUOTA_MAX_RESERVE_PER_CALL", "8000"))
+    QUOTA_DEFAULT_IMAGE_RESERVE_MICROS = int(os.getenv("QUOTA_DEFAULT_IMAGE_RESERVE_MICROS", "50000"))
+    QUOTA_DEFAULT_PODCAST_RESERVE_MICROS = int(os.getenv("QUOTA_DEFAULT_PODCAST_RESERVE_MICROS", "200000"))
+    QUOTA_DEFAULT_VIDEO_PRESENTATION_RESERVE_MICROS = int(os.getenv("QUOTA_DEFAULT_VIDEO_PRESENTATION_RESERVE_MICROS", "1000000"))
 
     # Abuse prevention: concurrent stream cap and CAPTCHA
     ANON_MAX_CONCURRENT_STREAMS = int(os.getenv("ANON_MAX_CONCURRENT_STREAMS", "2"))

@@ -1,0 +1,154 @@
+# Benchmark Run: gemma431b_vllm_B1_1024equiv_chunk_controlled_v1
+
+**Model:** google/gemma-4-31b-it  
+**API:** http://localhost:8000  
+**Document:** MSFT_FY26Q1_10Q.docx  
+**Benchmark:** msft_fy26q1_qa_benchmark_100_sanitized.json  
+**Generated:** 2026-05-04T18:09:11Z  
+
+## Overall Summary
+
+### All Groups
+
+| Metric | Value |
+|--------|-------|
+| Questions | 0 |
+| Overall Correct | 0 / 0 (0.0%) |
+| Number Match | 0 / 0 (0.0%) |
+| Unit Match | 0 / 0 (0.0%) |
+| Mean Token F1 | 0.0000 |
+
+### Group Group1
+
+| Metric | Value |
+|--------|-------|
+| Questions | 0 |
+| Overall Correct | 0 / 0 (0.0%) |
+| Number Match | 0 / 0 (0.0%) |
+| Unit Match | 0 / 0 (0.0%) |
+| Mean Token F1 | 0.0000 |
+
+### Group Group2
+
+| Metric | Value |
+|--------|-------|
+| Questions | 0 |
+| Overall Correct | 0 / 0 (0.0%) |
+| Number Match | 0 / 0 (0.0%) |
+| Unit Match | 0 / 0 (0.0%) |
+| Mean Token F1 | 0.0000 |
+
+### Group Group3
+
+| Metric | Value |
+|--------|-------|
+| Questions | 0 |
+| Overall Correct | 0 / 0 (0.0%) |
+| Number Match | 0 / 0 (0.0%) |
+| Unit Match | 0 / 0 (0.0%) |
+| Mean Token F1 | 0.0000 |
+
+## Per-Question Results
+
+| # | ID | Group | Correct | NumMatch | Pred | Gold |
+|---|-----|-------|---------|----------|------|------|
+| 1 | G1-001 | Group1 | N | N |  | $5.0 billion USD |
+| 2 | G1-002 | Group1 | N | N |  | $14.4 billion USD |
+| 3 | G1-003 | Group1 | N | N |  | $3.9 billion USD |
+| 4 | G1-004 | Group1 | N | N |  | $4.1 billion USD |
+| 5 | G1-005 | Group1 | N | N |  | $2.9 billion USD |
+| 6 | G1-006 | Group1 | N | N |  | $1.8 billion USD |
+| 7 | G1-007 | Group1 | N | Y |  | AAA |
+| 8 | G1-008 | Group1 | N | N |  | $376 million USD |
+| 9 | G1-009 | Group1 | N | N |  | $7.1 billion USD |
+| 10 | G1-010 | Group1 | N | N |  | $1.5 billion USD |
+| 11 | G1-011 | Group1 | N | N |  | 19% |
+| 12 | G1-012 | Group1 | N | N |  | $28.0 billion USD |
+| 13 | G1-013 | Group1 | N | N |  | $28.9 billion USD |
+| 14 | G1-014 | Group1 | N | N |  | $398 billion USD |
+| 15 | G1-015 | Group1 | N | N |  | 40% |
+| 16 | G1-016 | Group1 | N | N |  | $530 million USD |
+| 17 | G1-017 | Group1 | N | N |  | $1.7 billion USD |
+| 18 | G1-018 | Group1 | N | N |  | 10% |
+| 19 | G1-019 | Group1 | N | N |  | $49.1 billion USD |
+| 20 | G1-020 | Group1 | N | N |  | $250 billion USD |
+| 21 | G1-021 | Group1 | N | N |  | 26% |
+| 22 | G1-022 | Group1 | N | N |  | 51% |
+| 23 | G1-023 | Group1 | N | N |  | 17% |
+| 24 | G1-024 | Group1 | N | N |  | 26% |
+| 25 | G1-025 | Group1 | N | N |  | 18% |
+| 26 | G1-026 | Group1 | N | N |  | 40% |
+| 27 | G1-027 | Group1 | N | N |  | 6% |
+| 28 | G1-028 | Group1 | N | N |  | 1% |
+| 29 | G1-029 | Group1 | N | N |  | 16% |
+| 30 | G1-030 | Group1 | N | N |  | $12.1 billion USD |
+| 31 | G2-001 | Group2 | N | N |  | 7,432,377,655 shares |
+| 32 | G2-002 | Group2 | N | N |  | 15,922 USD million |
+| 33 | G2-003 | Group2 | N | N |  | 61,751 USD million |
+| 34 | G2-004 | Group2 | N | N |  | 77,673 USD million |
+| 35 | G2-005 | Group2 | N | N |  | 2,922 USD million |
+| 36 | G2-006 | Group2 | N | N |  | 21,121 USD million |
+| 37 | G2-007 | Group2 | N | N |  | 24,043 USD million |
+| 38 | G2-008 | Group2 | N | N |  | 53,630 USD million |
+| 39 | G2-009 | Group2 | N | N |  | 8,146 USD million |
+| 40 | G2-010 | Group2 | N | N |  | 5,717 USD million |
+| 41 | G2-011 | Group2 | N | N |  | 3.73 USD |
+| 42 | G2-012 | Group2 | N | N |  | 3.72 USD |
+| 43 | G2-013 | Group2 | N | N |  | 687 USD million |
+| 44 | G2-014 | Group2 | N | N |  | 28,849 USD million |
+| 45 | G2-015 | Group2 | N | N |  | 189,066 USD million |
+| 46 | G2-016 | Group2 | N | N |  | 32,580 USD million |
+| 47 | G2-017 | Group2 | N | N |  | 37,304 USD million |
+| 48 | G2-018 | Group2 | N | N |  | 33,053 USD million |
+| 49 | G2-019 | Group2 | N | N |  | 1,579 USD million |
+| 50 | G2-020 | Group2 | N | N |  | 152,433 USD million |
+| 51 | G2-021 | Group2 | N | N |  | 230,861 USD million |
+| 52 | G2-022 | Group2 | N | N |  | 12,401 USD million |
+| 53 | G2-023 | Group2 | N | N |  | 2,932 USD million |
+| 54 | G2-024 | Group2 | N | N |  | 9,250 USD million |
+| 55 | G2-025 | Group2 | N | N |  | 46,357 USD million |
+| 56 | G2-026 | Group2 | N | N |  | 12,659 USD million |
+| 57 | G2-027 | Group2 | N | N |  | 50,029 USD million |
+| 58 | G2-028 | Group2 | N | N |  | 1,656 USD million |
+| 59 | G2-029 | Group2 | N | N |  | 1,719 USD million |
+| 60 | G2-030 | Group2 | N | N |  | 24,791 USD million |
+| 61 | G2-031 | Group2 | N | N |  | 54,434 USD million |
+| 62 | G2-032 | Group2 | N | N |  | 5,862 USD million |
+| 63 | G2-033 | Group2 | N | N |  | 3,955 USD million |
+| 64 | G2-034 | Group2 | N | N |  | 6,765 USD million |
+| 65 | G2-035 | Group2 | N | N |  | 30,897 USD million |
+| 66 | G2-036 | Group2 | N | N |  | 4,163 USD million |
+| 67 | G2-037 | Group2 | N | N |  | 5,721 USD million |
+| 68 | G2-038 | Group2 | N | N |  | 37,596 USD million |
+| 69 | G2-039 | Group2 | N | N |  | 5,508 USD million |
+| 70 | G2-040 | Group2 | N | N |  | 3,697 USD million |
+| 71 | G3-001 | Group3 | N | N |  | 12,088 USD million |
+| 72 | G3-002 | Group3 | N | N |  | 11,438 USD million |
+| 73 | G3-003 | Group3 | N | N |  | 8,144 USD million |
+| 74 | G3-004 | Group3 | N | N |  | 7,409 USD million |
+| 75 | G3-005 | Group3 | N | N |  | 3,080 USD million |
+| 76 | G3-006 | Group3 | N | N |  | 0.41 USD |
+| 77 | G3-007 | Group3 | N | N |  | 6,805 USD million |
+| 78 | G3-008 | Group3 | N | N |  | 2,888 USD million |
+| 79 | G3-009 | Group3 | N | N |  | 3,700 USD million |
+| 80 | G3-010 | Group3 | N | N |  | 4,703 USD million |
+| 81 | G3-011 | Group3 | N | N |  | 3,891 USD million |
+| 82 | G3-012 | Group3 | N | N |  | 6,717 USD million |
+| 83 | G3-013 | Group3 | N | N |  | 3,517 USD million |
+| 84 | G3-014 | Group3 | N | N |  | -113 USD million |
+| 85 | G3-015 | Group3 | N | N |  | 6,164 USD million |
+| 86 | G3-016 | Group3 | N | N |  | 8,840 USD million |
+| 87 | G3-017 | Group3 | N | N |  | -17,011 USD million |
+| 88 | G3-018 | Group3 | N | N |  | 17,348 USD million |
+| 89 | G3-019 | Group3 | N | N |  | 17,142 USD million |
+| 90 | G3-020 | Group3 | N | N |  | 4,856 USD million |
+| 91 | G3-021 | Group3 | N | N |  | 25,895 USD million |
+| 92 | G3-022 | Group3 | N | N |  | -5,732 USD million |
+| 93 | G3-023 | Group3 | N | N |  | -4,210 USD million |
+| 94 | G3-024 | Group3 | N | N |  | 748 USD million |
+| 95 | G3-025 | Group3 | N | N |  | 495 USD million |
+| 96 | G3-026 | Group3 | N | N |  | 8,262 USD million |
+| 97 | G3-027 | Group3 | N | N |  | 1,155 USD million |
+| 98 | G3-028 | Group3 | N | N |  | 595 USD million |
+| 99 | G3-029 | Group3 | N | N |  | -10,254 USD million |
+| 100 | G3-030 | Group3 | N | N |  | -12 USD million |

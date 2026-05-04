@@ -10,6 +10,9 @@ It also provides utilities for creating ChatLiteLLM instances and
 managing prompt configurations.
 """
 
+import json as _json
+import re as _re
+import uuid as _uuid
 from collections.abc import AsyncIterator
 from dataclasses import dataclass
 from pathlib import Path
@@ -21,7 +24,9 @@ from langchain_core.callbacks import (
     CallbackManagerForLLMRun,
 )
 from langchain_core.messages import AIMessage, BaseMessage
-from langchain_core.outputs import ChatGenerationChunk, ChatResult
+from langchain_core.messages import AIMessageChunk
+from langchain_core.messages.tool import ToolCallChunk
+from langchain_core.outputs import ChatGeneration, ChatGenerationChunk, ChatResult
 from langchain_litellm import ChatLiteLLM
 from litellm import get_model_info
 from sqlalchemy import select
@@ -74,6 +79,80 @@ def _extract_reasoning_content_from_blocks(content: Any) -> str | None:
         return None
     merged = "".join(parts).strip()
     return merged or None
+
+
+# ---------------------------------------------------------------------------
+# Text-form tool call parsing (for models like Gemma 4 via vLLM pythonic parser)
+#
+# vLLM with --tool-call-parser pythonic returns tool calls as text content in
+# the deepagents format: call:funcname{key:val, key2:val2}
+# LangChain needs proper tool_calls on the AIMessage to route to the tool node.
+# ---------------------------------------------------------------------------
+
+# Matches: [thought\n]call:funcname{key:val, key2:val2}
+_TEXT_TOOL_CALL_RE = _re.compile(
+    r"(?:thought\s+)?call:([a-zA-Z_][a-zA-Z0-9_]*)\{([^}]*)\}",
+    _re.MULTILINE,
+)
+
+
+def _parse_deepagents_call_args(args_str: str) -> dict:
+    """Parse 'key1:val1, key2:val2' deepagents call format into a dict.
+
+    Values may contain colons (e.g. file paths), so we split on ', identifier:'
+    boundaries rather than any comma.
+    """
+    result: dict[str, str] = {}
+    parts = _re.split(r",\s*(?=[a-zA-Z_]\w*:)", args_str)
+    for part in parts:
+        part = part.strip()
+        if not part:
+            continue
+        colon_idx = part.find(":")
+        if colon_idx == -1:
+            continue
+        key = part[:colon_idx].strip()
+        value = part[colon_idx + 1 :].strip()
+        if key:
+            result[key] = value
+    return result
+
+
+def _patch_ai_message_text_tool_calls(msg: AIMessage) -> AIMessage:
+    """If *msg* has no structured tool_calls but its content contains
+    call:funcname{...} patterns, convert them to proper tool_calls.
+
+    Returns the original message unchanged if no patching is needed.
+    """
+    if msg.tool_calls:
+        return msg
+    content = msg.content
+    if not isinstance(content, str):
+        return msg
+    matches = list(_TEXT_TOOL_CALL_RE.finditer(content))
+    if not matches:
+        return msg
+
+    tool_calls = [
+        {
+            "id": f"call_{_uuid.uuid4().hex[:12]}",
+            "name": m.group(1),
+            "args": _parse_deepagents_call_args(m.group(2)),
+            "type": "tool_call",
+        }
+        for m in matches
+    ]
+
+    # Strip the tool call patterns (and orphaned "thought" lines) from content.
+    remaining = _TEXT_TOOL_CALL_RE.sub("", content)
+    remaining = _re.sub(r"^thought\s*$", "", remaining, flags=_re.MULTILINE).strip()
+
+    return AIMessage(
+        content=remaining or "",
+        tool_calls=tool_calls,  # type: ignore[arg-type]
+        additional_kwargs=msg.additional_kwargs or {},
+        response_metadata=getattr(msg, "response_metadata", {}) or {},
+    )
 
 
 def _sanitize_messages(messages: list[BaseMessage]) -> list[BaseMessage]:
@@ -153,7 +232,21 @@ class SanitizedChatLiteLLM(ChatLiteLLM):
         run_manager: CallbackManagerForLLMRun | None = None,
         **kwargs: Any,
     ) -> ChatResult:
-        return super()._generate(messages, stop, run_manager, **kwargs)
+        result = super()._generate(messages, stop, run_manager, **kwargs)
+        # Patch text-form tool calls (e.g. Gemma 4 via vLLM pythonic parser).
+        patched_gens = []
+        for gen in result.generations:
+            msg = getattr(gen, "message", None)
+            if isinstance(msg, AIMessage):
+                patched = _patch_ai_message_text_tool_calls(msg)
+                if patched is not msg:
+                    gen = ChatGeneration(
+                        message=patched,
+                        text=patched.content if isinstance(patched.content, str) else "",
+                    )
+            patched_gens.append(gen)
+        result.generations[:] = patched_gens
+        return result
 
     async def _astream(
         self,
@@ -162,8 +255,60 @@ class SanitizedChatLiteLLM(ChatLiteLLM):
         run_manager: AsyncCallbackManagerForLLMRun | None = None,
         **kwargs: Any,
     ) -> AsyncIterator[ChatGenerationChunk]:
+        # Buffer all chunks so we can detect text-form tool calls.
+        # If text-form calls are found we SUPPRESS the original text content
+        # (so it never reaches text-delta events / benchmark collection) and
+        # emit a synthetic chunk with proper tool_call_chunks instead.
+        chunks: list[ChatGenerationChunk] = []
+        has_structured = False
+        accumulated = ""
+
         async for chunk in super()._astream(messages, stop, run_manager, **kwargs):
-            yield chunk
+            chunks.append(chunk)
+            msg_chunk = getattr(chunk, "message", None)
+            if isinstance(msg_chunk, AIMessageChunk):
+                if getattr(msg_chunk, "tool_call_chunks", None):
+                    has_structured = True
+                if isinstance(msg_chunk.content, str):
+                    accumulated += msg_chunk.content
+
+        # If already has structured tool calls, yield unchanged.
+        if has_structured or not accumulated:
+            for chunk in chunks:
+                yield chunk
+            return
+
+        matches = list(_TEXT_TOOL_CALL_RE.finditer(accumulated))
+
+        if not matches:
+            # Normal text response — yield as-is.
+            for chunk in chunks:
+                yield chunk
+            return
+
+        # Text-form tool calls detected:
+        # 1. Yield each chunk but blank out any text content (suppress call: text
+        #    so it never appears as a text-delta event).
+        # 2. Append a synthetic chunk carrying the structured tool_call_chunks.
+        for chunk in chunks:
+            msg_chunk = getattr(chunk, "message", None)
+            if isinstance(msg_chunk, AIMessageChunk) and isinstance(msg_chunk.content, str) and msg_chunk.content:
+                yield ChatGenerationChunk(message=AIMessageChunk(content=""))
+            else:
+                yield chunk
+
+        tc_chunks = [
+            ToolCallChunk(
+                id=f"call_{_uuid.uuid4().hex[:12]}",
+                name=m.group(1),
+                args=_json.dumps(_parse_deepagents_call_args(m.group(2))),
+                index=i,
+            )
+            for i, m in enumerate(matches)
+        ]
+        yield ChatGenerationChunk(
+            message=AIMessageChunk(content="", tool_call_chunks=tc_chunks)
+        )
 
 
 # Provider mapping for LiteLLM model string construction
@@ -292,6 +437,25 @@ class AgentConfig:
         Returns:
             AgentConfig instance
         """
+        # For Qwen3 models, prepend /nothink to disable chain-of-thought in the
+        # system prompt so the model emits clean tool calls without leaking reasoning.
+        system_instructions = config.system_instructions
+        model_name_lower = (config.model_name or "").lower()
+        if "qwen3" in model_name_lower or "qwen/qwen3" in model_name_lower:
+            from app.agents.new_chat.system_prompt import SURFSENSE_SYSTEM_INSTRUCTIONS
+            base = (system_instructions or "").strip() or SURFSENSE_SYSTEM_INSTRUCTIONS.strip()
+            if not base.startswith("/nothink"):
+                # /nothink disables chain-of-thought for Qwen3.
+                # The search cap instruction prevents infinite tool loops.
+                system_instructions = (
+                    "/nothink\n\n"
+                    "IMPORTANT RULE: Call search_documents at most 8 times per question. "
+                    "After gathering results from up to 8 searches, you MUST stop searching "
+                    "and write your final answer based on what you found. "
+                    "Do not keep searching indefinitely.\n\n"
+                    + base
+                )
+
         return cls(
             provider=config.provider.value
             if hasattr(config.provider, "value")
@@ -301,7 +465,7 @@ class AgentConfig:
             api_base=config.api_base,
             custom_provider=config.custom_provider,
             litellm_params=config.litellm_params,
-            system_instructions=config.system_instructions,
+            system_instructions=system_instructions,
             use_default_system_instructions=config.use_default_system_instructions,
             citations_enabled=config.citations_enabled,
             config_id=config.id,
