@@ -1,0 +1,139 @@
+# Configuration: production_local
+# Zero-cost local RAG configuration
+
+metadata:
+  name: "production_local"
+  description: "Zero-cost local configuration using free models"
+  use_case: "Self-hosted deployment with no API costs"
+  estimated_cost_per_1k_queries: "$0.00"
+
+# ============================================================================
+# COMPONENT 1: ETL (Document Ingestion)
+# ============================================================================
+etl:
+  adapter: "docling"
+  config:
+    output_format: "markdown"
+    extract_tables: true
+    extract_images: false
+    async_processing: true
+    timeout_seconds: 120
+
+# ============================================================================
+# COMPONENT 2: CHUNKING
+# ============================================================================
+chunking:
+  adapter: "sandwich"
+  config:
+    chunk_size: 512
+    overlap_pct: 25
+    prefix_tokens: 100
+    suffix_tokens: 100
+    min_chunk_size: 100
+    max_chunk_size: 800
+    respect_sentence_boundaries: true
+
+# ============================================================================
+# COMPONENT 3: EMBEDDING
+# ============================================================================
+embedding:
+  adapter: "fastembed"
+  config:
+    model: "BAAI/bge-large-en-v1.5"
+    dimensions: 1024
+    batch_size: 32
+    device: "cuda"  # Use GPU if available
+    cache_dir: "./model_cache"
+
+# ============================================================================
+# COMPONENT 4: STORAGE
+# ============================================================================
+storage:
+  adapter: "opensearch"
+  config:
+    hosts: ["http://opensearch:9200"]
+    index_name: "documents_prod_local"
+    index_type: "hnsw"
+    hnsw_m: 16
+    hnsw_ef_construction: 200
+    number_of_shards: 2
+    number_of_replicas: 0  # No replicas for local
+
+# ============================================================================
+# COMPONENT 5: RETRIEVAL
+# ============================================================================
+retrieval:
+  strategy: "rrf"
+  config:
+    semantic_weight: 0.7
+    bm25_weight: 0.3
+    top_k: 30
+    min_score: 0.3
+
+# ============================================================================
+# COMPONENT 6: RERANKING
+# ============================================================================
+reranking:
+  adapter: "flashrank"
+  config:
+    model: "rank-T5-flan"
+    top_k: 8
+    device: "cuda"
+    cache_dir: "./model_cache"
+
+# ============================================================================
+# COMPONENT 7: CONTEXT ASSEMBLY
+# ============================================================================
+context:
+  format: "citation"
+  max_tokens: 2200
+  chunks_per_source: 3
+  include_metadata: true
+  deduplication: "exact_match"
+  sort_by: "relevance"
+
+# ============================================================================
+# COMPONENT 8: LLM GENERATION
+# ============================================================================
+llm:
+  adapter: "local"  # or "groq" for hosted Llama
+  config:
+    model: "llama-3.3-70b"
+    max_tokens: 2048
+    temperature: 0.3
+    device: "cuda"
+    # For Groq API instead:
+    # api_key: "${GROQ_API_KEY}"
+    # endpoint: "https://api.groq.com/openai/v1"
+
+# ============================================================================
+# COMPONENT 9: MEMORY
+# ============================================================================
+memory:
+  enabled: true
+  adapter: "opensearch_memory"
+  config:
+    episodic_retention_days: 30
+    semantic_retention_days: 90
+    procedural_never_expire: true
+    entity_retention_days: 60
+    search_top_k: 5
+
+# ============================================================================
+# PERFORMANCE TUNING
+# ============================================================================
+performance:
+  cache_embeddings: true
+  cache_ttl_seconds: 7200
+  parallel_embedding: true
+  max_concurrent_embeddings: 4
+  connection_pool_size: 10
+
+# ============================================================================
+# MONITORING
+# ============================================================================
+monitoring:
+  track_metrics: true
+  log_retrieval_results: true
+  log_llm_calls: false  # Reduce logging for local
+  cost_tracking: true

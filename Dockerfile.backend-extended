@@ -1,0 +1,15 @@
+# Extend the official SurfSense backend with OpenSearch support
+FROM ghcr.io/modsetter/surfsense-backend:latest
+
+# Install opensearch-py for OpenSearch integration
+RUN pip install --no-cache-dir opensearch-py==3.2.0
+
+# Patch billable_calls.py to handle missing QUOTA_DEFAULT_IMAGE_RESERVE_MICROS
+RUN sed -i '566s/.*/DEFAULT_IMAGE_RESERVE_MICROS = getattr(config, "QUOTA_DEFAULT_IMAGE_RESERVE_MICROS", 100000)/' \
+    /app/app/services/billable_calls.py
+
+# Verify opensearch-py is installed correctly
+RUN python3 -c "from opensearchpy import AsyncOpenSearch; print('✓ opensearch-py installed successfully')"
+
+# Keep the same entrypoint as the base image
+# No changes needed - inherits from parent

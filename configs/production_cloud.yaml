@@ -1,0 +1,139 @@
+# Configuration: production_cloud
+# Maximum quality cloud-based RAG configuration
+
+metadata:
+  name: "production_cloud"
+  description: "Maximum quality cloud-based configuration"
+  use_case: "Production deployment with highest quality requirements"
+  estimated_cost_per_1k_queries: "$2.50"
+
+# ============================================================================
+# COMPONENT 1: ETL (Document Ingestion)
+# ============================================================================
+etl:
+  adapter: "docling"
+  config:
+    output_format: "markdown"
+    extract_tables: true
+    extract_images: false
+    async_processing: true
+    timeout_seconds: 120
+
+# ============================================================================
+# COMPONENT 2: CHUNKING
+# ============================================================================
+chunking:
+  adapter: "sandwich"
+  config:
+    chunk_size: 512
+    overlap_pct: 25
+    prefix_tokens: 100
+    suffix_tokens: 100
+    min_chunk_size: 100
+    max_chunk_size: 800
+    respect_sentence_boundaries: true
+
+# ============================================================================
+# COMPONENT 3: EMBEDDING
+# ============================================================================
+embedding:
+  adapter: "openai"
+  config:
+    model: "text-embedding-3-large"
+    dimensions: 3072
+    batch_size: 64
+    timeout_seconds: 30
+    max_retries: 3
+
+# ============================================================================
+# COMPONENT 4: STORAGE
+# ============================================================================
+storage:
+  adapter: "opensearch"
+  config:
+    hosts: ["http://opensearch:9200"]
+    index_name: "documents_prod_cloud"
+    index_type: "hnsw"
+    hnsw_m: 16
+    hnsw_ef_construction: 200
+    number_of_shards: 3
+    number_of_replicas: 1
+
+# ============================================================================
+# COMPONENT 5: RETRIEVAL
+# ============================================================================
+retrieval:
+  strategy: "rrf"  # Reciprocal Rank Fusion
+  config:
+    semantic_weight: 0.7
+    bm25_weight: 0.3
+    top_k: 30
+    min_score: 0.4
+
+# ============================================================================
+# COMPONENT 6: RERANKING
+# ============================================================================
+reranking:
+  adapter: "cohere"
+  config:
+    model: "rerank-english-v3.0"
+    top_k: 8
+    max_chunks_per_doc: 3
+    timeout_seconds: 10
+
+# ============================================================================
+# COMPONENT 7: CONTEXT ASSEMBLY
+# ============================================================================
+context:
+  format: "citation"  # Add [1], [2] markers
+  max_tokens: 2200
+  chunks_per_source: 3
+  include_metadata: true
+  deduplication: "exact_match"
+  sort_by: "relevance"
+
+# ============================================================================
+# COMPONENT 8: LLM GENERATION
+# ============================================================================
+llm:
+  adapter: "openai"
+  config:
+    model: "gpt-4o"
+    max_tokens: 2048
+    temperature: 0.3
+    top_p: 0.9
+    presence_penalty: 0.0
+    frequency_penalty: 0.0
+    timeout_seconds: 30
+
+# ============================================================================
+# COMPONENT 9: MEMORY
+# ============================================================================
+memory:
+  enabled: true
+  adapter: "opensearch_memory"
+  config:
+    episodic_retention_days: 30
+    semantic_retention_days: 90
+    procedural_never_expire: true
+    entity_retention_days: 60
+    search_top_k: 5
+
+# ============================================================================
+# PERFORMANCE TUNING
+# ============================================================================
+performance:
+  cache_embeddings: true
+  cache_ttl_seconds: 3600
+  parallel_embedding: true
+  max_concurrent_embeddings: 8
+  connection_pool_size: 20
+
+# ============================================================================
+# MONITORING
+# ============================================================================
+monitoring:
+  track_metrics: true
+  log_retrieval_results: true
+  log_llm_calls: true
+  cost_tracking: true

@@ -1,0 +1,520 @@
+# =============================================================================
+# Adaptable Agentic RAG System - Docker Compose
+# =============================================================================
+# This extends the existing SurfSense docker-compose.yml with support for:
+# - Configurable RAG orchestrator
+# - Multiple configuration profiles
+# - A/B testing infrastructure
+# - Metrics collection and monitoring
+# =============================================================================
+
+name: surfsense-adaptable-rag
+
+services:
+  # ===========================================================================
+  # DATABASE & CACHE
+  # ===========================================================================
+  
+  # OpenSearch - Vector database with full-text search
+  opensearch:
+    image: opensearchproject/opensearch:2.11.1
+    environment:
+      - cluster.name=opensearch-cluster
+      - node.name=opensearch-node1
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms2g -Xmx2g"
+      - "DISABLE_INSTALL_DEMO_CONFIG=true"
+      - "DISABLE_SECURITY_PLUGIN=true"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - opensearch_data:/usr/share/opensearch/data
+    ports:
+      - "9200:9200"  # REST API
+      - "9600:9600"  # Performance Analyzer
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    networks:
+      - rag-network
+  
+  # OpenSearch Dashboards (optional - for monitoring)
+  opensearch-dashboards:
+    image: opensearchproject/opensearch-dashboards:2.11.1
+    ports:
+      - "5601:5601"
+    environment:
+      OPENSEARCH_HOSTS: '["http://opensearch:9200"]'
+      DISABLE_SECURITY_DASHBOARDS_PLUGIN: "true"
+    depends_on:
+      opensearch:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - rag-network
+    profiles:
+      - monitoring  # Only start with --profile monitoring
+  
+  # PostgreSQL - Relational data (documents, users, metadata)
+  # Note: Chunks now stored in OpenSearch, but backend still expects pgvector extension
+  db:
+    image: pgvector/pgvector:pg17  # Still need pgvector extension for backend compatibility
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgresql.conf:/etc/postgresql/postgresql.conf:ro
+    environment:
+      POSTGRES_USER: ${DB_USER:-surfsense}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-surfsense}
+      POSTGRES_DB: ${DB_NAME:-surfsense}
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-surfsense} -d ${DB_NAME:-surfsense}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - rag-network
+
+  redis:
+    image: redis:8-alpine
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - rag-network
+
+  # ===========================================================================
+  # BACKEND - Enhanced with RAG Orchestrator
+  # ===========================================================================
+  
+  backend:
+    image: documentai-backend:latest
+    ports:
+      - "${BACKEND_PORT:-8929}:8000"
+    volumes:
+      - shared_temp:/shared_tmp
+      
+      # ── Adapter Architecture Files ──
+      - ./adapter_base_classes.py:/app/app/adapters/adapter_base_classes.py:ro
+      - ./adapter_dataflow_models.py:/app/app/adapters/adapter_dataflow_models.py:ro
+      - ./adapter_examples.py:/app/app/adapters/adapter_examples.py:ro
+      - ./adapter_memory.py:/app/app/adapters/adapter_memory.py:ro
+      
+      # ── Storage Services ──
+      - ./opensearch_chunk_storage.py:/app/app/storage/opensearch_chunk_storage.py:ro
+      
+      # ── RAG Configuration Files ──
+      - ./rag_config_schema.yaml:/app/app/config/rag_config_schema.yaml:ro
+      - ./rag_config_manager.py:/app/app/rag_config_manager.py:ro
+      - ./rag_orchestrator.py:/app/app/rag_orchestrator.py:ro
+      
+      # ── Existing Configuration Files ──
+      - ./global_llm_config.yaml:/app/app/config/global_llm_config.yaml:ro
+      # - ./backend_config_init_override.py:/app/app/config/__init__.py:ro  # Disabled - incompatible with current backend version
+      - ./llm_config_patched.py:/app/app/agents/new_chat/llm_config.py:ro
+      
+      # ── Component Patches (Use adapters) ──
+      - ./document_chunker_patch.py:/app/app/indexing_pipeline/document_chunker.py:ro
+      - ./chunks_hybrid_search_opensearch.py:/app/app/retriever/chunks_hybrid_search.py:ro
+    
+    env_file:
+      - .env
+    
+    environment:
+      # Database & Redis
+      DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://${DB_USER:-surfsense}:${DB_PASSWORD:-surfsense}@${DB_HOST:-db}:${DB_PORT:-5432}/${DB_NAME:-surfsense}}
+      CELERY_BROKER_URL: ${REDIS_URL:-redis://redis:6379/0}
+      CELERY_RESULT_BACKEND: ${REDIS_URL:-redis://redis:6379/0}
+      REDIS_APP_URL: ${REDIS_URL:-redis://redis:6379/0}
+      
+      # Service config
+      CELERY_TASK_DEFAULT_QUEUE: surfsense
+      PYTHONPATH: /app
+      UVICORN_LOOP: asyncio
+      UNSTRUCTURED_HAS_PATCHED_LOOP: "1"
+      SERVICE_ROLE: api
+      
+      # Authentication
+      JWT_SECRET: ${JWT_SECRET:-sIG5ruHqlxiDMqUDZcP5gWPMhicaVytBYil24yRGxqI}
+      SECRET_KEY: ${SECRET_KEY:-sIG5ruHqlxiDMqUDZcP5gWPMhicaVytBYil24yRGxqI}
+      
+      # Frontend URL
+      NEXT_FRONTEND_URL: ${NEXT_FRONTEND_URL:-http://localhost:${FRONTEND_PORT:-3929}}
+      
+      # Search engine
+      SEARXNG_DEFAULT_HOST: ${SEARXNG_DEFAULT_HOST-}
+      
+      # ── RAG Orchestrator Configuration ──
+      RAG_CONFIG_PATH: /app/app/config/rag_config_schema.yaml
+      RAG_ACTIVE_PROFILE: ${RAG_ACTIVE_PROFILE:-production}
+      RAG_ENABLE_AB_TESTING: ${RAG_ENABLE_AB_TESTING:-false}
+      RAG_AB_TRAFFIC_SPLIT: ${RAG_AB_TRAFFIC_SPLIT:-0.1}
+      RAG_EXPERIMENTAL_PROFILE: ${RAG_EXPERIMENTAL_PROFILE:-experimental_512}
+      
+      # ── ETL Configuration ──
+      ETL_PROVIDER: ${ETL_PROVIDER:-mineru}
+      ETL_DETECT_TABLES: ${ETL_DETECT_TABLES:-true}
+      ETL_DETECT_FORMULAS: ${ETL_DETECT_FORMULAS:-true}
+      ETL_TABLE_FORMAT: ${ETL_TABLE_FORMAT:-markdown}
+      
+      # Component Configuration
+      CHUNKER_CHUNK_SIZE: ${CHUNKER_CHUNK_SIZE:-256}
+      RETRIEVAL_MODE: ${RETRIEVAL_MODE:-hybrid}
+      RERANKER_ENABLED: ${RERANKER_ENABLED:-true}
+      
+      # ── OpenSearch Configuration ──
+      OPENSEARCH_HOSTS: ${OPENSEARCH_HOSTS:-http://opensearch:9200}
+      OPENSEARCH_USE_SSL: ${OPENSEARCH_USE_SSL:-false}
+      OPENSEARCH_VERIFY_CERTS: ${OPENSEARCH_VERIFY_CERTS:-false}
+      OPENSEARCH_INDEX_PREFIX: ${OPENSEARCH_INDEX_PREFIX:-surfsense}
+      
+      # ── Embedding Provider API Keys ──
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      COHERE_API_KEY: ${COHERE_API_KEY:-}
+      VOYAGE_API_KEY: ${VOYAGE_API_KEY:-}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
+      JINA_API_KEY: ${JINA_API_KEY:-}
+      
+      # ── Monitoring & Metrics ──
+      RAG_TRACK_METRICS: ${RAG_TRACK_METRICS:-true}
+      RAG_LOG_RETRIEVAL_RESULTS: ${RAG_LOG_RETRIEVAL_RESULTS:-true}
+      RAG_LOG_LLM_CALLS: ${RAG_LOG_LLM_CALLS:-true}
+      
+      # Daytona Sandbox (optional)
+      # DAYTONA_SANDBOX_ENABLED: "TRUE"
+      # DAYTONA_API_KEY: ${DAYTONA_API_KEY:-}
+      # DAYTONA_API_URL: ${DAYTONA_API_URL:-https://app.daytona.io/api}
+      # DAYTONA_TARGET: ${DAYTONA_TARGET:-us}
+      
+      # Quota settings (required by billable_calls.py)
+      QUOTA_DEFAULT_IMAGE_RESERVE_MICROS: ${QUOTA_DEFAULT_IMAGE_RESERVE_MICROS:-100000}
+    
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    
+    depends_on:
+      opensearch:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 30
+      start_period: 200s
+    
+    networks:
+      - rag-network
+    
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  # ===========================================================================
+  # CELERY WORKER - Background task processing
+  # ===========================================================================
+  
+  celery_worker:
+    image: documentai-backend:latest
+    volumes:
+      - shared_temp:/shared_tmp
+      
+      # Adapter Architecture
+      - ./adapter_base_classes.py:/app/app/adapters/adapter_base_classes.py:ro
+      - ./adapter_dataflow_models.py:/app/app/adapters/adapter_dataflow_models.py:ro
+      - ./adapter_examples.py:/app/app/adapters/adapter_examples.py:ro
+      - ./adapter_memory.py:/app/app/adapters/adapter_memory.py:ro
+      
+      # Storage Services
+      - ./opensearch_chunk_storage.py:/app/app/storage/opensearch_chunk_storage.py:ro
+      
+      # RAG Configuration
+      - ./rag_config_schema.yaml:/app/app/config/rag_config_schema.yaml:ro
+      - ./rag_config_manager.py:/app/app/rag_config_manager.py:ro
+      - ./rag_orchestrator.py:/app/app/rag_orchestrator.py:ro
+      
+      # Existing config
+      - ./global_llm_config.yaml:/app/app/config/global_llm_config.yaml:ro
+      - ./backend_config_init_override.py:/app/app/config/__init__.py:ro
+      - ./llm_config_patched.py:/app/app/agents/new_chat/llm_config.py:ro
+      - ./document_chunker_patch.py:/app/app/indexing_pipeline/document_chunker.py:ro
+      - ./chunks_hybrid_search_patched.py:/app/app/retriever/chunks_hybrid_search.py:ro
+    
+    env_file:
+      - .env
+    
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://${DB_USER:-surfsense}:${DB_PASSWORD:-surfsense}@${DB_HOST:-db}:${DB_PORT:-5432}/${DB_NAME:-surfsense}}
+      CELERY_BROKER_URL: ${REDIS_URL:-redis://redis:6379/0}
+      CELERY_RESULT_BACKEND: ${REDIS_URL:-redis://redis:6379/0}
+      REDIS_APP_URL: ${REDIS_URL:-redis://redis:6379/0}
+      CELERY_TASK_DEFAULT_QUEUE: surfsense
+      PYTHONPATH: /app
+      SEARXNG_DEFAULT_HOST: ${SEARXNG_DEFAULT_HOST-}
+      SERVICE_ROLE: worker
+      
+      # Authentication
+      JWT_SECRET: ${JWT_SECRET:-sIG5ruHqlxiDMqUDZcP5gWPMhicaVytBYil24yRGxqI}
+      SECRET_KEY: ${SECRET_KEY:-sIG5ruHqlxiDMqUDZcP5gWPMhicaVytBYil24yRGxqI}
+      
+      # RAG config
+      RAG_CONFIG_PATH: /app/app/config/rag_config_schema.yaml
+      RAG_ACTIVE_PROFILE: ${RAG_ACTIVE_PROFILE:-production}
+      CHUNKER_CHUNK_SIZE: ${CHUNKER_CHUNK_SIZE:-256}
+      
+      # OpenSearch
+      OPENSEARCH_HOSTS: ${OPENSEARCH_HOSTS:-http://opensearch:9200}
+      
+      # Embedding Provider API Keys
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      COHERE_API_KEY: ${COHERE_API_KEY:-}
+      VOYAGE_API_KEY: ${VOYAGE_API_KEY:-}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
+      JINA_API_KEY: ${JINA_API_KEY:-}
+      RETRIEVAL_MODE: ${RETRIEVAL_MODE:-hybrid}
+      
+      # Quota settings (required by billable_calls.py)
+      QUOTA_DEFAULT_IMAGE_RESERVE_MICROS: ${QUOTA_DEFAULT_IMAGE_RESERVE_MICROS:-100000}
+    
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    
+    depends_on:
+      opensearch:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    
+    restart: unless-stopped
+    
+    networks:
+      - rag-network
+    
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  # ===========================================================================
+  # CELERY BEAT - Scheduled tasks
+  # ===========================================================================
+  
+  celery_beat:
+    image: documentai-backend:latest
+    volumes:
+      - ./global_llm_config.yaml:/app/app/config/global_llm_config.yaml:ro
+      - ./rag_config_schema.yaml:/app/app/config/rag_config_schema.yaml:ro
+    
+    env_file:
+      - .env
+    
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://${DB_USER:-surfsense}:${DB_PASSWORD:-surfsense}@${DB_HOST:-db}:${DB_PORT:-5432}/${DB_NAME:-surfsense}}
+      CELERY_BROKER_URL: ${REDIS_URL:-redis://redis:6379/0}
+      CELERY_RESULT_BACKEND: ${REDIS_URL:-redis://redis:6379/0}
+      CELERY_TASK_DEFAULT_QUEUE: surfsense
+      PYTHONPATH: /app
+      SERVICE_ROLE: beat
+      QUOTA_DEFAULT_IMAGE_RESERVE_MICROS: ${QUOTA_DEFAULT_IMAGE_RESERVE_MICROS:-100000}
+    
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      celery_worker:
+        condition: service_started
+    
+    restart: unless-stopped
+    
+    networks:
+      - rag-network
+    
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  # ===========================================================================
+  # FRONTEND - Web UI
+  # ===========================================================================
+  
+  frontend:
+    image: documentai-frontend:latest
+    ports:
+      - "${FRONTEND_PORT:-3929}:3000"
+    
+    environment:
+      NEXT_PUBLIC_FASTAPI_BACKEND_URL: ${NEXT_PUBLIC_FASTAPI_BACKEND_URL:-http://localhost:${BACKEND_PORT:-8929}}
+      NEXT_PUBLIC_ZERO_CACHE_URL: ${NEXT_PUBLIC_ZERO_CACHE_URL:-http://localhost:${ZERO_CACHE_PORT:-5929}}
+      NEXT_PUBLIC_SEARXNG_URL: ${NEXT_PUBLIC_SEARXNG_URL:-}
+      NEXT_PUBLIC_FASTAPI_BACKEND_AUTH_TYPE: ${NEXT_PUBLIC_FASTAPI_BACKEND_AUTH_TYPE:-LOCAL}
+      NEXT_PUBLIC_DEPLOYMENT_MODE: ${NEXT_PUBLIC_DEPLOYMENT_MODE:-self-hosted}
+      NEXT_PUBLIC_ETL_SERVICE: ${NEXT_PUBLIC_ETL_SERVICE:-DOCLING}
+      NEXT_PUBLIC_ANONYMOUS_ENABLED: ${NEXT_PUBLIC_ANONYMOUS_ENABLED:-false}
+    
+    volumes:
+      - ./docker-entrypoint-custom.sh:/app/docker-entrypoint-custom.sh:ro
+    
+    entrypoint: ["/bin/sh", "/app/docker-entrypoint-custom.sh"]
+    
+    depends_on:
+      backend:
+        condition: service_healthy
+      # zero-cache:  # Disabled - causes refresh loop with schema incompatibility
+      #   condition: service_started
+    
+    restart: unless-stopped
+    
+    networks:
+      - rag-network
+    
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  # ===========================================================================
+  # ZERO CACHE - Real-time sync
+  # ===========================================================================
+  
+  zero-cache:
+    image: rocicorp/zero:0.26.2
+    ports:
+      - "${ZERO_CACHE_PORT:-5929}:4848"
+    
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    
+    profiles:
+      - with-realtime  # Disabled by default - causes refresh loop with missing user table replication
+    
+    environment:
+      ZERO_UPSTREAM_DB: ${ZERO_UPSTREAM_DB:-postgresql://${DB_USER:-surfsense}:${DB_PASSWORD:-surfsense}@${DB_HOST:-db}:${DB_PORT:-5432}/${DB_NAME:-surfsense}?sslmode=${DB_SSLMODE:-disable}}
+      ZERO_CVR_DB: ${ZERO_CVR_DB:-postgresql://${DB_USER:-surfsense}:${DB_PASSWORD:-surfsense}@${DB_HOST:-db}:${DB_PORT:-5432}/${DB_NAME:-surfsense}?sslmode=${DB_SSLMODE:-disable}}
+      ZERO_CHANGE_DB: ${ZERO_CHANGE_DB:-postgresql://${DB_USER:-surfsense}:${DB_PASSWORD:-surfsense}@${DB_HOST:-db}:${DB_PORT:-5432}/${DB_NAME:-surfsense}?sslmode=${DB_SSLMODE:-disable}}
+      ZERO_REPLICA_FILE: /data/zero.db
+      ZERO_ADMIN_PASSWORD: ${ZERO_ADMIN_PASSWORD:-surfsense-zero-admin}
+      ZERO_APP_PUBLICATIONS: ${ZERO_APP_PUBLICATIONS:-zero_publication}
+      ZERO_NUM_SYNC_WORKERS: ${ZERO_NUM_SYNC_WORKERS:-4}
+      ZERO_UPSTREAM_MAX_CONNS: ${ZERO_UPSTREAM_MAX_CONNS:-20}
+      ZERO_CVR_MAX_CONNS: ${ZERO_CVR_MAX_CONNS:-30}
+      ZERO_QUERY_URL: ${ZERO_QUERY_URL:-http://frontend:3000/api/zero/query}
+      ZERO_MUTATE_URL: ${ZERO_MUTATE_URL:-http://frontend:3000/api/zero/mutate}
+    
+    volumes:
+      - zero_cache_data:/data
+    
+    restart: unless-stopped
+    
+    depends_on:
+      db:
+        condition: service_healthy
+    
+    networks:
+      - rag-network
+
+  # ===========================================================================
+  # SEARXNG - Search engine (optional)
+  # ===========================================================================
+  
+  searxng:
+    image: searxng/searxng:2026.3.13-3c1f68c59
+    volumes:
+      - ./searxng:/etc/searxng
+    
+    environment:
+      SEARXNG_SECRET: ${SEARXNG_SECRET:-surfsense-searxng-secret}
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
+    networks:
+      - rag-network
+
+  # ===========================================================================
+  # OPTIONAL: Metrics & Monitoring Services
+  # ===========================================================================
+  
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   ports:
+  #     - "9090:9090"
+  #   volumes:
+  #     - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+  #     - prometheus_data:/prometheus
+  #   command:
+  #     - '--config.file=/etc/prometheus/prometheus.yml'
+  #     - '--storage.tsdb.path=/prometheus'
+  #   restart: unless-stopped
+  #   networks:
+  #     - rag-network
+  
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - grafana_data:/var/lib/grafana
+  #     - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+  #     - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+  #   environment:
+  #     GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+  #   depends_on:
+  #     - prometheus
+  #   restart: unless-stopped
+  #   networks:
+  #     - rag-network
+
+# =============================================================================
+# VOLUMES
+# =============================================================================
+
+volumes:
+  opensearch_data:
+    driver: local
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  shared_temp:
+    driver: local
+  zero_cache_data:
+    driver: local
+  # prometheus_data:
+  #   driver: local
+  # grafana_data:
+  #   driver: local
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+
+networks:
+  rag-network:
+    driver: bridge

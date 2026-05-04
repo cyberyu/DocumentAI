@@ -1,0 +1,212 @@
+#!/bin/bash
+# =============================================================================
+# SurfSense Adaptable RAG - Startup Script
+# Replaces PostgreSQL pgvector with OpenSearch for chunk storage
+# =============================================================================
+
+set -e  # Exit on error
+
+echo "============================================================================="
+echo "SurfSense Adaptable RAG - OpenSearch Migration Startup"
+echo "============================================================================="
+echo ""
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Detect docker compose command (v1: docker-compose, v2: docker compose)
+DOCKER_COMPOSE=""
+if command -v docker-compose &> /dev/null; then
+    DOCKER_COMPOSE="sudo docker-compose"
+    echo -e "${GREEN}✓${NC} docker-compose found (v1)"
+elif docker compose version &> /dev/null; then
+    DOCKER_COMPOSE="sudo docker compose"
+    echo -e "${GREEN}✓${NC} docker compose found (v2)"
+else
+    echo -e "${RED}✗ Docker Compose not found. Please install Docker Compose.${NC}"
+    echo "Visit: https://docs.docker.com/compose/install/"
+    exit 1
+fi
+
+# Check if .env file exists
+if [ ! -f .env ]; then
+    echo -e "${YELLOW}⚠${NC} .env file not found. Creating from template..."
+    
+    cat > .env << 'EOF'
+# =============================================================================
+# SurfSense Adaptable RAG - Environment Variables
+# =============================================================================
+
+# Docker Image Version
+SURFSENSE_VERSION=latest
+
+# Database Configuration (PostgreSQL - relational data only, no pgvector)
+DB_USER=surfsense
+DB_PASSWORD=surfsense
+DB_NAME=surfsense
+DB_HOST=db
+DB_PORT=5432
+DATABASE_URL=postgresql+asyncpg://surfsense:surfsense@db:5432/surfsense
+
+# Redis Configuration
+REDIS_URL=redis://redis:6379/0
+
+# OpenSearch Configuration (NEW - replaces pgvector)
+OPENSEARCH_HOSTS=http://opensearch:9200
+OPENSEARCH_USE_SSL=false
+OPENSEARCH_VERIFY_CERTS=false
+OPENSEARCH_INDEX_PREFIX=surfsense
+
+# Backend Port
+BACKEND_PORT=8929
+
+# Frontend Port
+FRONTEND_PORT=3929
+
+# RAG Configuration
+RAG_ACTIVE_PROFILE=production
+RAG_ENABLE_AB_TESTING=false
+CHUNKER_CHUNK_SIZE=256
+RETRIEVAL_MODE=hybrid
+RERANKER_ENABLED=true
+
+# Embedding Provider API Keys (optional - can use local models)
+OPENAI_API_KEY=
+COHERE_API_KEY=
+VOYAGE_API_KEY=
+GOOGLE_API_KEY=
+JINA_API_KEY=
+
+# ETL Configuration
+ETL_PROVIDER=mineru
+ETL_DETECT_TABLES=true
+ETL_DETECT_FORMULAS=true
+
+# Monitoring
+RAG_TRACK_METRICS=true
+RAG_LOG_RETRIEVAL_RESULTS=true
+RAG_LOG_LLM_CALLS=true
+EOF
+    
+    echo -e "${GREEN}✓${NC} Created .env file with defaults"
+    echo -e "${YELLOW}⚠${NC} Please edit .env and add your API keys if needed"
+fi
+
+echo ""
+echo "============================================================================="
+$DOCKER_COMPOSE -f docker-compose-adaptable-rag.yml pull
+
+# Start services
+echo ""
+echo "Starting OpenSearch, PostgreSQL, Redis, and backend services..."
+$DOCKER_COMPOSEt Docker images..."
+sudo docker-compose -f docker-compose-adaptable-rag.yml pull
+
+# Start services
+echo ""
+echo "Starting OpenSearch, PostgreSQL, Redis, and backend services..."
+sudo docker-compose -f docker-compose-adaptable-rag.yml up -d
+
+# Wait for services to be healthy
+echo ""
+echo "Waiting for services to be healthy..."
+echo ""
+
+# Function to check service health
+check_health() {
+    local service=$1
+    local max_attempts=30
+    local attempt=0
+    
+    while [ $attempt -lt $max_attempts ]; do
+        if $DOCKER_COMPOSE -f docker-compose-adaptable-rag.yml ps | grep -q "$service.*healthy"; then
+            echo -e "${GREEN}✓${NC} $service is healthy"
+            return 0
+        fi
+        echo -n "."
+        sleep 2
+        attempt=$((attempt + 1))
+    done
+    
+    echo -e "${RED}✗${NC} $service failed to become healthy"
+    return 1
+}
+
+# Check critical services
+check_health "opensearch"
+check_health "db"
+check_health "redis"
+check_health "backend"
+
+echo ""
+echo "============================================================================="
+echo "Service Status"
+echo "============================================================================="
+echo ""
+
+$DOCKER_COMPOSE -f docker-compose-adaptable-rag.yml ps
+
+echo ""
+echo "==============$DOCKER_COMPOSE============================================"
+echo "Migration Instructions"
+echo "============================================================================="
+echo ""
+echo "If you have existing data in PostgreSQL pgvector, run the migration:"
+echo ""
+echo -e "${YELLOW}  sudo docker-compose -f docker-compose-adaptable-rag.yml exec backend python /app/migrate_postgres_to_opensearch.py${NC}"
+echo ""
+echo "This will:"
+echo "  1. Read all chunks from PostgreSQL"
+echo "  2. Create OpenSearch indices per search space"
+echo "  3. Bulk index all embeddings to OpenSearch"
+echo "  4. Verify migration success"
+echo ""
+
+echo "============================================================================="
+echo "Access Points"
+echo "============================================================================="
+echo ""
+echo -e "${GREEN}Backend API:${NC}           http://localhost:8929"
+echo -e "${GREEN}Frontend:${NC}              http://localhost:3929"
+echo -e "${GREEN}OpenSearch:${NC}            http://localhost:9200"
+echo -e "${GREEN}OpenSearch Dashboards:${NC} http://localhost:5601 (if monitoring profile enabled)"
+echo ""
+
+echo "============================================================================="
+echo "Next Steps"$DOCKER_COMPOSE
+echo "============================================================================="
+echo "Next Steps"
+echo "============================================================================="
+echo ""
+echo "1. If migrating from PostgreSQL pgvector, run migration script (see above)"
+echo "2. Test search functionality via frontend or API"
+echo "3. Monitor OpenSearch at http://localhost:9200/_cat/indices"
+echo "4. Check logs: $DOCKER_COMPOSE -f docker-compose-adaptable-rag.yml logs -f backend"
+echo ""
+
+echo "============================================================================="
+echo "Useful Commands"
+echo "============================================================================="
+echo ""
+echo "View logs:"
+echo "  $DOCKER_COMPOSE -f docker-compose-adaptable-rag.yml logs -f [service]"
+echo ""
+echo "Restart services:"
+echo "  $DOCKER_COMPOSE -f docker-compose-adaptable-rag.yml restart"
+echo ""
+echo "Stop services:"
+echo "  $DOCKER_COMPOSE -f docker-compose-adaptable-rag.yml down"
+echo ""
+echo "Check OpenSearch indices:"
+echo "  curl http://localhost:9200/_cat/indices?v"
+echo ""
+echo "Check OpenSearch cluster health:"
+echo "  curl http://localhost:9200/_cluster/health?pretty"
+echo ""
+
+echo "============================================================================="
+echo "🚀 SurfSense Adaptable RAG is ready!"
+echo "============================================================================="
