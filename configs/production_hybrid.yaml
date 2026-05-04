@@ -1,0 +1,140 @@
+# Configuration: production_hybrid
+# Finance-optimized hybrid configuration
+
+metadata:
+  name: "production_hybrid"
+  description: "Finance domain-tuned with hybrid cost optimization"
+  use_case: "Financial document analysis with domain-specific models"
+  estimated_cost_per_1k_queries: "$1.50"
+
+# ============================================================================
+# COMPONENT 1: ETL (Document Ingestion)
+# ============================================================================
+etl:
+  adapter: "mineru"
+  config:
+    use_gpu: true
+    extract_tables: true
+    extract_formulas: true
+    table_recognition_model: "structeqtable"
+    timeout_seconds: 300
+
+# ============================================================================
+# COMPONENT 2: CHUNKING
+# ============================================================================
+chunking:
+  adapter: "sandwich"
+  config:
+    chunk_size: 512
+    overlap_pct: 30  # Higher overlap for financial data
+    prefix_tokens: 150
+    suffix_tokens: 150
+    min_chunk_size: 100
+    max_chunk_size: 800
+    respect_sentence_boundaries: true
+    respect_table_boundaries: true  # Critical for finance
+
+# ============================================================================
+# COMPONENT 3: EMBEDDING
+# ============================================================================
+embedding:
+  adapter: "voyage"
+  config:
+    model: "voyage-finance-2"
+    dimensions: 1024
+    batch_size: 64
+    input_type: "document"  # vs "query"
+    timeout_seconds: 30
+
+# ============================================================================
+# COMPONENT 4: STORAGE
+# ============================================================================
+storage:
+  adapter: "opensearch"
+  config:
+    hosts: ["http://opensearch:9200"]
+    index_name: "documents_finance"
+    index_type: "hnsw"
+    hnsw_m: 20  # Higher for better recall
+    hnsw_ef_construction: 250
+    number_of_shards: 3
+    number_of_replicas: 1
+
+# ============================================================================
+# COMPONENT 5: RETRIEVAL
+# ============================================================================
+retrieval:
+  strategy: "rrf"
+  config:
+    semantic_weight: 0.6
+    bm25_weight: 0.4  # Higher for exact financial terms
+    top_k: 40
+    min_score: 0.35
+
+# ============================================================================
+# COMPONENT 6: RERANKING
+# ============================================================================
+reranking:
+  adapter: "voyage"
+  config:
+    model: "rerank-1"
+    top_k: 10
+    timeout_seconds: 15
+
+# ============================================================================
+# COMPONENT 7: CONTEXT ASSEMBLY
+# ============================================================================
+context:
+  format: "citation"
+  max_tokens: 2500  # More context for financial docs
+  chunks_per_source: 4
+  include_metadata: true
+  deduplication: "semantic_similarity"
+  similarity_threshold: 0.95
+  sort_by: "relevance"
+
+# ============================================================================
+# COMPONENT 8: LLM GENERATION
+# ============================================================================
+llm:
+  adapter: "openai"
+  config:
+    model: "gpt-4o-mini"  # Cost optimized
+    max_tokens: 2048
+    temperature: 0.2  # Lower for factual finance
+    top_p: 0.9
+    timeout_seconds: 30
+
+# ============================================================================
+# COMPONENT 9: MEMORY
+# ============================================================================
+memory:
+  enabled: true
+  adapter: "opensearch_memory"
+  config:
+    episodic_retention_days: 60  # Longer for finance
+    semantic_retention_days: 180
+    procedural_never_expire: true
+    entity_retention_days: 365  # Track companies long-term
+    search_top_k: 8
+
+# ============================================================================
+# PERFORMANCE TUNING
+# ============================================================================
+performance:
+  cache_embeddings: true
+  cache_ttl_seconds: 3600
+  parallel_embedding: true
+  max_concurrent_embeddings: 10
+  connection_pool_size: 25
+
+# ============================================================================
+# MONITORING
+# ============================================================================
+monitoring:
+  track_metrics: true
+  log_retrieval_results: true
+  log_llm_calls: true
+  cost_tracking: true
+  alert_on_high_cost: true
+  cost_threshold_per_query: 0.05

@@ -1,0 +1,132 @@
+# Configuration: research_quality
+# Maximum quality configuration for research
+
+metadata:
+  name: "research_quality"
+  description: "Highest quality configuration regardless of cost"
+  use_case: "Research, benchmarking, quality validation"
+  estimated_cost_per_1k_queries: "$15.00"
+
+# ============================================================================
+# COMPONENT 1: ETL (Document Ingestion)
+# ============================================================================
+etl:
+  adapter: "llamaparse"
+  config:
+    api_key: "${LLAMAPARSE_API_KEY}"
+    result_type: "markdown"
+    premium_mode: true
+    target_pages: null
+
+# ============================================================================
+# COMPONENT 2: CHUNKING
+# ============================================================================
+chunking:
+  adapter: "llm_based"
+  config:
+    model: "gpt-4o"
+    chunk_size_target: 512
+    instruction: "Split this document into semantically coherent chunks. Each chunk should represent a complete idea or concept."
+
+# ============================================================================
+# COMPONENT 3: EMBEDDING
+# ============================================================================
+embedding:
+  adapter: "openai"
+  config:
+    model: "text-embedding-3-large"
+    dimensions: 3072
+    batch_size: 32
+
+# ============================================================================
+# COMPONENT 4: STORAGE
+# ============================================================================
+storage:
+  adapter: "milvus"
+  config:
+    host: "milvus"
+    port: 19530
+    collection_name: "documents_research"
+    dimension: 3072
+    index_type: "GPU_IVF_PQ"
+    metric_type: "IP"  # Inner product
+    nlist: 2048
+    m: 16
+    nbits: 8
+
+# ============================================================================
+# COMPONENT 5: RETRIEVAL
+# ============================================================================
+retrieval:
+  strategy: "splade"  # Learned sparse+dense
+  config:
+    top_k: 50
+    min_score: 0.2
+
+# ============================================================================
+# COMPONENT 6: RERANKING
+# ============================================================================
+reranking:
+  adapter: "cohere"
+  config:
+    model: "rerank-english-v3.0"
+    top_k: 15
+    max_chunks_per_doc: 5
+    return_documents: true
+
+# ============================================================================
+# COMPONENT 7: CONTEXT ASSEMBLY
+# ============================================================================
+context:
+  format: "hierarchical"
+  max_tokens: 8000  # Long context
+  chunks_per_source: 5
+  include_metadata: true
+  deduplication: "semantic_similarity"
+  similarity_threshold: 0.90
+  sort_by: "relevance"
+  grouping: "by_document"
+
+# ============================================================================
+# COMPONENT 8: LLM GENERATION
+# ============================================================================
+llm:
+  adapter: "anthropic"
+  config:
+    model: "claude-3-5-sonnet-20241022"
+    max_tokens: 4096
+    temperature: 0.2
+    top_p: 0.95
+
+# ============================================================================
+# COMPONENT 9: MEMORY
+# ============================================================================
+memory:
+  enabled: true
+  adapter: "opensearch_memory"
+  config:
+    episodic_retention_days: 365
+    semantic_retention_days: 999  # Never expire
+    procedural_never_expire: true
+    entity_retention_days: 999
+    search_top_k: 10
+
+# ============================================================================
+# PERFORMANCE TUNING
+# ============================================================================
+performance:
+  cache_embeddings: true
+  cache_ttl_seconds: 3600
+  parallel_embedding: true
+  max_concurrent_embeddings: 8
+  connection_pool_size: 30
+
+# ============================================================================
+# MONITORING
+# ============================================================================
+monitoring:
+  track_metrics: true
+  log_retrieval_results: true
+  log_llm_calls: true
+  cost_tracking: true
+  detailed_profiling: true

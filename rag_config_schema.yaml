@@ -1,0 +1,1021 @@
+# ============================================================================
+# Adaptable Agentic RAG System - Configuration Schema
+# ============================================================================
+# This file defines all configurable components in the RAG pipeline.
+# Each profile can override specific components for different use cases.
+# ============================================================================
+
+# Default configuration profile
+default_profile: "production"
+
+# Available configuration profiles
+profiles:
+  
+  # ──────────────────────────────────────────────────────────────────────────
+  # PRODUCTION PROFILE - Current optimized setup
+  # ──────────────────────────────────────────────────────────────────────────
+  production:
+    name: "Production - Optimized for MSFT Q&A"
+    
+    etl:
+      provider: "mineru"  # Options: mineru | docling | unstructured | custom
+      config:
+        # MinerU configuration (recommended for complex PDFs with tables)
+        model_type: "auto"  # auto | layout | formula | table
+        use_gpu: false  # Enable GPU acceleration if available
+        parse_mode: "auto"  # auto | txt | ocr
+        
+        # Output format and transformation
+        export_format: "markdown"  # markdown | markdown_with_meta | html | json
+        table_format: "markdown"  # markdown | html | latex | csv
+        formula_format: "latex"  # latex | mathml | text
+        
+        # Layout understanding
+        detect_layout: true
+        detect_tables: true
+        detect_formulas: true
+        detect_images: true
+        
+        # Table extraction settings
+        table_structure_recognition: true
+        merge_table_cells: true
+        preserve_table_formatting: true
+        
+        # Image handling
+        extract_images: false
+        image_output_dir: "/tmp/extracted_images"
+        embed_images: false  # Embed as base64 in markdown
+        
+        # OCR settings (if parse_mode=ocr)
+        ocr_engine: "paddleocr"  # paddleocr | tesseract | easyocr
+        ocr_languages: ["en"]  # Language codes for OCR
+        
+        # Data transformation pipeline
+        transformations:
+          - "clean_whitespace"     # Remove excessive whitespace
+          - "normalize_headers"    # Standardize header levels
+          - "fix_list_formatting"  # Correct bullet/numbered lists
+          - "merge_split_sentences"  # Join sentences broken across lines
+          # - "extract_metadata"   # Extract title, author, date from document
+          # - "detect_sections"    # Identify document sections
+        
+        # Quality settings
+        dpi: 300  # Resolution for PDF rendering
+        max_pages: null  # Limit pages to process (null = all)
+    
+    chunking:
+      strategy: "hybrid_sandwich"  # Options: recursive | hybrid_sandwich | semantic | code_aware | sliding_window
+      config:
+        chunk_size: 256  # Match embedding model max_seq_length
+        chunk_overlap: 0
+        respect_sentence_boundary: true
+        table_handling:
+          mode: "preserve_whole"  # preserve_whole | split_with_header | row_binning
+          max_table_tokens: 512
+          prepend_context_lines: 1  # Sandwich chunker: lines before table
+          append_context_lines: 1   # Sandwich chunker: lines after table
+        code_handling:
+          enabled: false
+          respect_scope: true
+    
+    embedding:
+      provider: "fastembed"  # Options: fastembed | openai | cohere | voyage | custom
+      model: "sentence-transformers/all-MiniLM-L6-v2"
+      config:
+        dimensions: 384
+        max_seq_length: 256  # MUST match chunking.config.chunk_size
+        batch_size: 32
+        normalize: true
+        device: "cpu"  # cpu | cuda | mps
+    
+    storage:
+      provider: "opensearch"  # Options: opensearch | postgresql_pgvector | qdrant | weaviate | milvus
+      config:
+        # OpenSearch cluster configuration
+        hosts: ["opensearch:9200"]
+        use_ssl: false
+        verify_certs: false
+        
+        # Index settings
+        index_name: "surfsense_chunks"
+        refresh_interval: "1s"  # Balance between indexing speed and search freshness
+        number_of_shards: 3
+        number_of_replicas: 1
+        
+        # Vector search (k-NN) configuration
+        knn_engine: "nmslib"  # nmslib | faiss | lucene
+        distance_metric: "cosinesimil"  # cosinesimil | l2 | innerproduct
+        knn_algo_params:
+          ef_construction: 512  # Higher = better recall, slower indexing
+          ef_search: 512        # Higher = better recall, slower search
+          m: 16                 # Number of bi-directional links per node
+        
+        # Full-text search configuration
+        text_analyzer: "english"  # Analyzer for full-text search
+        text_search_fields: ["content"]  # Fields to search
+        
+        # Hybrid search configuration
+        hybrid_search_enabled: true
+        hybrid_normalization: "min_max"  # min_max | l2 | none
+        
+        # Multiple embedding support
+        embedding_fields:
+          - name: "embedding_minilm"      # Primary embedding
+            dimension: 384
+            model: "all-MiniLM-L6-v2"
+          - name: "embedding_bge"         # Alternative embedding
+            dimension: 768
+            model: "BAAI/bge-base-en-v1.5"
+            enabled: false
+    
+    retrieval:
+      strategy: "hybrid_rrf"  # Options: hybrid_rrf | vector_only | bm25_only | multi_stage | colbert
+      config:
+        # RRF parameters
+        rrf_k: 60  # Standard RRF constant
+        top_k_multiplier: 5  # Fetch top_k * multiplier from each source before fusion
+        
+        # Vector search
+        vector_enabled: true
+        vector_weight: 0.5  # For weighted fusion (ignored in RRF)
+        
+        # Keyword search
+        keyword_enabled: true
+        keyword_weight: 0.5  # For weighted fusion (ignored in RRF)
+        keyword_query_mode: "normalized_or"  # normalized_or | phrase | plainto
+        
+        # Result limits
+        max_chunks_per_document: 20  # Cap chunks from any single document
+        total_chunks_limit: 30  # Agent will see top N chunks
+        
+        # Adjacent chunk expansion
+        adjacent_expansion:
+          enabled: true
+          expand_before: 1  # Include N chunks before matched chunk
+          expand_after: 1   # Include N chunks after matched chunk
+          max_expansion_per_chunk: 2
+    
+    reranking:
+      enabled: true
+      provider: "flashrank"  # Options: flashrank | cohere | voyage | colbert | custom
+      model: "ms-marco-MiniLM-L-12-v2"
+      config:
+        top_k: 30  # Rerank top N chunks
+        batch_size: 32
+        score_threshold: 0.0  # Minimum reranking score
+    
+    context_building:
+      format: "xml_filesystem"  # Options: xml_filesystem | markdown_sections | json_chunks | plain_text
+      config:
+        # XML filesystem options
+        include_document_tree: true
+        include_chunk_metadata: true
+        show_matched_markers: true  # Mark chunks that matched the query
+        matched_first_ordering: true  # Show matched docs first in index
+        max_index_lines: 200  # Truncate index if too long
+        
+        # Context expansion
+        sandwich_context: true  # Include surrounding chunks
+        
+        # Metadata inclusion
+        include_timestamps: true
+        include_source_info: true
+        include_relevance_scores: false  # Hide raw scores from LLM
+    
+    generation:
+      # LLM routing controlled by global_llm_config.yaml
+      # This section controls RAG-specific generation params
+      config:
+        # Prompt configuration
+        system_prompt_template: "surfsense_default"  # Template name from prompts/
+        include_retrieval_instructions: true
+        include_citation_requirements: true
+        
+        # Tool configuration
+        enabled_tools:
+          - "read_file"
+          - "ls"
+          - "search_knowledge_base"
+          # - "web_search"  # Disabled for financial Q&A
+          # - "scrape_webpage"
+        
+        # Agent middleware stack
+        middleware:
+          - "memory_injection"
+          - "knowledge_base_search"  # Pre-search based on query
+          - "todo_list"
+          - "subagents"
+          - "safe_summarization"
+          - "prompt_caching"  # Anthropic prompt caching
+        
+        # Generation parameters
+        temperature: 0.0
+        max_tokens: 4096
+        top_p: 1.0
+        stop_sequences: []
+    
+    optimization:
+      # Experiment tracking
+      track_metrics: true
+      log_retrieval_results: true
+      log_llm_calls: true
+      
+      # Auto-optimization (future)
+      auto_tune: false
+      objective: "f1_score"  # f1_score | latency | cost | custom
+      
+      # A/B testing
+      ab_testing:
+        enabled: false
+        traffic_split: 0.1  # 10% to experimental config
+        experimental_profile: "experimental_256"
+  
+  # ──────────────────────────────────────────────────────────────────────────
+  # EXPERIMENTAL PROFILES
+  # ──────────────────────────────────────────────────────────────────────────
+  
+  experimental_512:
+    name: "Experimental - Larger 512-token chunks"
+    inherits: "production"  # Inherit all settings from production
+    overrides:
+      chunking:
+        config:
+          chunk_size: 512
+      embedding:
+        config:
+          max_seq_length: 512
+      storage:
+        config:
+          knn_algo_params:
+            ef_construction: 256  # Lower for faster indexing with larger chunks
+            ef_search: 256
+      retrieval:
+        config:
+          max_chunks_per_document: 10  # Fewer chunks needed with larger size
+  
+  experimental_semantic:
+    name: "Experimental - Semantic chunking"
+    inherits: "production"
+    overrides:
+      chunking:
+        strategy: "semantic"
+        config:
+          similarity_threshold: 0.7
+          min_chunk_size: 100
+          max_chunk_size: 512
+  
+  experimental_bge:
+    name: "Experimental - BGE embeddings (higher quality)"
+    inherits: "production"
+    overrides:
+      embedding:
+        model: "BAAI/bge-base-en-v1.5"
+        config:
+          dimensions: 768  # Higher dimensional
+          max_seq_length: 512
+      storage:
+        config:
+          embedding_fields:
+            - name: "embedding_bge"
+              dimension: 768
+              model: "BAAI/bge-base-en-v1.5"
+              enabled: true
+          knn_algo_params:
+            ef_construction: 256  # Adjust for higher dimensions
+            ef_search: 256
+            m: 24  # More links for higher-dimensional space
+  
+  # ──────────────────────────────────────────────────────────────────────────
+  # HIGH-DIMENSIONAL EMBEDDING PROFILES (OpenAI 3K, Voyage, Cohere)
+  # ──────────────────────────────────────────────────────────────────────────
+  
+  experimental_openai_3k:
+    name: "Experimental - OpenAI 3K Dimensions (Highest Quality)"
+    inherits: "production"
+    overrides:
+      embedding:
+        provider: "openai"
+        model: "text-embedding-3-large"
+        config:
+          dimensions: 3072  # 🔥 3K dimensions for maximum precision
+          max_seq_length: 8192  # Very large context window
+          batch_size: 16  # Smaller batches for API rate limits
+          api_key: "${OPENAI_API_KEY}"
+      
+      storage:
+        provider: "opensearch"
+        config:
+          embedding_fields:
+            - name: "embedding_openai_3k"
+              dimension: 3072
+              model: "text-embedding-3-large"
+              enabled: true
+          knn_algo_params:
+            ef_construction: 512  # High precision for 3K dims
+            ef_search: 512
+            m: 32  # More links for high-dimensional space
+      
+      retrieval:
+        config:
+          total_chunks_limit: 100  # More precise retrieval
+          max_chunks_per_document: 15
+      
+      optimization:
+        track_metrics: true
+        log_retrieval_results: true
+  
+  experimental_openai_3k_truncated:
+    name: "Experimental - OpenAI 3K Truncated to 1536"
+    inherits: "production"
+    overrides:
+      embedding:
+        provider: "openai"
+        model: "text-embedding-3-large"
+        config:
+          dimensions: 1536  # Truncated from 3072 for speed
+          max_seq_length: 8192
+          batch_size: 32
+          api_key: "${OPENAI_API_KEY}"
+      
+      storage:
+        config:
+          embedding_fields:
+            - name: "embedding_openai_1536"
+              dimension: 1536
+              model: "text-embedding-3-large"
+              enabled: true
+  
+  experimental_voyage_finance:
+    name: "Experimental - Voyage Finance (Finance-Optimized)"
+    inherits: "production"
+    overrides:
+      embedding:
+        provider: "voyage"
+        model: "voyage-finance-2"
+        config:
+          dimensions: 1024
+          max_seq_length: 32000  # HUGE context for financial docs!
+          batch_size: 32
+          api_key: "${VOYAGE_API_KEY}"
+          input_type: "document"  # vs "query" for search
+      
+      storage:
+        config:
+          embedding_fields:
+            - name: "embedding_voyage_finance"
+              dimension: 1024
+              model: "voyage-finance-2"
+              enabled: true
+      
+      retrieval:
+        config:
+          total_chunks_limit: 150  # Leverage large context
+  
+  experimental_cohere_compressed:
+    name: "Experimental - Cohere Binary Compression (Ultra Fast)"
+    inherits: "production"
+    overrides:
+      embedding:
+        provider: "cohere"
+        model: "embed-english-v3.0"
+        config:
+          dimensions: 1024
+          max_seq_length: 512
+          batch_size: 96
+          api_key: "${COHERE_API_KEY}"
+          input_type: "search_document"
+          embedding_type: "ubinary"  # Ultra-compressed binary
+      
+      storage:
+        config:
+          embedding_fields:
+            - name: "embedding_cohere_binary"
+              dimension: 1024
+              model: "embed-english-v3.0"
+              enabled: true
+              encoding: "ubinary"  # 32x smaller storage!
+      
+      retrieval:
+        strategy: "vector_only"  # Binary embeddings, pure vector search
+        config:
+          total_chunks_limit: 200  # Fast retrieval with binary
+  
+  scientific_papers:
+    name: "Scientific Papers - Formula & Table Focus"
+    inherits: "production"
+    overrides:
+      etl:
+        provider: "mineru"
+        config:
+          model_type: "auto"
+          detect_formulas: true
+          detect_tables: true
+          formula_format: "latex"
+          table_format: "markdown"
+          transformations:
+            - "clean_whitespace"
+            - "normalize_headers"
+            - "extract_metadata"
+      chunking:
+        config:
+          chunk_size: 512  # Larger for scientific content
+          table_handling:
+            mode: "preserve_whole"
+            max_table_tokens: 1024  # Allow larger tables
+      embedding:
+        config:
+          max_seq_length: 512
+  
+  # ──────────────────────────────────────────────────────────────────────────
+  # FAST & CHEAP PROFILE
+  # ──────────────────────────────────────────────────────────────────────────
+  
+  fast_cheap:
+    name: "Fast & Cheap - Minimal processing"
+    inherits: "production"
+    overrides:
+      etl:
+        provider: "docling"  # Faster than MinerU
+        config:
+          detect_tables: true
+          detect_formulas: false  # Skip formula detection
+      retrieval:
+        strategy: "vector_only"
+        config:
+          total_chunks_limit: 10
+      reranking:
+        enabled: false
+      context_building:
+        config:
+          show_matched_markers: false
+          max_index_lines: 50
+  
+  # ──────────────────────────────────────────────────────────────────────────
+  # HIGH ACCURACY PROFILE
+  # ──────────────────────────────────────────────────────────────────────────
+  
+  high_accuracy:
+    name: "High Accuracy - Maximum context"
+    inherits: "production"
+    overrides:
+      etl:
+        config:
+          # More thorough extraction
+          dpi: 400  # Higher resolution
+          detect_formulas: true
+          extract_images: true
+          transformations:
+            - "clean_whitespace"
+            - "normalize_headers"
+            - "fix_list_formatting"
+            - "merge_split_sentences"
+            - "extract_metadata"
+            - "detect_sections"
+      retrieval:
+        config:
+          top_k_multiplier: 10
+          max_chunks_per_document: 50
+          total_chunks_limit: 100
+          adjacent_expansion:
+            enabled: true
+            expand_before: 2
+            expand_after: 2
+      reranking:
+        config:
+          top_k: 100
+
+# ============================================================================
+# Agent-Specific Overrides
+# ============================================================================
+# Agents can dynamically select configurations based on query characteristics
+
+agent_routing_rules:
+  
+  # Route by query type
+  query_classification:
+    enabled: true
+    rules:
+      - condition: "query contains financial terms"
+        profile: "production"
+      
+      - condition: "query is code-related"
+        profile: "code_specialist"
+        overrides:
+          chunking:
+            strategy: "code_aware"
+            config:
+              respect_scope: true
+      
+      - condition: "query needs latest info"
+        overrides:
+          generation:
+            config:
+              enabled_tools:
+                - "web_search"
+                - "search_knowledge_base"
+  
+  # Route by search space size
+  document_count_rules:
+    - condition: "document_count < 10"
+      overrides:
+        retrieval:
+          config:
+            total_chunks_limit: 50
+    
+    - condition: "document_count > 1000"
+      profile: "fast_cheap"
+  
+  # Route by user preferences
+  user_preferences:
+    quality_over_speed:
+      profile: "high_accuracy"
+    
+    speed_over_quality:
+      profile: "fast_cheap"
+
+# ============================================================================
+# Optimization Experiments Configuration
+# ============================================================================
+
+experiment_configs:
+  
+  # Grid search over key parameters
+  grid_search:
+    enabled: false
+    base_profile: "production"
+    parameters:
+      chunking.config.chunk_size: [128, 256, 512]
+      retrieval.config.rrf_k: [20, 60, 100]
+      retrieval.config.max_chunks_per_document: [10, 20, 50]
+      reranking.enabled: [true, false]
+    
+    evaluation:
+      benchmark_file: "msft_fy26q1_qa_benchmark_100_sanitized.json"
+      metrics:
+        - "exact_match"
+        - "f1_score"
+        - "latency_p95"
+        - "cost_per_query"
+  
+  # Bayesian optimization for continuous parameters
+  bayesian_optimization:
+    enabled: false
+    base_profile: "production"
+    parameters:
+      retrieval.config.rrf_k:
+        type: "continuous"
+        range: [10, 100]
+      reranking.config.score_threshold:
+        type: "continuous"
+        range: [0.0, 0.5]
+    
+    objective: "maximize_f1_score"
+    num_iterations: 50
+    parallel_trials: 4
+
+# ============================================================================
+# Component Registry
+# ============================================================================
+# Define available implementations for each component type
+
+component_registry:
+  
+  etl_providers:
+    mineru:
+      class: "app.services.mineru_service.MinerUService"
+      requires: ["magic-pdf"]
+      supported_formats: ["pdf"]
+      features:
+        - "advanced_table_extraction"
+        - "formula_recognition"
+        - "layout_analysis"
+        - "multi_column_support"
+        - "header_footer_detection"
+      strengths:
+        - "Complex scientific papers"
+        - "Financial documents with tables"
+        - "Multi-column layouts"
+        - "Mathematical formulas"
+      output_formats: ["markdown", "markdown_with_meta", "html", "json"]
+    
+    docling:
+      class: "app.services.docling_service.DoclingService"
+      requires: ["docling"]
+      supported_formats: ["pdf", "docx", "xlsx", "pptx"]
+      features:
+        - "table_structure_detection"
+        - "multi_format_support"
+        - "cpu_optimized"
+      strengths:
+        - "Good general-purpose converter"
+        - "Fast processing"
+        - "Multiple document formats"
+      output_formats: ["markdown", "html", "json"]
+    
+    unstructured:
+      class: "app.services.unstructured_service.UnstructuredService"
+      requires: ["unstructured"]
+      supported_formats: ["pdf", "docx", "html", "xml", "eml", "pptx", "xlsx"]
+      features:
+        - "wide_format_support"
+        - "email_parsing"
+        - "html_processing"
+      strengths:
+        - "Broadest format support"
+        - "Email and web content"
+        - "Structured data extraction"
+      output_formats: ["json", "html"]
+    
+    custom:
+      class: "app.services.custom_etl_service.CustomETLService"
+      supported_formats: ["*"]
+      features:
+        - "fully_customizable"
+      output_formats: ["*"]
+  
+  chunking_strategies:
+    recursive:
+      class: "chonkie.RecursiveChunker"
+    
+    hybrid_sandwich:
+      class: "app.indexing_pipeline.document_chunker.chunk_text_hybrid"
+    
+    semantic:
+      class: "app.indexing_pipeline.semantic_chunker.SemanticChunker"
+    
+    code_aware:
+      class: "chonkie.CodeChunker"
+    
+    sliding_window:
+      class: "app.indexing_pipeline.sliding_window_chunker.SlidingWindowChunker"
+  
+  embedding_providers:
+    # ──────────────────────────────────────────────────────────────────────
+    # LOCAL EMBEDDINGS (FastEmbed + Sentence Transformers)
+    # ──────────────────────────────────────────────────────────────────────
+    fastembed:
+      class: "fastembed.TextEmbedding"
+      requires: ["fastembed"]
+      cost_per_1k_tokens: 0.0  # Free, runs locally
+      features:
+        - "offline_inference"
+        - "cpu_optimized"
+        - "no_api_key_required"
+      models:
+        # Lightweight models (256-512 dims)
+        - name: "sentence-transformers/all-MiniLM-L6-v2"
+          dimension: 384
+          max_seq_length: 256
+          strengths: ["fast", "low_memory", "general_purpose"]
+        - name: "BAAI/bge-small-en-v1.5"
+          dimension: 384
+          max_seq_length: 512
+          strengths: ["balanced_quality_speed", "english_optimized"]
+        
+        # Medium quality models (768 dims)
+        - name: "BAAI/bge-base-en-v1.5"
+          dimension: 768
+          max_seq_length: 512
+          strengths: ["high_quality", "english_optimized"]
+        - name: "BAAI/bge-base-en-v1.5"
+          dimension: 768
+          max_seq_length: 512
+          strengths: ["high_quality", "instruction_following"]
+        - name: "thenlper/gte-base"
+          dimension: 768
+          max_seq_length: 512
+          strengths: ["general_purpose", "robust"]
+        - name: "intfloat/e5-base-v2"
+          dimension: 768
+          max_seq_length: 512
+          strengths: ["contrastive_learning", "robust"]
+        
+        # High quality models (1024 dims)
+        - name: "BAAI/bge-large-en-v1.5"
+          dimension: 1024
+          max_seq_length: 512
+          strengths: ["state_of_art_quality", "english_optimized"]
+        - name: "thenlper/gte-large"
+          dimension: 1024
+          max_seq_length: 512
+          strengths: ["high_quality", "general_purpose"]
+        - name: "intfloat/e5-large-v2"
+          dimension: 1024
+          max_seq_length: 512
+          strengths: ["high_quality", "contrastive_learning"]
+        
+        # Multilingual models
+        - name: "intfloat/multilingual-e5-base"
+          dimension: 768
+          max_seq_length: 512
+          strengths: ["100_languages", "cross_lingual"]
+        - name: "intfloat/multilingual-e5-large"
+          dimension: 1024
+          max_seq_length: 512
+          strengths: ["100_languages", "high_quality"]
+    
+    # ──────────────────────────────────────────────────────────────────────
+    # OPENAI EMBEDDINGS (1536-3072 dims)
+    # ──────────────────────────────────────────────────────────────────────
+    openai:
+      class: "app.services.embedding.openai_embeddings.OpenAIEmbeddings"
+      requires: ["openai"]
+      requires_api_key: true
+      api_key_env: "OPENAI_API_KEY"
+      features:
+        - "cloud_hosted"
+        - "high_quality"
+        - "fast_inference"
+        - "shortening_support"  # Can truncate to smaller dimensions
+      models:
+        - name: "text-embedding-3-small"
+          dimension: 1536
+          max_seq_length: 8192
+          cost_per_1k_tokens: 0.00002  # $0.02 per 1M tokens
+          strengths: ["cost_effective", "fast", "high_quality"]
+          shortening_dimensions: [512, 1024]  # Can reduce to these
+        
+        - name: "text-embedding-3-large"
+          dimension: 3072  # 🔥 3K DIMENSIONS
+          max_seq_length: 8192
+          cost_per_1k_tokens: 0.00013  # $0.13 per 1M tokens
+          strengths: ["highest_quality", "large_context", "sota_performance"]
+          shortening_dimensions: [256, 512, 1024, 1536, 2048]  # Flexible truncation
+          recommended_for: ["complex_documents", "high_precision_retrieval", "legal_medical"]
+        
+        - name: "text-embedding-ada-002"
+          dimension: 1536
+          max_seq_length: 8192
+          cost_per_1k_tokens: 0.0001  # $0.10 per 1M tokens
+          strengths: ["widely_used", "stable"]
+          notes: "Legacy model, consider text-embedding-3-small instead"
+    
+    # ──────────────────────────────────────────────────────────────────────
+    # COHERE EMBEDDINGS (1024 dims)
+    # ──────────────────────────────────────────────────────────────────────
+    cohere:
+      class: "app.services.embedding.cohere_embeddings.CohereEmbeddings"
+      requires: ["cohere"]
+      requires_api_key: true
+      api_key_env: "COHERE_API_KEY"
+      features:
+        - "cloud_hosted"
+        - "input_type_optimization"  # search_document vs search_query
+        - "compression_support"  # int8, uint8, binary, ubinary
+      models:
+        - name: "embed-english-v3.0"
+          dimension: 1024
+          max_seq_length: 512
+          cost_per_1k_tokens: 0.0001  # $0.10 per 1M tokens
+          strengths: ["english_optimized", "high_quality", "flexible_compression"]
+          compression_options: ["int8", "uint8", "binary", "ubinary"]
+        
+        - name: "embed-multilingual-v3.0"
+          dimension: 1024
+          max_seq_length: 512
+          cost_per_1k_tokens: 0.0001
+          strengths: ["100_languages", "cross_lingual", "high_quality"]
+          compression_options: ["int8", "uint8", "binary", "ubinary"]
+        
+        - name: "embed-english-light-v3.0"
+          dimension: 384
+          max_seq_length: 512
+          cost_per_1k_tokens: 0.0001
+          strengths: ["fast", "cost_effective", "low_latency"]
+    
+    # ──────────────────────────────────────────────────────────────────────
+    # VOYAGE AI EMBEDDINGS (1024-1536 dims)
+    # ──────────────────────────────────────────────────────────────────────
+    voyage:
+      class: "app.services.embedding.voyage_embeddings.VoyageEmbeddings"
+      requires: ["voyageai"]
+      requires_api_key: true
+      api_key_env: "VOYAGE_API_KEY"
+      features:
+        - "cloud_hosted"
+        - "domain_specific_models"
+        - "high_quality"
+      models:
+        - name: "voyage-large-2"
+          dimension: 1536
+          max_seq_length: 16000
+          cost_per_1k_tokens: 0.00012  # $0.12 per 1M tokens
+          strengths: ["highest_quality", "large_context", "general_purpose"]
+        
+        - name: "voyage-2"
+          dimension: 1024
+          max_seq_length: 4000
+          cost_per_1k_tokens: 0.0001
+          strengths: ["balanced_quality_cost", "general_purpose"]
+        
+        - name: "voyage-code-2"
+          dimension: 1536
+          max_seq_length: 16000
+          cost_per_1k_tokens: 0.00012
+          strengths: ["code_optimized", "technical_documents"]
+        
+        - name: "voyage-law-2"
+          dimension: 1024
+          max_seq_length: 16000
+          cost_per_1k_tokens: 0.00012
+          strengths: ["legal_documents", "contract_analysis"]
+        
+        - name: "voyage-finance-2"
+          dimension: 1024
+          max_seq_length: 32000
+          cost_per_1k_tokens: 0.00012
+          strengths: ["financial_documents", "10k_10q_reports"]
+          recommended_for: ["financial_qa", "earnings_reports", "sec_filings"]
+    
+    # ──────────────────────────────────────────────────────────────────────
+    # GOOGLE EMBEDDINGS (768 dims)
+    # ──────────────────────────────────────────────────────────────────────
+    google:
+      class: "app.services.embedding.google_embeddings.GoogleEmbeddings"
+      requires: ["google-generativeai"]
+      requires_api_key: true
+      api_key_env: "GOOGLE_API_KEY"
+      features:
+        - "cloud_hosted"
+        - "task_type_optimization"
+        - "multimodal_support"
+      models:
+        - name: "text-embedding-004"
+          dimension: 768
+          max_seq_length: 2048
+          cost_per_1k_tokens: 0.00001  # Very cost-effective
+          strengths: ["cost_effective", "task_optimized", "stable"]
+          task_types: ["retrieval_query", "retrieval_document", "semantic_similarity"]
+        
+        - name: "text-embedding-005"
+          dimension: 768
+          max_seq_length: 2048
+          cost_per_1k_tokens: 0.00001
+          strengths: ["latest_generation", "improved_quality"]
+    
+    # ──────────────────────────────────────────────────────────────────────
+    # JINA AI EMBEDDINGS (768-8192 dims)
+    # ──────────────────────────────────────────────────────────────────────
+    jina:
+      class: "app.services.embedding.jina_embeddings.JinaEmbeddings"
+      requires: ["requests"]
+      requires_api_key: true
+      api_key_env: "JINA_API_KEY"
+      features:
+        - "cloud_hosted"
+        - "long_context_support"
+        - "multilingual"
+      models:
+        - name: "jina-embeddings-v2-base-en"
+          dimension: 768
+          max_seq_length: 8192  # Very long context!
+          cost_per_1k_tokens: 0.00002
+          strengths: ["long_context", "english_optimized", "high_quality"]
+        
+        - name: "jina-embeddings-v2-small-en"
+          dimension: 512
+          max_seq_length: 8192
+          cost_per_1k_tokens: 0.00001
+          strengths: ["cost_effective", "long_context", "fast"]
+        
+        - name: "jina-embeddings-v3"
+          dimension: 1024
+          max_seq_length: 8192
+          cost_per_1k_tokens: 0.00002
+          strengths: ["multilingual", "task_specific_lora", "high_quality"]
+    
+    # ──────────────────────────────────────────────────────────────────────
+    # CUSTOM EMBEDDINGS
+    # ──────────────────────────────────────────────────────────────────────
+    custom:
+      class: "app.services.embedding.custom_embeddings.CustomEmbeddings"
+      requires: []
+      notes: "Bring your own embedding model implementation"
+  
+  storage_providers:
+    opensearch:
+      class: "app.db.opensearch_storage.OpenSearchStorage"
+      requires: ["opensearch-py"]
+      features:
+        - "vector_search"
+        - "full_text_search"
+        - "hybrid_search"
+        - "multiple_embeddings"
+        - "native_analytics"
+      supported_distances: ["cosinesimil", "l2", "innerproduct"]
+      max_dimension: 16000
+    
+    postgresql_pgvector:
+      class: "app.db.postgresql_storage.PostgreSQLStorage"
+      requires: ["pgvector", "asyncpg"]
+      features:
+        - "vector_search"
+        - "full_text_search"
+      supported_distances: ["cosine", "l2", "inner_product"]
+      max_dimension: 2000
+    
+    qdrant:
+      class: "app.db.qdrant_storage.QdrantStorage"
+      requires: ["qdrant-client"]
+      features:
+        - "vector_search"
+        - "payload_indexing"
+      supported_distances: ["cosine", "euclid", "dot"]
+      max_dimension: 65536
+    
+    weaviate:
+      class: "app.db.weaviate_storage.WeaviateStorage"
+      requires: ["weaviate-client"]
+      features:
+        - "vector_search"
+        - "full_text_search"
+        - "graphql_api"
+      supported_distances: ["cosine", "dot", "l2-squared"]
+      max_dimension: 65535
+  
+  retrieval_strategies:
+    hybrid_rrf:
+      class: "app.retriever.chunks_hybrid_search.ChucksHybridSearchRetriever"
+    
+    vector_only:
+      class: "app.retriever.vector_search.VectorSearchRetriever"
+    
+    bm25_only:
+      class: "app.retriever.bm25_search.BM25SearchRetriever"
+    
+    multi_stage:
+      class: "app.retriever.multi_stage.MultiStageRetriever"
+    
+    colbert:
+      class: "app.retriever.colbert_search.ColBERTRetriever"
+  
+  reranking_providers:
+    flashrank:
+      class: "rerankers.Reranker"
+      models:
+        - "ms-marco-MiniLM-L-12-v2"
+        - "rank-T5-flan"
+    
+    cohere:
+      class: "app.services.reranker.cohere_reranker.CohereReranker"
+      models:
+        - "rerank-english-v3.0"
+        - "rerank-multilingual-v3.0"
+    
+    voyage:
+      class: "app.services.reranker.voyage_reranker.VoyageReranker"
+      models:
+        - "rerank-lite-1"
+
+# ============================================================================
+# Monitoring & Telemetry
+# ============================================================================
+
+monitoring:
+  enabled: true
+  
+  metrics:
+    # Retrieval metrics
+    - "retrieval_latency"
+    - "chunks_retrieved"
+    - "reranking_score_distribution"
+    - "document_coverage"
+    
+    # Generation metrics
+    - "llm_latency"
+    - "prompt_tokens"
+    - "completion_tokens"
+    - "tool_calls_count"
+    
+    # Quality metrics (when ground truth available)
+    - "exact_match"
+    - "f1_score"
+    - "citation_accuracy"
+  
+  logging:
+    level: "INFO"  # DEBUG | INFO | WARNING | ERROR
+    destinations:
+      - "console"
+      - "file"  # logs/rag_system.log
+      - "database"  # Store in PostgreSQL for analysis
+  
+  tracing:
+    enabled: true
+    provider: "opentelemetry"  # opentelemetry | langsmith | custom
+    sample_rate: 1.0  # 100% sampling
+
+# ============================================================================
+# Feature Flags
+# ============================================================================
+
+feature_flags:
+  # Enable/disable features without code changes
+  enable_prompt_caching: true
+  enable_context_expansion: true
+  enable_matched_first_ordering: true
+  enable_query_planning: true
+  enable_tool_selection: true
+  enable_parallel_tool_calls: true
+  enable_subagents: true
+  enable_auto_reranking: true
+  enable_feedback_loop: false  # Not implemented yet

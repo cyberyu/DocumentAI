@@ -1,0 +1,114 @@
+# Configuration: speed_optimized
+# Lowest latency configuration
+
+metadata:
+  name: "speed_optimized"
+  description: "Minimum latency configuration for real-time use"
+  use_case: "Interactive applications requiring sub-second response"
+  estimated_cost_per_1k_queries: "$0.80"
+
+# ============================================================================
+# COMPONENT 1: ETL (Document Ingestion)
+# ============================================================================
+etl:
+  adapter: "pymupdf"
+  config:
+    extract_tables: false  # Skip for speed
+    extract_images: false
+
+# ============================================================================
+# COMPONENT 2: CHUNKING
+# ============================================================================
+chunking:
+  adapter: "fixed"
+  config:
+    chunk_size: 256
+    overlap_pct: 15
+    min_chunk_size: 50
+
+# ============================================================================
+# COMPONENT 3: EMBEDDING
+# ============================================================================
+embedding:
+  adapter: "fastembed"
+  config:
+    model: "BAAI/bge-small-en-v1.5"
+    dimensions: 384
+    batch_size: 64
+    device: "cuda"
+
+# ============================================================================
+# COMPONENT 4: STORAGE
+# ============================================================================
+storage:
+  adapter: "redis"
+  config:
+    host: "redis"
+    port: 6379
+    index_name: "documents_speed"
+    vector_algorithm: "HNSW"
+    vector_dim: 384
+    m: 12
+    ef_construction: 100
+
+# ============================================================================
+# COMPONENT 5: RETRIEVAL
+# ============================================================================
+retrieval:
+  strategy: "semantic_only"  # Skip BM25 for speed
+  config:
+    top_k: 15
+    min_score: 0.3
+
+# ============================================================================
+# COMPONENT 6: RERANKING
+# ============================================================================
+reranking:
+  enabled: false  # Skip reranking for speed
+
+# ============================================================================
+# COMPONENT 7: CONTEXT ASSEMBLY
+# ============================================================================
+context:
+  format: "simple"
+  max_tokens: 1200
+  chunks_per_source: 2
+  include_metadata: false
+  deduplication: "none"  # Skip for speed
+  sort_by: "relevance"
+
+# ============================================================================
+# COMPONENT 8: LLM GENERATION
+# ============================================================================
+llm:
+  adapter: "groq"
+  config:
+    model: "llama-3.3-70b-versatile"
+    max_tokens: 1024
+    temperature: 0.3
+    timeout_seconds: 10
+
+# ============================================================================
+# COMPONENT 9: MEMORY
+# ============================================================================
+memory:
+  enabled: false  # Disabled for speed
+
+# ============================================================================
+# PERFORMANCE TUNING
+# ============================================================================
+performance:
+  cache_embeddings: true
+  cache_ttl_seconds: 1800
+  parallel_embedding: true
+  max_concurrent_embeddings: 32
+  connection_pool_size: 50
+
+# ============================================================================
+# MONITORING
+# ============================================================================
+monitoring:
+  track_metrics: true
+  log_retrieval_results: false
+  log_llm_calls: false
+  cost_tracking: false

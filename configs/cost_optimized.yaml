@@ -1,0 +1,128 @@
+# Configuration: cost_optimized
+# Minimum cost while maintaining reasonable quality
+
+metadata:
+  name: "cost_optimized"
+  description: "Minimum cost configuration with affordable APIs"
+  use_case: "Budget-constrained deployments"
+  estimated_cost_per_1k_queries: "$0.20"
+
+# ============================================================================
+# COMPONENT 1: ETL (Document Ingestion)
+# ============================================================================
+etl:
+  adapter: "docling"
+  config:
+    output_format: "markdown"
+    extract_tables: true
+    extract_images: false
+    async_processing: true
+
+# ============================================================================
+# COMPONENT 2: CHUNKING
+# ============================================================================
+chunking:
+  adapter: "fixed"
+  config:
+    chunk_size: 256
+    overlap_pct: 10
+    min_chunk_size: 50
+
+# ============================================================================
+# COMPONENT 3: EMBEDDING
+# ============================================================================
+embedding:
+  adapter: "google"
+  config:
+    model: "text-embedding-004"
+    dimensions: 768
+    batch_size: 128
+    task_type: "RETRIEVAL_DOCUMENT"
+
+# ============================================================================
+# COMPONENT 4: STORAGE
+# ============================================================================
+storage:
+  adapter: "qdrant"
+  config:
+    url: "http://qdrant:6333"
+    collection_name: "documents_cost_opt"
+    vector_size: 768
+    distance: "Cosine"
+    hnsw_config:
+      m: 12
+      ef_construct: 100
+
+# ============================================================================
+# COMPONENT 5: RETRIEVAL
+# ============================================================================
+retrieval:
+  strategy: "rrf"
+  config:
+    semantic_weight: 0.7
+    bm25_weight: 0.3
+    top_k: 20
+    min_score: 0.3
+
+# ============================================================================
+# COMPONENT 6: RERANKING
+# ============================================================================
+reranking:
+  adapter: "flashrank"
+  config:
+    model: "ms-marco-MiniLM-L-12-v2"
+    top_k: 5
+    device: "cpu"  # CPU to avoid GPU costs
+
+# ============================================================================
+# COMPONENT 7: CONTEXT ASSEMBLY
+# ============================================================================
+context:
+  format: "simple"
+  max_tokens: 1500
+  chunks_per_source: 2
+  include_metadata: false
+  deduplication: "exact_match"
+  sort_by: "relevance"
+
+# ============================================================================
+# COMPONENT 8: LLM GENERATION
+# ============================================================================
+llm:
+  adapter: "google"
+  config:
+    model: "gemini-1.5-flash"
+    max_tokens: 1024
+    temperature: 0.3
+
+# ============================================================================
+# COMPONENT 9: MEMORY
+# ============================================================================
+memory:
+  enabled: true
+  adapter: "opensearch_memory"
+  config:
+    episodic_retention_days: 7
+    semantic_retention_days: 30
+    procedural_never_expire: true
+    entity_retention_days: 30
+    search_top_k: 3
+
+# ============================================================================
+# PERFORMANCE TUNING
+# ============================================================================
+performance:
+  cache_embeddings: true
+  cache_ttl_seconds: 7200
+  parallel_embedding: true
+  max_concurrent_embeddings: 16
+  connection_pool_size: 10
+
+# ============================================================================
+# MONITORING
+# ============================================================================
+monitoring:
+  track_metrics: true
+  log_retrieval_results: false
+  log_llm_calls: false
+  cost_tracking: true

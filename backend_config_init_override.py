@@ -404,10 +404,14 @@ class Config:
 
     # Premium token quota settings
     PREMIUM_TOKEN_LIMIT = int(os.getenv("PREMIUM_TOKEN_LIMIT", "3000000"))
+<<<<<<< HEAD
     PREMIUM_CREDIT_MICROS_LIMIT = int(
         os.getenv("PREMIUM_CREDIT_MICROS_LIMIT")
         or os.getenv("PREMIUM_TOKEN_LIMIT", "5000000")
     )
+=======
+    PREMIUM_CREDIT_MICROS_LIMIT = int(os.getenv("PREMIUM_CREDIT_MICROS_LIMIT", "100000000"))  # 100 million micros = $100
+>>>>>>> 76b95abd28c400fdd46e0e82711a11038ce77b11
     STRIPE_PREMIUM_TOKEN_PRICE_ID = os.getenv("STRIPE_PREMIUM_TOKEN_PRICE_ID")
     STRIPE_TOKENS_PER_UNIT = int(os.getenv("STRIPE_TOKENS_PER_UNIT", "1000000"))
     STRIPE_CREDIT_MICROS_PER_UNIT = int(os.getenv("STRIPE_CREDIT_MICROS_PER_UNIT") or os.getenv("STRIPE_TOKENS_PER_UNIT", "1000000"))
