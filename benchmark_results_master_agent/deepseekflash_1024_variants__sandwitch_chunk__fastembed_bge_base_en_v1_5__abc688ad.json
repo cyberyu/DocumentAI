@@ -1,0 +1,81 @@
+{
+  "generated_at_utc": "2026-05-06T01:20:00Z",
+  "config": {
+    "base_url": "http://localhost:8929",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "document_title_contains": "MSFT_FY26Q1_10Q",
+    "mentioned_document_ids": [
+      89
+    ],
+    "max_questions": 1,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": true,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 1,
+    "overall_correct_count": 1,
+    "overall_correct_rate": 1.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 1,
+    "number_match_rate": 1.0,
+    "unit_match_count": 1,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.03418803418803419,
+    "questions_total": 100,
+    "questions_run": 1,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 1,
+      "overall_correct_count": 1,
+      "overall_correct_rate": 1.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 1,
+      "number_match_rate": 1.0,
+      "unit_match_count": 1,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.03418803418803419
+    }
+  },
+  "thread_ids_used": [
+    138
+  ],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "Let me read the relevant document to find the answer.I need to search for \"accounts receivable\" in this document. Let me grep for it.The grep results clearly show the answer. From chunk 72696 (in the sandwitch_chunk_bge_base file, line 760):\n\n\"As of September 30, 2025 and June 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion and $5.2 billion, respectively\"\n\nSo as of September 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion. The document says \"(In millions)\" for the balance sheets, but this specific figure is stated as \"$5.0 billion\" in the notes. Let me report it as stated in the source document.$5.0 billion",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.058823529411764705,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.1111111111111111,
+        "primary_value_match": true,
+        "token_f1": 0.03418803418803419,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    }
+  ]
+}

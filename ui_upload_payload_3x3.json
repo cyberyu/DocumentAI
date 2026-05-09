@@ -1,0 +1,18 @@
+{
+  "base_url": "http://localhost:8929",
+  "search_space_id": 1,
+  "source_file": "MSFT_FY26Q1_10Q_content.md",
+  "processing_mode": "basic",
+  "should_summarize": false,
+  "use_vision_llm": false,
+  "chunking_strategies": [
+    "chunk_text",
+    "chunk_recursive",
+    "sandwitch_chunk"
+  ],
+  "embedding_models": [
+    "fastembed/all-MiniLM-L6-v2",
+    "fastembed/bge-base-en-v1.5",
+    "fastembed/bge-large-en-v1.5"
+  ]
+}

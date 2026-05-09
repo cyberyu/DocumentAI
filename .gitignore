@@ -6,3 +6,8 @@ global_llm_config.yaml
 
 # Temporary lock files
 .~lock.*#
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo

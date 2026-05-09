@@ -1,0 +1,96 @@
+{
+  "generated_at_utc": "2026-05-06T20:51:45Z",
+  "llm_model": "deepseek-v4-flash",
+  "master_run_prefix": "diagnose127_q1",
+  "subagent_workers": 1,
+  "search_space_id": 1,
+  "source_document": "MSFT_FY26Q1_10Q.docx",
+  "document_id": "docsha256_fba0e3883b2f01df",
+  "benchmark_file": "msft_fy26q1_qa_benchmark_100_sanitized.json",
+  "objective": {
+    "formula": "0.60*overall_correct_rate + 0.30*number_match_rate + 0.10*mean_token_f1 - 0.01*request_failures",
+    "primary": "overall_correct_rate",
+    "secondary": "number_match_rate",
+    "tertiary": "mean_token_f1"
+  },
+  "harness": {
+    "isolation_mode": "forced_mentioned_document_ids",
+    "non_overlap_guarantee": "unique pipeline_id -> unique backend_document_id",
+    "document_identity": {
+      "document_id": "docsha256_fba0e3883b2f01df",
+      "semantics": "stable identity for the source document across all pipelines"
+    },
+    "pipeline_upload_id_semantics": "per-pipeline backend upload row id",
+    "chunk_sizes": [
+      256
+    ],
+    "ranking_variants": [
+      "hybrid_rrf_plus"
+    ],
+    "assignments": [
+      {
+        "pipeline_id": "chunk_text__fastembed_all_minilm_l6_v2__tok256__hybrid_rrf_plus",
+        "run_name": "diagnose127_q1__chunk_text__fastembed_all_minilm_l6_v2__tok256__hybrid_rrf_plus__296f86f0",
+        "chunking_strategy": "chunk_text",
+        "embedding_model": "fastembed/all-MiniLM-L6-v2",
+        "ranking_variant": "hybrid_rrf_plus",
+        "document_id": "docsha256_fba0e3883b2f01df",
+        "pipeline_upload_id": 199,
+        "forced_mentioned_document_ids": [
+          199
+        ],
+        "chunk_size": 256
+      }
+    ]
+  },
+  "recommended_pipeline": {
+    "candidate": {
+      "pipeline_id": "chunk_text__fastembed_all_minilm_l6_v2__tok256__hybrid_rrf_plus",
+      "chunking_strategy": "chunk_text",
+      "embedding_model": "fastembed/all-MiniLM-L6-v2",
+      "chunk_size": 256,
+      "ranking_variant": "hybrid_rrf_plus"
+    },
+    "pipeline_id": "chunk_text__fastembed_all_minilm_l6_v2__tok256__hybrid_rrf_plus",
+    "success": true,
+    "run_name": "diagnose127_q1__chunk_text__fastembed_all_minilm_l6_v2__tok256__hybrid_rrf_plus__296f86f0",
+    "document_id": "docsha256_fba0e3883b2f01df",
+    "pipeline_upload_id": 199,
+    "document_title_filter": "MSFT_FY26Q1_10Q__chunk_text__fastembed_all_minilm_l6_v2__tok256__hybrid_rrf_plus__296f86f0",
+    "benchmark_json": "benchmark_results_master_agent/diagnose127_q1__chunk_text__fastembed_all_minilm_l6_v2__tok256__hybrid_rrf_plus__296f86f0.json",
+    "benchmark_md": "benchmark_results_master_agent/diagnose127_q1__chunk_text__fastembed_all_minilm_l6_v2__tok256__hybrid_rrf_plus__296f86f0.md",
+    "overall_correct_rate": 1.0,
+    "number_match_rate": 1.0,
+    "mean_token_f1": 0.009615384615384614,
+    "request_failures": 0,
+    "elapsed_seconds": 77.47481751441956,
+    "score": 0.9009615384615384,
+    "error": null
+  },
+  "ranked_subagent_reports": [
+    {
+      "candidate": {
+        "pipeline_id": "chunk_text__fastembed_all_minilm_l6_v2__tok256__hybrid_rrf_plus",
+        "chunking_strategy": "chunk_text",
+        "embedding_model": "fastembed/all-MiniLM-L6-v2",
+        "chunk_size": 256,
+        "ranking_variant": "hybrid_rrf_plus"
+      },
+      "pipeline_id": "chunk_text__fastembed_all_minilm_l6_v2__tok256__hybrid_rrf_plus",
+      "success": true,
+      "run_name": "diagnose127_q1__chunk_text__fastembed_all_minilm_l6_v2__tok256__hybrid_rrf_plus__296f86f0",
+      "document_id": "docsha256_fba0e3883b2f01df",
+      "pipeline_upload_id": 199,
+      "document_title_filter": "MSFT_FY26Q1_10Q__chunk_text__fastembed_all_minilm_l6_v2__tok256__hybrid_rrf_plus__296f86f0",
+      "benchmark_json": "benchmark_results_master_agent/diagnose127_q1__chunk_text__fastembed_all_minilm_l6_v2__tok256__hybrid_rrf_plus__296f86f0.json",
+      "benchmark_md": "benchmark_results_master_agent/diagnose127_q1__chunk_text__fastembed_all_minilm_l6_v2__tok256__hybrid_rrf_plus__296f86f0.md",
+      "overall_correct_rate": 1.0,
+      "number_match_rate": 1.0,
+      "mean_token_f1": 0.009615384615384614,
+      "request_failures": 0,
+      "elapsed_seconds": 77.47481751441956,
+      "score": 0.9009615384615384,
+      "error": null
+    }
+  ]
+}

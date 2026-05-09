@@ -1,0 +1,81 @@
+{
+  "generated_at_utc": "2026-05-06T20:51:45Z",
+  "config": {
+    "base_url": "http://localhost:8929",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "document_title_contains": "MSFT_FY26Q1_10Q",
+    "mentioned_document_ids": [
+      199
+    ],
+    "max_questions": 1,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": true,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 1,
+    "overall_correct_count": 1,
+    "overall_correct_rate": 1.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 1,
+    "number_match_rate": 1.0,
+    "unit_match_count": 1,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.009615384615384614,
+    "questions_total": 100,
+    "questions_run": 1,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 1,
+      "overall_correct_count": 1,
+      "overall_correct_rate": 1.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 1,
+      "number_match_rate": 1.0,
+      "unit_match_count": 1,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.009615384615384614
+    }
+  },
+  "thread_ids_used": [
+    265
+  ],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "Let me search for the long-term accounts receivable in the MSFT FY26 Q1 10Q document. Let me look at the most relevant document first.The search_surfsense_docs is for SurfSense documentation, not for the MSFT document. Let me read the priority document to find the information about long-term accounts receivable.Let me read the priority document to find the relevant information about long-term accounts receivable.I see the document has a lot of chunks, but I need to find the specific information about \"long-term accounts receivable\" or \"long-term notes receivable\" net of allowance. Let me search for \"accounts receivable\" or \"long-term\" in the document to find the relevant chunks. Actually, let me look at the other document files as well, or search for the relevant content using grep.The search didn't find any matches for \"long-term receivable\" or \"accounts receivable net\" in the file contents. This might be because the grep searches the indexed chunks in postgres. Let me try reading one of the larger documents that might contain the full financial statements. Let me look at the \"tok1024\" or \"hybrid_full\" document which may have more complete content.\n\nLet me read a comprehensive document with the full 10Q content.The chunk index starts at line 4524, which means there are earlier lines before that. Let me search for balance sheet content - I should look for terms like \"accounts receivable\", \"long-term\", \"notes receivable\", \"allowance for doubtful\" etc. Let me use grep on the XML files.I can see from multiple chunks that the information is:\n\n\"As of September 30, 2025 and June 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion and $5.2 billion, respectively\"\n\nSo for September 30, 2025, the long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion.\n\nThe document is in millions, so $5.0 billion means $5.0 billion. Let me verify by reading the exact chunk to confirm.Let me find the right file and read the exact chunk. Let me look at chunk_id=73649 which contains the long-term accounts receivable info in the tok256 file.I found it. The document clearly states:\n\n\"As of September 30, 2025 and June 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion and $5.2 billion, respectively\"\n\nSo the answer is $5.0 billion for September 30, 2025.\n\nThe document says the amounts are in millions on the balance sheet, but here they're stated as \"$5.0 billion\" explicitly. So I should report this in the unit and scale used: $5.0 billion.$5.0 billion",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.025,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.04878048780487806,
+        "primary_value_match": true,
+        "token_f1": 0.009615384615384614,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    }
+  ]
+}

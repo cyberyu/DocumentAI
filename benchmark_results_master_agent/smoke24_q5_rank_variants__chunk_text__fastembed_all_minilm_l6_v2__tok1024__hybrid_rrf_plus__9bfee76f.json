@@ -1,0 +1,185 @@
+{
+  "generated_at_utc": "2026-05-06T23:36:41Z",
+  "config": {
+    "base_url": "http://localhost:8929",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "document_title_contains": "MSFT_FY26Q1_10Q",
+    "mentioned_document_ids": [
+      211
+    ],
+    "max_questions": 5,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": true,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 5,
+    "overall_correct_count": 5,
+    "overall_correct_rate": 1.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 5,
+    "number_match_rate": 1.0,
+    "unit_match_count": 5,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.029487340494758686,
+    "questions_total": 100,
+    "questions_run": 5,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 5,
+      "overall_correct_count": 5,
+      "overall_correct_rate": 1.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 5,
+      "number_match_rate": 1.0,
+      "unit_match_count": 5,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.029487340494758686
+    }
+  },
+  "thread_ids_used": [
+    276,
+    280,
+    282,
+    284,
+    286
+  ],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user wants me to find the long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025 from the MSFT FY26Q1 10Q document. Let me search the knowledge base for this information.That searched SurfSense docs, not the knowledge base. Let me search the knowledge base documents directly. I need to look at the document files in /documents/ that are related to MSFT FY26Q1 10Q. Let me first look at the priority document mentioned.Let me search across the document files for \"long-term accounts receivable\" or similar terms.I found the answer clearly. From multiple document chunks, the same data appears:\n\n\"As of September 30, 2025 and June 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion and $5.2 billion, respectively\"\n\nSo for September 30, 2025, the value is $5.0 billion. The document reports in billions. Let me verify by reading the actual chunk from the priority document.$5.0 billion",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.045454545454545456,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.08695652173913045,
+        "primary_value_match": true,
+        "token_f1": 0.02531645569620253,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "The user wants to know the value of \"other receivables related to activities to facilitate the purchase of server components\" as of September 30, 2025 from the MSFT FY26 Q1 10Q document.\n\nLet me search for this information. The priority document is mentioned, let me read it to find the relevant information.The chunk index doesn't tell me much about the content directly. Let me search for \"other receivables\" and \"server components\" in the document to find the relevant section.The grep results clearly show multiple matches across different chunk files, all stating the same thing:\n\n\"As of September 30, 2025 and June 30, 2025, other receivables related to activities to facilitate the purchase of server components were $14.4 billion and $8.2 billion, respectively\"\n\nSo the value as of September 30, 2025 is $14.4 billion.\n\nLet me read one chunk to verify the exact phrasing and confirm the citation.$14.4 billion",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.05263157894736842,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.1,
+        "primary_value_match": true,
+        "token_f1": 0.026490066225165566,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-003",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is our financing receivables, net as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is our financing receivables, net as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "$3.9 billion USD",
+      "predicted_answer": "The user is asking about a specific value in the Microsoft FY26 Q1 10-Q document. Let me read the priority document that was retrieved to find the financing receivables, net as of September 30, 2025.\n\nLet me start by reading the document that was flagged as most relevant.Let me search for \"financing receivables\" in this document. Let me grep for it.The search results consistently show that as of September 30, 2025, financing receivables, net were $3.9 billion.$3.9 billion",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.09090909090909091,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.16666666666666669,
+        "primary_value_match": true,
+        "token_f1": 0.04938271604938271,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-004",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the net loss from investments in OpenAI for the three months ended September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is the net loss from investments in OpenAI for the three months ended September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "$4.1 billion USD",
+      "predicted_answer": "The user is asking about a specific financial figure from Microsoft's FY26 Q1 10-Q filing. Let me search the knowledge base for this information.\n\nThe priority document points to a specific file. Let me read it to find the relevant information about the net loss from investments in OpenAI for the three months ended September 30, 2025.\n\nLet me start by reading the priority document.I need to search for information about OpenAI and net loss. Let me read more of the document to find relevant content about OpenAI.The key finding is at line 981:\n\n\"For the three months ended September 30, 2025 and 2024, other income (expense), net included $4.1 billion and $688 million, respectively, of net losses from investments in OpenAI, primarily net recognized losses on our equity method investment reflected in other, net.\"\n\nAnd at line 2218, there's a table showing:\n\"Net losses from investments in OpenAI | 4,061 | 688\"\n\nThe value is $4.1 billion / $4,061 million for the three months ended September 30, 2025.\n\nLet me verify with the exact chunk.The answer is clearly stated: $4.1 billion for the three months ended September 30, 2025. The document also shows it as 4,061 (in millions) in the table at line 2218. So the value is $4.1 billion or $4,061 million.\n\nThe user wants the exact unit and scale used in the source document. The source document uses \"In millions\" for the table at line 2218 showing 4,061. But the prose at line 981 says \"$4.1 billion\". Let me check the table at line 2218 more carefully.The table header says \"(In millions, except percentages and per share amounts)\" and the value is 4,061. The prose says \"$4.1 billion\". Both are consistent - the table reports in millions (4,061 million = $4.061 billion, which rounds to $4.1 billion).\n\nThe user asks: \"Return only the value with unit.\" and \"Report monetary values in the exact unit and scale used in the source document (e.g., USD millions).\"\n\nThe table shows it as \"4,061\" with the header \"(In millions)\". So the value is $4,061 million.\n\nLet me also check the prose chunk more carefully to see what exact unit it uses.\n\nFrom line 981: \"included $4.1 billion\" - this is the prose description.\nFrom line 2218 (table): \"4,061\" under header \"(In millions)\".\n\nThe user asks me to report in the exact unit and scale used in the source. The table is in millions, so I should report $4,061 million. But the prose says $4.1 billion.\n\nActually, let me re-read: \"Report monetary values in the exact unit and scale used in the source document (e.g., USD millions).\"\n\nThe table header says \"(In millions)\" and the value is 4,061. So $4,061 million is the exact value from the table.\n\nBut the prose says \"$4.1 billion\". Both are in the source. The table value is more precise. Let me use $4,061 million since the table uses millions.\n\nActually, $4.1 billion = $4,100 million, and the table says 4,061. So there's a slight rounding difference. The table is the exact figure. Let me report $4,061 million.$4,061 million",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.016129032258064516,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.031746031746031744,
+        "primary_value_match": true,
+        "token_f1": 0.011764705882352941,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-005",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments as of September 30, 2025? Return only the value with unit. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "$2.9 billion USD",
+      "predicted_answer": "Let me search through the document to find the specific value for equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments as of September 30, 2025.Let me read one of these files to find the specific value. Let me start with the one that was priority-ranked highest.The grep results clearly show the answer. Multiple chunks contain the exact same value:\n\nFrom chunk_id=73937, chunk_id=76603, chunk_id=79427, chunk_id=45342:\n\"As of both September 30, 2025 and June 30, 2025, equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments were $2.9 billion.\"\n\nThe value is $2.9 billion.$2.9 billion",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.05,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.09523809523809523,
+        "primary_value_match": true,
+        "token_f1": 0.034482758620689655,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    }
+  ]
+}

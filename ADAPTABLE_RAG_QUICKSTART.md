@@ -322,6 +322,35 @@ agent_routing_rules:
 
 ## Running Experiments
 
+### Self-Adaptive Master Agent (Chunking × Embedding)
+
+Use the new master/subagent optimizer to evaluate pipeline combinations end-to-end against the benchmark ground truth:
+
+```bash
+python3 scripts/self_adaptive_master_agent.py \
+  --config benchmark_runner_config.json \
+  --search-space-id 2 \
+  --source-doc MSFT_FY26Q1_10Q.docx \
+  --benchmark-file msft_fy26q1_qa_benchmark_100_sanitized.json \
+  --llm-model deepseek-v4-flash \
+  --chunking-strategies chunk_text,chunk_recursive,sandwitch_chunk \
+  --embedding-models openai/text-embedding-3-small,openai/text-embedding-3-large \
+  --subagent-workers 2 \
+  --benchmark-workers 20 \
+  --run-prefix deepseek_v4_flash_master
+```
+
+Outputs:
+- Per-subagent benchmark artifacts in `benchmark_results_master_agent/`
+- Master ranking + recommendation summary:
+  - `benchmark_results_master_agent/deepseek_v4_flash_master__master_summary.json`
+  - `benchmark_results_master_agent/deepseek_v4_flash_master__master_summary.md`
+
+Identity semantics for master/subagent runs:
+- `pipeline_id`: unique per `(chunking_strategy, embedding_model, chunk_size)` candidate.
+- `document_id`: stable shared ID for the same source document across all candidates.
+- `pipeline_upload_id`: per-upload backend row ID used internally for `mentioned_document_ids`.
+
 ### Grid Search
 
 Edit `rag_config_schema.yaml`:

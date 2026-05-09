@@ -1,0 +1,291 @@
+{
+  "generated_at_utc": "2026-05-06T02:14:28Z",
+  "llm_model": "deepseek-v4-flash",
+  "master_run_prefix": "deepseekflash_master_subagents_12",
+  "subagent_workers": 3,
+  "search_space_id": 1,
+  "source_document": "MSFT_FY26Q1_10Q.docx",
+  "benchmark_file": "msft_fy26q1_qa_benchmark_100_sanitized.json",
+  "objective": {
+    "formula": "0.60*overall_correct_rate + 0.30*number_match_rate + 0.10*mean_token_f1 - 0.01*request_failures",
+    "primary": "overall_correct_rate",
+    "secondary": "number_match_rate",
+    "tertiary": "mean_token_f1"
+  },
+  "harness": {
+    "isolation_mode": "forced_mentioned_document_ids",
+    "non_overlap_guarantee": "unique combo -> unique doc_id",
+    "chunk_sizes": [
+      256,
+      1024
+    ],
+    "assignments": []
+  },
+  "recommended_pipeline": null,
+  "ranked_subagent_reports": [
+    {
+      "candidate": {
+        "pipeline_id": "chunk_text__fastembed_all_minilm_l6_v2__tok256",
+        "chunking_strategy": "chunk_text",
+        "embedding_model": "fastembed/all-MiniLM-L6-v2",
+        "chunk_size": 256
+      },
+      "pipeline_id": "chunk_text__fastembed_all_minilm_l6_v2__tok256",
+      "success": false,
+      "run_name": "deepseekflash_master_subagents_12__chunk_text__fastembed_all_minilm_l6_v2__tok256__06db1351",
+      "document_id": 122,
+      "document_title_filter": "MSFT_FY26Q1_10Q__chunk_text__fastembed_all_minilm_l6_v2__tok256__06db1351",
+      "benchmark_json": null,
+      "benchmark_md": null,
+      "overall_correct_rate": 0.0,
+      "number_match_rate": 0.0,
+      "mean_token_f1": 0.0,
+      "request_failures": 1,
+      "elapsed_seconds": 16.291565656661987,
+      "score": -1.0,
+      "error": "Document indexing failed for doc_id=122, state=failed"
+    },
+    {
+      "candidate": {
+        "pipeline_id": "chunk_text__fastembed_all_minilm_l6_v2__tok1024",
+        "chunking_strategy": "chunk_text",
+        "embedding_model": "fastembed/all-MiniLM-L6-v2",
+        "chunk_size": 1024
+      },
+      "pipeline_id": "chunk_text__fastembed_all_minilm_l6_v2__tok1024",
+      "success": false,
+      "run_name": "deepseekflash_master_subagents_12__chunk_text__fastembed_all_minilm_l6_v2__tok1024__333093c5",
+      "document_id": 123,
+      "document_title_filter": "MSFT_FY26Q1_10Q__chunk_text__fastembed_all_minilm_l6_v2__tok1024__333093c5",
+      "benchmark_json": null,
+      "benchmark_md": null,
+      "overall_correct_rate": 0.0,
+      "number_match_rate": 0.0,
+      "mean_token_f1": 0.0,
+      "request_failures": 1,
+      "elapsed_seconds": 28.354668617248535,
+      "score": -1.0,
+      "error": "Document indexing failed for doc_id=123, state=failed"
+    },
+    {
+      "candidate": {
+        "pipeline_id": "chunk_text__fastembed_bge_base_en_v1_5__tok256",
+        "chunking_strategy": "chunk_text",
+        "embedding_model": "fastembed/bge-base-en-v1.5",
+        "chunk_size": 256
+      },
+      "pipeline_id": "chunk_text__fastembed_bge_base_en_v1_5__tok256",
+      "success": false,
+      "run_name": "deepseekflash_master_subagents_12__chunk_text__fastembed_bge_base_en_v1_5__tok256__12d2fa3d",
+      "document_id": 124,
+      "document_title_filter": "MSFT_FY26Q1_10Q__chunk_text__fastembed_bge_base_en_v1_5__tok256__12d2fa3d",
+      "benchmark_json": null,
+      "benchmark_md": null,
+      "overall_correct_rate": 0.0,
+      "number_match_rate": 0.0,
+      "mean_token_f1": 0.0,
+      "request_failures": 1,
+      "elapsed_seconds": 42.419721603393555,
+      "score": -1.0,
+      "error": "Document indexing failed for doc_id=124, state=failed"
+    },
+    {
+      "candidate": {
+        "pipeline_id": "chunk_text__fastembed_bge_base_en_v1_5__tok1024",
+        "chunking_strategy": "chunk_text",
+        "embedding_model": "fastembed/bge-base-en-v1.5",
+        "chunk_size": 1024
+      },
+      "pipeline_id": "chunk_text__fastembed_bge_base_en_v1_5__tok1024",
+      "success": false,
+      "run_name": "deepseekflash_master_subagents_12__chunk_text__fastembed_bge_base_en_v1_5__tok1024__95a5b276",
+      "document_id": 125,
+      "document_title_filter": "MSFT_FY26Q1_10Q__chunk_text__fastembed_bge_base_en_v1_5__tok1024__95a5b276",
+      "benchmark_json": null,
+      "benchmark_md": null,
+      "overall_correct_rate": 0.0,
+      "number_match_rate": 0.0,
+      "mean_token_f1": 0.0,
+      "request_failures": 1,
+      "elapsed_seconds": 40.33367609977722,
+      "score": -1.0,
+      "error": "Document indexing failed for doc_id=125, state=failed"
+    },
+    {
+      "candidate": {
+        "pipeline_id": "chunk_text__fastembed_bge_large_en_v1_5__tok256",
+        "chunking_strategy": "chunk_text",
+        "embedding_model": "fastembed/bge-large-en-v1.5",
+        "chunk_size": 256
+      },
+      "pipeline_id": "chunk_text__fastembed_bge_large_en_v1_5__tok256",
+      "success": false,
+      "run_name": "deepseekflash_master_subagents_12__chunk_text__fastembed_bge_large_en_v1_5__tok256__d1ff4fd9",
+      "document_id": 126,
+      "document_title_filter": "MSFT_FY26Q1_10Q__chunk_text__fastembed_bge_large_en_v1_5__tok256__d1ff4fd9",
+      "benchmark_json": null,
+      "benchmark_md": null,
+      "overall_correct_rate": 0.0,
+      "number_match_rate": 0.0,
+      "mean_token_f1": 0.0,
+      "request_failures": 1,
+      "elapsed_seconds": 40.332133293151855,
+      "score": -1.0,
+      "error": "Document indexing failed for doc_id=126, state=failed"
+    },
+    {
+      "candidate": {
+        "pipeline_id": "chunk_text__fastembed_bge_large_en_v1_5__tok1024",
+        "chunking_strategy": "chunk_text",
+        "embedding_model": "fastembed/bge-large-en-v1.5",
+        "chunk_size": 1024
+      },
+      "pipeline_id": "chunk_text__fastembed_bge_large_en_v1_5__tok1024",
+      "success": false,
+      "run_name": "deepseekflash_master_subagents_12__chunk_text__fastembed_bge_large_en_v1_5__tok1024__9d02c9e8",
+      "document_id": 127,
+      "document_title_filter": "MSFT_FY26Q1_10Q__chunk_text__fastembed_bge_large_en_v1_5__tok1024__9d02c9e8",
+      "benchmark_json": null,
+      "benchmark_md": null,
+      "overall_correct_rate": 0.0,
+      "number_match_rate": 0.0,
+      "mean_token_f1": 0.0,
+      "request_failures": 1,
+      "elapsed_seconds": 40.34532380104065,
+      "score": -1.0,
+      "error": "Document indexing failed for doc_id=127, state=failed"
+    },
+    {
+      "candidate": {
+        "pipeline_id": "sandwitch_chunk__fastembed_all_minilm_l6_v2__tok256",
+        "chunking_strategy": "sandwitch_chunk",
+        "embedding_model": "fastembed/all-MiniLM-L6-v2",
+        "chunk_size": 256
+      },
+      "pipeline_id": "sandwitch_chunk__fastembed_all_minilm_l6_v2__tok256",
+      "success": false,
+      "run_name": "deepseekflash_master_subagents_12__sandwitch_chunk__fastembed_all_minilm_l6_v2__tok256__adfe56aa",
+      "document_id": 128,
+      "document_title_filter": "MSFT_FY26Q1_10Q__sandwitch_chunk__fastembed_all_minilm_l6_v2__tok256__adfe56aa",
+      "benchmark_json": null,
+      "benchmark_md": null,
+      "overall_correct_rate": 0.0,
+      "number_match_rate": 0.0,
+      "mean_token_f1": 0.0,
+      "request_failures": 1,
+      "elapsed_seconds": 40.33418369293213,
+      "score": -1.0,
+      "error": "Document indexing failed for doc_id=128, state=failed"
+    },
+    {
+      "candidate": {
+        "pipeline_id": "sandwitch_chunk__fastembed_all_minilm_l6_v2__tok1024",
+        "chunking_strategy": "sandwitch_chunk",
+        "embedding_model": "fastembed/all-MiniLM-L6-v2",
+        "chunk_size": 1024
+      },
+      "pipeline_id": "sandwitch_chunk__fastembed_all_minilm_l6_v2__tok1024",
+      "success": false,
+      "run_name": "deepseekflash_master_subagents_12__sandwitch_chunk__fastembed_all_minilm_l6_v2__tok1024__001ee8d7",
+      "document_id": 129,
+      "document_title_filter": "MSFT_FY26Q1_10Q__sandwitch_chunk__fastembed_all_minilm_l6_v2__tok1024__001ee8d7",
+      "benchmark_json": null,
+      "benchmark_md": null,
+      "overall_correct_rate": 0.0,
+      "number_match_rate": 0.0,
+      "mean_token_f1": 0.0,
+      "request_failures": 1,
+      "elapsed_seconds": 42.34748816490173,
+      "score": -1.0,
+      "error": "Document indexing failed for doc_id=129, state=failed"
+    },
+    {
+      "candidate": {
+        "pipeline_id": "sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256",
+        "chunking_strategy": "sandwitch_chunk",
+        "embedding_model": "fastembed/bge-base-en-v1.5",
+        "chunk_size": 256
+      },
+      "pipeline_id": "sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256",
+      "success": false,
+      "run_name": "deepseekflash_master_subagents_12__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__a66d996a",
+      "document_id": 130,
+      "document_title_filter": "MSFT_FY26Q1_10Q__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__a66d996a",
+      "benchmark_json": null,
+      "benchmark_md": null,
+      "overall_correct_rate": 0.0,
+      "number_match_rate": 0.0,
+      "mean_token_f1": 0.0,
+      "request_failures": 1,
+      "elapsed_seconds": 42.34257960319519,
+      "score": -1.0,
+      "error": "Document indexing failed for doc_id=130, state=failed"
+    },
+    {
+      "candidate": {
+        "pipeline_id": "sandwitch_chunk__fastembed_bge_base_en_v1_5__tok1024",
+        "chunking_strategy": "sandwitch_chunk",
+        "embedding_model": "fastembed/bge-base-en-v1.5",
+        "chunk_size": 1024
+      },
+      "pipeline_id": "sandwitch_chunk__fastembed_bge_base_en_v1_5__tok1024",
+      "success": false,
+      "run_name": "deepseekflash_master_subagents_12__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok1024__964939b5",
+      "document_id": 131,
+      "document_title_filter": "MSFT_FY26Q1_10Q__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok1024__964939b5",
+      "benchmark_json": null,
+      "benchmark_md": null,
+      "overall_correct_rate": 0.0,
+      "number_match_rate": 0.0,
+      "mean_token_f1": 0.0,
+      "request_failures": 1,
+      "elapsed_seconds": 42.31920766830444,
+      "score": -1.0,
+      "error": "Document indexing failed for doc_id=131, state=failed"
+    },
+    {
+      "candidate": {
+        "pipeline_id": "sandwitch_chunk__fastembed_bge_large_en_v1_5__tok256",
+        "chunking_strategy": "sandwitch_chunk",
+        "embedding_model": "fastembed/bge-large-en-v1.5",
+        "chunk_size": 256
+      },
+      "pipeline_id": "sandwitch_chunk__fastembed_bge_large_en_v1_5__tok256",
+      "success": false,
+      "run_name": "deepseekflash_master_subagents_12__sandwitch_chunk__fastembed_bge_large_en_v1_5__tok256__3f86074a",
+      "document_id": 132,
+      "document_title_filter": "MSFT_FY26Q1_10Q__sandwitch_chunk__fastembed_bge_large_en_v1_5__tok256__3f86074a",
+      "benchmark_json": null,
+      "benchmark_md": null,
+      "overall_correct_rate": 0.0,
+      "number_match_rate": 0.0,
+      "mean_token_f1": 0.0,
+      "request_failures": 1,
+      "elapsed_seconds": 42.29579734802246,
+      "score": -1.0,
+      "error": "Document indexing failed for doc_id=132, state=failed"
+    },
+    {
+      "candidate": {
+        "pipeline_id": "sandwitch_chunk__fastembed_bge_large_en_v1_5__tok1024",
+        "chunking_strategy": "sandwitch_chunk",
+        "embedding_model": "fastembed/bge-large-en-v1.5",
+        "chunk_size": 1024
+      },
+      "pipeline_id": "sandwitch_chunk__fastembed_bge_large_en_v1_5__tok1024",
+      "success": false,
+      "run_name": "deepseekflash_master_subagents_12__sandwitch_chunk__fastembed_bge_large_en_v1_5__tok1024__2467ee2b",
+      "document_id": 133,
+      "document_title_filter": "MSFT_FY26Q1_10Q__sandwitch_chunk__fastembed_bge_large_en_v1_5__tok1024__2467ee2b",
+      "benchmark_json": null,
+      "benchmark_md": null,
+      "overall_correct_rate": 0.0,
+      "number_match_rate": 0.0,
+      "mean_token_f1": 0.0,
+      "request_failures": 1,
+      "elapsed_seconds": 42.28973174095154,
+      "score": -1.0,
+      "error": "Document indexing failed for doc_id=133, state=failed"
+    }
+  ]
+}

@@ -840,6 +840,7 @@ class SurfSenseClient:
         expand_adjacent_chunks: bool = False,
         adjacent_chunks_window: int = 1,
         enforce_ranked_evidence_first: bool | None = None,
+        ranking_variant: str | None = None,
     ) -> str:
         # Optional throttle before each API call (applies to first attempt and retries).
         if pre_request_delay_seconds > 0:
@@ -859,6 +860,8 @@ class SurfSenseClient:
             payload["adjacent_chunks_window"] = adjacent_chunks_window
         if enforce_ranked_evidence_first is not None:
             payload["enforce_ranked_evidence_first"] = enforce_ranked_evidence_first
+        if ranking_variant:
+            payload["ranking_variant"] = ranking_variant
 
         status, body, headers = self._request(
             "POST",
@@ -1109,6 +1112,11 @@ def build_arg_parser() -> argparse.ArgumentParser:
         help="If set, auto-detect document IDs by title and pass as mentioned_document_ids",
     )
     parser.add_argument(
+        "--mentioned-document-ids",
+        default=None,
+        help="Comma-separated document IDs to force in mentioned_document_ids (overrides title filter)",
+    )
+    parser.add_argument(
         "--max-questions",
         type=int,
         default=0,
@@ -1170,6 +1178,11 @@ def build_arg_parser() -> argparse.ArgumentParser:
         "--disabled-tools",
         default=None,
         help="Comma-separated tool names to disable per request (example: web_search,scrape_webpage)",
+    )
+    parser.add_argument(
+        "--ranking-variant",
+        default=None,
+        help="Per-request ranking variant for hybrid retrieval (e.g. hybrid_rrf_plus, hybrid_weighted)",
     )
     parser.add_argument(
         "--expand-adjacent-chunks",
@@ -1244,6 +1257,11 @@ def main() -> int:
         or _first_present(cfg, ["document_title_contains", "DOCUMENT_TITLE_CONTAINS"])
         or None
     )
+    mentioned_document_ids_raw = (
+        args.mentioned_document_ids
+        if args.mentioned_document_ids is not None
+        else _first_present(cfg, ["mentioned_document_ids", "MENTIONED_DOCUMENT_IDS"])
+    )
     output_dir = (
         args.output_dir
         or _first_present(cfg, ["output_dir", "OUTPUT_DIR"])
@@ -1291,6 +1309,15 @@ def main() -> int:
             enforce_ranked_evidence_first = _as_bool(cfg_ranked, True)
     else:
         enforce_ranked_evidence_first = args.enforce_ranked_evidence_first
+
+    ranking_variant = (
+        args.ranking_variant
+        if args.ranking_variant is not None
+        else _first_present(cfg, ["ranking_variant", "RANKING_VARIANT"])
+    )
+    ranking_variant = str(ranking_variant).strip() if ranking_variant is not None else None
+    if ranking_variant == "":
+        ranking_variant = None
 
     delay_per_request_raw = (
         args.delay_per_request
@@ -1340,10 +1367,38 @@ def main() -> int:
     search_space_id = resolve_search_space_id(client, search_space_id, search_space_name)
     print(f"[{_now_utc()}] Using search_space_id={search_space_id}")
 
-    doc_ids = resolve_document_ids(client, search_space_id, document_title_contains)
+    forced_doc_ids: list[int] | None = None
+    if mentioned_document_ids_raw not in (None, ""):
+        if isinstance(mentioned_document_ids_raw, list):
+            raw_values = mentioned_document_ids_raw
+        else:
+            raw_values = [s.strip() for s in str(mentioned_document_ids_raw).split(",") if s.strip()]
+        try:
+            forced_doc_ids = [int(v) for v in raw_values]
+        except (TypeError, ValueError):
+            print("ERROR: mentioned-document-ids must be a comma-separated list of integers", file=sys.stderr)
+            return 2
+
+    if forced_doc_ids is not None:
+        doc_ids = forced_doc_ids
+    else:
+        doc_ids = resolve_document_ids(client, search_space_id, document_title_contains)
+        if len(doc_ids) > 1:
+            print(
+                (
+                    "ERROR: title-based auto-discovery matched multiple document IDs "
+                    f"({doc_ids}). Use --mentioned-document-ids with a single explicit "
+                    "backend upload ID to keep pipeline isolation strict."
+                ),
+                file=sys.stderr,
+            )
+            return 2
     fallback_doc_ids: list[int] = []
     if doc_ids:
-        print(f"[{_now_utc()}] Mentioning document IDs: {doc_ids}")
+        if forced_doc_ids is not None:
+            print(f"[{_now_utc()}] Using forced mentioned_document_ids: {doc_ids}")
+        else:
+            print(f"[{_now_utc()}] Mentioning document IDs: {doc_ids}")
     else:
         print(f"[{_now_utc()}] No matching document IDs found for title filter: {document_title_contains!r}")
 
@@ -1385,6 +1440,7 @@ def main() -> int:
                 expand_adjacent_chunks=expand_adjacent_chunks,
                 adjacent_chunks_window=adjacent_chunks_window,
                 enforce_ranked_evidence_first=enforce_ranked_evidence_first,
+                ranking_variant=ranking_variant,
             )
             if not pred:
                 # Retry once in a new thread on empty output.
@@ -1405,6 +1461,7 @@ def main() -> int:
                         expand_adjacent_chunks=expand_adjacent_chunks,
                         adjacent_chunks_window=adjacent_chunks_window,
                         enforce_ranked_evidence_first=enforce_ranked_evidence_first,
+                        ranking_variant=ranking_variant,
                     )
                 except Exception:
                     retry_pred = ""
@@ -1443,6 +1500,7 @@ def main() -> int:
                         expand_adjacent_chunks=expand_adjacent_chunks,
                         adjacent_chunks_window=adjacent_chunks_window,
                         enforce_ranked_evidence_first=enforce_ranked_evidence_first,
+                        ranking_variant=ranking_variant,
                     )
                     if retry_pred:
                         pred = _choose_better_prediction(pred, retry_pred)
@@ -1464,6 +1522,7 @@ def main() -> int:
                             expand_adjacent_chunks=expand_adjacent_chunks,
                             adjacent_chunks_window=adjacent_chunks_window,
                             enforce_ranked_evidence_first=enforce_ranked_evidence_first,
+                            ranking_variant=ranking_variant,
                         )
                         if second_retry_pred:
                             pred = _choose_better_prediction(pred, second_retry_pred)
@@ -1492,6 +1551,7 @@ def main() -> int:
                         expand_adjacent_chunks=expand_adjacent_chunks,
                         adjacent_chunks_window=adjacent_chunks_window,
                         enforce_ranked_evidence_first=enforce_ranked_evidence_first,
+                        ranking_variant=ranking_variant,
                     )
                     if not pred:
                         pred = ""

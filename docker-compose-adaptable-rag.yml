@@ -77,6 +77,8 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD:-surfsense}
       POSTGRES_DB: ${DB_NAME:-surfsense}
     command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    ports:
+      - "5432:5432"  # Expose to host for local dev
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-surfsense} -d ${DB_NAME:-surfsense}"]
@@ -91,6 +93,8 @@ services:
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"  # Expose to host for local dev
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
@@ -105,34 +109,22 @@ services:
   # ===========================================================================
   
   backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend-extended
     image: documentai-backend:latest
+    gpus: all
     ports:
       - "${BACKEND_PORT:-8929}:8000"
     volumes:
       - shared_temp:/shared_tmp
-      
-      # ── Adapter Architecture Files ──
-      - ./adapter_base_classes.py:/app/app/adapters/adapter_base_classes.py:ro
-      - ./adapter_dataflow_models.py:/app/app/adapters/adapter_dataflow_models.py:ro
-      - ./adapter_examples.py:/app/app/adapters/adapter_examples.py:ro
-      - ./adapter_memory.py:/app/app/adapters/adapter_memory.py:ro
-      
-      # ── Storage Services ──
-      - ./opensearch_chunk_storage.py:/app/app/storage/opensearch_chunk_storage.py:ro
-      
-      # ── RAG Configuration Files ──
-      - ./rag_config_schema.yaml:/app/app/config/rag_config_schema.yaml:ro
-      - ./rag_config_manager.py:/app/app/rag_config_manager.py:ro
-      - ./rag_orchestrator.py:/app/app/rag_orchestrator.py:ro
-      
-      # ── Existing Configuration Files ──
-      - ./global_llm_config.yaml:/app/app/config/global_llm_config.yaml:ro
-      # - ./backend_config_init_override.py:/app/app/config/__init__.py:ro  # Disabled - incompatible with current backend version
-      - ./llm_config_patched.py:/app/app/agents/new_chat/llm_config.py:ro
-      
-      # ── Component Patches (Use adapters) ──
-      - ./document_chunker_patch.py:/app/app/indexing_pipeline/document_chunker.py:ro
-      - ./chunks_hybrid_search_opensearch.py:/app/app/retriever/chunks_hybrid_search.py:ro
+
+      # ── Benchmark Orchestration Scripts ──
+      - ./scripts/self_adaptive_master_agent.py:/app/scripts/self_adaptive_master_agent.py:ro
+      - ./scripts/run_surfsense_benchmark.py:/app/scripts/run_surfsense_benchmark.py:ro
+
+      # ── Benchmark Source Assets ──
+      - ./MSFT_FY26Q1_10Q.docx:/app/benchmark_assets/MSFT_FY26Q1_10Q.docx:ro
     
     env_file:
       - .env
@@ -148,8 +140,12 @@ services:
       CELERY_TASK_DEFAULT_QUEUE: surfsense
       PYTHONPATH: /app
       UVICORN_LOOP: asyncio
+      UVICORN_LIMIT_CONCURRENCY: "200"
+      UVICORN_TIMEOUT_KEEP_ALIVE: "75"
       UNSTRUCTURED_HAS_PATCHED_LOOP: "1"
       SERVICE_ROLE: api
+      NVIDIA_VISIBLE_DEVICES: ${NVIDIA_VISIBLE_DEVICES:-all}
+      NVIDIA_DRIVER_CAPABILITIES: ${NVIDIA_DRIVER_CAPABILITIES:-compute,utility}
       
       # Authentication
       JWT_SECRET: ${JWT_SECRET:-sIG5ruHqlxiDMqUDZcP5gWPMhicaVytBYil24yRGxqI}
@@ -184,6 +180,7 @@ services:
       OPENSEARCH_USE_SSL: ${OPENSEARCH_USE_SSL:-false}
       OPENSEARCH_VERIFY_CERTS: ${OPENSEARCH_VERIFY_CERTS:-false}
       OPENSEARCH_INDEX_PREFIX: ${OPENSEARCH_INDEX_PREFIX:-surfsense}
+      AUTO_CREATE_DB_TABLES: ${AUTO_CREATE_DB_TABLES:-false}
       
       # ── Embedding Provider API Keys ──
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
@@ -237,30 +234,13 @@ services:
   # ===========================================================================
   
   celery_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend-extended
     image: documentai-backend:latest
+    gpus: all
     volumes:
       - shared_temp:/shared_tmp
-      
-      # Adapter Architecture
-      - ./adapter_base_classes.py:/app/app/adapters/adapter_base_classes.py:ro
-      - ./adapter_dataflow_models.py:/app/app/adapters/adapter_dataflow_models.py:ro
-      - ./adapter_examples.py:/app/app/adapters/adapter_examples.py:ro
-      - ./adapter_memory.py:/app/app/adapters/adapter_memory.py:ro
-      
-      # Storage Services
-      - ./opensearch_chunk_storage.py:/app/app/storage/opensearch_chunk_storage.py:ro
-      
-      # RAG Configuration
-      - ./rag_config_schema.yaml:/app/app/config/rag_config_schema.yaml:ro
-      - ./rag_config_manager.py:/app/app/rag_config_manager.py:ro
-      - ./rag_orchestrator.py:/app/app/rag_orchestrator.py:ro
-      
-      # Existing config
-      - ./global_llm_config.yaml:/app/app/config/global_llm_config.yaml:ro
-      - ./backend_config_init_override.py:/app/app/config/__init__.py:ro
-      - ./llm_config_patched.py:/app/app/agents/new_chat/llm_config.py:ro
-      - ./document_chunker_patch.py:/app/app/indexing_pipeline/document_chunker.py:ro
-      - ./chunks_hybrid_search_patched.py:/app/app/retriever/chunks_hybrid_search.py:ro
     
     env_file:
       - .env
@@ -274,6 +254,8 @@ services:
       PYTHONPATH: /app
       SEARXNG_DEFAULT_HOST: ${SEARXNG_DEFAULT_HOST-}
       SERVICE_ROLE: worker
+      NVIDIA_VISIBLE_DEVICES: ${NVIDIA_VISIBLE_DEVICES:-all}
+      NVIDIA_DRIVER_CAPABILITIES: ${NVIDIA_DRIVER_CAPABILITIES:-compute,utility}
       
       # Authentication
       JWT_SECRET: ${JWT_SECRET:-sIG5ruHqlxiDMqUDZcP5gWPMhicaVytBYil24yRGxqI}
@@ -294,6 +276,11 @@ services:
       GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
       JINA_API_KEY: ${JINA_API_KEY:-}
       RETRIEVAL_MODE: ${RETRIEVAL_MODE:-hybrid}
+
+      # Keep worker memory stable for large multi-embedding jobs
+      CELERY_MAX_WORKERS: ${CELERY_MAX_WORKERS:-1}
+      CELERY_MIN_WORKERS: ${CELERY_MIN_WORKERS:-1}
+      CELERY_MAX_TASKS_PER_CHILD: ${CELERY_MAX_TASKS_PER_CHILD:-10}
       
       # Quota settings (required by billable_calls.py)
       QUOTA_DEFAULT_IMAGE_RESERVE_MICROS: ${QUOTA_DEFAULT_IMAGE_RESERVE_MICROS:-100000}
@@ -324,10 +311,11 @@ services:
   # ===========================================================================
   
   celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend-extended
     image: documentai-backend:latest
-    volumes:
-      - ./global_llm_config.yaml:/app/app/config/global_llm_config.yaml:ro
-      - ./rag_config_schema.yaml:/app/app/config/rag_config_schema.yaml:ro
+    volumes: []
     
     env_file:
       - .env
@@ -362,7 +350,7 @@ services:
   # ===========================================================================
   
   frontend:
-    image: documentai-frontend:latest
+    image: custom-surfsense-web:multi-embed
     ports:
       - "${FRONTEND_PORT:-3929}:3000"
     

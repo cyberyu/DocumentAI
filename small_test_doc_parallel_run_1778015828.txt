@@ -1,0 +1,6 @@
+Q1 FY26 revenue was $65.6B.
+Intelligent Cloud grew 20%.
+This is a small ingestion test for chunking and multi-embedding.
+
+
+parallel-run-marker:1778015828

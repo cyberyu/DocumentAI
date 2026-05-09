@@ -11,5 +11,45 @@ RUN sed -i '566s/.*/DEFAULT_IMAGE_RESERVE_MICROS = getattr(config, "QUOTA_DEFAUL
 # Verify opensearch-py is installed correctly
 RUN python3 -c "from opensearchpy import AsyncOpenSearch; print('✓ opensearch-py installed successfully')"
 
+# =============================================================================
+# Copy all custom overrides from surfsense_backend into the image.
+# Build context must be the DocumentAI/ project root.
+# =============================================================================
+
+# ── Adapter architecture (top-level importable) ──────────────────────────────
+COPY source/SurfSense/surfsense_backend/adapter_base_classes.py          /app/adapter_base_classes.py
+COPY source/SurfSense/surfsense_backend/adapter_dataflow_models.py       /app/adapter_dataflow_models.py
+COPY source/SurfSense/surfsense_backend/adapter_examples.py              /app/adapter_examples.py
+COPY source/SurfSense/surfsense_backend/adapter_memory.py                /app/adapter_memory.py
+
+# ── Multi-embedding support (top-level importable) ───────────────────────────
+COPY source/SurfSense/surfsense_backend/multi_embedding_processor.py          /app/multi_embedding_processor.py
+COPY source/SurfSense/surfsense_backend/opensearch_multi_embedding_storage.py /app/opensearch_multi_embedding_storage.py
+COPY source/SurfSense/surfsense_backend/opensearch_chunk_storage.py           /app/opensearch_chunk_storage.py
+
+# ── Modified surfsense_backend source files ───────────────────────────────────
+COPY source/SurfSense/surfsense_backend/app/indexing_pipeline/indexing_pipeline_service.py /app/app/indexing_pipeline/indexing_pipeline_service.py
+COPY source/SurfSense/surfsense_backend/app/routes/documents_routes.py   /app/app/routes/documents_routes.py
+COPY source/SurfSense/surfsense_backend/app/routes/benchmark_routes.py  /app/app/routes/benchmark_routes.py
+COPY source/SurfSense/surfsense_backend/app/routes/__init__.py           /app/app/routes/__init__.py
+COPY source/SurfSense/surfsense_backend/app/services/task_dispatcher.py /app/app/services/task_dispatcher.py
+COPY source/SurfSense/surfsense_backend/app/tasks/celery_tasks/document_tasks.py          /app/app/tasks/celery_tasks/document_tasks.py
+COPY source/SurfSense/surfsense_backend/app/tasks/document_processors/file_processors.py /app/app/tasks/document_processors/file_processors.py
+COPY source/SurfSense/surfsense_backend/app/indexing_pipeline/adapters/file_upload_adapter.py /app/app/indexing_pipeline/adapters/file_upload_adapter.py
+
+# ── RAG orchestrator & configuration ─────────────────────────────────────────
+COPY source/SurfSense/surfsense_backend/app/rag_orchestrator.py               /app/app/rag_orchestrator.py
+COPY source/SurfSense/surfsense_backend/app/rag_config_manager.py             /app/app/rag_config_manager.py
+COPY source/SurfSense/surfsense_backend/app/config/rag_config_schema.yaml     /app/app/config/rag_config_schema.yaml
+COPY source/SurfSense/surfsense_backend/app/config/global_llm_config.yaml     /app/app/config/global_llm_config.yaml
+
+# ── Component patches ─────────────────────────────────────────────────────────
+COPY source/SurfSense/surfsense_backend/app/agents/new_chat/llm_config.py     /app/app/agents/new_chat/llm_config.py
+COPY source/SurfSense/surfsense_backend/app/indexing_pipeline/document_chunker.py /app/app/indexing_pipeline/document_chunker.py
+COPY source/SurfSense/surfsense_backend/app/retriever/chunks_hybrid_search.py /app/app/retriever/chunks_hybrid_search.py
+
+# ── Alembic migrations ────────────────────────────────────────────────────────
+COPY source/SurfSense/surfsense_backend/alembic/versions /app/alembic/versions
+
 # Keep the same entrypoint as the base image
 # No changes needed - inherits from parent
