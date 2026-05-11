@@ -1,0 +1,55 @@
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "fontSize": "42px",
+    "fontFamily": "Inter, Segoe UI, Arial",
+    "primaryTextColor": "#111827",
+    "lineColor": "#374151"
+  },
+  "flowchart": {
+    "curve": "linear",
+    "nodeSpacing": 70,
+    "rankSpacing": 90,
+    "padding": 20
+  }
+}}%%
+
+flowchart TB
+  U[User Query]
+  API[stream_new_chat]
+  FACTORY[create_surfsense_deep_agent]
+  REG[Tools Registry<br/>build_tools_async]
+  AGENT[LangChain / LangGraph Agent<br/>create_agent + middleware]
+  STREAM[agent.astream_events]
+
+  SCRAPE[scrape_webpage Tool<br/>extracts web content]
+  UPDATE[update_memory Tool<br/>explicit memory save]
+  BG[Background Memory Extraction<br/>extract_and_save_memory / team]
+  DB[(Postgres / SearchSpace Memory)]
+
+  OUT[Streamed Final Answer]
+
+  U --> API --> FACTORY --> REG --> AGENT --> STREAM
+
+  STREAM -->|Tool call| SCRAPE
+  SCRAPE --> STREAM
+
+  STREAM -->|Tool call| UPDATE
+  UPDATE --> DB
+  DB --> UPDATE
+  UPDATE --> STREAM
+
+  STREAM -->|if update_memory not called| BG
+  BG --> DB
+
+  STREAM --> OUT
+
+  classDef core fill:#dbeafe,stroke:#1d4ed8,stroke-width:2px,color:#111827;
+  classDef tool fill:#dcfce7,stroke:#15803d,stroke-width:2px,color:#111827;
+  classDef store fill:#fef3c7,stroke:#b45309,stroke-width:2px,color:#111827;
+  classDef out fill:#ede9fe,stroke:#6d28d9,stroke-width:2px,color:#111827;
+
+  class API,FACTORY,REG,AGENT,STREAM core;
+  class SCRAPE,UPDATE,BG tool;
+  class DB store;
+  class OUT out;
