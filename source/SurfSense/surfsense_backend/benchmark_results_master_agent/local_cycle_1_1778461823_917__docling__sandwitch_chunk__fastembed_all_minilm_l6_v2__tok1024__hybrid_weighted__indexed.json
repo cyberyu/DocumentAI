@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-11T01:11:53Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/6e63833023e94d45a73644253c18cb7b__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      348
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_weighted"
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "number_match_count": 0,
+    "number_match_rate": 0.0,
+    "unit_match_count": 0,
+    "unit_match_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 0,
+      "unit_match_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user is asking about a specific value from a document called \"MSFT_FY26Q1_10Q.docx\". Let me search for this file in the workspace.The file wasn't found via glob. Let me check the workspace more broadly.The workspace is empty. The file \"MSFT_FY26Q1_10Q.docx\" is not in the user's knowledge base. However, I should note that the user asked about this file - maybe it was uploaded in this conversation? Let me check the conversation history to see if there was any file uploaded or referenced earlier.\n\nLooking at the conversation, there's no prior context - this is the first message. The user hasn't uploaded any file in this conversation.\n\nI need to let the user know the file isn't found in their knowledge base and ask if they'd like me to answer from general knowledge instead.I couldn't find the file **MSFT_FY26Q1_10Q.docx** in your knowledge base \u2014 the workspace is currently empty and no documents match that filename.\n\nWould you like me to answer from my general knowledge instead?",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "The user is asking about a specific value from a document called \"MSFT_FY26Q1_10Q.docx\". Let me search for this document in their knowledge base.The file wasn't found via glob. Let me search more broadly - the document might be stored with a different name or extension. Let me also search the knowledge base for this information.The document isn't found in the user's knowledge base. Let me try searching with broader terms.The user's knowledge base is empty - no documents are stored. The file \"MSFT_FY26Q1_10Q.docx\" doesn't exist in their knowledge base. I cannot find the requested information. Per the knowledge_base_only_policy, I need to inform the user that I could not find the information and ask if they'd like me to answer from general knowledge instead. But wait - this is a very specific number from a specific document (Microsoft's 10-Q filing for FY26 Q1). The filing is a public SEC document. Let me check if web search is available... \n\nLooking at the disabled tools: \"Web Search, Scrape Webpage\" are disabled. So I can't look this up on the web either.\n\nI should let the user know the document isn't in their knowledge base and ask what they'd like to do.I could not find the document **MSFT_FY26Q1_10Q.docx** in your knowledge base \u2014 no files or documents are currently stored there.\n\nWould you like me to answer from my general knowledge instead? I can tell you what Microsoft reported for other receivables related to server component purchase facilitation in their FY26 Q1 10-Q filing, based on what I know.",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

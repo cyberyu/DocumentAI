@@ -4,6 +4,8 @@ import { rightPanelCollapsedAtom, rightPanelTabAtom } from "@/atoms/layout/right
 export interface PipelineVariant {
 	id: number;
 	title: string;
+	pipelineId?: string;
+	etlService?: string;
 }
 
 /**

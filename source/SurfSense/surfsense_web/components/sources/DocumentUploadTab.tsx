@@ -39,7 +39,7 @@ import type { ChunkingStrategy, ProcessingMode } from "@/contracts/types/documen
 import { useElectronAPI } from "@/hooks/use-platform";
 import { documentsApiService } from "@/lib/apis/documents-api.service";
 import { getBearerToken } from "@/lib/auth-utils";
-import { BACKEND_URL } from "@/lib/env-config";
+import { BACKEND_URL, ETL_SERVICE } from "@/lib/env-config";
 import {
 	trackDocumentUploadFailure,
 	trackDocumentUploadStarted,
@@ -50,6 +50,17 @@ import {
 	getSupportedExtensions,
 	getSupportedExtensionsSet,
 } from "@/lib/supported-extensions";
+
+type EtlServiceOption = "DOCLING" | "MINERU" | "UNSTRUCTURED" | "LLAMACLOUD";
+type UploadedPipelineJob = {
+	document_id: number;
+	pipeline_id: string;
+	job_name: string;
+	etl_service?: string;
+	chunking_strategy?: string | null;
+	chunk_size?: number | null;
+	embedding_models?: string[];
+};
 
 interface DocumentUploadTabProps {
 	searchSpaceId: string;
@@ -160,6 +171,18 @@ export function DocumentUploadTab({
 	const [useVisionLlm, setUseVisionLlm] = useState(false);
 	const [processingMode, setProcessingMode] = useState<ProcessingMode>("basic");
 	const [chunkingStrategy, setChunkingStrategy] = useState<ChunkingStrategy>("chunk_text");
+	const [selectedEtlServices, setSelectedEtlServices] = useState<EtlServiceOption[]>(() => {
+		const normalized = ETL_SERVICE.toUpperCase();
+		if (
+			normalized === "DOCLING" ||
+			normalized === "MINERU" ||
+			normalized === "UNSTRUCTURED" ||
+			normalized === "LLAMACLOUD"
+		) {
+			return [normalized];
+		}
+		return ["DOCLING"];
+	});
 	const [generateVariants, setGenerateVariants] = useState(false);
 	const [selectedChunkingStrategies, setSelectedChunkingStrategies] = useState<ChunkingStrategy[]>([
 		"chunk_text",
@@ -182,7 +205,7 @@ export function DocumentUploadTab({
 	const [indexingEtaSeconds, setIndexingEtaSeconds] = useState<number | null>(null);
 	const [isIndexing, setIsIndexing] = useState(false);
 	const [variantStatuses, setVariantStatuses] = useState<
-		Array<{ id: number; title: string; state: string; reason?: string }>
+		Array<{ id: string | number; title: string; state: string; reason?: string }>
 	>([]);
 
 	useEffect(() => {
@@ -357,20 +380,188 @@ export function DocumentUploadTab({
 		});
 	}, []);
 
+	const toggleEtlServiceSelection = useCallback((etlService: EtlServiceOption) => {
+		setSelectedEtlServices((prev) => {
+			if (prev.includes(etlService)) {
+				if (prev.length === 1) return prev;
+				return prev.filter((item) => item !== etlService);
+			}
+			return [...prev, etlService];
+		});
+	}, []);
+
 	const trackIndexingProgress = useCallback(
-		(documentIds: number[]) => {
-			if (!documentIds || documentIds.length === 0) {
+		(documentIds: number[], pipelineJobs?: UploadedPipelineJob[]) => {
+			const normalizedJobs = (pipelineJobs ?? []).filter((job) => !!job?.pipeline_id);
+
+			if ((!documentIds || documentIds.length === 0) && normalizedJobs.length === 0) {
 				onSuccess?.();
 				return;
 			}
 
+			const jobNames = normalizedJobs.map((job) => job.job_name).filter(Boolean);
+			const totalVariantCount = normalizedJobs.length > 0 ? normalizedJobs.length : documentIds.length;
+
 			setIsIndexing(true);
 			setIndexingProgress(0);
-			setVariantStatuses([]);
-			setIndexingStatusMessage(`Queued ${documentIds.length} document variant(s) for indexing...`);
+			if (normalizedJobs.length > 0) {
+				setVariantStatuses(
+					normalizedJobs.map((job) => ({
+						id: job.pipeline_id,
+						title: job.job_name,
+						state: "pending",
+					}))
+				);
+			} else {
+				setVariantStatuses([]);
+			}
+			setIndexingStatusMessage(`Queued ${totalVariantCount} document variant(s) for indexing...`);
 			setIndexingEtaSeconds(null);
 
 			const startedAt = Date.now();
+
+			const pollByNotifications = async () => {
+				const token = getBearerToken() ?? "";
+				const controller = new AbortController();
+				const abortTimer = setTimeout(() => controller.abort(), 15000);
+				try {
+					const res = await fetch(
+						`${BACKEND_URL}/api/v1/notifications?search_space_id=${searchSpaceId}&category=status&limit=100&t=${Date.now()}`,
+						{ headers: { Authorization: `Bearer ${token}` }, signal: controller.signal }
+					);
+					clearTimeout(abortTimer);
+
+					if (!res.ok) {
+						pollTimeoutRef.current = setTimeout(poll, 1500);
+						return;
+					}
+
+					const payload = (await res.json()) as {
+						items?: Array<{
+							type?: string;
+							title?: string;
+							message?: string;
+							metadata?: Record<string, unknown>;
+						}>;
+					};
+
+					const statusByName = new Map<
+						string,
+						{ state: "pending" | "processing" | "ready" | "failed"; reason?: string }
+					>();
+
+					for (const item of payload.items ?? []) {
+						if (item.type !== "document_processing") continue;
+						const metadata = item.metadata ?? {};
+						const documentName = typeof metadata.document_name === "string" ? metadata.document_name : undefined;
+						if (!documentName || !jobNames.includes(documentName)) continue;
+						if (statusByName.has(documentName)) continue;
+						const rawStatus = typeof metadata.status === "string" ? metadata.status : "in_progress";
+						const state =
+							rawStatus === "completed"
+								? "ready"
+								: rawStatus === "failed"
+									? "failed"
+									: "processing";
+						const reason =
+							typeof metadata.error_message === "string"
+								? metadata.error_message
+								: state === "failed"
+									? (item.message ?? "Processing failed")
+									: undefined;
+						statusByName.set(documentName, { state, reason });
+					}
+
+					let mappedStatuses = normalizedJobs.map((job) => {
+						const current = statusByName.get(job.job_name);
+						return {
+							id: job.pipeline_id,
+							title: job.job_name,
+							state: current?.state ?? "pending",
+							reason: current?.reason,
+						};
+					});
+
+					const unresolved = mappedStatuses.filter((item) => item.state === "pending").length;
+					if (unresolved > 0) {
+						const uniqueDocumentIds = Array.from(
+							new Set(normalizedJobs.map((job) => job.document_id))
+						);
+						if (uniqueDocumentIds.length > 0) {
+							const statusRes = await fetch(
+								`${BACKEND_URL}/api/v1/documents/status?search_space_id=${searchSpaceId}&document_ids=${uniqueDocumentIds.join(",")}&t=${Date.now()}`,
+								{ headers: { Authorization: `Bearer ${token}` }, signal: controller.signal }
+							);
+							if (statusRes.ok) {
+								const statusPayload = (await statusRes.json()) as {
+									items?: Array<{ id: number; status: { state: string; reason?: string } }>;
+								};
+								const byDocId = new Map(
+									(statusPayload.items ?? []).map((item) => [item.id, item.status])
+								);
+								mappedStatuses = mappedStatuses.map((item, idx) => {
+									if (item.state !== "pending") return item;
+									const job = normalizedJobs[idx];
+									const docStatus = byDocId.get(job.document_id);
+									if (!docStatus) return item;
+									if (docStatus.state === "ready") {
+										return { ...item, state: "ready", reason: undefined };
+									}
+									if (docStatus.state === "failed") {
+										return {
+											...item,
+											state: "failed",
+											reason: docStatus.reason,
+										};
+									}
+									if (docStatus.state === "processing") {
+										return { ...item, state: "processing" };
+									}
+									return item;
+								});
+							}
+						}
+					}
+
+					setVariantStatuses(mappedStatuses);
+
+					const total = mappedStatuses.length;
+					const ready = mappedStatuses.filter((item) => item.state === "ready").length;
+					const failed = mappedStatuses.filter((item) => item.state === "failed").length;
+					const done = ready + failed;
+					const percent = total > 0 ? Math.round((done / total) * 100) : 0;
+					setIndexingProgress(percent);
+
+					const elapsedSec = Math.max((Date.now() - startedAt) / 1000, 1);
+					if (done > 0 && done < total) {
+						const rate = done / elapsedSec;
+						const eta = Math.max(0, Math.round((total - done) / Math.max(rate, 0.001)));
+						setIndexingEtaSeconds(eta);
+					} else {
+						setIndexingEtaSeconds(0);
+					}
+
+					setIndexingStatusMessage(
+						`Indexing: ${done}/${total} complete (${ready} ready, ${failed} failed)`
+					);
+
+					if (done >= total) {
+						setIsIndexing(false);
+						if (failed > 0) {
+							toast.warning(`Indexing finished with ${failed} failed variant(s).`);
+						} else {
+							toast.success("All document variants indexed successfully.");
+						}
+						onSuccess?.();
+						return;
+					}
+
+					pollTimeoutRef.current = setTimeout(pollByNotifications, 2000);
+				} catch {
+					clearTimeout(abortTimer);
+					pollTimeoutRef.current = setTimeout(poll, 1500);
+				}
+			};
 
 			const poll = async () => {
 				const token = getBearerToken() ?? "";
@@ -439,6 +630,11 @@ export function DocumentUploadTab({
 					pollTimeoutRef.current = setTimeout(poll, 3000);
 				}
 			};
+
+			if (normalizedJobs.length > 0) {
+				void pollByNotifications();
+				return;
+			}
 
 			void poll();
 		},
@@ -550,6 +746,8 @@ export function DocumentUploadTab({
 			return;
 		}
 
+		const shouldGenerateVariants = generateVariants || selectedEtlServices.length > 1;
+
 		setUploadProgress(0);
 		trackDocumentUploadStarted(Number(searchSpaceId), files.length, totalFileSize);
 
@@ -565,19 +763,35 @@ export function DocumentUploadTab({
 				should_summarize: shouldSummarize,
 				use_vision_llm: useVisionLlm,
 				processing_mode: processingMode,
+				etl_services: shouldGenerateVariants ? selectedEtlServices : undefined,
 				embedding_models: selectedEmbeddingModels,
-				chunking_strategy: generateVariants ? chunkingStrategy : (selectedChunkingStrategies[0] ?? chunkingStrategy),
-				chunking_strategies: generateVariants ? selectedChunkingStrategies : undefined,
-				chunk_sizes: generateVariants ? selectedChunkSizes : undefined,
-				generate_variants: generateVariants,
+				chunking_strategy: shouldGenerateVariants ? chunkingStrategy : (selectedChunkingStrategies[0] ?? chunkingStrategy),
+				chunking_strategies: shouldGenerateVariants ? selectedChunkingStrategies : undefined,
+				chunk_sizes: shouldGenerateVariants ? selectedChunkSizes : undefined,
+				generate_variants: shouldGenerateVariants,
 			},
 			{
 				onSuccess: (result) => {
 					if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
 					setUploadProgress(100);
 					trackDocumentUploadSuccess(Number(searchSpaceId), files.length);
-					toast(t("upload_initiated"), { description: t("upload_initiated_desc") });
-					trackIndexingProgress(result.document_ids ?? []);
+					const queuedCount =
+						result.pending_files ??
+						result.pipeline_jobs?.length ??
+						result.document_ids?.length ??
+						0;
+					const skippedCount = result.skipped_duplicates ?? 0;
+
+					if (queuedCount > 0) {
+						toast(t("upload_initiated"), { description: t("upload_initiated_desc") });
+					} else if (skippedCount > 0) {
+						toast.info("No new processing queued", {
+							description: `Skipped ${skippedCount} duplicate file${skippedCount === 1 ? "" : "s"}.`,
+						});
+					} else {
+						toast.info("No new processing queued");
+					}
+					trackIndexingProgress(result.document_ids ?? [], result.pipeline_jobs ?? []);
 				},
 				onError: (error: unknown) => {
 					if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
@@ -942,15 +1156,54 @@ export function DocumentUploadTab({
 							<p className="text-[10px] text-muted-foreground leading-snug">
 								Converts raw files into clean Markdown. Runs once per document — output is shared by all pipeline variants.
 							</p>
-							{/* Docling — only valid option for now */}
-							<div className="rounded-lg border border-orange-500/50 bg-orange-500/10 px-3 py-2 flex items-start gap-2">
-								<span className="inline-block h-1.5 w-1.5 rounded-full bg-orange-500 mt-1 shrink-0" />
-								<div>
-									<p className="text-xs font-semibold text-orange-400 leading-none">Docling</p>
-									<p className="text-[10px] text-muted-foreground mt-0.5 leading-snug">Local, open-source. No external API calls.</p>
-								</div>
-							</div>
-							<p className="text-[9px] text-muted-foreground/50 italic">More parsers coming soon</p>
+							{[
+								{
+									key: "DOCLING",
+									label: "Docling",
+									desc: "Multi-format local parser for PDF/Office documents.",
+								},
+								{
+									key: "MINERU",
+									label: "MinerU",
+									desc: "Layout parser for PDFs; MinerU v3+ also supports DOCX/PPTX/XLSX.",
+								},
+							].map((option) => {
+								const active = selectedEtlServices.includes(option.key as EtlServiceOption);
+								return (
+									<button
+										key={option.key}
+										type="button"
+										onClick={() => toggleEtlServiceSelection(option.key as EtlServiceOption)}
+										className={`rounded-lg border px-3 py-2 flex items-start gap-2 ${
+											active
+												? "border-orange-500/50 bg-orange-500/10"
+												: "border-border bg-muted/40 hover:border-orange-500/30"
+										}`}
+									>
+										<span
+											className={`inline-block h-1.5 w-1.5 rounded-full mt-1 shrink-0 ${
+												active ? "bg-orange-500" : "bg-muted-foreground/50"
+											}`}
+										/>
+										<div>
+											<p
+												className={`text-xs font-semibold leading-none ${
+													active ? "text-orange-400" : "text-muted-foreground"
+												}`}
+											>
+												{option.label}
+												{active ? " (selected)" : ""}
+											</p>
+											<p className="text-[10px] text-muted-foreground mt-0.5 leading-snug">
+												{option.desc}
+											</p>
+										</div>
+									</button>
+								);
+							})}
+							<p className="text-[9px] text-muted-foreground/50 italic">
+								Select one or more parsers. Pipeline variants are generated across all selected ETLs. Default comes from <span className="font-mono">NEXT_PUBLIC_ETL_SERVICE</span>.
+							</p>
 						</div>
 
 						{/* Column 2 — Chunking Method */}

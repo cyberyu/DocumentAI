@@ -110,14 +110,17 @@ interface EmbeddingModelSelectorProps {
 	selectedModels: string[];
 	onSelectionChange: (models: string[]) => void;
 	estimatedTokens?: number;
+	availableModelIds?: string[];
 }
 
 export function EmbeddingModelSelector({
 	selectedModels,
 	onSelectionChange,
 	estimatedTokens = 10000,
+	availableModelIds,
 }: EmbeddingModelSelectorProps) {
 	const [isExpanded, setIsExpanded] = useState(false);
+	const availableModelSet = availableModelIds ? new Set(availableModelIds) : null;
 
 	// Group models by provider
 	const modelsByProvider = EMBEDDING_MODELS.reduce(
@@ -132,6 +135,9 @@ export function EmbeddingModelSelector({
 	);
 
 	const handleModelToggle = (modelId: string) => {
+		if (availableModelSet && !availableModelSet.has(modelId)) {
+			return;
+		}
 		const isSelected = selectedModels.includes(modelId);
 
 		if (isSelected) {
@@ -198,13 +204,17 @@ export function EmbeddingModelSelector({
 								<div className="space-y-1">
 									{models.map((model) => {
 										const isSelected = selectedModels.includes(model.id);
+										const isAvailable = !availableModelSet || availableModelSet.has(model.id);
 										return (
 											<button
 												key={model.id}
 												type="button"
+												disabled={!isAvailable}
 												onClick={() => handleModelToggle(model.id)}
 												className={`w-full flex items-start gap-2.5 rounded-md border p-2.5 text-left transition-colors ${
-													isSelected
+													!isAvailable
+														? "border-border opacity-50 cursor-not-allowed"
+														: isSelected
 														? "border-primary bg-primary/5"
 														: "border-border hover:border-muted-foreground/50"
 												}`}
@@ -212,6 +222,7 @@ export function EmbeddingModelSelector({
 												<Checkbox
 													checked={isSelected}
 													className="mt-0.5"
+													disabled={!isAvailable}
 													onCheckedChange={() => handleModelToggle(model.id)}
 												/>
 												<div className="flex-1 min-w-0 space-y-0.5">

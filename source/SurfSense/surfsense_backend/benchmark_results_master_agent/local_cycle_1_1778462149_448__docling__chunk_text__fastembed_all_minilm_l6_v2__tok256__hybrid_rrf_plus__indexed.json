@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-11T01:16:45Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/52e913b32b7e43a595cda8353730d785__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      350
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_rrf_plus"
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 2,
+    "overall_correct_rate": 1.0,
+    "number_match_count": 2,
+    "number_match_rate": 1.0,
+    "unit_match_count": 2,
+    "unit_match_rate": 1.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.03238823404481257,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 2,
+      "overall_correct_rate": 1.0,
+      "number_match_count": 2,
+      "number_match_rate": 1.0,
+      "unit_match_count": 2,
+      "unit_match_rate": 1.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.03238823404481257
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "Let me read the file to find the specific value the user is asking about.The file is quite large with many chunks. I need to find \"long-term accounts receivable\" or the balance sheet section. Let me search for this term.The file matched but I need to see the content. Let me search for it with content output mode.The answer is clearly in the document. As of September 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion.$5.0 billion [citation:320078]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.046511627906976744,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "The user wants to find information about \"other receivables related to activities to facilitate the purchase of server components\" in the MSFT FY26 Q1 10Q document as of September 30, 2025. Let me read this document.Let me read the relevant chunk (320078) and also search for \"server\" more broadly.The search for \"server\" found matches but none related to \"server components\". Let me search for the specific phrase \"facilitate the purchase\" or look at the contract balances and other receivables section more carefully.Let me read the chunk about \"Contract Balances and Other Receivables\" (chunk_id=320078) to get the full content. I need to read a broader range to see the full context.Let me read the \"Contract Balances and Other Receivables\" section. Chunk 320078 is at lines 756-762. Let me also search more broadly for the specific phrase about \"activities to facilitate the purchase of server components\".I found the answer in chunk 320078. The relevant text is:\n\n\"As of September 30, 2025 and June 30, 2025, other receivables related to activities to facilitate the purchase of server components were $14.4 billion and $8.2 billion, respectively, and are included in other current assets in our consolidated balance sheets.\"\n\nSo as of September 30, 2025, the value is $14.4 billion. The user asked for \"only the value with unit.\"$14.4 billion [citation:320078]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.0182648401826484,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    }
+  ]
+}

@@ -108,6 +108,148 @@ def delete_document_task(self, document_id: int):
     return run_async_celery_task(lambda: _delete_document_background(document_id))
 
 
+def _extract_pipeline_ids(document_metadata: dict | None) -> list[str]:
+    if not isinstance(document_metadata, dict):
+        return []
+
+    raw = document_metadata.get("pipeline_ids")
+    if not isinstance(raw, list):
+        return []
+
+    return [
+        pipeline_id.strip()
+        for pipeline_id in raw
+        if isinstance(pipeline_id, str) and pipeline_id.strip()
+    ]
+
+
+async def _delete_document_chunks_from_opensearch(
+    search_space_id: int,
+    document_id: int,
+    pipeline_ids: list[str] | None = None,
+) -> int:
+    from opensearchpy import AsyncOpenSearch
+
+    raw_hosts = os.getenv("OPENSEARCH_HOSTS", "http://opensearch:9200")
+    hosts = [host.strip() for host in raw_hosts.split(",") if host.strip()]
+    index_prefix = os.getenv("OPENSEARCH_INDEX_PREFIX", "surfsense")
+
+    use_ssl = os.getenv("OPENSEARCH_USE_SSL", "false").lower() == "true"
+    verify_certs = os.getenv("OPENSEARCH_VERIFY_CERTS", "false").lower() == "true"
+    username = os.getenv("OPENSEARCH_USERNAME")
+    password = os.getenv("OPENSEARCH_PASSWORD")
+
+    client_kwargs: dict[str, object] = {
+        "hosts": hosts,
+        "use_ssl": use_ssl,
+        "verify_certs": verify_certs,
+    }
+    if username and password:
+        client_kwargs["http_auth"] = (username, password)
+
+    client = AsyncOpenSearch(**client_kwargs)
+    index_pattern = f"{index_prefix}_chunks_{search_space_id}*"
+
+    should_clauses: list[dict[str, object]] = [
+        {"term": {"document_id": str(document_id)}},
+    ]
+    normalized_pipeline_ids = [
+        pipeline_id
+        for pipeline_id in (pipeline_ids or [])
+        if isinstance(pipeline_id, str) and pipeline_id
+    ]
+    if normalized_pipeline_ids:
+        should_clauses.append({"terms": {"pipeline_id": normalized_pipeline_ids}})
+
+    query_body = {
+        "query": {
+            "bool": {
+                "should": should_clauses,
+                "minimum_should_match": 1,
+            }
+        }
+    }
+
+    try:
+        logger.info(
+            "OpenSearch delete start document_id=%s search_space_id=%s hosts=%s index_pattern=%s pipeline_ids=%s",
+            document_id,
+            search_space_id,
+            hosts,
+            index_pattern,
+            normalized_pipeline_ids,
+        )
+
+        # Use the same endpoint style as manual curl:
+        # POST /<index_pattern>/_delete_by_query?conflicts=proceed&refresh=true&ignore_unavailable=true&allow_no_indices=true
+        response = await client.transport.perform_request(
+            method="POST",
+            url=f"/{index_pattern}/_delete_by_query",
+            params={
+                "conflicts": "proceed",
+                "refresh": "true",
+                "ignore_unavailable": "true",
+                "allow_no_indices": "true",
+            },
+            body=query_body,
+        )
+
+        deleted = int(response.get("deleted", 0) or 0)
+        total = int(response.get("total", 0) or 0)
+        timed_out = bool(response.get("timed_out", False))
+        failures = response.get("failures") or []
+
+        logger.info(
+            "OpenSearch delete response document_id=%s search_space_id=%s total=%s deleted=%s timed_out=%s failures=%s",
+            document_id,
+            search_space_id,
+            total,
+            deleted,
+            timed_out,
+            len(failures) if isinstance(failures, list) else failures,
+        )
+
+        if timed_out or failures:
+            raise RuntimeError(
+                "OpenSearch delete_by_query incomplete "
+                f"(timed_out={timed_out}, failures={len(failures) if isinstance(failures, list) else failures})"
+            )
+
+        verify = await client.transport.perform_request(
+            method="POST",
+            url=f"/{index_pattern}/_count",
+            body=query_body,
+            params={
+                "ignore_unavailable": "true",
+                "allow_no_indices": "true",
+            },
+        )
+        remaining = int(verify.get("count", 0) or 0)
+
+        logger.info(
+            "OpenSearch delete verification document_id=%s search_space_id=%s remaining=%s",
+            document_id,
+            search_space_id,
+            remaining,
+        )
+
+        if remaining > 0:
+            raise RuntimeError(
+                "OpenSearch delete verification failed "
+                f"for document_id={document_id} search_space_id={search_space_id}; remaining={remaining}"
+            )
+
+        logger.info(
+            "Deleted %s OpenSearch chunks for document_id=%s search_space_id=%s",
+            deleted,
+            document_id,
+            search_space_id,
+        )
+        return deleted
+    finally:
+        await client.close()
+
+
 async def _delete_document_background(document_id: int) -> None:
     """Delete chunks in batches first, then remove the document row."""
     from sqlalchemy import delete as sa_delete, select
@@ -115,6 +257,12 @@ async def _delete_document_background(document_id: int) -> None:
     from app.db import Chunk, Document
 
     async with get_celery_session_maker()() as session:
+        doc = await session.get(Document, document_id)
+        search_space_id = doc.search_space_id if doc else None
+        pipeline_ids = _extract_pipeline_ids(
+            doc.document_metadata if doc else None
+        )
+
         batch_size = 500
         while True:
             chunk_ids_result = await session.execute(
@@ -127,6 +275,24 @@ async def _delete_document_background(document_id: int) -> None:
                 break
             await session.execute(sa_delete(Chunk).where(Chunk.id.in_(chunk_ids)))
             await session.commit()
+
+        if search_space_id is not None:
+            logger.info(
+                "Queueing OpenSearch cleanup document_id=%s search_space_id=%s pipeline_ids=%s",
+                document_id,
+                search_space_id,
+                pipeline_ids,
+            )
+            await _delete_document_chunks_from_opensearch(
+                search_space_id=search_space_id,
+                document_id=document_id,
+                pipeline_ids=pipeline_ids,
+            )
+        else:
+            logger.warning(
+                "Skipping OpenSearch cleanup because document not found before deletion document_id=%s",
+                document_id,
+            )
 
         doc = await session.get(Document, document_id)
         if doc:
@@ -165,6 +331,12 @@ async def _delete_folder_documents(
     async with get_celery_session_maker()() as session:
         batch_size = 500
         for doc_id in document_ids:
+            doc = await session.get(Document, doc_id)
+            search_space_id = doc.search_space_id if doc else None
+            pipeline_ids = _extract_pipeline_ids(
+                doc.document_metadata if doc else None
+            )
+
             while True:
                 chunk_ids_result = await session.execute(
                     select(Chunk.id)
@@ -176,6 +348,13 @@ async def _delete_folder_documents(
                     break
                 await session.execute(sa_delete(Chunk).where(Chunk.id.in_(chunk_ids)))
                 await session.commit()
+
+            if search_space_id is not None:
+                await _delete_document_chunks_from_opensearch(
+                    search_space_id=search_space_id,
+                    document_id=doc_id,
+                    pipeline_ids=pipeline_ids,
+                )
 
             doc = await session.get(Document, doc_id)
             if doc:
@@ -630,6 +809,9 @@ async def _process_file_upload(
 
             # Update notification on success
             if result:
+                document.status = DocumentStatus.ready()
+                document.updated_at = get_current_timestamp()
+                await session.commit()
                 await (
                     NotificationService.document_processing.notify_processing_completed(
                         session=session,
@@ -756,6 +938,8 @@ def process_file_upload_with_document_task(
     chunking_strategy: str | None = None,
     chunking_strategies: list[str] | None = None,
     chunk_size: int | None = None,
+    etl_service_override: str | None = None,
+    pipeline_id: str | None = None,
 ):
     """
     Celery task to process uploaded file with existing pending document.
@@ -810,6 +994,8 @@ def process_file_upload_with_document_task(
                 chunking_strategy=chunking_strategy,
                 chunking_strategies=chunking_strategies,
                 chunk_size=chunk_size,
+                etl_service_override=etl_service_override,
+                pipeline_id=pipeline_id,
             )
         )
         logger.info(
@@ -850,6 +1036,8 @@ async def _process_file_with_document(
     chunking_strategy: str | None = None,
     chunking_strategies: list[str] | None = None,
     chunk_size: int | None = None,
+    etl_service_override: str | None = None,
+    pipeline_id: str | None = None,
 ):
     """
     Process file and update existing pending document status.
@@ -958,6 +1146,8 @@ async def _process_file_with_document(
                 chunking_strategy=chunking_strategy,
                 chunking_strategies=chunking_strategies,
                 chunk_size=chunk_size,
+                etl_service_override=etl_service_override,
+                pipeline_id=pipeline_id,
             )
 
             # Update notification on success

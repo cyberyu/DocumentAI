@@ -5,6 +5,7 @@ export const documentTable = table("documents")
 		id: number(),
 		title: string(),
 		documentType: string().from("document_type"),
+		documentMetadata: json().optional().from("document_metadata"),
 		searchSpaceId: number().from("search_space_id"),
 		folderId: number().optional().from("folder_id"),
 		createdById: string().optional().from("created_by_id"),

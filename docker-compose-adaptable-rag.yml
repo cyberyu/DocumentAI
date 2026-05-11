@@ -132,9 +132,9 @@ services:
     environment:
       # Database & Redis
       DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://${DB_USER:-surfsense}:${DB_PASSWORD:-surfsense}@${DB_HOST:-db}:${DB_PORT:-5432}/${DB_NAME:-surfsense}}
-      CELERY_BROKER_URL: ${REDIS_URL:-redis://redis:6379/0}
-      CELERY_RESULT_BACKEND: ${REDIS_URL:-redis://redis:6379/0}
-      REDIS_APP_URL: ${REDIS_URL:-redis://redis:6379/0}
+      CELERY_BROKER_URL: ${REDIS_INTERNAL_URL:-redis://redis:6379/0}
+      CELERY_RESULT_BACKEND: ${REDIS_INTERNAL_URL:-redis://redis:6379/0}
+      REDIS_APP_URL: ${REDIS_INTERNAL_URL:-redis://redis:6379/0}
       
       # Service config
       CELERY_TASK_DEFAULT_QUEUE: surfsense
@@ -152,7 +152,7 @@ services:
       SECRET_KEY: ${SECRET_KEY:-sIG5ruHqlxiDMqUDZcP5gWPMhicaVytBYil24yRGxqI}
       
       # Frontend URL
-      NEXT_FRONTEND_URL: ${NEXT_FRONTEND_URL:-http://localhost:${FRONTEND_PORT:-3929}}
+      NEXT_FRONTEND_URL: ${NEXT_FRONTEND_URL:-http://localhost:${FRONTEND_PORT:-3000}}
       
       # Search engine
       SEARXNG_DEFAULT_HOST: ${SEARXNG_DEFAULT_HOST-}
@@ -241,15 +241,16 @@ services:
     gpus: all
     volumes:
       - shared_temp:/shared_tmp
+      - ${SHARED_TMP_DIR_HOST:-/tmp/documentai_shared}:/tmp/documentai_shared
     
     env_file:
       - .env
     
     environment:
       DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://${DB_USER:-surfsense}:${DB_PASSWORD:-surfsense}@${DB_HOST:-db}:${DB_PORT:-5432}/${DB_NAME:-surfsense}}
-      CELERY_BROKER_URL: ${REDIS_URL:-redis://redis:6379/0}
-      CELERY_RESULT_BACKEND: ${REDIS_URL:-redis://redis:6379/0}
-      REDIS_APP_URL: ${REDIS_URL:-redis://redis:6379/0}
+      CELERY_BROKER_URL: ${REDIS_INTERNAL_URL:-redis://redis:6379/0}
+      CELERY_RESULT_BACKEND: ${REDIS_INTERNAL_URL:-redis://redis:6379/0}
+      REDIS_APP_URL: ${REDIS_INTERNAL_URL:-redis://redis:6379/0}
       CELERY_TASK_DEFAULT_QUEUE: surfsense
       PYTHONPATH: /app
       SEARXNG_DEFAULT_HOST: ${SEARXNG_DEFAULT_HOST-}
@@ -322,8 +323,8 @@ services:
     
     environment:
       DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://${DB_USER:-surfsense}:${DB_PASSWORD:-surfsense}@${DB_HOST:-db}:${DB_PORT:-5432}/${DB_NAME:-surfsense}}
-      CELERY_BROKER_URL: ${REDIS_URL:-redis://redis:6379/0}
-      CELERY_RESULT_BACKEND: ${REDIS_URL:-redis://redis:6379/0}
+      CELERY_BROKER_URL: ${REDIS_INTERNAL_URL:-redis://redis:6379/0}
+      CELERY_RESULT_BACKEND: ${REDIS_INTERNAL_URL:-redis://redis:6379/0}
       CELERY_TASK_DEFAULT_QUEUE: surfsense
       PYTHONPATH: /app
       SERVICE_ROLE: beat
@@ -350,9 +351,12 @@ services:
   # ===========================================================================
   
   frontend:
-    image: custom-surfsense-web:multi-embed
+    build:
+      context: ./source/SurfSense/surfsense_web
+      dockerfile: Dockerfile
+    image: shiyu688/surfsense-web:latest
     ports:
-      - "${FRONTEND_PORT:-3929}:3000"
+      - "${FRONTEND_PORT:-3000}:3000"
     
     environment:
       NEXT_PUBLIC_FASTAPI_BACKEND_URL: ${NEXT_PUBLIC_FASTAPI_BACKEND_URL:-http://localhost:${BACKEND_PORT:-8929}}
@@ -362,6 +366,8 @@ services:
       NEXT_PUBLIC_DEPLOYMENT_MODE: ${NEXT_PUBLIC_DEPLOYMENT_MODE:-self-hosted}
       NEXT_PUBLIC_ETL_SERVICE: ${NEXT_PUBLIC_ETL_SERVICE:-DOCLING}
       NEXT_PUBLIC_ANONYMOUS_ENABLED: ${NEXT_PUBLIC_ANONYMOUS_ENABLED:-false}
+      NEXT_PUBLIC_DEV_LOGIN_USERNAME: ${NEXT_PUBLIC_DEV_LOGIN_USERNAME:-}
+      NEXT_PUBLIC_DEV_LOGIN_PASSWORD: ${NEXT_PUBLIC_DEV_LOGIN_PASSWORD:-}
     
     volumes:
       - ./docker-entrypoint-custom.sh:/app/docker-entrypoint-custom.sh:ro

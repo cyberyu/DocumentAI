@@ -1,15 +1,20 @@
 # Force asyncio to use standard event loop before unstructured imports
 import asyncio
+import io
 import logging
+from datetime import UTC, datetime
 from typing import Any, Optional
 
 from fastapi import APIRouter, Depends, Form, HTTPException, Query, UploadFile
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel as PydanticBaseModel, Field
+from sqlalchemy import func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 
 from app.db import (
+    BenchmarkData,
     Chunk,
     Document,
     DocumentType,
@@ -53,6 +58,44 @@ os.environ["UNSTRUCTURED_HAS_PATCHED_LOOP"] = "1"
 router = APIRouter()
 
 MAX_FILE_SIZE_BYTES = 500 * 1024 * 1024  # 500 MB per file
+MAX_BENCHMARK_DATASET_SIZE_BYTES = 25 * 1024 * 1024  # 25 MB per benchmark dataset
+
+
+def _document_source_key(title: str | None) -> str:
+    if not title:
+        return ""
+    return title.split("__", 1)[0]
+
+
+class BenchmarkDataRead(PydanticBaseModel):
+    benchmarkdata_id: int
+    doc_id: int
+    task_type: str
+    task_num: int
+    created_date: datetime
+    dataset_filename: str
+    dataset_mime_type: str | None = None
+    dataset_size_bytes: int
+
+
+class BenchmarkDataListResponse(PydanticBaseModel):
+    items: list[BenchmarkDataRead]
+    total: int
+
+
+def _build_document_metadata_with_benchmark_count(
+    document: Document,
+    benchmark_count: int,
+) -> dict[str, Any]:
+    metadata = (
+        dict(document.document_metadata)
+        if isinstance(document.document_metadata, dict)
+        else {}
+    )
+    metadata["has_benchmark_data"] = benchmark_count > 0
+    metadata["benchmark_data_count"] = benchmark_count
+    metadata["benchmark_data_updated_at"] = datetime.now(UTC).isoformat()
+    return metadata
 
 
 @router.post("/documents")
@@ -127,6 +170,8 @@ async def create_documents_file_upload(
     should_summarize: bool = Form(False),
     use_vision_llm: bool = Form(False),
     processing_mode: str = Form("basic"),
+    etl_service: Optional[str] = Form(default=None),
+    etl_services: Optional[str] = Form(default=None),
     embedding_models: Optional[str] = Form(default=None),  # JSON string array
     chunking_strategy: Optional[str] = Form(default=None),
     chunking_strategies: Optional[str] = Form(default=None),
@@ -152,6 +197,7 @@ async def create_documents_file_upload(
     import tempfile
     import uuid
     from datetime import datetime
+    from pathlib import PurePosixPath
 
     from app.db import DocumentStatus
     from app.etl_pipeline.etl_document import ProcessingMode
@@ -160,6 +206,7 @@ async def create_documents_file_upload(
         get_current_timestamp,
     )
     from app.utils.document_converters import generate_unique_identifier_hash
+    from app.utils.file_extensions import get_document_extensions_for_service
 
     validated_mode = ProcessingMode.coerce(processing_mode)
     
@@ -171,6 +218,67 @@ async def create_documents_file_upload(
     logger.info(f"[DEBUG] chunk_size received: {repr(chunk_size)}")
     logger.info(f"[DEBUG] chunk_sizes received: {repr(chunk_sizes)}")
     logger.info(f"[DEBUG] generate_variants received: {repr(generate_variants)}")
+    logger.info(f"[DEBUG] etl_service received: {repr(etl_service)}")
+    logger.info(f"[DEBUG] etl_services received: {repr(etl_services)}")
+
+    default_etl_service = (
+        etl_service.strip().upper()
+        if isinstance(etl_service, str) and etl_service.strip()
+        else (os.getenv("ETL_SERVICE") or "DOCLING").strip().upper()
+    )
+    allowed_etl_services = {"MINERU", "DOCLING", "UNSTRUCTURED", "LLAMACLOUD"}
+    if default_etl_service not in allowed_etl_services:
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                "Invalid etl_service. Allowed values: "
+                "MINERU, DOCLING, UNSTRUCTURED, LLAMACLOUD"
+            ),
+        )
+
+    resolved_etl_services: list[str] = [default_etl_service]
+    if isinstance(etl_services, str) and etl_services.strip():
+        try:
+            raw_etl_services = json.loads(etl_services.strip())
+            if isinstance(raw_etl_services, str):
+                raw_etl_services = [raw_etl_services]
+            if not isinstance(raw_etl_services, list):
+                raise ValueError("etl_services must be a JSON array")
+
+            deduped_services: list[str] = []
+            seen_services: set[str] = set()
+            for raw_service in raw_etl_services:
+                if not isinstance(raw_service, str) or not raw_service.strip():
+                    continue
+                normalized_service = raw_service.strip().upper()
+                if normalized_service not in allowed_etl_services:
+                    raise ValueError(
+                        "Invalid etl_services value. Allowed values: "
+                        "MINERU, DOCLING, UNSTRUCTURED, LLAMACLOUD"
+                    )
+                if normalized_service in seen_services:
+                    continue
+                deduped_services.append(normalized_service)
+                seen_services.add(normalized_service)
+
+            if not deduped_services:
+                raise ValueError("etl_services must contain at least one valid ETL service")
+
+            resolved_etl_services = deduped_services
+        except (json.JSONDecodeError, TypeError, ValueError) as e:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Invalid etl_services format: {e}",
+            )
+
+    resolved_etl_service = resolved_etl_services[0]
+    shared_tmp_dir = os.getenv("SHARED_TMP_DIR", "/shared_tmp")
+    try:
+        os.makedirs(shared_tmp_dir, exist_ok=True)
+    except OSError:
+        shared_tmp_dir = tempfile.gettempdir()
+        os.makedirs(shared_tmp_dir, exist_ok=True)
+        logger.warning("Falling back to temp dir '%s' for upload staging", shared_tmp_dir)
 
     if chunk_size is not None and chunk_size <= 0:
         raise HTTPException(status_code=400, detail="chunk_size must be a positive integer")
@@ -297,26 +405,30 @@ async def create_documents_file_upload(
             )
 
         effective_chunk_sizes = parsed_chunk_sizes or [chunk_size or 1024]
-        for strategy in resolved_chunking_strategies:
-            for model_key in parsed_embedding_models:
-                for size in effective_chunk_sizes:
-                    model_slug = model_key.replace("/", "_").replace("-", "_")
-                    size_slug = f"tok{size}" if size is not None else "tokdefault"
-                    variant_specs.append(
-                        {
-                            "chunking_strategy": strategy,
-                            "chunking_strategies": [strategy],
-                            "chunk_size": size,
-                            "embedding_config": {
-                                "mode": "single",
-                                "model_keys": [model_key],
-                            },
-                            "variant_suffix": f"{strategy}__{model_slug}__{size_slug}",
-                        }
-                    )
+        for etl_variant_service in resolved_etl_services:
+            etl_slug = etl_variant_service.lower()
+            for strategy in resolved_chunking_strategies:
+                for model_key in parsed_embedding_models:
+                    for size in effective_chunk_sizes:
+                        model_slug = model_key.replace("/", "_").replace("-", "_")
+                        size_slug = f"tok{size}" if size is not None else "tokdefault"
+                        variant_specs.append(
+                            {
+                                "etl_service": etl_variant_service,
+                                "chunking_strategy": strategy,
+                                "chunking_strategies": [strategy],
+                                "chunk_size": size,
+                                "embedding_config": {
+                                    "mode": "single",
+                                    "model_keys": [model_key],
+                                },
+                                "variant_suffix": f"{etl_slug}__{strategy}__{model_slug}__{size_slug}",
+                            }
+                        )
     else:
         variant_specs = [
             {
+                "etl_service": resolved_etl_service,
                 "chunking_strategy": resolved_chunking_strategy,
                 "chunking_strategies": resolved_chunking_strategies,
                 "chunk_size": chunk_size,
@@ -362,7 +474,9 @@ async def create_documents_file_upload(
 
             def _write_temp() -> str:
                 with tempfile.NamedTemporaryFile(
-                    delete=False, suffix=os.path.splitext(filename)[1]
+                    delete=False,
+                    suffix=os.path.splitext(filename)[1],
+                    dir=shared_tmp_dir,
                 ) as tmp:
                     tmp.write(content)
                     return tmp.name
@@ -374,98 +488,187 @@ async def create_documents_file_upload(
 
         # ===== PHASE 1: Create pending documents for all files =====
         created_documents: list[Document] = []
-        files_to_process: list[tuple[Document, str, str, dict[str, Any]]] = []
+        files_to_process: list[tuple[Document, str, str, dict[str, Any], str, str]] = []
         skipped_duplicates = 0
         duplicate_document_ids: list[int] = []
 
         for temp_path, filename, file_size in saved_files:
             try:
                 file_stem, file_ext = os.path.splitext(filename)
+                file_suffix = PurePosixPath(filename).suffix.lower()
+                file_variant_specs: list[dict[str, Any]] = []
                 for spec in variant_specs:
-                    variant_suffix = spec.get("variant_suffix")
-                    # Title shown in UI — no extension for variants
-                    variant_filename = (
-                        f"{file_stem}__{variant_suffix}"
-                        if variant_suffix
-                        else filename
+                    variant_etl_service = str(spec.get("etl_service") or resolved_etl_service)
+                    supported_exts = get_document_extensions_for_service(variant_etl_service)
+                    if file_suffix and file_suffix not in supported_exts:
+                        logger.info(
+                            "[DEBUG] Skipping unsupported ETL variant for %s: etl=%s ext=%s",
+                            filename,
+                            variant_etl_service,
+                            file_suffix,
+                        )
+                        continue
+                    file_variant_specs.append(spec)
+
+                if not file_variant_specs:
+                    selected_etl_values = sorted(
+                        {
+                            str(spec.get("etl_service") or resolved_etl_service)
+                            for spec in variant_specs
+                        }
                     )
-                    # ETL needs the extension to detect file type
+                    raise HTTPException(
+                        status_code=400,
+                        detail=(
+                            f"No selected ETL service supports file type '{file_suffix or file_ext or filename}'. "
+                            f"Selected ETLs: {', '.join(selected_etl_values)}"
+                        ),
+                    )
+
+                pipeline_variants: list[dict[str, Any]] = []
+                for spec in file_variant_specs:
+                    variant_suffix = spec.get("variant_suffix")
+                    variant_etl_service = str(spec.get("etl_service") or resolved_etl_service)
                     variant_file_name_with_ext = (
                         f"{file_stem}__{variant_suffix}{file_ext}"
                         if variant_suffix
                         else filename
                     )
-                    # Use variant_file_name_with_ext for the hash so it matches
-                    # what the file_upload_adapter passes as unique_id (the ETL filename).
-                    unique_identifier_hash = generate_unique_identifier_hash(
-                        DocumentType.FILE, variant_file_name_with_ext, search_space_id
-                    )
 
-                    existing = await check_document_by_unique_identifier(
-                        session, unique_identifier_hash
+                    embedding_cfg = spec.get("embedding_config") or {}
+                    pipeline_signature = {
+                        "etl_service": variant_etl_service,
+                        "chunking_strategy": spec.get("chunking_strategy"),
+                        "chunking_strategies": spec.get("chunking_strategies") or [],
+                        "chunk_size": spec.get("chunk_size"),
+                        "embedding_mode": embedding_cfg.get("mode"),
+                        "embedding_models": embedding_cfg.get("model_keys") or [],
+                    }
+                    unique_identifier_source = (
+                        f"{variant_file_name_with_ext}::"
+                        f"{json.dumps(pipeline_signature, sort_keys=True)}"
                     )
-                    if existing:
-                        if DocumentStatus.is_state(existing.status, DocumentStatus.READY):
-                            skipped_duplicates += 1
-                            duplicate_document_ids.append(existing.id)
-                            continue
-
-                        existing.status = DocumentStatus.pending()
-                        existing.content = "Processing..."
-                        existing.document_metadata = {
-                            **(existing.document_metadata or {}),
-                            "FILE_NAME": variant_file_name_with_ext,
-                            "file_size": file_size,
-                            "upload_time": datetime.now().isoformat(),
-                            "variant_suffix": variant_suffix,
+                    pipeline_id = generate_unique_identifier_hash(
+                        DocumentType.FILE, unique_identifier_source, search_space_id
+                    )
+                    pipeline_variants.append(
+                        {
+                            "filename": variant_file_name_with_ext,
+                            "etl_service": variant_etl_service,
+                            "pipeline_signature": pipeline_signature,
+                            "pipeline_id": pipeline_id,
+                            "spec": spec,
                         }
-                        existing.updated_at = get_current_timestamp()
-                        created_documents.append(existing)
+                    )
 
-                        with tempfile.NamedTemporaryFile(
-                            delete=False, suffix=file_ext
-                        ) as variant_tmp:
-                            await asyncio.to_thread(
-                                shutil.copyfile, temp_path, variant_tmp.name
-                            )
-                            variant_temp_path = variant_tmp.name
+                base_unique_identifier_hash = generate_unique_identifier_hash(
+                    DocumentType.FILE, filename, search_space_id
+                )
+                existing_document = await check_document_by_unique_identifier(
+                    session, base_unique_identifier_hash
+                )
 
-                        files_to_process.append(
-                            (existing, variant_temp_path, variant_file_name_with_ext, spec)
-                        )
-                        continue
+                existing_pipeline_signatures = []
+                if existing_document and isinstance(existing_document.document_metadata, dict):
+                    raw_signatures = existing_document.document_metadata.get("pipeline_signatures")
+                    if isinstance(raw_signatures, list):
+                        existing_pipeline_signatures = [
+                            signature
+                            for signature in raw_signatures
+                            if isinstance(signature, dict)
+                        ]
 
+                is_ready_duplicate = bool(existing_document) and DocumentStatus.is_state(
+                    existing_document.status, DocumentStatus.READY
+                )
+                is_single_variant_upload = len(file_variant_specs) == 1
+                requested_single_signature = pipeline_variants[0]["pipeline_signature"]
+                matches_existing_single_signature = (
+                    requested_single_signature in existing_pipeline_signatures
+                    if existing_pipeline_signatures
+                    else True
+                )
+                should_skip_duplicate = (
+                    is_ready_duplicate
+                    and is_single_variant_upload
+                    and not generate_variants
+                    and matches_existing_single_signature
+                )
+
+                if should_skip_duplicate:
+                    skipped_duplicates += 1
+                    duplicate_document_ids.append(existing_document.id)
+                    try:
+                        os.unlink(temp_path)
+                    except FileNotFoundError:
+                        pass
+                    continue
+
+                primary_variant = pipeline_variants[0]
+                pipeline_signatures = [v["pipeline_signature"] for v in pipeline_variants]
+                pipeline_ids = [v["pipeline_id"] for v in pipeline_variants]
+
+                if existing_document:
+                    existing_document.status = DocumentStatus.pending()
+                    existing_document.content = "Processing..."
+                    existing_document.document_metadata = {
+                        **(existing_document.document_metadata or {}),
+                        "FILE_NAME": filename,
+                        "ETL_SERVICE": primary_variant["etl_service"],
+                        "file_size": file_size,
+                        "upload_time": datetime.now().isoformat(),
+                        "pipeline_variant_count": len(pipeline_variants),
+                        "pipeline_signatures": pipeline_signatures,
+                        "pipeline_ids": pipeline_ids,
+                    }
+                    existing_document.updated_at = get_current_timestamp()
+                    document = existing_document
+                else:
                     document = Document(
                         search_space_id=search_space_id,
-                        title=variant_filename
-                        if variant_filename != "unknown"
-                        else "Uploaded File",
+                        title=filename if filename != "unknown" else "Uploaded File",
                         document_type=DocumentType.FILE,
                         document_metadata={
-                            "FILE_NAME": variant_file_name_with_ext,
+                            "FILE_NAME": filename,
+                            "ETL_SERVICE": primary_variant["etl_service"],
                             "file_size": file_size,
                             "upload_time": datetime.now().isoformat(),
-                            "variant_suffix": variant_suffix,
+                            "pipeline_variant_count": len(pipeline_variants),
+                            "pipeline_signatures": pipeline_signatures,
+                            "pipeline_ids": pipeline_ids,
                         },
                         content="Processing...",
-                        content_hash=unique_identifier_hash,
-                        unique_identifier_hash=unique_identifier_hash,
+                        content_hash=base_unique_identifier_hash,
+                        unique_identifier_hash=base_unique_identifier_hash,
                         embedding=None,
                         status=DocumentStatus.pending(),
                         updated_at=get_current_timestamp(),
                         created_by_id=str(user.id),
                     )
                     session.add(document)
-                    created_documents.append(document)
 
-                    with tempfile.NamedTemporaryFile(delete=False, suffix=file_ext) as variant_tmp:
+                created_documents.append(document)
+
+                for variant in pipeline_variants:
+                    with tempfile.NamedTemporaryFile(
+                        delete=False,
+                        suffix=file_ext,
+                        dir=shared_tmp_dir,
+                    ) as variant_tmp:
                         await asyncio.to_thread(
                             shutil.copyfile, temp_path, variant_tmp.name
                         )
                         variant_temp_path = variant_tmp.name
 
                     files_to_process.append(
-                        (document, variant_temp_path, variant_file_name_with_ext, spec)
+                        (
+                            document,
+                            variant_temp_path,
+                            variant["filename"],
+                            variant["spec"],
+                            variant["etl_service"],
+                            variant["pipeline_id"],
+                        )
                     )
 
                 try:
@@ -488,17 +691,18 @@ async def create_documents_file_upload(
                 await session.refresh(doc)
 
         # ===== PHASE 2: Dispatch tasks for each file =====
-        for document, temp_path, filename, spec in files_to_process:
+        for document, temp_path, filename, spec, etl_service_override, pipeline_id in files_to_process:
             dispatch_embedding_config = spec.get("embedding_config")
             dispatch_chunking_strategy = spec.get("chunking_strategy")
             dispatch_chunking_strategies = spec.get("chunking_strategies")
             dispatch_chunk_size = spec.get("chunk_size")
             logger.info(
-                "[DEBUG] Dispatching task for %s with embedding_config=%s chunking_strategy=%s chunk_size=%s",
+                "[DEBUG] Dispatching task for %s with embedding_config=%s chunking_strategy=%s chunk_size=%s pipeline_id=%s",
                 filename,
                 dispatch_embedding_config,
                 dispatch_chunking_strategy,
                 dispatch_chunk_size,
+                pipeline_id,
             )
             await dispatcher.dispatch_file_processing(
                 document_id=document.id,
@@ -513,16 +717,32 @@ async def create_documents_file_upload(
                 chunking_strategy=dispatch_chunking_strategy,
                 chunking_strategies=dispatch_chunking_strategies,
                 chunk_size=dispatch_chunk_size,
+                etl_service_override=etl_service_override,
+                pipeline_id=pipeline_id,
             )
 
         return {
             "message": "Files uploaded for processing",
-            "document_ids": [doc.id for doc in created_documents],
+            "document_ids": list({doc.id for doc in created_documents}),
             "duplicate_document_ids": duplicate_document_ids,
             "total_files": len(files_to_process) + skipped_duplicates,
             "pending_files": len(files_to_process),
             "skipped_duplicates": skipped_duplicates,
             "variant_count": len(variant_specs),
+            "pipeline_jobs": [
+                {
+                    "document_id": document.id,
+                    "pipeline_id": pipeline_id,
+                    "job_name": filename,
+                    "etl_service": etl_service_override,
+                    "chunking_strategy": spec.get("chunking_strategy"),
+                    "chunk_size": spec.get("chunk_size"),
+                    "embedding_models": (
+                        (spec.get("embedding_config") or {}).get("model_keys") or []
+                    ),
+                }
+                for document, _, filename, spec, etl_service_override, pipeline_id in files_to_process
+            ],
         }
     except HTTPException:
         raise
@@ -1380,6 +1600,13 @@ async def read_document(
             "You don't have permission to read documents in this search space",
         )
 
+        status_data = None
+        if hasattr(document, "status") and document.status:
+            status_data = DocumentStatusSchema(
+                state=document.status.get("state", "ready"),
+                reason=document.status.get("reason"),
+            )
+
         raw_content = document.content or ""
         return DocumentRead(
             id=document.id,
@@ -1394,6 +1621,7 @@ async def read_document(
             updated_at=document.updated_at,
             search_space_id=document.search_space_id,
             folder_id=document.folder_id,
+            status=status_data,
         )
     except HTTPException:
         raise
@@ -1440,6 +1668,13 @@ async def update_document(
         await session.commit()
         await session.refresh(db_document)
 
+        status_data = None
+        if hasattr(db_document, "status") and db_document.status:
+            status_data = DocumentStatusSchema(
+                state=db_document.status.get("state", "ready"),
+                reason=db_document.status.get("reason"),
+            )
+
         # Convert to DocumentRead for response
         return DocumentRead(
             id=db_document.id,
@@ -1453,6 +1688,7 @@ async def update_document(
             updated_at=db_document.updated_at,
             search_space_id=db_document.search_space_id,
             folder_id=db_document.folder_id,
+            status=status_data,
         )
     except HTTPException:
         raise
@@ -1488,18 +1724,6 @@ async def delete_document(
                 status_code=404, detail=f"Document with id {document_id} not found"
             )
 
-        doc_state = document.status.get("state") if document.status else None
-        if doc_state in ("pending", "processing"):
-            raise HTTPException(
-                status_code=409,
-                detail="Cannot delete document while it is pending or being processed. Please wait for processing to complete.",
-            )
-        if doc_state == "deleting":
-            raise HTTPException(
-                status_code=409,
-                detail="Document is already being deleted.",
-            )
-
         # Check permission for the search space
         await check_permission(
             session,
@@ -1509,9 +1733,74 @@ async def delete_document(
             "You don't have permission to delete documents in this search space",
         )
 
+        source_key = _document_source_key(document.title)
+        related_documents = [document]
+        if source_key:
+            related_result = await session.execute(
+                select(Document).filter(
+                    Document.search_space_id == document.search_space_id,
+                    Document.document_type == document.document_type,
+                    Document.id != document.id,
+                    (
+                        (Document.title == source_key)
+                        | Document.title.like(f"{source_key}__%")
+                    ),
+                )
+            )
+            related_documents.extend(related_result.scalars().all())
+
+        # De-duplicate IDs in case the selected document is already in related query results
+        deduped_related_docs: list[Document] = []
+        seen_ids: set[int] = set()
+        for related_doc in related_documents:
+            if related_doc.id in seen_ids:
+                continue
+            seen_ids.add(related_doc.id)
+            deduped_related_docs.append(related_doc)
+
+        blocking_docs = []
+        already_deleting_ids: list[int] = []
+        for related_doc in deduped_related_docs:
+            state = (
+                related_doc.status.get("state")
+                if isinstance(related_doc.status, dict)
+                else None
+            )
+            if state in ("pending", "processing"):
+                blocking_docs.append(related_doc.title)
+            elif state == "deleting":
+                already_deleting_ids.append(related_doc.id)
+
+        if blocking_docs:
+            blocked_preview = ", ".join(blocking_docs[:3])
+            if len(blocking_docs) > 3:
+                blocked_preview = f"{blocked_preview}, ..."
+            raise HTTPException(
+                status_code=409,
+                detail=(
+                    "Cannot delete document variants while one or more are pending/processing: "
+                    f"{blocked_preview}. Please wait for processing to complete."
+                ),
+            )
+
+        previous_statuses: dict[int, Any] = {
+            related_doc.id: (
+                dict(related_doc.status)
+                if isinstance(related_doc.status, dict)
+                else related_doc.status
+            )
+            for related_doc in deduped_related_docs
+        }
+
+        to_queue_ids: list[int] = []
+        for related_doc in deduped_related_docs:
+            if related_doc.id in already_deleting_ids:
+                continue
+            related_doc.status = {"state": "deleting"}
+            to_queue_ids.append(related_doc.id)
+
         # Mark the document as "deleting" so it's excluded from searches,
         # then commit immediately so the user gets a fast response.
-        document.status = {"state": "deleting"}
         await session.commit()
 
         # Dispatch durable background deletion via Celery.
@@ -1519,22 +1808,356 @@ async def delete_document(
         try:
             from app.tasks.celery_tasks.document_tasks import delete_document_task
 
-            delete_document_task.delay(document_id)
+            for related_doc_id in to_queue_ids:
+                delete_document_task.delay(related_doc_id)
         except Exception as dispatch_error:
-            document.status = {"state": "ready"}
+            for related_doc in deduped_related_docs:
+                related_doc.status = previous_statuses.get(related_doc.id)
             await session.commit()
             raise HTTPException(
                 status_code=503,
                 detail="Failed to queue background deletion. Please try again.",
             ) from dispatch_error
 
-        return {"message": "Document deleted successfully"}
+        return {
+            "message": "Document deleted successfully",
+            "queued_deletions": len(to_queue_ids),
+            "already_deleting": len(already_deleting_ids),
+        }
     except HTTPException:
         raise
     except Exception as e:
         await session.rollback()
         raise HTTPException(
             status_code=500, detail=f"Failed to delete document: {e!s}"
+        ) from e
+
+
+@router.get(
+    "/documents/{document_id}/benchmark-data",
+    response_model=BenchmarkDataListResponse,
+)
+async def list_document_benchmark_data(
+    document_id: int,
+    session: AsyncSession = Depends(get_async_session),
+    user: User = Depends(current_active_user),
+):
+    """
+    List benchmark datasets associated with a document.
+    Requires DOCUMENTS_READ permission for the document's search space.
+    """
+    try:
+        result = await session.execute(
+            select(Document).filter(Document.id == document_id)
+        )
+        document = result.scalars().first()
+
+        if not document:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Document with id {document_id} not found",
+            )
+
+        await check_permission(
+            session,
+            user,
+            document.search_space_id,
+            Permission.DOCUMENTS_READ.value,
+            "You don't have permission to read documents in this search space",
+        )
+
+        benchmark_result = await session.execute(
+            select(BenchmarkData)
+            .filter(BenchmarkData.doc_id == document_id)
+            .order_by(BenchmarkData.created_date.desc(), BenchmarkData.benchmarkdata_id.desc())
+        )
+        rows = benchmark_result.scalars().all()
+
+        return BenchmarkDataListResponse(
+            items=[
+                BenchmarkDataRead(
+                    benchmarkdata_id=row.benchmarkdata_id,
+                    doc_id=row.doc_id,
+                    task_type=row.task_type,
+                    task_num=row.task_num,
+                    created_date=row.created_date,
+                    dataset_filename=row.dataset_filename,
+                    dataset_mime_type=row.dataset_mime_type,
+                    dataset_size_bytes=row.dataset_size_bytes,
+                )
+                for row in rows
+            ],
+            total=len(rows),
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to list benchmark datasets: {e!s}",
+        ) from e
+
+
+@router.post(
+    "/documents/{document_id}/benchmark-data",
+    response_model=BenchmarkDataRead,
+)
+async def upload_document_benchmark_data(
+    document_id: int,
+    benchmark_file: UploadFile,
+    task_type: str = Form(...),
+    task_num: int = Form(...),
+    session: AsyncSession = Depends(get_async_session),
+    user: User = Depends(current_active_user),
+):
+    """
+    Upload and associate a benchmark dataset with a document.
+    Requires DOCUMENTS_UPDATE permission for the document's search space.
+    """
+    try:
+        result = await session.execute(
+            select(Document).filter(Document.id == document_id)
+        )
+        document = result.scalars().first()
+
+        if not document:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Document with id {document_id} not found",
+            )
+
+        await check_permission(
+            session,
+            user,
+            document.search_space_id,
+            Permission.DOCUMENTS_UPDATE.value,
+            "You don't have permission to update documents in this search space",
+        )
+
+        cleaned_task_type = task_type.strip()
+        if not cleaned_task_type:
+            raise HTTPException(status_code=400, detail="task_type is required")
+        if len(cleaned_task_type) > 128:
+            raise HTTPException(
+                status_code=400,
+                detail="task_type must be 128 characters or fewer",
+            )
+        if task_num < 1:
+            raise HTTPException(status_code=400, detail="task_num must be >= 1")
+
+        file_content = await benchmark_file.read()
+        if not file_content:
+            raise HTTPException(status_code=400, detail="benchmark_file is empty")
+        if len(file_content) > MAX_BENCHMARK_DATASET_SIZE_BYTES:
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    "benchmark_file exceeds maximum size of "
+                    f"{MAX_BENCHMARK_DATASET_SIZE_BYTES // (1024 * 1024)} MB"
+                ),
+            )
+
+        try:
+            dataset_content = file_content.decode("utf-8")
+        except UnicodeDecodeError as decode_error:
+            raise HTTPException(
+                status_code=400,
+                detail="benchmark_file must be UTF-8 text (JSON/CSV/TSV/Markdown)",
+            ) from decode_error
+
+        existing_rows_result = await session.execute(
+            select(BenchmarkData).where(BenchmarkData.doc_id == document_id)
+        )
+        existing_rows = existing_rows_result.scalars().all()
+        for existing_row in existing_rows:
+            await session.delete(existing_row)
+        await session.flush()
+
+        row = BenchmarkData(
+            doc_id=document_id,
+            task_type=cleaned_task_type,
+            task_num=task_num,
+            created_date=datetime.now(UTC),
+            dataset_filename=benchmark_file.filename or f"benchmark-{document_id}.txt",
+            dataset_content=dataset_content,
+            dataset_mime_type=benchmark_file.content_type,
+            dataset_size_bytes=len(file_content),
+        )
+        session.add(row)
+        await session.flush()
+
+        count_result = await session.execute(
+            select(func.count())
+            .select_from(BenchmarkData)
+            .where(BenchmarkData.doc_id == document_id)
+        )
+        benchmark_count = int(count_result.scalar() or 0)
+        document.document_metadata = _build_document_metadata_with_benchmark_count(
+            document,
+            benchmark_count,
+        )
+
+        await session.commit()
+        await session.refresh(row)
+
+        return BenchmarkDataRead(
+            benchmarkdata_id=row.benchmarkdata_id,
+            doc_id=row.doc_id,
+            task_type=row.task_type,
+            task_num=row.task_num,
+            created_date=row.created_date,
+            dataset_filename=row.dataset_filename,
+            dataset_mime_type=row.dataset_mime_type,
+            dataset_size_bytes=row.dataset_size_bytes,
+        )
+    except HTTPException:
+        await session.rollback()
+        raise
+    except Exception as e:
+        await session.rollback()
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to upload benchmark dataset: {e!s}",
+        ) from e
+
+
+@router.get("/documents/{document_id}/benchmark-data/{benchmarkdata_id}/download")
+async def download_document_benchmark_data(
+    document_id: int,
+    benchmarkdata_id: int,
+    session: AsyncSession = Depends(get_async_session),
+    user: User = Depends(current_active_user),
+):
+    """
+    Download benchmark dataset content for a document-associated benchmark record.
+    Requires DOCUMENTS_READ permission for the document's search space.
+    """
+    try:
+        doc_result = await session.execute(
+            select(Document).filter(Document.id == document_id)
+        )
+        document = doc_result.scalars().first()
+
+        if not document:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Document with id {document_id} not found",
+            )
+
+        await check_permission(
+            session,
+            user,
+            document.search_space_id,
+            Permission.DOCUMENTS_READ.value,
+            "You don't have permission to read documents in this search space",
+        )
+
+        benchmark_result = await session.execute(
+            select(BenchmarkData).filter(
+                BenchmarkData.benchmarkdata_id == benchmarkdata_id,
+                BenchmarkData.doc_id == document_id,
+            )
+        )
+        benchmark_row = benchmark_result.scalars().first()
+        if not benchmark_row:
+            raise HTTPException(
+                status_code=404,
+                detail=(
+                    "Benchmark dataset not found for this document"
+                ),
+            )
+
+        media_type = benchmark_row.dataset_mime_type or "text/plain"
+        output_filename = benchmark_row.dataset_filename or f"benchmark-{benchmarkdata_id}.txt"
+
+        return StreamingResponse(
+            io.BytesIO(benchmark_row.dataset_content.encode("utf-8")),
+            media_type=media_type,
+            headers={
+                "Content-Disposition": f'attachment; filename="{output_filename}"',
+            },
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to download benchmark dataset: {e!s}",
+        ) from e
+
+
+@router.delete("/documents/{document_id}/benchmark-data/{benchmarkdata_id}")
+async def delete_document_benchmark_data(
+    document_id: int,
+    benchmarkdata_id: int,
+    session: AsyncSession = Depends(get_async_session),
+    user: User = Depends(current_active_user),
+):
+    """
+    Delete a benchmark dataset associated with a document.
+    Requires DOCUMENTS_UPDATE permission for the document's search space.
+    """
+    try:
+        doc_result = await session.execute(
+            select(Document).filter(Document.id == document_id)
+        )
+        document = doc_result.scalars().first()
+
+        if not document:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Document with id {document_id} not found",
+            )
+
+        await check_permission(
+            session,
+            user,
+            document.search_space_id,
+            Permission.DOCUMENTS_UPDATE.value,
+            "You don't have permission to update documents in this search space",
+        )
+
+        benchmark_result = await session.execute(
+            select(BenchmarkData).filter(
+                BenchmarkData.benchmarkdata_id == benchmarkdata_id,
+                BenchmarkData.doc_id == document_id,
+            )
+        )
+        benchmark_row = benchmark_result.scalars().first()
+        if not benchmark_row:
+            raise HTTPException(
+                status_code=404,
+                detail="Benchmark dataset not found for this document",
+            )
+
+        await session.delete(benchmark_row)
+        await session.flush()
+
+        count_result = await session.execute(
+            select(func.count())
+            .select_from(BenchmarkData)
+            .where(BenchmarkData.doc_id == document_id)
+        )
+        benchmark_count = int(count_result.scalar() or 0)
+        document.document_metadata = _build_document_metadata_with_benchmark_count(
+            document,
+            benchmark_count,
+        )
+
+        await session.commit()
+        return {
+            "message": "Benchmark dataset deleted",
+            "benchmarkdata_id": benchmarkdata_id,
+            "remaining": benchmark_count,
+        }
+    except HTTPException:
+        await session.rollback()
+        raise
+    except Exception as e:
+        await session.rollback()
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to delete benchmark dataset: {e!s}",
         ) from e
 
 
@@ -1791,11 +2414,21 @@ async def folder_upload(
     Works for all deployment modes (no is_self_hosted guard).
     """
     import json
+    import os
     import tempfile
 
     from app.etl_pipeline.etl_document import ProcessingMode
 
     validated_mode = ProcessingMode.coerce(processing_mode)
+    shared_tmp_dir = os.getenv("SHARED_TMP_DIR", "/shared_tmp")
+    try:
+        os.makedirs(shared_tmp_dir, exist_ok=True)
+    except OSError:
+        shared_tmp_dir = tempfile.gettempdir()
+        os.makedirs(shared_tmp_dir, exist_ok=True)
+        logging.getLogger(__name__).warning(
+            "Falling back to temp dir '%s' for folder upload staging", shared_tmp_dir
+        )
     
     # Parse embedding_models and create config
     from app.config.embedding_config import EmbeddingConfig
@@ -1928,7 +2561,9 @@ async def folder_upload(
 
         def _write_temp() -> str:
             with tempfile.NamedTemporaryFile(
-                delete=False, suffix=os.path.splitext(filename)[1]
+                delete=False,
+                suffix=os.path.splitext(filename)[1],
+                dir=shared_tmp_dir,
             ) as tmp:
                 tmp.write(content)
                 return tmp.name

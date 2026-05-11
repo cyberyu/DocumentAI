@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-11T04:00:33Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/388fd3b941b84afbab63607f818c2626__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      383
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_weighted"
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 2,
+    "overall_correct_rate": 1.0,
+    "number_match_count": 2,
+    "number_match_rate": 1.0,
+    "unit_match_count": 2,
+    "unit_match_rate": 1.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.041078575942700646,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 2,
+      "overall_correct_rate": 1.0,
+      "number_match_count": 2,
+      "number_match_rate": 1.0,
+      "unit_match_count": 2,
+      "unit_match_rate": 1.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.041078575942700646
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user is asking about a specific value from the MSFT FY26 Q1 10Q document. Let me read the document to find the long-term accounts receivable value.Let me search for \"long-term accounts receivable\" or \"accounts receivable\" in the document to find the relevant value.I can see from line 760 that the value is clearly stated: \"As of September 30, 2025 and June 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion and $5.2 billion, respectively.\"\n\nSo for September 30, 2025, the value is $5.0 billion.$5.0 billion",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.0425531914893617,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "Let me read the document to find the specific information about other receivables related to activities to facilitate the purchase of server components as of September 30, 2025.The grep found a match in chunk_id 497738. Let me read that chunk to see the actual content.I need to find chunk_id 497738. Let me look at the chunk index to find its line range.Chunk 497738 is at lines 756-762. Let me read that section.The answer is right there. As of September 30, 2025, other receivables related to activities to facilitate the purchase of server components were $14.4 billion.$14.4 billion [citation:497738]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.0396039603960396,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    }
+  ]
+}

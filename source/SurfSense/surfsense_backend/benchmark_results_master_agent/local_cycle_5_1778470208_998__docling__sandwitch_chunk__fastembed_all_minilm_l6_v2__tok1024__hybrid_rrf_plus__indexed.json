@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-11T03:32:01Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/d1b30ea3e70040f2962a452335d12888__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      376
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_rrf_plus"
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "number_match_count": 0,
+    "number_match_rate": 0.0,
+    "unit_match_count": 0,
+    "unit_match_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 0,
+      "unit_match_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user is asking about a specific value from a document. Let me search for this document in the knowledge base.The document wasn't found by filename. Let me search the knowledge base more broadly for this document name or for Microsoft 10Q or accounts receivable information.The Surfsense docs search didn't find the document either. Let me search the knowledge base more broadly for this document or for Microsoft financial information.Let me also try searching for just \"MSFT\" or \"FY26\" or \"10Q\" or related terms. Let me also check if there's a broader search across documents by looking at the documents list.The knowledge base is completely empty. The document `MSFT_FY26Q1_10Q.docx` doesn't exist in the user's knowledge base. I need to let the user know I couldn't find it and ask if they'd like me to answer from general knowledge.\n\nWait - actually, web search and scrape_webpage are disabled tools (\"DISABLED TOOLS (by user)\"). So I can't search the web for this information either.\n\nLet me inform the user that I couldn't find this document in their knowledge base and ask if they'd like me to answer from my general knowledge.I couldn't find the document `MSFT_FY26Q1_10Q.docx` in your knowledge base \u2014 the workspace is currently empty, and no matches were found for that filename or related terms. Would you like me to answer from my general knowledge instead?",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "The user is asking about a specific value in a document. Let me search for this document in the knowledge base.The file wasn't found in the workspace. Let me search the knowledge base more broadly for this document.The document \"MSFT_FY26Q1_10Q.docx\" doesn't exist in the knowledge base or workspace. I need to let the user know and ask if they'd like me to answer from my general knowledge.\n\nBut wait - web search is disabled. Let me re-read the system prompt... Yes, \"Web Search\" and \"Scrape Webpage\" are disabled tools. So I can't search the web for this information either.\n\nLet me inform the user that the document wasn't found in their knowledge base.The document **MSFT_FY26Q1_10Q.docx** was not found in your knowledge base. I searched the workspace and all indexed content \u2014 there are no matches for that filename or related terms like \"other receivables\" or \"server components.\"\n\nCould you confirm the filename or upload the document so I can look up the value?",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-11T03:50:44Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/6ef19f89c7f1477ca5adadd9b9b520b6__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      379
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_rrf_plus"
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 1,
+    "overall_correct_rate": 0.5,
+    "number_match_count": 1,
+    "number_match_rate": 0.5,
+    "unit_match_count": 1,
+    "unit_match_rate": 0.5,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.0028530670470756064,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 1,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 1,
+      "overall_correct_rate": 0.5,
+      "number_match_count": 1,
+      "number_match_rate": 0.5,
+      "unit_match_count": 1,
+      "unit_match_rate": 0.5,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.0028530670470756064
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user wants to know the long-term accounts receivable from a specific financial document. Let me read the file.The document seems to be empty. Let me search for the relevant content using grep to find the term \"long-term accounts receivable\" or \"accounts receivable\" in the document.The grep found nothing. But the workspace shows the file exists. Let me check the file size more carefully. The metadata says the file is 987KB but the content seems empty. Let me check if the file has more content by reading further.The document appears to be essentially empty - it has the XML structure but no actual chunks in the content. The file is 987KB though, which suggests there might be something. But the chunk_index is also empty. Let me check other pipeline variants or the sandwitch_chunk variant.\n\nActually wait, the document metadata has multiple pipeline signatures. Each pipeline variant might have its own data. Let me check if there are other versions of this document.\n\nActually, looking more carefully at the XML output (15 lines total), the document truly has no content chunks. The ETL pipeline processed it but generated no chunks \u2014 this might mean the document is in a format that wasn't parsed correctly, or the file is corrupted, or perhaps the XML wasn't fully extracted.\n\nLet me try to search for the document content using a broader search.So the file itself does match these terms, but when we read it, the document content is empty. This seems like a quirk of how the document is stored. Let me try reading the raw file to see what's actually there. Maybe the content is in a different encoding or format that doesn't appear as XML chunks. Let me check the sandwitch_chunk variant.\n\nActually, looking at the pipeline_variant_count: 4 and pipeline_ids - each pipeline variant might be stored as a separate document internally. When I read the file, it shows the first document/variant which appears to have no content. Let me try searching for the specific text using a different grep approach.So the content is in the XML but it might be stored differently. Let me look for \"long-term accounts receivable\" specifically, or look at the balance sheet sections more carefully. Let me look for \"accounts receivable\" more broadly in the balance sheet data.I can see that chunk_id 476898 shows \"Accounts receivable, net of allowance for doubtful accounts\" at $52,894 (in millions), and chunk_id 476941 mentions \"long-term accounts receivable\" but is truncated. Let me read these specific chunks to get the full details.The file appears to only have 15 lines of XML content. But grep found matches with chunk IDs 476898, 476941, etc. These chunk IDs are from the database index, not from the actual file content. The read_file only shows the XML wrapper that doesn't contain the actual content chunks. \n\nThis means the document content is stored in the database chunks but not represented in the XML file I'm reading directly. Let me try to access the content differently. Let me try to read specific portions of the file from the beginning to see what's actually there.The document only has 15 lines and no chunk content is visible in the file. However, grep found content - it's stored in the database chunks. The chunk IDs from grep were 476898, 476941, etc. These chunks are indexed in the database. \n\nI need to search for \"long-term accounts receivable\" to find the relevant chunk. Let me use the kb search or look more carefully at what grep returned. From the grep output on chunk 476941, it said:\n\n\"Our other current financial assets and current financial liabilities have fair values that approximate their carrying values. **Contract Balances and Other Receivables** As of September 30, 2025 and June 30, 2025, long-term accounts receiva\"\n\nThis is truncated. Let me get more context by searching more specifically.I found it. The result shows:\n\n\"As of September 30, 2025 and June 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion and $5.2 billion, respectively, and is included in other long-term assets in our consolidated balance sheets\"\n\nSo as of September 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts was $5.0 billion.$5.0 billion",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.005706134094151213,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "",
+      "metrics": {
+        "answer_clean": false,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

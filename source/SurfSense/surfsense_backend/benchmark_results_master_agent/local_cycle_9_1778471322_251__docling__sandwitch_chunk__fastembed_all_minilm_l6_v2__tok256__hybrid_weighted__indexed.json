@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-11T03:50:32Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/6ef19f89c7f1477ca5adadd9b9b520b6__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      379
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_weighted"
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "number_match_count": 0,
+    "number_match_rate": 0.0,
+    "unit_match_count": 0,
+    "unit_match_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 1,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 0,
+      "unit_match_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user is asking about a specific value in the MSFT_FY26Q1_10Q.docx.xml file. Let me read the file to find the long-term accounts receivable value.The document appears to have no content. Let me check the file size - it's 987 KB, so there should be something there. Let me search for \"accounts receivable\" or \"long-term\" to find the relevant content.Let me search more broadly for \"accounts receivable\" or \"allowance\" in the document.Let me check the actual content of the file more carefully. The chunk_index and document_content are empty tags. Maybe the file has content between CDATA sections or maybe the content is stored differently. Let me read more of the file.The file seems to be empty in terms of content - the `<chunk_index>` and `<document_content>` are empty. Let me check if there are other files related to this document, maybe the chunks are stored in separate locations. Let me look at the workspace tree more carefully.\n\nActually, wait - the file size is 987KB so the content must be somewhere. Let me look for other files with similar names or search more broadly.The file is only 15 lines long and the content is empty. The grep found no matches for \"accounts receivable\" either. So the document was uploaded but its content hasn't been properly indexed/extracted yet. The chunk_index and document_content sections are both empty.\n\nLet me do a knowledge base search to find the relevant content since the raw XML doesn't have the text content inlined.The Surfsense documentation search didn't help since it searches the Surfsense docs, not the user's knowledge base. Let me try searching the user's knowledge base to find this document's content.\n\nActually, looking at the file more carefully, the chunk_index and document_content are empty tags. But do they contain CDATA that just wasn't shown because they're empty? The file is 987KB but only has 15 lines. This is odd - maybe the content is encoded or stored differently.\n\nWait - the file content shows line 10 `<chunk_index>` with nothing between it and line 11. But the file size is 987KB, so there must be content there that's not being shown. Let me look at more of the file.The file really is only 15 lines with empty `<chunk_index>` and `<document_content>` tags. This is odd for a 987KB file. The document metadata mentions it was processed by DOCLING (docling) which presumably extracts content from the docx. Perhaps the chunks are stored in a vector store and not directly in this XML file.\n\nLet me try searching the knowledge base for the content I need. The user has a knowledge base connector that allows searching.",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "",
+      "metrics": {
+        "answer_clean": false,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

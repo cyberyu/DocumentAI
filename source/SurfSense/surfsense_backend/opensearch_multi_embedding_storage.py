@@ -16,6 +16,7 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
 
 from opensearchpy import AsyncOpenSearch
+from opensearchpy.exceptions import RequestError
 from opensearchpy.helpers import async_bulk
 
 logger = logging.getLogger(__name__)
@@ -148,6 +149,10 @@ class MultiEmbeddingOpenSearchStorage:
         self.index_prefix = index_prefix
         logger.info(f"Initialized Multi-Embedding OpenSearch client with hosts: {hosts}")
 
+    async def close(self) -> None:
+        """Close underlying AsyncOpenSearch client/session."""
+        await self.client.close()
+
     @staticmethod
     def _normalize_strategy_name(chunking_strategy: str) -> str:
         strategy_aliases = {
@@ -222,6 +227,7 @@ class MultiEmbeddingOpenSearchStorage:
             "document_id": {"type": "keyword"},
             "pipeline_id": {"type": "keyword"},
             "chunking_strategy": {"type": "keyword"},
+            "chunk_size": {"type": "integer"},
             "embedding_models": {"type": "keyword"},
             "embedding_model_count": {"type": "integer"},
             "content": {
@@ -274,10 +280,18 @@ class MultiEmbeddingOpenSearchStorage:
             "mappings": {"properties": properties},
         }
 
-        await self.client.indices.create(index=index_name, body=index_body)
-        logger.info(
-            f"Created multi-embedding index {index_name} with {len(embedding_models)} embedding models"
-        )
+        try:
+            await self.client.indices.create(index=index_name, body=index_body)
+            logger.info(
+                f"Created multi-embedding index {index_name} with {len(embedding_models)} embedding models"
+            )
+        except RequestError as exc:
+            if getattr(exc, "error", None) == "resource_already_exists_exception":
+                logger.info(
+                    "Index %s was created concurrently by another worker", index_name
+                )
+                return
+            raise
 
     async def index_chunks_multi_embedding(
         self,
@@ -326,6 +340,7 @@ class MultiEmbeddingOpenSearchStorage:
                 "document_id": str(chunk["document_id"]),
                 "pipeline_id": chunk.get("pipeline_id") or str(chunk["document_id"]),
                 "chunking_strategy": chunk_strategy,
+                "chunk_size": metadata.get("chunk_size"),
                 "embedding_models": embedding_models,
                 "embedding_model_count": len(embedding_models),
                 "content": chunk["content"],

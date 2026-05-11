@@ -369,6 +369,7 @@ async def _extract_file_content(
     notification: Notification | None,
     use_vision_llm: bool = False,
     processing_mode: str = "basic",
+    etl_service_override: str | None = None,
 ) -> tuple[str, str, int]:
     """
     Extract markdown content from a file regardless of type.
@@ -424,7 +425,10 @@ async def _extract_file_content(
 
         vision_llm = await get_vision_llm(session, search_space_id)
 
-    result = await EtlPipelineService(vision_llm=vision_llm).extract(
+    result = await EtlPipelineService(
+        vision_llm=vision_llm,
+        etl_service_override=etl_service_override,
+    ).extract(
         EtlRequest(
             file_path=file_path,
             filename=filename,
@@ -460,6 +464,8 @@ async def process_file_in_background_with_document(
     chunking_strategy: str | None = None,
     chunking_strategies: list[str] | None = None,
     chunk_size: int | None = None,
+    etl_service_override: str | None = None,
+    pipeline_id: str | None = None,
 ) -> Document | None:
     """
     Process file and update existing pending document (2-phase pattern).
@@ -481,6 +487,15 @@ async def process_file_in_background_with_document(
     doc_id = document.id
 
     try:
+        metadata = document.document_metadata if isinstance(document.document_metadata, dict) else {}
+        resolved_etl_service_override = etl_service_override
+        if not resolved_etl_service_override:
+            resolved_etl_service_override = (
+                metadata.get("ETL_SERVICE")
+                if isinstance(metadata.get("ETL_SERVICE"), str)
+                else None
+            )
+
         markdown_content, etl_service, billable_pages = await _extract_file_content(
             file_path,
             filename,
@@ -492,6 +507,7 @@ async def process_file_in_background_with_document(
             notification,
             use_vision_llm=use_vision_llm,
             processing_mode=processing_mode,
+            etl_service_override=resolved_etl_service_override,
         )
 
         if not markdown_content:
@@ -503,8 +519,11 @@ async def process_file_in_background_with_document(
         # All variants of the same source file produce identical Docling markdown,
         # so the check would incorrectly flag every variant after the first one.
         is_pipeline_variant = bool(
-            document.document_metadata
-            and document.document_metadata.get("variant_suffix") is not None
+            pipeline_id
+            or (
+                document.document_metadata
+                and document.document_metadata.get("variant_suffix") is not None
+            )
         )
         if not is_pipeline_variant:
             existing_by_content = await check_duplicate_document(session, content_hash)
@@ -526,6 +545,7 @@ async def process_file_in_background_with_document(
 
         adapter = UploadDocumentAdapter(session)
         await adapter.index(
+            document=document,
             markdown_content=markdown_content,
             filename=filename,
             etl_service=etl_service,
@@ -538,6 +558,7 @@ async def process_file_in_background_with_document(
             chunking_strategies=chunking_strategies,
             chunk_size=chunk_size,
             is_pipeline_variant=is_pipeline_variant,
+            pipeline_id=pipeline_id,
         )
 
         if billable_pages > 0:

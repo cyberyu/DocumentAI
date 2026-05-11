@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-11T01:11:52Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/6e63833023e94d45a73644253c18cb7b__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      348
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_weighted"
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "number_match_count": 0,
+    "number_match_rate": 0.0,
+    "unit_match_count": 0,
+    "unit_match_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 0,
+      "unit_match_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user is asking about a specific document in their knowledge base. Let me search for it.The document isn't showing up with glob. Let me search more broadly - maybe it's in the knowledge base and needs to be searched via the knowledge base search. But wait - I don't have a direct \"knowledge base search\" tool listed. Let me look at my tools again...\n\nI don't have a dedicated \"search knowledge base\" tool. The `search_surfsense_docs` tool is for SurfSense documentation only. Let me try searching for this file with a broader glob or grep.\n\nActually, let me look at the workspace tree - it shows `/documents/` is empty. Let me try listing it.The file `MSFT_FY26Q1_10Q.docx` is not found anywhere in the user's knowledge base (the `/documents/` directory is empty). I need to inform the user that I couldn't find this document in their knowledge base. Since web search and scrape_webpage tools are disabled, I can't look this up externally either.\n\nLet me ask the user if they'd like me to answer from my general knowledge instead.I searched the workspace but the file `MSFT_FY26Q1_10Q.docx` is not present in your knowledge base \u2014 the `/documents/` directory is currently empty. \n\nWould you like me to answer from my general knowledge instead?",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "The user is asking about a specific value in a document called \"MSFT_FY26Q1_10Q.docx\". Let me search for this file in the workspace.The file is not found in the workspace. Let me search more broadly to see what's available.The file \"MSFT_FY26Q1_10Q.docx\" does not exist in the user's knowledge base workspace. Similarly, no search results matched this filename. Let me also check in the knowledge base via search.Let me search the knowledge base more broadly for Microsoft or FY26Q1 content.The file doesn't exist in the user's knowledge base. Let me check the workspace tree once more and list the contents of /documents/ to be sure.The user's knowledge base is empty. There are no files at all. I need to inform the user that I couldn't find this file in their knowledge base and ask if they'd like me to answer from general knowledge.\n\nWait - the knowledge_base_only_policy says that if the knowledge base search returns no relevant results AND no other tool provides the answer, I must inform the user and ask if they'd like me to answer from my general knowledge. Let me do that.\n\nHowever, this is a very specific financial figure from a real Microsoft 10-Q document. Microsoft's FY26 Q1 would cover the period ending September 30, 2025. As of my knowledge cutoff, this document may or may not exist in my training data. Since it's about a future period (beyond my training data), I cannot answer this from general knowledge either.\n\nWait, actually the user's question references \"FY26 Q1\" which for Microsoft would be the quarter ending September 30, 2025. The current date is May 11, 2026, so this document should exist. However, I don't have access to real-time web search (it's disabled) and the file isn't in the user's knowledge base.\n\nLet me inform the user accordingly.I couldn't find the file **MSFT_FY26Q1_10Q.docx** in your knowledge base \u2014 the workspace is currently empty, and no matching documents were found via search.\n\nWould you like me to answer from my general knowledge instead? (Note: Microsoft's FY26 Q1 covers the period ending September 30, 2025, which would be after my training cutoff, so I may not have this specific figure.)",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

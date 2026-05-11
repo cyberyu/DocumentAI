@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-11T01:38:39Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/8058f1fd5c2d48f6a86cb5e62f825d16__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      358
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_weighted"
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 2,
+    "overall_correct_rate": 1.0,
+    "number_match_count": 2,
+    "number_match_rate": 1.0,
+    "unit_match_count": 2,
+    "unit_match_rate": 1.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.034201266713581986,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 2,
+      "overall_correct_rate": 1.0,
+      "number_match_count": 2,
+      "number_match_rate": 1.0,
+      "unit_match_count": 2,
+      "unit_match_rate": 1.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.034201266713581986
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user is asking about a specific number in the MSFT_FY26Q1_10Q.docx.xml file. Let me read it to find the long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025.Let me read the specific chunk that mentions long-term accounts receivable.Let me read the balance sheet chunk (353898) and the long-term accounts receivable chunk (353918) to find the information I need.Looking at the balance sheet, I see \"Accounts receivable, net of allowance for doubtful accounts\" as a current asset, which is $52,894 million as of September 30, 2025. But the user is asking about \"long-term accounts receivable, net of allowance for doubtful accounts.\"\n\nLet me read the chunk that mentions \"long-term accounts receivable\" (chunk 353918, lines 756-762).The answer is clearly stated: long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025 was $5.0 billion.$5.0 billion [citation:353918]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.027586206896551727,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "The user is asking about a specific number in the MSFT FY26 Q1 10Q document. Let me read the file to find the relevant information about \"other receivables related to activities to facilitate the purchase of server components\" as of September 30, 2025.Let me read more of this document to find the specific number. Let me look at the chunk around that match.Let me search more specifically for \"other receivables\" and \"server components\" or \"activities to facilitate\" around the matching chunk 353918.I found the information in chunk 353918. The answer is: $14.4 billion.$14.4 billion [citation:353918]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.04081632653061225,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    }
+  ]
+}

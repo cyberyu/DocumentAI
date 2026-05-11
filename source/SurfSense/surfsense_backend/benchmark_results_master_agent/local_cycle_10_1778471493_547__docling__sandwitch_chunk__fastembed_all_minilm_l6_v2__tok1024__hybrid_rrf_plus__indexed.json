@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-11T03:53:28Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/f91f8c9bad224a34bbc0aae7a31d59e0__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      380
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_rrf_plus"
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "number_match_count": 0,
+    "number_match_rate": 0.0,
+    "unit_match_count": 0,
+    "unit_match_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 1,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 0,
+      "unit_match_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user is asking about a specific value from the MSFT_FY26Q1_10Q.docx file. Let me read the document to find the information about long-term accounts receivable.The chunk_index and document_content are empty. Let me search for the relevant content in the document using grep.The grep didn't find anything, but the file has been added with the DOCLING ETL service. Since the file was uploaded on 2026-05-10 and the chunk_index and document_content are empty, it seems the document wasn't fully processed or indexed yet. Let me check if there's a read_file that gives me more info, or if I need to look at the file more carefully.\n\nWait, the grep says no matches found, but the file exists. Let me search for other terms related to receivables.The grep isn't finding anything in the document content. Let me check the file more thoroughly. The document seems to be a .docx that was processed by DOCLING. Let me look at its chunk index and content more carefully by reading more of the file.\n\nWait, I already read the file and the chunk_index and document_content were both empty. That's strange. Let me check the file size again - it's 987,441 bytes, so there should be content. \n\nLet me try reading more of the file or checking if there's additional XML content.The document has been uploaded but it appears there's no chunked content available. The XML file only contains metadata without any actual content chunks. This could mean the document processing hasn't completed yet or the chunks weren't stored properly.\n\nLet me search the knowledge base more broadly to see if there's any content from this document that was indexed.The search_surfsense_docs is searching the SurfSense documentation, not the user's knowledge base. Let me try searching the user's knowledge base directly. But the issue is that the document XML file appears to be empty (no content chunks). Let me try the knowledge base search tool \u2014 I realize I need to look at this differently.\n\nActually, looking at the document XML more carefully, the `<chunk_index>` and `<document_content>` are both empty. This means the document file exists but hasn't been processed into chunks yet by the system. The file was uploaded very recently (2026-05-10). Let me check if there are any other files or directories.\n\nWait, let me look more carefully. Let me check if there are any other documents or if there's content I'm missing.The only file in /documents is MSFT_FY26Q1_10Q.docx.xml, and its content is empty (no chunks). The document was uploaded but hasn't been processed into usable content yet.\n\nLet me check if there's a different way this file could have content. Maybe I need to read it in a different way or it's still processing. The file size is 987,441 bytes according to the metadata, but the XML content is empty. This means the DOCLING ETL service hasn't produced any chunks yet - likely still processing or failed to process.\n\nGiven this situation, I cannot find the requested information in the user's knowledge base. I should inform the user and ask if they'd like me to answer from general knowledge.I couldn't find the requested information in the document. The file `MSFT_FY26Q1_10Q.docx` was uploaded and is present, but its content hasn't been processed into searchable text yet \u2014 the document's content chunks are empty, so I'm unable to retrieve any data from it.\n\nWould you like me to answer from my general knowledge instead? (I can tell you what Microsoft typically reports for long-term accounts receivable in their 10-Q filings, though I wouldn't have the exact FY26 Q1 figure from my training data since that would be a forward-looking filing.)",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "",
+      "metrics": {
+        "answer_clean": false,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

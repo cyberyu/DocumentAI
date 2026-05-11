@@ -1,4 +1,5 @@
 import logging
+from collections.abc import Awaitable, Callable
 
 from app.config import config as app_config
 from app.etl_pipeline.etl_document import EtlRequest, EtlResult
@@ -15,8 +16,13 @@ from app.etl_pipeline.parsers.plaintext import read_plaintext
 class EtlPipelineService:
     """Single pipeline for extracting markdown from files. All callers use this."""
 
-    def __init__(self, *, vision_llm=None):
+    def __init__(self, *, vision_llm=None, etl_service_override: str | None = None):
         self._vision_llm = vision_llm
+        self._etl_service_override = (
+            etl_service_override.strip().upper()
+            if isinstance(etl_service_override, str) and etl_service_override.strip()
+            else None
+        )
 
     async def extract(self, request: EtlRequest) -> EtlResult:
         category = classify_file(request.filename)
@@ -107,12 +113,14 @@ class EtlPipelineService:
 
         from app.utils.file_extensions import get_document_extensions_for_service
 
-        etl_service = app_config.ETL_SERVICE
+        etl_service = self._etl_service_override or app_config.ETL_SERVICE
         if not etl_service:
             raise EtlServiceUnavailableError(
                 "No ETL_SERVICE configured. "
-                "Set ETL_SERVICE to UNSTRUCTURED, LLAMACLOUD, or DOCLING in your .env"
+                "Set ETL_SERVICE to MINERU, DOCLING, UNSTRUCTURED, or LLAMACLOUD in your .env"
             )
+
+        etl_service = etl_service.upper()
 
         ext = PurePosixPath(request.filename).suffix.lower()
         supported = get_document_extensions_for_service(etl_service)
@@ -121,24 +129,38 @@ class EtlPipelineService:
                 f"File type {ext} is not supported by {etl_service}"
             )
 
-        if etl_service == "DOCLING":
-            from app.etl_pipeline.parsers.docling import parse_with_docling
-
-            content = await parse_with_docling(request.file_path, request.filename)
-        elif etl_service == "UNSTRUCTURED":
-            from app.etl_pipeline.parsers.unstructured import parse_with_unstructured
-
-            content = await parse_with_unstructured(request.file_path)
-        elif etl_service == "LLAMACLOUD":
-            content = await self._extract_with_llamacloud(request)
-        else:
+        parser_map: dict[str, Callable[[EtlRequest], Awaitable[str]]] = {
+            "MINERU": self._extract_with_mineru,
+            "DOCLING": self._extract_with_docling,
+            "UNSTRUCTURED": self._extract_with_unstructured,
+            "LLAMACLOUD": self._extract_with_llamacloud,
+        }
+        parser = parser_map.get(etl_service)
+        if parser is None:
             raise EtlServiceUnavailableError(f"Unknown ETL_SERVICE: {etl_service}")
+
+        content = await parser(request)
 
         return EtlResult(
             markdown_content=content,
             etl_service=etl_service,
             content_type="document",
         )
+
+    async def _extract_with_mineru(self, request: EtlRequest) -> str:
+        from app.etl_pipeline.parsers.mineru import parse_with_mineru
+
+        return await parse_with_mineru(request.file_path, request.filename)
+
+    async def _extract_with_docling(self, request: EtlRequest) -> str:
+        from app.etl_pipeline.parsers.docling import parse_with_docling
+
+        return await parse_with_docling(request.file_path, request.filename)
+
+    async def _extract_with_unstructured(self, request: EtlRequest) -> str:
+        from app.etl_pipeline.parsers.unstructured import parse_with_unstructured
+
+        return await parse_with_unstructured(request.file_path)
 
     async def _extract_with_llamacloud(self, request: EtlRequest) -> str:
         """Try Azure Document Intelligence first (when configured) then LlamaCloud.

@@ -25,9 +25,11 @@ class UploadDocumentAdapter:
         chunking_strategies: list[str] | None = None,
         chunk_size: int | None = None,
         is_pipeline_variant: bool = False,
-    ) -> None:
+        document: Document | None = None,
+        pipeline_id: str | None = None,
+    ) -> Document:
         connector_doc = ConnectorDocument(
-            title=filename,
+            title=document.title if document is not None else filename,
             source_markdown=markdown_content,
             unique_id=filename,
             document_type=DocumentType.FILE,
@@ -43,19 +45,37 @@ class UploadDocumentAdapter:
             },
         )
 
-        documents = await self._service.prepare_for_indexing([connector_doc], is_pipeline_variant=is_pipeline_variant)
+        if document is None:
+            documents = await self._service.prepare_for_indexing(
+                [connector_doc], is_pipeline_variant=is_pipeline_variant
+            )
 
-        if not documents:
-            raise RuntimeError("prepare_for_indexing returned no documents")
+            if not documents:
+                raise RuntimeError("prepare_for_indexing returned no documents")
+
+            target_document = documents[0]
+        else:
+            metadata = dict(document.document_metadata or {})
+            metadata.update(
+                {
+                    "FILE_NAME": filename,
+                    "ETL_SERVICE": etl_service,
+                }
+            )
+            document.document_metadata = metadata
+            document.source_markdown = markdown_content
+            document.content_hash = compute_content_hash(connector_doc)
+            target_document = document
 
         indexed = await self._service.index(
-            documents[0],
+            target_document,
             connector_doc,
             llm,
             embedding_config=embedding_config,
             chunking_strategy=chunking_strategy,
             chunking_strategies=chunking_strategies,
             chunk_size=chunk_size,
+            pipeline_id=pipeline_id,
         )
 
         if not DocumentStatus.is_state(indexed.status, DocumentStatus.READY):
@@ -63,6 +83,7 @@ class UploadDocumentAdapter:
 
         indexed.content_needs_reindexing = False
         await self._session.commit()
+        return indexed
 
     async def reindex(self, document: Document, llm) -> None:
         """Re-index an existing document after its source_markdown has been updated."""

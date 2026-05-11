@@ -7,6 +7,7 @@ export const benchmarkJobCreateRequest = z.object({
 	benchmark_file: z.instanceof(File),
 	search_space_id: z.number(),
 	source_doc_path: z.string().optional(),
+	etl_services: z.array(z.string()).min(1),
 	chunking_strategies: z.array(chunkingStrategyEnum),
 	embedding_models: z.array(z.string()).min(1),
 	chunk_sizes: z.array(z.number().int().positive()).min(1),
@@ -63,7 +64,20 @@ export const benchmarkJobStartPollRequest = z.object({
 	job_id: z.string(),
 });
 
+export const benchmarkAvailableOptionsResponse = z.object({
+	search_space_id: z.number(),
+	document_id: z.number().nullable().optional(),
+	source: z.string(),
+	etl_services: z.array(z.string()),
+	chunking_strategies: z.array(z.string()),
+	chunk_sizes: z.array(z.number().int()),
+	embedding_models: z.array(z.string()),
+	pipeline_ids: z.array(z.string()),
+	ranking_variants: z.array(z.string()),
+});
+
 export type BenchmarkJobCreateRequest = z.infer<typeof benchmarkJobCreateRequest>;
 export type BenchmarkJobCreateResponse = z.infer<typeof benchmarkJobCreateResponse>;
 export type BenchmarkJobStatusResponse = z.infer<typeof benchmarkJobStatusResponse>;
 export type BenchmarkCandidateStatus = z.infer<typeof benchmarkCandidateStatus>;
+export type BenchmarkAvailableOptionsResponse = z.infer<typeof benchmarkAvailableOptionsResponse>;

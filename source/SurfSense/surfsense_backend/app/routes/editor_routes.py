@@ -7,6 +7,7 @@ import asyncio
 import io
 import logging
 import os
+import re
 import tempfile
 from datetime import UTC, datetime
 from typing import Any
@@ -173,6 +174,22 @@ async def get_editor_content(
 async def get_document_chunks(
     search_space_id: int,
     document_id: int,
+    pipeline_id: str | None = Query(
+        None,
+        description="Optional pipeline identifier to filter chunks for a specific indexing variant.",
+    ),
+    q: str | None = Query(
+        None,
+        description="Full-text search phrase/keywords across this document's chunks",
+    ),
+    caseinsensitive: bool = Query(
+        True,
+        description="If true, matching ignores casing differences.",
+    ),
+    smart_match: bool = Query(
+        True,
+        description="If true, apply smart fallback matching for concatenated terms.",
+    ),
     session: AsyncSession = Depends(get_async_session),
     user: User = Depends(current_active_user),
 ):
@@ -204,10 +221,65 @@ async def get_document_chunks(
     # Wildcard covers all strategy-specific indexes + the base index
     query_index = f"{index_prefix}_chunks_{search_space_id}_*,{index_prefix}_chunks_{search_space_id}"
 
+    query_text = (q or "").strip()
+
+    def _build_split_phrase_variants(text: str) -> list[str]:
+        if not re.fullmatch(r"[A-Za-z0-9]{6,}", text):
+            return []
+
+        variants: list[str] = []
+        seen: set[str] = set()
+        for idx in range(3, len(text) - 2):
+            candidate = f"{text[:idx]} {text[idx:]}"
+            lowered = candidate.lower()
+            if lowered in seen:
+                continue
+            seen.add(lowered)
+            variants.append(candidate)
+            if len(variants) >= 12:
+                break
+        return variants
+
+    if query_text:
+        must_clauses: list[dict[str, Any]] = [{"term": {"document_id": str(document_id)}}]
+        if pipeline_id:
+            must_clauses.append({"term": {"pipeline_id": pipeline_id}})
+        must_clauses.append(
+            {
+                "simple_query_string": {
+                    "query": query_text,
+                    "fields": ["content"],
+                    "default_operator": "and",
+                }
+            }
+        )
+        query_body: dict[str, Any] = {
+            "bool": {
+                "must": must_clauses
+            }
+        }
+        sort_clause: list[dict[str, Any]] = [
+            {"_score": {"order": "desc"}},
+            {"indexed_at": {"order": "asc"}},
+        ]
+    else:
+        if pipeline_id:
+            query_body = {
+                "bool": {
+                    "must": [
+                        {"term": {"document_id": str(document_id)}},
+                        {"term": {"pipeline_id": pipeline_id}},
+                    ]
+                }
+            }
+        else:
+            query_body = {"term": {"document_id": str(document_id)}}
+        sort_clause = [{"indexed_at": {"order": "asc"}}]
+
     body = {
         "size": 10000,
-        "query": {"term": {"document_id": str(document_id)}},
-        "sort": [{"indexed_at": {"order": "asc"}}],
+        "query": query_body,
+        "sort": sort_clause,
         "_source": ["content", "indexed_at"],
     }
 
@@ -217,12 +289,61 @@ async def get_document_chunks(
             body=body,
             params={"ignore_unavailable": "true", "allow_no_indices": "true"},
         )
+
+        hits = response.get("hits", {}).get("hits", [])
+        if query_text and smart_match and not hits:
+            split_variants = _build_split_phrase_variants(query_text)
+            if split_variants:
+                split_query = " | ".join(f'"{variant}"' for variant in split_variants)
+                fallback_body = {
+                    "size": 10000,
+                    "query": {
+                        "bool": {
+                            "must": (
+                                [{"term": {"document_id": str(document_id)}}]
+                                + ([{"term": {"pipeline_id": pipeline_id}}] if pipeline_id else [])
+                                + [
+                                    {
+                                        "simple_query_string": {
+                                            "query": split_query,
+                                            "fields": ["content"],
+                                            "default_operator": "and",
+                                        }
+                                    }
+                                ]
+                            )
+                        }
+                    },
+                    "sort": [
+                        {"_score": {"order": "desc"}},
+                        {"indexed_at": {"order": "asc"}},
+                    ],
+                    "_source": ["content", "indexed_at"],
+                }
+                response = await os_client.search(
+                    index=query_index,
+                    body=fallback_body,
+                    params={"ignore_unavailable": "true", "allow_no_indices": "true"},
+                )
+
         await os_client.close()
     except Exception as exc:
-        logging.warning("OpenSearch chunks query failed for doc %d: %s", document_id, exc)
+        logging.warning(
+            "OpenSearch chunks query failed for doc %d (q=%r): %s",
+            document_id,
+            query_text,
+            exc,
+        )
         return {"document_id": document_id, "total": 0, "chunks": []}
 
     hits = response.get("hits", {}).get("hits", [])
+    if query_text and not caseinsensitive:
+        hits = [
+            hit
+            for hit in hits
+            if query_text in str(hit.get("_source", {}).get("content", ""))
+        ]
+
     chunks = [
         {"id": hit["_id"], "index": i + 1, "content": hit["_source"]["content"]}
         for i, hit in enumerate(hits)

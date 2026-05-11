@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-11T01:11:15Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/6e63833023e94d45a73644253c18cb7b__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      348
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_rrf_plus"
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 1,
+    "overall_correct_rate": 0.5,
+    "number_match_count": 1,
+    "number_match_rate": 0.5,
+    "unit_match_count": 1,
+    "unit_match_rate": 0.5,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.022988505747126436,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 1,
+      "overall_correct_rate": 0.5,
+      "number_match_count": 1,
+      "number_match_rate": 0.5,
+      "unit_match_count": 1,
+      "unit_match_rate": 0.5,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.022988505747126436
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user wants a specific value from the MSFT FY26Q1 10Q document. Let me read the file to find the long-term accounts receivable figure as of September 30, 2025.Let me search for \"accounts receivable\" or \"long-term\" in the document to find the relevant section.The document clearly states:\n\n\"As of September 30, 2025 and June 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion and $5.2 billion, respectively\"\n\nSo for September 30, 2025, the figure is $5.0 billion.$5.0 billion [citation:310580]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.04597701149425287,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "The user is asking about \"other receivables related to activities to facilitate the purchase of server components\" from the MSFT FY26 Q1 10Q document. Let me read the document to find this information.The file is not found directly. Let me check the workspace to see what's available.The workspace is empty. The file mentioned in the workspace tree and priority documents doesn't actually exist in the filesystem. Let me search the knowledge base for this document.The file doesn't exist in the filesystem. The workspace tree showed it, but the actual file is not there. Let me search the knowledge base for this information.The document doesn't exist in the knowledge base or filesystem. Let me check if it was perhaps indexed differently. Let me search more broadly.The document MSFT_FY26Q1_10Q.docx.xml is not actually present in the knowledge base. The workspace tree and priority documents mentioned it, but it's not accessible. I need to inform the user that I couldn't find this document in their knowledge base and ask if they'd like me to answer from my general knowledge.I couldn't find the document **MSFT_FY26Q1_10Q.docx** in your knowledge base \u2014 it appears to be referenced but is not present or accessible in the workspace. Would you like me to answer from my general knowledge instead?",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

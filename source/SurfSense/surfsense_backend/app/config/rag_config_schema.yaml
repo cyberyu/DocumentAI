@@ -583,7 +583,7 @@ component_registry:
   etl_providers:
     mineru:
       class: "app.services.mineru_service.MinerUService"
-      requires: ["magic-pdf"]
+      requires: ["mineru (import alias: magic_pdf)"]
       supported_formats: ["pdf"]
       features:
         - "advanced_table_extraction"

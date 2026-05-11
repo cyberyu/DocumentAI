@@ -14,6 +14,43 @@ compatibility.  IMAGE_EXTENSIONS is used only for routing classification.
 
 from pathlib import PurePosixPath
 
+
+def _mineru_supports_office_formats() -> bool:
+    """Return True when installed MinerU version supports Office files.
+
+    MinerU v3+ adds native Office parsing support (DOCX/PPTX/XLSX).
+    """
+    def _major_version(dist_name: str) -> int | None:
+        from importlib.metadata import version
+
+        try:
+            raw = version(dist_name)
+            major_str = raw.split(".", 1)[0]
+            return int(major_str)
+        except Exception:
+            return None
+
+    try:
+        # Modern package name: mineru
+        major = _major_version("mineru")
+        if major is not None:
+            return major >= 3
+
+        # Legacy distribution used in some installs while runtime module
+        # remains `magic_pdf`.
+        major = _major_version("magic-pdf")
+        if major is not None:
+            return major >= 3
+
+        # Fallback legacy naming seen in some environments.
+        major = _major_version("magic_pdf")
+        if major is not None:
+            return major >= 3
+
+        return False
+    except Exception:
+        return False
+
 # ---------------------------------------------------------------------------
 # Image extensions (used by file_classifier for routing to vision LLM)
 # ---------------------------------------------------------------------------
@@ -51,6 +88,20 @@ DOCLING_DOCUMENT_EXTENSIONS: frozenset[str] = frozenset(
         ".tif",
         ".bmp",
         ".webp",
+    }
+)
+
+MINERU_DOCUMENT_EXTENSIONS: frozenset[str] = frozenset(
+    {
+        ".pdf",
+    }
+)
+
+MINERU_OFFICE_DOCUMENT_EXTENSIONS: frozenset[str] = frozenset(
+    {
+        ".docx",
+        ".pptx",
+        ".xlsx",
     }
 )
 
@@ -137,13 +188,15 @@ AZURE_DI_DOCUMENT_EXTENSIONS: frozenset[str] = frozenset(
 # ---------------------------------------------------------------------------
 
 DOCUMENT_EXTENSIONS: frozenset[str] = (
-    DOCLING_DOCUMENT_EXTENSIONS
+    MINERU_DOCUMENT_EXTENSIONS
+    | DOCLING_DOCUMENT_EXTENSIONS
     | LLAMAPARSE_DOCUMENT_EXTENSIONS
     | UNSTRUCTURED_DOCUMENT_EXTENSIONS
     | AZURE_DI_DOCUMENT_EXTENSIONS
 )
 
 _SERVICE_MAP: dict[str, frozenset[str]] = {
+    "MINERU": MINERU_DOCUMENT_EXTENSIONS,
     "DOCLING": DOCLING_DOCUMENT_EXTENSIONS,
     "LLAMACLOUD": LLAMAPARSE_DOCUMENT_EXTENSIONS,
     "UNSTRUCTURED": UNSTRUCTURED_DOCUMENT_EXTENSIONS,
@@ -160,6 +213,8 @@ def get_document_extensions_for_service(etl_service: str | None) -> frozenset[st
     Falls back to the full union when the service is ``None`` or unknown.
     """
     extensions = _SERVICE_MAP.get(etl_service or "", DOCUMENT_EXTENSIONS)
+    if etl_service == "MINERU" and _mineru_supports_office_formats():
+        extensions = extensions | MINERU_OFFICE_DOCUMENT_EXTENSIONS
     if etl_service == "LLAMACLOUD":
         from app.config import config as app_config
 

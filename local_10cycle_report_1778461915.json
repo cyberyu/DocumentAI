@@ -1,0 +1,46 @@
+{
+  "run_started_at": "2026-05-11T01:09:19Z",
+  "run_completed_at": "2026-05-11T01:11:55Z",
+  "base_url": "http://localhost:8930",
+  "search_space": {
+    "name": "My Search Space",
+    "id": 1
+  },
+  "document": "MSFT_FY26Q1_10Q.docx",
+  "benchmark_file": "msft_fy26q1_qa_benchmark_100_sanitized.json",
+  "cycles": 1,
+  "max_questions": 2,
+  "pipeline_spec": {
+    "etl_services": [
+      "DOCLING"
+    ],
+    "chunking_strategies": [
+      "chunk_text",
+      "sandwitch_chunk"
+    ],
+    "chunk_sizes": [
+      256,
+      1024
+    ],
+    "embedding_models": [
+      "fastembed/all-MiniLM-L6-v2"
+    ],
+    "ranking_variants": [
+      "hybrid_rrf_plus",
+      "hybrid_weighted"
+    ]
+  },
+  "summary": {
+    "passed": 0,
+    "failed": 1
+  },
+  "cycles_detail": [
+    {
+      "cycle": 1,
+      "success": false,
+      "error": "HTTPError: 404 Client Error: Not Found for url: http://localhost:8930/api/v1/documents/348",
+      "started_at": "2026-05-11T01:11:55Z",
+      "completed_at": "2026-05-11T01:11:55Z"
+    }
+  ]
+}

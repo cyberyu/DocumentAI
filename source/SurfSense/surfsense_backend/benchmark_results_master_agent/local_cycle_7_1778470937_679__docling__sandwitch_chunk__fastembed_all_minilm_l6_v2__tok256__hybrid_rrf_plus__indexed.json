@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-11T03:43:50Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/5813ef5ab7614731af17a2e4056a3998__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      378
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_rrf_plus"
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 1,
+    "overall_correct_rate": 0.5,
+    "number_match_count": 1,
+    "number_match_rate": 0.5,
+    "unit_match_count": 1,
+    "unit_match_rate": 0.5,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.0273972602739726,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 1,
+      "overall_correct_rate": 0.5,
+      "number_match_count": 1,
+      "number_match_rate": 0.5,
+      "unit_match_count": 1,
+      "unit_match_rate": 0.5,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.0273972602739726
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user is asking about a specific value from the MSFT_FY26Q1_10Q.docx file. Let me read this file to find the information.I need to search for \"long-term accounts receivable\" or similar terms in this document to find the value. Let me search for relevant chunks.The answer is clear from the grep results. As of September 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion.$5.0 billion [citation:462860]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.0547945205479452,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "The user is asking about a specific financial document (MSFT_FY26Q1_10Q.docx.xml) and wants a specific value. Let me search for this information in the document.\n\nLet me first read the document to find the relevant information about \"other receivables\" related to \"activities to facilitate the purchase of server components.\"The grep didn't find matches. Let me read the document to understand its structure and find the relevant information.Let me check what files exist in the documents directory.The workspace tree showed `/documents/MSFT_FY26Q1_10Q.docx.xml` but it doesn't actually exist when I try to list it or read it. It may have been deleted or the tree was stale. Let me check if there are any files in the knowledge base that match.The file doesn't exist in the filesystem. Let me try searching the knowledge base using search_surfsense_docs or the knowledge base search. Actually, I should search the knowledge base for this information.The user is referring to a document called MSFT_FY26Q1_10Q.docx that was supposedly in the workspace. However, the file doesn't exist in the filesystem. The workspace tree had it listed, but when I try to list or read it, it's not there.\n\nLet me search the knowledge base to see if this document exists somewhere.Let me search the knowledge base for this Microsoft 10-Q document.The document doesn't seem to be available in the knowledge base or filesystem. I need to inform the user that I couldn't find the document. The workspace tree in the system prompt showed it existed, but it's not actually accessible. Let me check if there might be an issue with the path.I'm unable to find the document **MSFT_FY26Q1_10Q.docx** in your knowledge base. It was listed in the workspace tree, but the file doesn't appear to be accessible \u2014 I get a \"not found\" error when trying to read it, and searches for \"other receivables\" and \"server components\" returned no matches.\n\nCould you re-upload the file or check whether it was synced properly? Once it's available, I'll look up the exact value for you.",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

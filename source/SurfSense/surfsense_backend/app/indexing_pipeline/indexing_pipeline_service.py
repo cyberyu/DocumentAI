@@ -365,6 +365,7 @@ class IndexingPipelineService:
         chunking_strategy: str | None = None,
         chunking_strategies: list[str] | None = None,
         chunk_size: int | None = None,
+        pipeline_id: str | None = None,
     ) -> Document:
         """
         Run summarization, embedding, and chunking for a document and persist the results.
@@ -439,6 +440,7 @@ class IndexingPipelineService:
                 and len(embedding_config.get("model_keys", [])) >= 1
             )
             logger.info(f"[indexing] use_multi_embedding={use_multi_embedding}")
+            resolved_pipeline_id = pipeline_id or document.unique_identifier_hash
             
             if use_multi_embedding:
                 # Use multi-embedding processor for OpenSearch
@@ -455,114 +457,119 @@ class IndexingPipelineService:
                     username=os.getenv("OPENSEARCH_USERNAME") or None,
                     password=os.getenv("OPENSEARCH_PASSWORD") or None,
                 )
-                processor = MultiEmbeddingProcessor(storage)
-                
-                # Process chunks with multiple embeddings for each chunking strategy
-                model_keys = embedding_config.get("model_keys", [])
-
-                # Phase 1: run chunking for all strategies in bounded parallelism, without embedding.
-                raw_chunking_concurrency = os.getenv(
-                    "INDEXING_STRATEGY_CHUNK_CONCURRENCY", "3"
-                )
                 try:
-                    strategy_chunk_concurrency = int(raw_chunking_concurrency)
-                except ValueError:
-                    strategy_chunk_concurrency = 3
-                strategy_chunk_concurrency = max(
-                    1,
-                    min(strategy_chunk_concurrency, len(normalized_strategies)),
-                )
-                strategy_chunk_semaphore = asyncio.Semaphore(strategy_chunk_concurrency)
+                    processor = MultiEmbeddingProcessor(storage)
 
-                async def _chunk_strategy(strategy_name: str) -> tuple[str, list[str]]:
-                    async with strategy_chunk_semaphore:
-                        strategy_chunk_texts = await asyncio.to_thread(
-                            chunk_with_strategy,
-                            connector_doc.source_markdown,
-                            strategy=strategy_name,
-                            use_code_chunker=connector_doc.should_use_code_chunker,
-                            chunk_size=chunk_size,
-                        )
-                    return strategy_name, strategy_chunk_texts
+                    # Process chunks with multiple embeddings for each chunking strategy
+                    model_keys = embedding_config.get("model_keys", [])
 
-                chunking_results = await asyncio.gather(
-                    *[_chunk_strategy(strategy_name) for strategy_name in normalized_strategies]
-                )
+                    # Phase 1: run chunking for all strategies in bounded parallelism, without embedding.
+                    raw_chunking_concurrency = os.getenv(
+                        "INDEXING_STRATEGY_CHUNK_CONCURRENCY", "3"
+                    )
+                    try:
+                        strategy_chunk_concurrency = int(raw_chunking_concurrency)
+                    except ValueError:
+                        strategy_chunk_concurrency = 3
+                    strategy_chunk_concurrency = max(
+                        1,
+                        min(strategy_chunk_concurrency, len(normalized_strategies)),
+                    )
+                    strategy_chunk_semaphore = asyncio.Semaphore(strategy_chunk_concurrency)
 
-                strategy_chunks: dict[str, list[str]] = {
-                    strategy_name: strategy_chunk_texts
-                    for strategy_name, strategy_chunk_texts in chunking_results
-                }
-                strategy_chunk_counts: dict[str, int] = {
-                    strategy_name: len(strategy_chunks.get(strategy_name, []))
-                    for strategy_name in normalized_strategies
-                }
+                    async def _chunk_strategy(strategy_name: str) -> tuple[str, list[str]]:
+                        async with strategy_chunk_semaphore:
+                            strategy_chunk_texts = await asyncio.to_thread(
+                                chunk_with_strategy,
+                                connector_doc.source_markdown,
+                                strategy=strategy_name,
+                                use_code_chunker=connector_doc.should_use_code_chunker,
+                                chunk_size=chunk_size,
+                            )
+                        return strategy_name, strategy_chunk_texts
 
-                all_chunk_texts: list[str] = []
-                for strategy_name in normalized_strategies:
-                    all_chunk_texts.extend(strategy_chunks.get(strategy_name, []))
+                    chunking_results = await asyncio.gather(
+                        *[_chunk_strategy(strategy_name) for strategy_name in normalized_strategies]
+                    )
 
-                # Phase 2: after all chunking is done, embed/index each strategy in parallel.
-                raw_strategy_embed_concurrency = os.getenv(
-                    "INDEXING_STRATEGY_EMBED_CONCURRENCY", "2"
-                )
-                try:
-                    strategy_embed_concurrency = int(raw_strategy_embed_concurrency)
-                except ValueError:
-                    strategy_embed_concurrency = 2
-                strategy_embed_concurrency = max(
-                    1,
-                    min(strategy_embed_concurrency, len(normalized_strategies)),
-                )
-                strategy_embed_semaphore = asyncio.Semaphore(strategy_embed_concurrency)
-
-                async def _embed_and_store_strategy(strategy_name: str) -> None:
-                    strategy_chunk_texts = strategy_chunks.get(strategy_name, [])
-                    chunk_records = [
-                        {
-                            "text": text,
-                            "metadata": {
-                                "document_id": document.id,
-                                "pipeline_id": document.unique_identifier_hash,
-                                "chunking_strategy": strategy_name,
-                            },
-                        }
-                        for text in strategy_chunk_texts
-                    ]
-                    async with strategy_embed_semaphore:
-                        await processor.process_and_store_document(
-                            chunks=chunk_records,
-                            model_keys=model_keys,
-                            document_id=document.id,
-                            pipeline_id=document.unique_identifier_hash,
-                            search_space_id=connector_doc.search_space_id,
-                            chunking_strategy=strategy_name,
-                        )
-
-                await asyncio.gather(
-                    *[
-                        _embed_and_store_strategy(strategy_name)
+                    strategy_chunks: dict[str, list[str]] = {
+                        strategy_name: strategy_chunk_texts
+                        for strategy_name, strategy_chunk_texts in chunking_results
+                    }
+                    strategy_chunk_counts: dict[str, int] = {
+                        strategy_name: len(strategy_chunks.get(strategy_name, []))
                         for strategy_name in normalized_strategies
-                    ]
-                )
+                    }
 
-                # Skip legacy summary embedding generation in multi-embedding mode.
-                # This avoids CUDA re-init errors in Celery prefork workers when torch is GPU-enabled.
-                summary_embedding = None
-                
-                # Create chunks without embeddings (stored in OpenSearch already)
-                chunks = [Chunk(content=text) for text in all_chunk_texts]
-                
-                perf.info(
-                    "[indexing] multi-embed doc=%d models=%d strategies=%s total_chunks=%d strategy_chunk_concurrency=%d strategy_embed_concurrency=%d in %.3fs",
-                    document.id,
-                    len(model_keys),
-                    strategy_chunk_counts,
-                    len(chunks),
-                    strategy_chunk_concurrency,
-                    strategy_embed_concurrency,
-                    time.perf_counter() - t_step,
-                )
+                    all_chunk_texts: list[str] = []
+                    for strategy_name in normalized_strategies:
+                        all_chunk_texts.extend(strategy_chunks.get(strategy_name, []))
+
+                    # Phase 2: after all chunking is done, embed/index each strategy in parallel.
+                    raw_strategy_embed_concurrency = os.getenv(
+                        "INDEXING_STRATEGY_EMBED_CONCURRENCY", "2"
+                    )
+                    try:
+                        strategy_embed_concurrency = int(raw_strategy_embed_concurrency)
+                    except ValueError:
+                        strategy_embed_concurrency = 2
+                    strategy_embed_concurrency = max(
+                        1,
+                        min(strategy_embed_concurrency, len(normalized_strategies)),
+                    )
+                    strategy_embed_semaphore = asyncio.Semaphore(strategy_embed_concurrency)
+
+                    async def _embed_and_store_strategy(strategy_name: str) -> None:
+                        strategy_chunk_texts = strategy_chunks.get(strategy_name, [])
+                        chunk_records = [
+                            {
+                                "chunk_id": f"{resolved_pipeline_id}:{strategy_name}:{idx}",
+                                "text": text,
+                                "metadata": {
+                                    "document_id": document.id,
+                                    "pipeline_id": resolved_pipeline_id,
+                                    "chunking_strategy": strategy_name,
+                                    "chunk_size": chunk_size,
+                                },
+                            }
+                            for idx, text in enumerate(strategy_chunk_texts)
+                        ]
+                        async with strategy_embed_semaphore:
+                            await processor.process_and_store_document(
+                                chunks=chunk_records,
+                                model_keys=model_keys,
+                                document_id=document.id,
+                                pipeline_id=resolved_pipeline_id,
+                                search_space_id=connector_doc.search_space_id,
+                                chunking_strategy=strategy_name,
+                            )
+
+                    await asyncio.gather(
+                        *[
+                            _embed_and_store_strategy(strategy_name)
+                            for strategy_name in normalized_strategies
+                        ]
+                    )
+
+                    # Skip legacy summary embedding generation in multi-embedding mode.
+                    # This avoids CUDA re-init errors in Celery prefork workers when torch is GPU-enabled.
+                    summary_embedding = None
+
+                    # Create chunks without embeddings (stored in OpenSearch already)
+                    chunks = [Chunk(content=text) for text in all_chunk_texts]
+
+                    perf.info(
+                        "[indexing] multi-embed doc=%d models=%d strategies=%s total_chunks=%d strategy_chunk_concurrency=%d strategy_embed_concurrency=%d in %.3fs",
+                        document.id,
+                        len(model_keys),
+                        strategy_chunk_counts,
+                        len(chunks),
+                        strategy_chunk_concurrency,
+                        strategy_embed_concurrency,
+                        time.perf_counter() - t_step,
+                    )
+                finally:
+                    await storage.close()
             else:
                 # Single embedding path (default)
                 primary_strategy = normalized_strategies[0]

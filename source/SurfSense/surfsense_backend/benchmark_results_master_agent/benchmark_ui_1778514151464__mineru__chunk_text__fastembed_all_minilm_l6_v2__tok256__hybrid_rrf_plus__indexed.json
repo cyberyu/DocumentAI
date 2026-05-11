@@ -1,0 +1,172 @@
+{
+  "generated_at_utc": "2026-05-11T15:44:42Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/a4b7960fb05e4bbfb833076cac7f3dab__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      390
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_rrf_plus"
+  },
+  "summary": {
+    "run": 5,
+    "overall_correct_count": 5,
+    "overall_correct_rate": 1.0,
+    "number_match_count": 5,
+    "number_match_rate": 1.0,
+    "unit_match_count": 5,
+    "unit_match_rate": 1.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.03145186810260761,
+    "questions_total": 5,
+    "questions_run": 5,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 5,
+      "overall_correct_count": 5,
+      "overall_correct_rate": 1.0,
+      "number_match_count": 5,
+      "number_match_rate": 1.0,
+      "unit_match_count": 5,
+      "unit_match_rate": 1.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.03145186810260761
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user is asking about a specific financial figure from the MSFT_FY26Q1_10Q document. Let me read the file to find the information.The file is very large with many chunks. I need to find information about \"long-term accounts receivable\" or \"allowance for doubtful accounts\" as of September 30, 2025. Let me search for this specific text.The grep only returned the filename, which means it found a match but didn't show the content. Let me use the content output mode to see the actual lines.The value is clearly stated: $5.0 billion as of September 30, 2025. The user asked to return only the value with unit.$5.0 billion [citation:610828]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.03669724770642202,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "The user wants a specific financial figure from the MSFT_FY26Q1_10Q document. Let me read the document to find the relevant information.The grep found a match but not the exact line I need. Let me search more broadly or read the chunk that was matched. Let me look at the relevant chunk more carefully.Let me read the specific chunk to get the full content.The file is very large. Let me search more specifically for \"other receivables\" and \"server components\" or \"facilitate the purchase\" to find the exact line numbers, and then read the relevant chunk.The grep results clearly show the answer. Line 1073 (and 2319, duplicated in another chunk) states:\n\n\"As of September 30, 2025 and June 30, 2025, other receivables related to activities to facilitate the purchase of server components were $14.4 billion and $8.2 billion, respectively\"\n\nSo as of September 30, 2025, the amount is $14.4 billion.$14.4 billion",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.026315789473684213,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-003",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is our financing receivables, net as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is our financing receivables, net as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$3.9 billion USD",
+      "predicted_answer": "The user is asking for a specific financial figure from a document. Let me read the document to find the value.Let me read the actual chunks to get the full context and find the specific value.The file is very large. Let me find the specific chunk that contains \"financing receivables\" with the September 30, 2025 value. The grep showed chunks with IDs 610829 and 611367. Let me read those chunks.Found it. As of September 30, 2025, financing receivables, net were $3.9 billion.$3.9 billion [citation:610829]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.04597701149425287,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-004",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the net loss from investments in OpenAI for the three months ended September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is the net loss from investments in OpenAI for the three months ended September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$4.1 billion USD",
+      "predicted_answer": "The user is asking about a specific financial figure from the MSFT FY26 Q1 10Q document. Let me read the document to find the net loss from investments in OpenAI for the three months ended September 30, 2025.The document is quite large. Let me search for \"OpenAI\" within it to find the relevant chunk(s).From the grep results, I can see the key information. Let me look at chunk 610843 more closely:\n\nChunk 610843 says: \"For the three months ended September 30, 2025 and 2024, other income (expense), net included $4.1 billion and $688 million, respectively, of net losses from investments in OpenAI, primarily net recognized losses on our equity method investment reflected in other, net.\"\n\nAlso from chunk 611155: \"Net losses from investments in OpenAI\" shows 4,061 (million, meaning $4.061 billion).\n\nAnd chunk 611536 also confirms: \"Net losses from investments in OpenAI\" -> \"4,061\"\n\nSo the net loss from investments in OpenAI for the three months ended September 30, 2025 is $4.1 billion (or $4,061 million).\n\nThe user asked for the value with the unit. So the answer is $4.1 billion.\n\nWait, let me be precise. The document says $4.1 billion (which is $4,061 million).$4.1 billion [citation:610843] [citation:611155]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.019900497512437814,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-005",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$2.9 billion USD",
+      "predicted_answer": "The user is asking for a specific value from the MSFT FY26 Q1 10Q document. Let me read the file to find the information.Let me look at the specific chunk that mentions \"equity investments presented as 'Other'\" which seems most likely to contain the September 30, 2025 value.The chunk index is very large. Let me search for the specific chunk about equity investments presented as \"Other\" which was chunk_id=610893. Let me read around that area.Let me read the chunk that discusses equity investments measured at cost with adjustments:Let me check the file length first.The file has 3326 lines. The chunk IDs in the chunk_index are not the same as line numbers. They're pointing to lines in the actual file. Let me search for the text \"Other\" with equity investments context.Found it. The value is $2.9 billion.$2.9 billion [citation:610893][citation:611402]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.028368794326241138,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    }
+  ]
+}

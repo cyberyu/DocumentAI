@@ -1,0 +1,413 @@
+{
+  "run_started_at": "2026-05-11T03:28:13Z",
+  "run_completed_at": "2026-05-11T03:35:47Z",
+  "base_url": "http://localhost:8930",
+  "search_space": {
+    "name": "My Search Space",
+    "id": 1
+  },
+  "document": "MSFT_FY26Q1_10Q.docx",
+  "benchmark_file": "msft_fy26q1_qa_benchmark_100_sanitized.json",
+  "cycles": 1,
+  "max_questions": 2,
+  "pipeline_spec": {
+    "etl_services": [
+      "DOCLING"
+    ],
+    "chunking_strategies": [
+      "chunk_text",
+      "sandwitch_chunk"
+    ],
+    "chunk_sizes": [
+      256,
+      1024
+    ],
+    "embedding_models": [
+      "fastembed/all-MiniLM-L6-v2"
+    ],
+    "ranking_variants": [
+      "hybrid_rrf_plus",
+      "hybrid_weighted"
+    ]
+  },
+  "summary": {
+    "passed": 0,
+    "failed": 1
+  },
+  "cycles_detail": [
+    {
+      "cycle": 1,
+      "started_at": "2026-05-11T03:28:13Z",
+      "completed_at": "2026-05-11T03:35:47Z",
+      "elapsed_seconds": 454.569,
+      "success": false,
+      "failure_reasons": [
+        "delete_confirmation_timeout",
+        "opensearch_residual_chunks"
+      ],
+      "upload": {
+        "response": {
+          "message": "Files uploaded for processing",
+          "document_ids": [
+            376
+          ],
+          "duplicate_document_ids": [],
+          "total_files": 4,
+          "pending_files": 4,
+          "skipped_duplicates": 0,
+          "variant_count": 4,
+          "pipeline_jobs": [
+            {
+              "document_id": 376,
+              "pipeline_id": "f603389a6a64020bbeffc563db85051119fa23628ed34c9a422ced3292a145f1",
+              "job_name": "MSFT_FY26Q1_10Q__docling__chunk_text__fastembed_all_MiniLM_L6_v2__tok256.docx",
+              "etl_service": "DOCLING",
+              "chunking_strategy": "chunk_text",
+              "chunk_size": 256,
+              "embedding_models": [
+                "fastembed/all-MiniLM-L6-v2"
+              ]
+            },
+            {
+              "document_id": 376,
+              "pipeline_id": "7365684844c372e1b7a31699670ff55ccbba2a78f45574379569f62ad7d2ce3d",
+              "job_name": "MSFT_FY26Q1_10Q__docling__chunk_text__fastembed_all_MiniLM_L6_v2__tok1024.docx",
+              "etl_service": "DOCLING",
+              "chunking_strategy": "chunk_text",
+              "chunk_size": 1024,
+              "embedding_models": [
+                "fastembed/all-MiniLM-L6-v2"
+              ]
+            },
+            {
+              "document_id": 376,
+              "pipeline_id": "e453da1c9d20e7d39368e21abba24e12923a0cb48a401f61b5e8efaadf769305",
+              "job_name": "MSFT_FY26Q1_10Q__docling__sandwitch_chunk__fastembed_all_MiniLM_L6_v2__tok256.docx",
+              "etl_service": "DOCLING",
+              "chunking_strategy": "sandwitch_chunk",
+              "chunk_size": 256,
+              "embedding_models": [
+                "fastembed/all-MiniLM-L6-v2"
+              ]
+            },
+            {
+              "document_id": 376,
+              "pipeline_id": "aa53001b4bcc1ef358c2eb8cd279af6ec3a618b97ea80b27dce5be89b191757b",
+              "job_name": "MSFT_FY26Q1_10Q__docling__sandwitch_chunk__fastembed_all_MiniLM_L6_v2__tok1024.docx",
+              "etl_service": "DOCLING",
+              "chunking_strategy": "sandwitch_chunk",
+              "chunk_size": 1024,
+              "embedding_models": [
+                "fastembed/all-MiniLM-L6-v2"
+              ]
+            }
+          ]
+        },
+        "document_ids": [
+          376
+        ],
+        "pipeline_ids": [
+          "7365684844c372e1b7a31699670ff55ccbba2a78f45574379569f62ad7d2ce3d",
+          "aa53001b4bcc1ef358c2eb8cd279af6ec3a618b97ea80b27dce5be89b191757b",
+          "e453da1c9d20e7d39368e21abba24e12923a0cb48a401f61b5e8efaadf769305",
+          "f603389a6a64020bbeffc563db85051119fa23628ed34c9a422ced3292a145f1"
+        ]
+      },
+      "processing": {
+        "completed": true,
+        "states": {
+          "376": "ready"
+        },
+        "documents": {
+          "376": {
+            "id": 376,
+            "title": "MSFT_FY26Q1_10Q.docx",
+            "document_type": "FILE",
+            "document_metadata": {
+              "FILE_NAME": "MSFT_FY26Q1_10Q__docling__sandwitch_chunk__fastembed_all_MiniLM_L6_v2__tok256.docx",
+              "ETL_SERVICE": "DOCLING",
+              "file_size": 987441,
+              "upload_time": "2026-05-10T23:28:13.408793",
+              "pipeline_variant_count": 4,
+              "pipeline_signatures": [
+                {
+                  "etl_service": "DOCLING",
+                  "chunking_strategy": "chunk_text",
+                  "chunking_strategies": [
+                    "chunk_text"
+                  ],
+                  "chunk_size": 256,
+                  "embedding_mode": "single",
+                  "embedding_models": [
+                    "fastembed/all-MiniLM-L6-v2"
+                  ]
+                },
+                {
+                  "etl_service": "DOCLING",
+                  "chunking_strategy": "chunk_text",
+                  "chunking_strategies": [
+                    "chunk_text"
+                  ],
+                  "chunk_size": 1024,
+                  "embedding_mode": "single",
+                  "embedding_models": [
+                    "fastembed/all-MiniLM-L6-v2"
+                  ]
+                },
+                {
+                  "etl_service": "DOCLING",
+                  "chunking_strategy": "sandwitch_chunk",
+                  "chunking_strategies": [
+                    "sandwitch_chunk"
+                  ],
+                  "chunk_size": 256,
+                  "embedding_mode": "single",
+                  "embedding_models": [
+                    "fastembed/all-MiniLM-L6-v2"
+                  ]
+                },
+                {
+                  "etl_service": "DOCLING",
+                  "chunking_strategy": "sandwitch_chunk",
+                  "chunking_strategies": [
+                    "sandwitch_chunk"
+                  ],
+                  "chunk_size": 1024,
+                  "embedding_mode": "single",
+                  "embedding_models": [
+                    "fastembed/all-MiniLM-L6-v2"
+                  ]
+                }
+              ],
+              "pipeline_ids": [
+                "f603389a6a64020bbeffc563db85051119fa23628ed34c9a422ced3292a145f1",
+                "7365684844c372e1b7a31699670ff55ccbba2a78f45574379569f62ad7d2ce3d",
+                "e453da1c9d20e7d39368e21abba24e12923a0cb48a401f61b5e8efaadf769305",
+                "aa53001b4bcc1ef358c2eb8cd279af6ec3a618b97ea80b27dce5be89b191757b"
+              ],
+              "embedding_models": [
+                "fastembed/all-MiniLM-L6-v2"
+              ],
+              "embedding_mode": "single",
+              "chunking_strategies": [
+                "sandwitch_chunk"
+              ],
+              "chunk_size": 256
+            },
+            "content": "",
+            "content_preview": "**UNITED STATES**\n\n**SECURITIES AND EXCHANGE COMMISSION**\n\n**Washington, D.C. 20549**\n\n**FORM 10-Q**\n\n| **\u2612**   | **QUARTERLY REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934**   |\n|---------|-------------------------------------------------------------------------------",
+            "content_hash": "cb25957b717dc69e5ec7840c4d0e7ad546a551c76f01f5d6d8bc1048eaddb546",
+            "unique_identifier_hash": "e749d5b47215cf90ee48e783fd37d838cc9b8813563a3f2518a0ddc7df5ad40a",
+            "created_at": "2026-05-11T03:28:13.411740Z",
+            "updated_at": "2026-05-11T03:29:04.706533Z",
+            "search_space_id": 1,
+            "folder_id": null,
+            "created_by_id": "51302537-c062-447e-806d-64c387828e16",
+            "created_by_name": null,
+            "created_by_email": "shi.yu@broadridge.com",
+            "status": {
+              "state": "ready",
+              "reason": null
+            }
+          }
+        }
+      },
+      "db_after_upload": {
+        "ok": true,
+        "host": "localhost:5432",
+        "documents": 1,
+        "chunks": 1086
+      },
+      "opensearch_after_upload": {
+        "ok": true,
+        "host": "http://localhost:9200",
+        "document_count": 3909,
+        "pipeline_count": 4230
+      },
+      "benchmark": {
+        "job_id": "c8422785c4c0415ca332c9bf4abdbbbf",
+        "status": "completed",
+        "error": null,
+        "candidate_count": 8,
+        "recommended_pipeline_id": "docling__chunk_text__fastembed_all_minilm_l6_v2__tok1024__hybrid_weighted"
+      },
+      "delete": {
+        "api": {
+          "message": "Document deleted successfully",
+          "queued_deletions": 1,
+          "already_deleting": 0
+        },
+        "wait": {
+          "completed": true,
+          "remaining": []
+        },
+        "confirmation": {
+          "confirmed": false,
+          "attempts": 98,
+          "api": {
+            "completed": true,
+            "remaining": []
+          },
+          "db": {
+            "ok": true,
+            "host": "localhost:5432",
+            "documents": 0,
+            "chunks": 0
+          },
+          "opensearch": {
+            "ok": true,
+            "host": "http://localhost:9200",
+            "document_count": 4230,
+            "pipeline_count": 4230
+          },
+          "last_snapshot": {
+            "api": {
+              "completed": true,
+              "remaining": []
+            },
+            "db": {
+              "ok": true,
+              "host": "localhost:5432",
+              "documents": 0,
+              "chunks": 0
+            },
+            "opensearch": {
+              "ok": true,
+              "host": "http://localhost:9200",
+              "document_count": 4230,
+              "pipeline_count": 4230
+            },
+            "api_confirmed": true,
+            "db_confirmed": true,
+            "opensearch_confirmed": false
+          },
+          "error": "Timed out waiting for full deletion confirmation"
+        }
+      },
+      "db_after_delete": {
+        "ok": true,
+        "host": "localhost:5432",
+        "documents": 0,
+        "chunks": 0
+      },
+      "opensearch_after_delete": {
+        "ok": true,
+        "host": "http://localhost:9200",
+        "document_count": 4230,
+        "pipeline_count": 4230
+      },
+      "debug_events": [
+        {
+          "ts": "2026-05-11T03:28:13Z",
+          "elapsed_s": 0.0,
+          "stage": "cycle_start",
+          "cycle": 1,
+          "source_key": "MSFT_FY26Q1_10Q",
+          "search_space_id": 1
+        },
+        {
+          "ts": "2026-05-11T03:28:13Z",
+          "elapsed_s": 0.048,
+          "stage": "pre_cleanup",
+          "queued": 0,
+          "ids": []
+        },
+        {
+          "ts": "2026-05-11T03:28:13Z",
+          "elapsed_s": 0.206,
+          "stage": "upload_done",
+          "pending_files": 4,
+          "total_files": 4,
+          "skipped_duplicates": 0
+        },
+        {
+          "ts": "2026-05-11T03:28:13Z",
+          "elapsed_s": 0.206,
+          "stage": "upload_entities",
+          "document_ids": [
+            376
+          ],
+          "pipeline_count": 4
+        },
+        {
+          "ts": "2026-05-11T03:29:04Z",
+          "elapsed_s": 51.568,
+          "stage": "processing_wait_done",
+          "completed": true,
+          "states": {
+            "376": "ready"
+          }
+        },
+        {
+          "ts": "2026-05-11T03:29:04Z",
+          "elapsed_s": 51.609,
+          "stage": "post_upload_counts",
+          "db": {
+            "ok": true,
+            "host": "localhost:5432",
+            "documents": 1,
+            "chunks": 1086
+          },
+          "opensearch": {
+            "ok": true,
+            "host": "http://localhost:9200",
+            "document_count": 3909,
+            "pipeline_count": 4230
+          }
+        },
+        {
+          "ts": "2026-05-11T03:30:47Z",
+          "elapsed_s": 154.225,
+          "stage": "benchmark_done",
+          "job_id": "c8422785c4c0415ca332c9bf4abdbbbf",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "ts": "2026-05-11T03:30:47Z",
+          "elapsed_s": 154.3,
+          "stage": "delete_queued",
+          "delete_result": {
+            "message": "Document deleted successfully",
+            "queued_deletions": 1,
+            "already_deleting": 0
+          }
+        },
+        {
+          "ts": "2026-05-11T03:35:47Z",
+          "elapsed_s": 454.569,
+          "stage": "delete_confirmation_done",
+          "confirmed": false,
+          "attempts": 98,
+          "api": {
+            "completed": true,
+            "remaining": []
+          },
+          "db": {
+            "ok": true,
+            "host": "localhost:5432",
+            "documents": 0,
+            "chunks": 0
+          },
+          "opensearch": {
+            "ok": true,
+            "host": "http://localhost:9200",
+            "document_count": 4230,
+            "pipeline_count": 4230
+          }
+        },
+        {
+          "ts": "2026-05-11T03:35:47Z",
+          "elapsed_s": 454.569,
+          "stage": "cycle_complete",
+          "success": false,
+          "failure_reasons": [
+            "delete_confirmation_timeout",
+            "opensearch_residual_chunks"
+          ],
+          "total_elapsed_s": 454.569
+        }
+      ]
+    }
+  ]
+}

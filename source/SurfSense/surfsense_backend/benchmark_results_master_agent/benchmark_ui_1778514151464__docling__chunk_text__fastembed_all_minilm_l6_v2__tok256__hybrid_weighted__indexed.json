@@ -1,0 +1,172 @@
+{
+  "generated_at_utc": "2026-05-11T15:44:33Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/a4b7960fb05e4bbfb833076cac7f3dab__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      390
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_weighted"
+  },
+  "summary": {
+    "run": 5,
+    "overall_correct_count": 5,
+    "overall_correct_rate": 1.0,
+    "number_match_count": 5,
+    "number_match_rate": 1.0,
+    "unit_match_count": 5,
+    "unit_match_rate": 1.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.04201814449330659,
+    "questions_total": 5,
+    "questions_run": 5,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 5,
+      "overall_correct_count": 5,
+      "overall_correct_rate": 1.0,
+      "number_match_count": 5,
+      "number_match_rate": 1.0,
+      "unit_match_count": 5,
+      "unit_match_rate": 1.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.04201814449330659
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user wants a specific financial figure from the MSFT FY26 Q1 10Q document. Let me read the file to find the long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025.The search found chunk_id=610828 which mentions \"long-term accounts receivable\" as of September 30, 2025. Let me read that chunk to get the exact value.The file is very large. I found that chunk_id=610828 (lines 1067-1073) is about \"long-term accounts receivable\". Let me read that specific section.The document clearly states:\n\n\"As of September 30, 2025 and June 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion and $5.2 billion, respectively\"\n\nSo the value as of September 30, 2025 is $5.0 billion.$5.0 billion [citation:610828]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.03225806451612903,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "Let me look at the document to find this information.Let me search the document for keywords related to \"other receivables\" and \"server components\" or \"purchase of server components\".The answer is clear from the document: $14.4 billion.**$14.4 billion** [citation:610828]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.09756097560975609,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-003",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is our financing receivables, net as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is our financing receivables, net as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$3.9 billion USD",
+      "predicted_answer": "The user wants a specific financial figure from the document MSFT_FY26Q1_10Q.docx.xml. Let me read the file to find the financing receivables, net as of September 30, 2025.Let me read the actual document content around those chunk IDs to find the net financing receivables figure.The file is very large. Let me look at the grep results more carefully. The grep showed two chunk matches: chunk_id=610829 and chunk_id=611367. Let me read those chunks directly.The balance sheet is at chunk 610766 onwards. I can see the balance sheet assets but don't see \"financing receivables, net\" listed there directly. Let me search specifically for \"financing receivables\" in the document to find the value.Found it. Chunk 610829 says: \"As of September 30, 2025 and June 30, 2025, our financing receivables, net were $3.9 billion and $4.3 billion, respectively, for short-term and long-term financing receivables.\"\n\nSo the answer is $3.9 billion.$3.9 billion [citation:610829]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.02666666666666666,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-004",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the net loss from investments in OpenAI for the three months ended September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is the net loss from investments in OpenAI for the three months ended September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$4.1 billion USD",
+      "predicted_answer": "The user is asking about a specific financial figure from the MSFT_FY26Q1_10Q.docx document. Let me read the document to find the net loss from investments in OpenAI for the three months ended September 30, 2025.The file is very large. Let me search for \"OpenAI\" in the document to find the relevant section about net loss from investments in OpenAI.From the grep results, I can see the relevant information clearly. For the three months ended September 30, 2025, the net losses from investments in OpenAI was:\n\n- In chunk 610843: \"other income (expense), net included $4.1 billion and $688 million, respectively, of net losses from investments in OpenAI\" - this is the pre-tax net loss from investments in OpenAI\n- In chunk 611536: \"Net losses from investments in OpenAI\" shows \"4,061\" (which would be $4,061 million = $4.061 billion) and \"688\"\n- In chunk 611537: \"Net losses from investments in OpenAI, net of tax\" shows \"3,086\" ($3.086 billion)\n\nThe question asks for the \"net loss from investments in OpenAI\" (not \"net of tax\"). The text says the net losses from investments in OpenAI were $4.1 billion. The table shows 4,061 (millions).\n\nSo the answer is $4.1 billion or $4,061 million. Let me look at the specific chunk to be precise.The net loss from investments in OpenAI for the three months ended September 30, 2025 is **$4.1 billion** (or $4,061 million) [citation:610843].",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.017241379310344827,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-005",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$2.9 billion USD",
+      "predicted_answer": "Let me read the document to find the specific value the user is asking about.The file is very large with a lot of metadata. Let me search for \"equity investments without readily determinable\" to find the specific information I need.The answer is clearly stated: \"As of both September 30, 2025 and June 30, 2025, equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments were $2.9 billion.\"\n\nLet me read the specific chunk to get the exact citation.The answer is clear from chunk 610893 (lines 1162-1164). The value is $2.9 billion as of September 30, 2025.$2.9 billion [citation:610893]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.03636363636363636,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    }
+  ]
+}

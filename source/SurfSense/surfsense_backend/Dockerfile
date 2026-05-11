@@ -86,6 +86,9 @@ RUN playwright install chromium --with-deps
 # Copy source code
 COPY . .
 
+# Remove prebuilt artifacts that can shadow source packages during editable installs.
+RUN rm -rf /app/build /app/dist /app/*.egg-info
+
 # Install the project itself in editable mode. Dependencies were already
 # installed deterministically from uv.lock above, so --no-deps prevents any
 # re-resolution that could pull newer versions.

@@ -23,6 +23,15 @@ const commonTypes: Record<string, string[]> = {
 };
 
 export const FILE_TYPE_CONFIG: Record<string, Record<string, string[]>> = {
+	MINERU: {
+		"application/pdf": [".pdf"],
+		"image/jpeg": [".jpg", ".jpeg"],
+		"image/png": [".png"],
+		"image/bmp": [".bmp"],
+		"image/webp": [".webp"],
+		"image/tiff": [".tiff", ".tif"],
+		...audioFileTypes,
+	},
 	LLAMACLOUD: {
 		...commonTypes,
 		"application/msword": [".doc"],

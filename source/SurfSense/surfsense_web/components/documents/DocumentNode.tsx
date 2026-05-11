@@ -5,6 +5,7 @@ import {
 	Clock,
 	Download,
 	Eye,
+	FlaskConical,
 	History,
 	MoreHorizontal,
 	Move,
@@ -50,6 +51,7 @@ export interface DocumentNodeDoc {
 	document_type: string;
 	folderId: number | null;
 	status?: { state: string; reason?: string | null };
+	document_metadata?: Record<string, unknown> | null;
 }
 
 interface DocumentNodeProps {
@@ -61,6 +63,7 @@ interface DocumentNodeProps {
 	onEdit: (doc: DocumentNodeDoc) => void;
 	onDelete: (doc: DocumentNodeDoc) => void;
 	onMove: (doc: DocumentNodeDoc) => void;
+	onBenchmark?: (doc: DocumentNodeDoc) => void;
 	onExport?: (doc: DocumentNodeDoc, format: string) => void;
 	onVersionHistory?: (doc: DocumentNodeDoc) => void;
 	contextMenuOpen?: boolean;
@@ -76,6 +79,7 @@ export const DocumentNode = React.memo(function DocumentNode({
 	onEdit,
 	onDelete,
 	onMove,
+	onBenchmark,
 	onExport,
 	onVersionHistory,
 	contextMenuOpen,
@@ -87,6 +91,16 @@ export const DocumentNode = React.memo(function DocumentNode({
 	const isUnavailable = isProcessing || isFailed;
 	const isSelectable = !isUnavailable;
 	const isEditable = EDITABLE_DOCUMENT_TYPES.has(doc.document_type) && !isUnavailable;
+	const benchmarkCountRaw = doc.document_metadata?.benchmark_data_count;
+	const benchmarkCount =
+		typeof benchmarkCountRaw === "number"
+			? benchmarkCountRaw
+			: typeof benchmarkCountRaw === "string"
+				? Number.parseInt(benchmarkCountRaw, 10)
+				: 0;
+	const hasBenchmarkData =
+		doc.document_metadata?.has_benchmark_data === true ||
+		(Number.isFinite(benchmarkCount) && benchmarkCount > 0);
 
 	const handleCheckChange = useCallback(() => {
 		if (isSelectable) {
@@ -222,6 +236,17 @@ export const DocumentNode = React.memo(function DocumentNode({
 						</TooltipContent>
 					</Tooltip>
 
+					{hasBenchmarkData && (
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<span className="flex h-4 w-4 shrink-0 items-center justify-center">
+									<FlaskConical className="h-3.5 w-3.5 text-primary" />
+								</span>
+							</TooltipTrigger>
+							<TooltipContent side="top">Task benchmark associated</TooltipContent>
+						</Tooltip>
+					)}
+
 					<span className="relative shrink-0 flex items-center justify-center h-6 w-6">
 						{getDocumentTypeIcon(
 							doc.document_type as DocumentTypeEnum,
@@ -275,6 +300,12 @@ export const DocumentNode = React.memo(function DocumentNode({
 									<Move className="mr-2 h-4 w-4" />
 									Move to...
 								</DropdownMenuItem>
+								{onBenchmark && (
+									<DropdownMenuItem onClick={() => onBenchmark(doc)}>
+										<FlaskConical className="mr-2 h-4 w-4" />
+										Benchmark
+									</DropdownMenuItem>
+								)}
 								{onExport && (
 									<DropdownMenuSub>
 										<DropdownMenuSubTrigger disabled={isUnavailable}>
@@ -318,6 +349,12 @@ export const DocumentNode = React.memo(function DocumentNode({
 						<Move className="mr-2 h-4 w-4" />
 						Move to...
 					</ContextMenuItem>
+					{onBenchmark && (
+						<ContextMenuItem onClick={() => onBenchmark(doc)}>
+							<FlaskConical className="mr-2 h-4 w-4" />
+							Benchmark
+						</ContextMenuItem>
+					)}
 					{onExport && (
 						<ContextMenuSub>
 							<ContextMenuSubTrigger disabled={isUnavailable}>

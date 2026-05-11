@@ -4,6 +4,14 @@
  * Next.js inlines NEXT_PUBLIC_* values at build time. The Docker image is built
  * with unique placeholder strings (e.g. __NEXT_PUBLIC_FASTAPI_BACKEND_URL__).
  * This script replaces those placeholders with real values from the container's
+	[
+		"__NEXT_PUBLIC_DEV_LOGIN_USERNAME__",
+		process.env.NEXT_PUBLIC_DEV_LOGIN_USERNAME || "",
+	],
+	[
+		"__NEXT_PUBLIC_DEV_LOGIN_PASSWORD__",
+		process.env.NEXT_PUBLIC_DEV_LOGIN_PASSWORD || "",
+	],
  * environment variables before the server starts.
  *
  * Runs once at container startup via docker-entrypoint.sh.

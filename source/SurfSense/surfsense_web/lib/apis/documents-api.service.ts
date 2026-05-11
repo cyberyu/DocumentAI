@@ -134,6 +134,8 @@ class DocumentsApiService {
 			should_summarize,
 			use_vision_llm,
 			processing_mode,
+			etl_service,
+			etl_services,
 			embedding_models,
 			chunking_strategy,
 			chunking_strategies,
@@ -149,9 +151,19 @@ class DocumentsApiService {
 
 		const allDocumentIds: number[] = [];
 		const allDuplicateIds: number[] = [];
+		const allPipelineJobs: Array<{
+			document_id: number;
+			pipeline_id: string;
+			job_name: string;
+			etl_service?: string;
+			chunking_strategy?: string | null;
+			chunk_size?: number | null;
+			embedding_models?: string[];
+		}> = [];
 		let totalFiles = 0;
 		let pendingFiles = 0;
 		let skippedDuplicates = 0;
+		let variantCount = 0;
 
 		for (const batch of batches) {
 			const formData = new FormData();
@@ -160,6 +172,12 @@ class DocumentsApiService {
 			formData.append("should_summarize", String(should_summarize));
 			formData.append("use_vision_llm", String(use_vision_llm));
 			formData.append("processing_mode", processing_mode);
+			if (etl_service) {
+				formData.append("etl_service", etl_service);
+			}
+			if (etl_services && etl_services.length > 0) {
+				formData.append("etl_services", JSON.stringify(etl_services));
+			}
 			if (embedding_models && embedding_models.length > 0) {
 				formData.append("embedding_models", JSON.stringify(embedding_models));
 			}
@@ -188,9 +206,11 @@ class DocumentsApiService {
 
 				allDocumentIds.push(...(result.document_ids ?? []));
 				allDuplicateIds.push(...(result.duplicate_document_ids ?? []));
+				allPipelineJobs.push(...(result.pipeline_jobs ?? []));
 				totalFiles += result.total_files ?? batch.length;
 				pendingFiles += result.pending_files ?? 0;
 				skippedDuplicates += result.skipped_duplicates ?? 0;
+				variantCount += result.variant_count ?? 0;
 			} finally {
 				clearTimeout(timeoutId);
 			}
@@ -203,6 +223,8 @@ class DocumentsApiService {
 			total_files: totalFiles,
 			pending_files: pendingFiles,
 			skipped_duplicates: skippedDuplicates,
+			variant_count: variantCount,
+			pipeline_jobs: allPipelineJobs,
 		};
 	};
 

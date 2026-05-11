@@ -21,5 +21,5 @@ sudo docker ps | grep frontend
 echo ""
 echo "✅ Frontend restarted!"
 echo ""
-echo "Open http://localhost:3929 to see the Embedding Model Selector"
+echo "Open http://localhost:3000 to see the Embedding Model Selector"
 echo "It should appear after 'Processing Mode' and before the 'Upload' button"

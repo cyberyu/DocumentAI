@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-11T03:53:25Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/f91f8c9bad224a34bbc0aae7a31d59e0__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      380
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_weighted"
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "number_match_count": 0,
+    "number_match_rate": 0.0,
+    "unit_match_count": 0,
+    "unit_match_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 1,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 0,
+      "unit_match_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user is asking about a specific value in the MSFT_FY26Q1_10Q.docx file. Let me read it to find the information.The document appears to be empty in terms of content. Let me search for the specific information using grep to find \"long-term accounts receivable\" or similar phrases in the file.No matches found. Let me try some other search terms related to this value.The document appears to have no readable content in its chunks. Let me check if the file is larger than what was shown in the first 200 lines, or if maybe the XML structure has content later. The `document_content` tag is empty (lines 13-14). Let me re-read further into the file to see if there's content beyond line 200.The file is only 15 lines long, and the `<document_content>` is empty. The document didn't actually get any content extracted from it. Let me check if there's a different file or version of this document.\n\nActually, looking at the metadata, this file is 987,441 bytes, so it's large. But the XML representation only has 15 lines. This means the chunking didn't produce any content chunks. The `<chunk_index>` tag on line 10 is empty (closed on line 11), and the `<document_content>` on line 13 is also empty (closed on line 14).\n\nSo unfortunately, I cannot find the information the user is asking for from this document. Let me search the knowledge base more broadly to see if there's any related content.The document is there but its content chunks are empty. The file was uploaded (987 KB) but the text extraction pipeline didn't produce any content chunks. This means no text content is available from this document in my knowledge base.\n\nLet me try searching the knowledge base more broadly to see if there's any related content about Microsoft's financials.I'm unable to find the specific value you're asking about. The document **MSFT_FY26Q1_10Q.docx** was uploaded to your knowledge base (987 KB file), but its text content wasn't successfully extracted \u2014 the document's XML representation contains no content chunks, and searches within it return no results.\n\nWould you like me to answer from my general knowledge instead?",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "",
+      "metrics": {
+        "answer_clean": false,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

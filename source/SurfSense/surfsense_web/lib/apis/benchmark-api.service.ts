@@ -1,5 +1,7 @@
 import {
+	type BenchmarkAvailableOptionsResponse,
 	type BenchmarkJobCreateRequest,
+	benchmarkAvailableOptionsResponse,
 	benchmarkJobCreateRequest,
 	benchmarkJobCreateResponse,
 	benchmarkJobStatusResponse,
@@ -20,6 +22,7 @@ class BenchmarkApiService {
 		formData.append("benchmark_file", parsed.data.benchmark_file);
 		formData.append("search_space_id", String(parsed.data.search_space_id));
 		if (parsed.data.source_doc_path) formData.append("source_doc_path", parsed.data.source_doc_path);
+		formData.append("etl_services", JSON.stringify(parsed.data.etl_services));
 		formData.append("chunking_strategies", JSON.stringify(parsed.data.chunking_strategies));
 		formData.append("embedding_models", JSON.stringify(parsed.data.embedding_models));
 		formData.append("chunk_sizes", JSON.stringify(parsed.data.chunk_sizes));
@@ -46,6 +49,20 @@ class BenchmarkApiService {
 			`/api/v1/benchmark/jobs/${jobId}?t=${Date.now()}`,
 			benchmarkJobStatusResponse,
 			{ signal }
+		);
+	};
+
+	getAvailableOptions = async (
+		searchSpaceId: number,
+		documentId?: number
+	): Promise<BenchmarkAvailableOptionsResponse> => {
+		const params = new URLSearchParams({ search_space_id: String(searchSpaceId) });
+		if (documentId) {
+			params.set("document_id", String(documentId));
+		}
+		return baseApiService.get(
+			`/api/v1/benchmark/options?${params.toString()}`,
+			benchmarkAvailableOptionsResponse
 		);
 	};
 

@@ -103,7 +103,7 @@ async def save_file_document(
         markdown_content: Markdown content to store
         search_space_id: ID of the search space
         user_id: ID of the user
-        etl_service: Name of the ETL service (UNSTRUCTURED, LLAMACLOUD, DOCLING)
+        etl_service: Name of the ETL service (MINERU, DOCLING, UNSTRUCTURED, LLAMACLOUD)
         connector: Optional connector info for Google Drive files
         enable_summary: Whether to generate an AI summary
 

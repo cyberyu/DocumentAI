@@ -5,18 +5,23 @@ import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginMutationAtom } from "@/atoms/auth/auth-mutation.atoms";
 import { Spinner } from "@/components/ui/spinner";
 import { getAuthErrorDetails, isNetworkError } from "@/lib/auth-errors";
-import { AUTH_TYPE } from "@/lib/env-config";
+import { AUTH_TYPE, DEV_LOGIN_PASSWORD, DEV_LOGIN_USERNAME } from "@/lib/env-config";
 import { ValidationError } from "@/lib/error";
 import { trackLoginAttempt, trackLoginFailure, trackLoginSuccess } from "@/lib/posthog/events";
 
+const DEV_FALLBACK_USERNAMES = ["shi.yu@broadridge.com", "shee.yu@gmail.com"];
+
 export function LocalLoginForm() {
 	const t = useTranslations("auth");
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
+	const isDev = process.env.NODE_ENV !== "production";
+	const defaultDevUsername =
+		(DEV_LOGIN_USERNAME || "").trim() || (isDev ? DEV_FALLBACK_USERNAMES[0] : "");
+	const [username, setUsername] = useState(isDev ? defaultDevUsername : "");
+	const [password, setPassword] = useState(isDev ? DEV_LOGIN_PASSWORD : "");
 	const [showPassword, setShowPassword] = useState(false);
 	const [error, setError] = useState<{
 		title: string | null;
@@ -28,10 +33,32 @@ export function LocalLoginForm() {
 	const authType = AUTH_TYPE;
 	const router = useRouter();
 	const [{ mutateAsync: login, isPending: isLoggingIn }] = useAtom(loginMutationAtom);
+	const usernameSuggestions = isDev
+		? Array.from(new Set([defaultDevUsername, ...DEV_FALLBACK_USERNAMES].filter(Boolean)))
+		: [];
+
+	useEffect(() => {
+		if (!isDev || typeof window === "undefined") return;
+
+		if (!username) {
+			const savedUsername = localStorage.getItem("dev_login_username");
+			if (savedUsername) setUsername(savedUsername);
+		}
+
+		if (!password) {
+			const savedPassword = localStorage.getItem("dev_login_password");
+			if (savedPassword) setPassword(savedPassword);
+		}
+	}, [isDev, password, username]);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setError({ title: null, message: null }); // Clear any previous errors
+
+		if (isDev && typeof window !== "undefined") {
+			localStorage.setItem("dev_login_username", username);
+			localStorage.setItem("dev_login_password", password);
+		}
 
 		// Track login attempt
 		trackLoginAttempt("local");
@@ -156,12 +183,19 @@ export function LocalLoginForm() {
 					<input
 						id="email"
 						type="email"
+						list={isDev ? "dev-login-usernames" : undefined}
 						autoComplete="username"
 						required
 						maxLength={254}
 						placeholder="you@example.com"
 						value={username}
-						onChange={(e) => setUsername(e.target.value)}
+						onChange={(e) => {
+							const nextUsername = e.target.value;
+							setUsername(nextUsername);
+							if (isDev && typeof window !== "undefined") {
+								localStorage.setItem("dev_login_username", nextUsername);
+							}
+						}}
 						className={`mt-1 block w-full rounded-md border px-3 py-1.5 md:py-2 shadow-sm focus:outline-none focus:ring-1 bg-background text-foreground transition-all ${
 							error.title
 								? "border-destructive focus:border-destructive focus:ring-destructive/40"
@@ -169,6 +203,13 @@ export function LocalLoginForm() {
 						}`}
 						disabled={isLoggingIn}
 					/>
+					{isDev && usernameSuggestions.length > 0 && (
+						<datalist id="dev-login-usernames">
+							{usernameSuggestions.map((candidate) => (
+								<option key={candidate} value={candidate} />
+							))}
+						</datalist>
+					)}
 				</div>
 
 				<div>
@@ -183,7 +224,13 @@ export function LocalLoginForm() {
 							required
 							placeholder="Enter your password"
 							value={password}
-							onChange={(e) => setPassword(e.target.value)}
+							onChange={(e) => {
+								const nextPassword = e.target.value;
+								setPassword(nextPassword);
+								if (isDev && typeof window !== "undefined") {
+									localStorage.setItem("dev_login_password", nextPassword);
+								}
+							}}
 							className={`block w-full rounded-md border pr-10 px-3 py-1.5 md:py-2 shadow-sm focus:outline-none focus:ring-1 bg-background text-foreground transition-all ${
 								error.title
 									? "border-destructive focus:border-destructive focus:ring-destructive/40"

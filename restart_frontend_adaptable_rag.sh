@@ -18,6 +18,6 @@ sleep 5
 echo ""
 echo "✅ Frontend restarted with custom-surfsense-web:multi-embed"
 echo ""
-echo "🌐 Open http://localhost:3929"
+echo "🌐 Open http://localhost:3000"
 echo "📍 Go to Upload tab"
 echo "✨ Look for 'Embedding Models' section after 'Processing Mode'"

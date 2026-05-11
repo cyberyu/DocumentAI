@@ -13,13 +13,15 @@ import packageJson from "../package.json";
 
 // Auth type: "LOCAL" for email/password, "GOOGLE" for OAuth
 // Placeholder: __NEXT_PUBLIC_FASTAPI_BACKEND_AUTH_TYPE__
-export const AUTH_TYPE = process.env.NEXT_PUBLIC_FASTAPI_BACKEND_AUTH_TYPE || "GOOGLE";
+export const AUTH_TYPE =
+	process.env.NEXT_PUBLIC_FASTAPI_BACKEND_AUTH_TYPE ||
+	(process.env.NODE_ENV !== "production" ? "LOCAL" : "GOOGLE");
 
 // Backend API URL
 // Placeholder: __NEXT_PUBLIC_FASTAPI_BACKEND_URL__
 export const BACKEND_URL = process.env.NEXT_PUBLIC_FASTAPI_BACKEND_URL || "http://localhost:8000";
 
-// ETL Service: "DOCLING", "UNSTRUCTURED", or "LLAMACLOUD"
+// ETL Service: "MINERU", "DOCLING", "UNSTRUCTURED", or "LLAMACLOUD"
 // Placeholder: __NEXT_PUBLIC_ETL_SERVICE__
 export const ETL_SERVICE = process.env.NEXT_PUBLIC_ETL_SERVICE || "DOCLING";
 
@@ -29,6 +31,14 @@ export const ETL_SERVICE = process.env.NEXT_PUBLIC_ETL_SERVICE || "DOCLING";
 // cloud: Only cloud-based connectors available
 // Placeholder: __NEXT_PUBLIC_DEPLOYMENT_MODE__
 export const DEPLOYMENT_MODE = process.env.NEXT_PUBLIC_DEPLOYMENT_MODE || "self-hosted";
+
+// Development-only login autofill (LOCAL auth)
+// Placeholder: __NEXT_PUBLIC_DEV_LOGIN_USERNAME__
+export const DEV_LOGIN_USERNAME = process.env.NEXT_PUBLIC_DEV_LOGIN_USERNAME || "";
+
+// Development-only login autofill (LOCAL auth)
+// Placeholder: __NEXT_PUBLIC_DEV_LOGIN_PASSWORD__
+export const DEV_LOGIN_PASSWORD = process.env.NEXT_PUBLIC_DEV_LOGIN_PASSWORD || "";
 
 // App version - defaults to package.json version
 // Can be overridden at build time with NEXT_PUBLIC_APP_VERSION for full git tag version

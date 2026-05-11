@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-11T03:44:33Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/5813ef5ab7614731af17a2e4056a3998__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      378
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_weighted"
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "number_match_count": 0,
+    "number_match_rate": 0.0,
+    "unit_match_count": 0,
+    "unit_match_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 0,
+      "unit_match_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user is asking about a specific financial figure from the MSFT_FY26Q1_10Q.docx file. Let me read that file to find the information.The file isn't at that exact path. Let me look for it with a different approach.The glob pattern didn't find the file. Let me check the workspace tree more carefully. The workspace_tree shows:\n\n/documents/\n  MSFT_FY26Q1_10Q.docx.xml\n\nBut the read_file failed with \"File not found\". Let me try listing the directory first.The workspace tree shows the file, but the actual directory listing shows it's empty. This is the anonymized uploaded document - it shows in the tree but might not be accessible. Let me try to read it directly. Maybe the glob didn't handle the .docx.xml extension properly. Let me try reading the file directly.The file seems to be in the workspace tree but isn't actually accessible. This is an issue. Let me try searching for it via grep to see if the content is indexed in the knowledge base.The file doesn't seem to be accessible or searchable in the knowledge base. It appears only in the workspace tree view but doesn't actually exist as accessible content. Let me try a more comprehensive search of the knowledge base.That didn't find the MSFT document. The file shows in the workspace tree but seems inaccessible. Let me try other search approaches - maybe the document content is indexed even if the file can't be read directly.The file appears in the workspace tree but its content is not indexed in the knowledge base. I can't access the document content. Let me check the workspace_tree more carefully. It shows:\n\n/documents/\n  MSFT_FY26Q1_10Q.docx.xml\n\nThis seems to be a processed docx file (converted to XML). But it's not found by read_file or grep. This is likely a file that was uploaded in a prior session and is referenced in the workspace_tree metadata but the actual file content is no longer available or is a read-only uploaded document that can't be easily read.\n\nLet me try one more approach - read directly from the root.Let me try listing with full path to see what's really there.So the workspace_tree shows the file but the actual directory listing is empty. This is a read-only uploaded/created document from a previous turn which is now inaccessible. Let me try to search the knowledge base for any content related to Microsoft financials.Let me try to search the knowledge base directly.The search results show only SurfSense documentation, not the actual MSFT document. The document `MSFT_FY26Q1_10Q.docx.xml` appears in the workspace tree but the content is not accessible via any of the search tools, grep, or read_file. \n\nSince the web_search and scrape_webpage tools are disabled (\"DISABLED TOOLS (by user)\"), I can't use them to find this information online.\n\nLet me inform the user that I couldn't access the document content.I wasn't able to access the content of `MSFT_FY26Q1_10Q.docx.xml` \u2014 the file appears in the workspace tree but its content isn't retrievable through any available tool, and web search is disabled. \n\nCould you re-upload the document or paste the relevant section so I can look up the figure for you?",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "The user is asking about a specific value in a document called \"MSFT_FY26Q1_10Q.docx\". Let me first check what files exist in the documents directory.The file isn't found in the workspace. Let me search more broadly.The documents directory is empty. The file \"MSFT_FY26Q1_10Q.docx\" doesn't exist in the user's knowledge base. Per the knowledge base policy, I need to inform the user and ask if they'd like me to answer from my general knowledge.\n\nHowever, the user is asking about a specific Microsoft 10-Q filing. The FY26Q1 (fiscal year 2026 first quarter) for Microsoft would cover the period ending September 30, 2025. The specific question is about \"other receivables related to activities to facilitate the purchase of server components\" as of that date.\n\nSince I cannot find the document in the knowledge base, I need to let the user know and ask if they want me to answer from general knowledge.\n\nActually, wait - web search is disabled. So I can't look this up online either. Let me inform the user that I couldn't find the document in their knowledge base and the web search tool is disabled, so I'm limited in what I can do.I searched the workspace and the document **MSFT_FY26Q1_10Q.docx** is not present in your knowledge base. Could you upload the file so I can look up the exact figure?",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

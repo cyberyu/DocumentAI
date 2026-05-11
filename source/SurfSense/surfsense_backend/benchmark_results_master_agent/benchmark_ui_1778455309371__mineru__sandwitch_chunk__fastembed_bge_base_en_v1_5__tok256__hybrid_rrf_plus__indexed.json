@@ -1,0 +1,172 @@
+{
+  "generated_at_utc": "2026-05-10T23:24:15Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/761a3e0b0997475992f1c23c757ac763__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      341
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_rrf_plus"
+  },
+  "summary": {
+    "run": 5,
+    "overall_correct_count": 5,
+    "overall_correct_rate": 1.0,
+    "number_match_count": 5,
+    "number_match_rate": 1.0,
+    "unit_match_count": 5,
+    "unit_match_rate": 1.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.032450357937503685,
+    "questions_total": 5,
+    "questions_run": 5,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 5,
+      "overall_correct_count": 5,
+      "overall_correct_rate": 1.0,
+      "number_match_count": 5,
+      "number_match_rate": 1.0,
+      "unit_match_count": 5,
+      "unit_match_rate": 1.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.032450357937503685
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user is asking about a specific financial data point from the MSFT FY26Q1 10-Q document. Let me read the document to find this information.This is a large document. Let me search for \"accounts receivable\" or \"long-term\" within the document to find the relevant section. Let me also search for \"September 30, 2025\" to find the balance sheet.I found the relevant information. As of September 30, 2025, long-term accounts receivable, net of allowance for doubtful accounts, was $5.0 billion.$5.0 billion [citation:249366]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.047619047619047616,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "The user is asking about a specific line item in the MSFT FY26 Q1 10-Q document: \"other receivables related to activities to facilitate the purchase of server components\" as of September 30, 2025. Let me read the document to find this information.The grep found the exact line I need. The chunk mentions that as of September 30, 2025, other receivables related to activities to facilitate the purchase of server components were $14.4 billion.$14.4 billion",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.051948051948051945,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-003",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is our financing receivables, net as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is our financing receivables, net as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$3.9 billion USD",
+      "predicted_answer": "The user is asking for a specific value from the MSFT_FY26Q1_10Q document. Let me read the document to find the financing receivables, net as of September 30, 2025.The document is very large. Let me search for \"financing receivables\" in the document to find the specific value.The grep results show exactly what I need. Let me read the specific chunk to confirm the value.\n\nThe chunk says: \"As of September 30, 2025 and June 30, 2025, our financing receivables, net were $3.9 billion and $4.3 billion, respectively, for short-term and long-term financing receivables\"\n\nBut the user asked for \"financing receivables, net\" \u2014 this is the total (short-term + long-term). Let me check if there's a more specific line item. Let me read the chunk fully.The document clearly states: \"As of September 30, 2025 and June 30, 2025, our financing receivables, net were $3.9 billion and $4.3 billion, respectively, for short-term and long-term financing receivables.\"\n\nWait, the phrasing is a bit ambiguous. Let me re-read: \"our financing receivables, net were $3.9 billion and $4.3 billion, respectively, for short-term and long-term financing receivables\"\n\nSo this is saying short-term financing receivables, net were $3.9 billion and long-term financing receivables, net were $4.3 billion as of September 30, 2025? That doesn't seem right \u2014 the \"respectively\" matches September 30, 2025 ($3.9B) and June 30, 2025 ($4.3B). \n\nRe-reading: \"As of September 30, 2025 and June 30, 2025, our financing receivables, net were $3.9 billion and $4.3 billion, respectively, for short-term and long-term financing receivables\"\n\nActually I think the structure is: As of [Sept 30, 2025] and [June 30, 2025], our financing receivables, net were [$3.9 billion] and [$4.3 billion], respectively, for [short-term] and [long-term] financing receivables.\n\nHmm, that's confusing. Let me think about it differently. The sentence says \"for short-term and long-term financing receivables\". So maybe:\n\n- Short-term financing receivables, net: $3.9 billion as of Sept 30, 2025\n- Long-term financing receivables, net: $4.3 billion as of June 30, 2025\n\nThat doesn't make sense either. Let me read it as:\n\n\"As of September 30, 2025 and June 30, 2025, our financing receivables, net were $3.9 billion and $4.3 billion, respectively\"\n\nThis means:\n- September 30, 2025: $3.9 billion\n- June 30, 2025: $4.3 billion\n\nAnd the \"for short-term and long-term financing receivables\" might be clarifying that this total includes both short-term and long-term portions.\n\nActually, I think the more natural reading is that $3.9B is the total financing receivables, net as of September 30, 2025 (combining short-term and long-term portions). Let me verify by also checking the balance sheet section.\n\nLet me also search for the balance sheet items like \"other current assets\" and \"other long-term assets\" to see if there are breakdowns.Let me also look at the balance sheet to see how financing receivables are broken down.Let me also look at the balance sheet (consolidated balance sheets) where financing receivables might be broken down into short-term and long-term components.Let me look at the balance sheet section of the 10-Q to find the exact balance sheet line items.Let me search for the actual balance sheet presentation with \"financing\" line items. The document is an XML with line numbers starting from large values (line 3382+). Let me search more specifically.Let me search for the balance sheet table structure, looking for \"Other current\" or \"Other long-term\" items that might contain the financing receivable components.Let me read more of the document around the area that mentions financing receivables to see what the context says. The chunk I read indicates that the total financing receivables, net as of September 30, 2025 was $3.9 billion (combining short-term and long-term). Let me verify by reading more context.The earlier part of the document has cover page info. The content that matters is around lines 3400+. Let me search for the actual balance sheet data. Let me search for \"Other current assets\" or similar terms in the balance sheet.Let me look at the balance sheet data around line 3595. The value $33,030 (million) appears as \"Other current assets\" as of Sept 30, 2025 probably. Let me read the balance sheet.OK, so looking at the balance sheet, there's no separate line item for \"financing receivables\" on the balance sheet itself. The document notes say that financing receivables (short-term) are included in \"Other current assets\" and financing receivables (long-term) are included in \"Other long-term assets.\"\n\nFrom chunk 249370:\n\"As of September 30, 2025 and June 30, 2025, our financing receivables, net were $3.9 billion and $4.3 billion, respectively, for short-term and long-term financing receivables, which are included in other current assets and other long-term assets in our consolidated balance sheets.\"\n\nWait, let me re-read this. The sentence structure is:\n\"As of September 30, 2025 and June 30, 2025, our financing receivables, net were $3.9 billion and $4.3 billion, respectively, for short-term and long-term financing receivables\"\n\nThis means:\n- $3.9 billion is the short-term financing receivables, net\n- $4.3 billion is the long-term financing receivables, net\n\nWait no, let me re-read more carefully. The sentence says:\n\"As of September 30, 2025 and June 30, 2025, our financing receivables, net were $3.9 billion and $4.3 billion, respectively\"\n\nThe \"respectively\" pairs:\n- September 30, 2025 \u2192 $3.9 billion\n- June 30, 2025 \u2192 $4.3 billion\n\nAnd then \"for short-term and long-term financing receivables\" - this phrase is modifying the context. It's saying that these amounts ($3.9B and $4.3B) are the combined total of short-term and long-term financing receivables? No, wait...\n\nActually, I think the phrasing is confusing because of how the doc was parsed. Let me read the surrounding context more carefully.\n\nActually, let me look at it differently. In the 10-Q, the balance sheet notes typically break out financing receivables separately. Let me search for more context.OK, now I need to parse this correctly. The sentence in chunk 249370 is:\n\n\"As of September 30, 2025 and June 30, 2025, our financing receivables, net were $3.9 billion and $4.3 billion, respectively, for short-term and long-term financing receivables\"\n\nThis is a bit ambiguous. Let me think about it.\n\nOption 1: The \"respectively\" pairs September 30, 2025 with $3.9B, and June 30, 2025 with $4.3B. And the \"for short-term and long-term financing receivables\" means the total includes both short and long term components.\n\nSo: Total financing receivables, net as of September 30, 2025 = $3.9 billion (including both short and long-term portions).\n\nOption 2: The sentence could be parsed as: the $3.9B refers to short-term and the $4.3B refers to long-term. But then what's the \"As of September 30, 2025 and June 30, 2025, respectively\" doing?\n\nWait, let me re-read: \"As of September 30, 2025 and June 30, 2025, our financing receivables, net were $3.9 billion and $4.3 billion, respectively, for short-term and long-term financing receivables\"\n\nThe \"respectively\" typically pairs items in order. The first list is \"September 30, 2025 and June 30, 2025\" and the second list is \"$3.9 billion and $4.3 billion\". So:\n- September 30, 2025 \u2192 $3.9 billion\n- June 30, 2025 \u2192 $4.3 billion\n\nThen \"for short-term and long-term financing receivables\" seems like it's describing the composition. So the $3.9 billion total as of Sept 30, 2025 includes both the short-term and long-term portions.\n\nBut wait, that doesn't make total sense because the balance sheet shows \"Other current assets\" of $33,030 million ($33 billion) and \"Other long-term assets\" of $39,435 million ($39.4 billion) as of Sept 30, 2025. If financing receivables were split between short and long term, the short-term portion would be in \"Other current assets\" and the long-term portion in \"Other long-term assets.\"\n\nHmm, let me look at how the comparable period changed. From June 30, 2025 to Sept 30, 2025:\n- Other current assets: $25,723M \u2192 $33,030M (increase of $7,307M)\n- Other long-term assets: $40,565M \u2192 $39,435M (decrease of $1,130M)\n\nAnd the financing receivables went from $4.3B to $3.9B, a decrease of $0.4B.\n\nSo I think the \"respectively\" pairs dates with values:\n- As of September 30, 2025: $3.9 billion\n- As of June 30, 2025: $4.3 billion\n\nAnd the phrase \"for short-term and long-term financing receivables\" means this total is the combined amount for both short-term and long-term financing receivables. So $3.9 billion is the total (both short and long-term combined) as of September 30, 2025.\n\nWait, but that would be a decline from $4.3B to $3.9B. Let me check if there are other references.\n\nActually, I think it might be:\n- Short-term financing receivables: $3.9B (Sept 30, 2025) \n- Long-term financing receivables: $4.3B (June 30, 2025)\n\nNo, that doesn't make sense because the \"respectively\" should pair the dates with the values.\n\nLet me try one more parsing:\n\"As of September 30, 2025 and June 30, 2025, our financing receivables, net were $3.9 billion and $4.3 billion, respectively, for short-term and long-term financing receivables\"\n\nActually, I think the \"for short-term and long-term financing receivables\" is just clarifying that the $3.9B and $4.3B figures are for the combined short-term AND long-term financing receivables together. So:\n\n- As of September 30, 2025: total financing receivables, net = $3.9 billion\n- As of June 30, 2025: total financing receivables, net = $4.3 billion\n\nThis is the most natural reading of \"respectively\" pairing the two dates with the two values.\n\nThe user asked: \"what is our financing receivables, net as of September 30, 2025?\"\n\nSo the answer is $3.9 billion.$3.9 billion [citation:249370]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.002602472348731295,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-004",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is the net loss from investments in OpenAI for the three months ended September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is the net loss from investments in OpenAI for the three months ended September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$4.1 billion USD",
+      "predicted_answer": "The user is asking about the net loss from investments in OpenAI for the three months ended September 30, 2025, from the MSFT_FY26Q1_10Q document. Let me read the file to find this information.The file is very large. Let me search for \"OpenAI\" within the file to find the relevant chunk.From the document, I can see multiple references to the net losses from investments in OpenAI for the three months ended September 30, 2025. The key data points are:\n\n1. From chunk 249341/249391: \"$4.1 billion\" for the three months ended September 30, 2025\n2. From the table on line 5188: \"4,061\" (which is in millions)\n\nThe \"4,061\" is in millions, which equals $4.061 billion. The text says \"$4.1 billion\" which is a rounded figure. The precise figure from the table is $4,061 million.\n\nLet me look at the table more carefully to give the exact value.The table shows \"Net losses from investments in OpenAI\" as **4,061** (in millions). So the net loss is $4,061 million, which is $4.061 billion. Let me provide the answer.$4,061 million ($4.1 billion)",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.0223463687150838,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-005",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$2.9 billion USD",
+      "predicted_answer": "The user is asking about a specific value in the MSFT FY26 Q1 10Q document. Let me read the document to find it.The document has many chunks. Let me search for the specific phrase \"equity investments without readily determinable fair values\" or similar to find the right section quickly.I found the exact chunk that answers the question. Let me read it to confirm:\n\nLine 4026: `As of both September 30, 2025 and June 30, 2025, equity investments without readily determinable fair values measured at cost with adjustments for observable changes in price or impairments were $2.9 billion.`\n\nThe answer is $2.9 billion.$2.9 billion",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.03773584905660377,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    }
+  ]
+}

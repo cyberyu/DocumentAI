@@ -189,6 +189,10 @@ export function useDocuments(
 	useEffect(() => {
 		if (!searchSpaceId || !zeroDocuments || !initialLoadDoneRef.current) return;
 
+		if (zeroDocuments.length === 0) {
+			return;
+		}
+
 		const validItems = zeroDocuments.filter(
 			(doc) => doc.id != null && doc.title != null && doc.title !== ""
 		);

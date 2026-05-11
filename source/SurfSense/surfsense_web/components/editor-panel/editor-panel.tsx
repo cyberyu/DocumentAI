@@ -7,8 +7,11 @@ import {
 	Download,
 	FileQuestionMark,
 	FileText,
+	FlaskConical,
 	Pencil,
 	RefreshCw,
+	Search,
+	Trash2,
 	XIcon,
 } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -19,14 +22,26 @@ import { VersionHistoryButton } from "@/components/documents/version-history";
 import { SourceCodeEditor } from "@/components/editor/source-code-editor";
 import { MarkdownViewer } from "@/components/markdown-viewer";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerHandle, DrawerTitle } from "@/components/ui/drawer";
+import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useElectronAPI } from "@/hooks/use-platform";
 import { authenticatedFetch, getBearerToken, redirectToLogin } from "@/lib/auth-utils";
 import { inferMonacoLanguageFromPath } from "@/lib/editor-language";
+import { ETL_SERVICE } from "@/lib/env-config";
 
 const PlateEditor = dynamic(
 	() => import("@/components/editor/plate-editor").then((m) => ({ default: m.PlateEditor })),
@@ -245,10 +260,80 @@ function getEmbeddingColor(m: string) {
 interface ChunkViewState {
 	variantId: number;
 	variantTitle: string;
+	pipelineId?: string;
+	query: string;
 	chunks: Array<{ id: number; index: number; content: string }>;
 	total: number;
 	loading: boolean;
 	error: string | null;
+}
+
+interface BenchmarkDatasetSummary {
+	benchmarkdata_id: number;
+	doc_id: number;
+	task_type: string;
+	task_num: number;
+	created_date: string;
+	dataset_filename: string;
+	dataset_mime_type?: string | null;
+	dataset_size_bytes: number;
+}
+
+function escapeRegExp(value: string): string {
+	return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function buildSmartSplitVariants(query: string): string[] {
+	if (!/^[A-Za-z0-9]{6,}$/.test(query)) return [];
+	const variants: string[] = [];
+	for (let idx = 3; idx < query.length - 2; idx += 1) {
+		variants.push(`${query.slice(0, idx)} ${query.slice(idx)}`);
+		if (variants.length >= 12) break;
+	}
+	return variants;
+}
+
+function highlightChunkContent(
+	content: string,
+	query: string,
+	caseInsensitive: boolean,
+	smartMatch: boolean
+) {
+	const trimmed = query.trim();
+	if (!trimmed) return content;
+
+	const terms = new Set<string>([trimmed]);
+	if (smartMatch) {
+		for (const variant of buildSmartSplitVariants(trimmed)) {
+			terms.add(variant);
+		}
+	}
+
+	const escapedTerms = [...terms]
+		.filter((term) => term.length > 0)
+		.sort((a, b) => b.length - a.length)
+		.map((term) => escapeRegExp(term));
+
+	if (escapedTerms.length === 0) return content;
+
+	const pattern = new RegExp(`(${escapedTerms.join("|")})`, caseInsensitive ? "gi" : "g");
+	const parts = content.split(pattern);
+
+	if (parts.length <= 1) return content;
+
+	return (
+		<>
+			{parts.map((part, index) =>
+				index % 2 === 1 ? (
+					<mark key={`${part}-${index}`} className="rounded bg-yellow-300 px-0.5 font-semibold text-black dark:bg-yellow-400">
+						{part}
+					</mark>
+				) : (
+					<span key={`${part}-${index}`}>{part}</span>
+				)
+			)}
+		</>
+	);
 }
 
 function PipelineListView({
@@ -265,23 +350,245 @@ function PipelineListView({
 	const [activeStrategies, setActiveStrategies] = useState<Set<string>>(new Set());
 	const [activeEmbeddings, setActiveEmbeddings] = useState<Set<string>>(new Set());
 	const [chunkView, setChunkView] = useState<ChunkViewState | null>(null);
+	const [chunkSearchInput, setChunkSearchInput] = useState("");
+	const [chunkCaseInsensitive, setChunkCaseInsensitive] = useState(true);
+	const [chunkSmartMatch, setChunkSmartMatch] = useState(true);
+	const sourceDocumentId = variants[0]?.id;
+	const [benchmarkItems, setBenchmarkItems] = useState<BenchmarkDatasetSummary[]>([]);
+	const [benchmarkLoading, setBenchmarkLoading] = useState(false);
+	const [benchmarkError, setBenchmarkError] = useState<string | null>(null);
+	const [benchmarkUploadOpen, setBenchmarkUploadOpen] = useState(false);
+	const [benchmarkUploading, setBenchmarkUploading] = useState(false);
+	const [benchmarkDeletingId, setBenchmarkDeletingId] = useState<number | null>(null);
+	const [benchmarkDownloadingId, setBenchmarkDownloadingId] = useState<number | null>(null);
+	const [benchmarkPendingDelete, setBenchmarkPendingDelete] = useState<BenchmarkDatasetSummary | null>(null);
+	const [benchmarkTaskType, setBenchmarkTaskType] = useState("qa");
+	const [benchmarkTaskNum, setBenchmarkTaskNum] = useState("1");
+	const [benchmarkFile, setBenchmarkFile] = useState<File | null>(null);
+	const defaultEtlLabel = ETL_SERVICE.toUpperCase() === "MINERU" ? "MinerU" : "Docling";
+
+	const resolveVariantEtlLabel = useCallback((variant: PipelineVariant): string => {
+		const explicit = variant.etlService?.toUpperCase();
+		if (explicit === "MINERU") return "MinerU";
+		if (explicit === "DOCLING") return "Docling";
+		if (explicit === "UNSTRUCTURED") return "Unstructured";
+		if (explicit === "LLAMACLOUD") return "LlamaCloud";
+
+		const sepIdx = variant.title.indexOf("__");
+		if (sepIdx >= 0) {
+			const suffix = variant.title.slice(sepIdx + 2);
+			const firstSegment = suffix.split("__", 1)[0]?.trim().toUpperCase();
+			if (firstSegment === "MINERU") return "MinerU";
+			if (firstSegment === "DOCLING") return "Docling";
+			if (firstSegment === "UNSTRUCTURED") return "Unstructured";
+			if (firstSegment === "LLAMACLOUD") return "LlamaCloud";
+		}
+
+		return defaultEtlLabel;
+	}, [defaultEtlLabel]);
+
+	const fetchVariantChunks = useCallback(async (
+		variantId: number,
+		query: string,
+		options?: { caseinsensitive?: boolean; smartMatch?: boolean; pipelineId?: string }
+	) => {
+		const params = new URLSearchParams();
+		const trimmedQuery = query.trim();
+		if (trimmedQuery) params.set("q", trimmedQuery);
+		if (options?.pipelineId) params.set("pipeline_id", options.pipelineId);
+		params.set("caseinsensitive", String(options?.caseinsensitive ?? true));
+		params.set("smart_match", String(options?.smartMatch ?? true));
+		const queryString = params.toString();
+		const url = `${process.env.NEXT_PUBLIC_FASTAPI_BACKEND_URL}/api/v1/search-spaces/${searchSpaceId}/documents/${variantId}/chunks${queryString ? `?${queryString}` : ""}`;
+		const res = await authenticatedFetch(url, { method: "GET" });
+		if (!res.ok) {
+			const err = await res.json().catch(() => ({ detail: "Failed to load chunks" }));
+			throw new Error(err.detail ?? "Failed to load chunks");
+		}
+		return res.json();
+	}, [searchSpaceId]);
 
 	const openChunkView = useCallback(async (v: PipelineVariant) => {
-		setChunkView({ variantId: v.id, variantTitle: v.title, chunks: [], total: 0, loading: true, error: null });
+		setChunkSearchInput("");
+		setChunkView({ variantId: v.id, variantTitle: v.title, pipelineId: v.pipelineId, query: "", chunks: [], total: 0, loading: true, error: null });
 		try {
-			const url = `${process.env.NEXT_PUBLIC_FASTAPI_BACKEND_URL}/api/v1/search-spaces/${searchSpaceId}/documents/${v.id}/chunks`;
-			const res = await authenticatedFetch(url, { method: "GET" });
-			if (!res.ok) {
-				const err = await res.json().catch(() => ({ detail: "Failed to load chunks" }));
-				setChunkView((prev) => prev ? { ...prev, loading: false, error: err.detail ?? "Failed to load chunks" } : null);
-				return;
-			}
-			const data = await res.json();
-			setChunkView({ variantId: v.id, variantTitle: v.title, chunks: data.chunks ?? [], total: data.total ?? 0, loading: false, error: null });
+			const data = await fetchVariantChunks(v.id, "", { pipelineId: v.pipelineId });
+			setChunkView({
+				variantId: v.id,
+				variantTitle: v.title,
+				pipelineId: v.pipelineId,
+				query: "",
+				chunks: data.chunks ?? [],
+				total: data.total ?? 0,
+				loading: false,
+				error: null,
+			});
 		} catch (e) {
 			setChunkView((prev) => prev ? { ...prev, loading: false, error: String(e) } : null);
 		}
-	}, [searchSpaceId]);
+	}, [fetchVariantChunks]);
+
+	const runChunkSearch = useCallback(async () => {
+		if (!chunkView) return;
+		const query = chunkSearchInput.trim();
+		setChunkView((prev) => (prev ? { ...prev, query, loading: true, error: null } : prev));
+		try {
+			const data = await fetchVariantChunks(chunkView.variantId, query, {
+				caseinsensitive: chunkCaseInsensitive,
+				smartMatch: chunkSmartMatch,
+				pipelineId: chunkView.pipelineId,
+			});
+			setChunkView((prev) =>
+				prev
+					? {
+							...prev,
+							query,
+							chunks: data.chunks ?? [],
+							total: data.total ?? 0,
+							loading: false,
+							error: null,
+						}
+					: prev
+			);
+		} catch (e) {
+			setChunkView((prev) => (prev ? { ...prev, loading: false, error: String(e) } : prev));
+		}
+	}, [chunkSearchInput, chunkView, fetchVariantChunks, chunkCaseInsensitive, chunkSmartMatch]);
+
+	const loadBenchmarkDatasets = useCallback(async () => {
+		if (!sourceDocumentId) {
+			setBenchmarkItems([]);
+			setBenchmarkError(null);
+			return;
+		}
+
+		setBenchmarkLoading(true);
+		setBenchmarkError(null);
+		try {
+			const response = await authenticatedFetch(
+				`${process.env.NEXT_PUBLIC_FASTAPI_BACKEND_URL}/api/v1/documents/${sourceDocumentId}/benchmark-data`,
+				{ method: "GET" }
+			);
+			if (!response.ok) {
+				const err = await response.json().catch(() => ({ detail: "Failed to load benchmark datasets" }));
+				throw new Error(err.detail ?? "Failed to load benchmark datasets");
+			}
+			const payload = (await response.json()) as { items?: BenchmarkDatasetSummary[] };
+			setBenchmarkItems(payload.items ?? []);
+		} catch (error) {
+			setBenchmarkError(error instanceof Error ? error.message : "Failed to load benchmark datasets");
+		} finally {
+			setBenchmarkLoading(false);
+		}
+	}, [sourceDocumentId]);
+
+	useEffect(() => {
+		void loadBenchmarkDatasets();
+	}, [loadBenchmarkDatasets]);
+
+	const submitBenchmarkUpload = useCallback(async () => {
+		if (!sourceDocumentId) {
+			toast.error("Missing source document context");
+			return;
+		}
+		if (!benchmarkFile) {
+			toast.error("Choose a benchmark dataset file first");
+			return;
+		}
+		const normalizedTaskType = benchmarkTaskType.trim();
+		if (!normalizedTaskType) {
+			toast.error("Task type is required");
+			return;
+		}
+		const parsedTaskNum = Number.parseInt(benchmarkTaskNum, 10);
+		if (!Number.isFinite(parsedTaskNum) || parsedTaskNum < 1) {
+			toast.error("Task number must be at least 1");
+			return;
+		}
+
+		setBenchmarkUploading(true);
+		try {
+			const formData = new FormData();
+			formData.append("benchmark_file", benchmarkFile);
+			formData.append("task_type", normalizedTaskType);
+			formData.append("task_num", String(parsedTaskNum));
+
+			const response = await authenticatedFetch(
+				`${process.env.NEXT_PUBLIC_FASTAPI_BACKEND_URL}/api/v1/documents/${sourceDocumentId}/benchmark-data`,
+				{ method: "POST", body: formData }
+			);
+			if (!response.ok) {
+				const err = await response.json().catch(() => ({ detail: "Failed to upload benchmark dataset" }));
+				throw new Error(err.detail ?? "Failed to upload benchmark dataset");
+			}
+
+			toast.success("Benchmark dataset associated");
+			setBenchmarkFile(null);
+			setBenchmarkUploadOpen(false);
+			await loadBenchmarkDatasets();
+		} catch (error) {
+			toast.error(error instanceof Error ? error.message : "Failed to upload benchmark dataset");
+		} finally {
+			setBenchmarkUploading(false);
+		}
+	}, [sourceDocumentId, benchmarkFile, benchmarkTaskType, benchmarkTaskNum, loadBenchmarkDatasets]);
+
+	const handleBenchmarkDownload = useCallback(async (item: BenchmarkDatasetSummary) => {
+		if (!sourceDocumentId) return;
+		setBenchmarkDownloadingId(item.benchmarkdata_id);
+		try {
+			const response = await authenticatedFetch(
+				`${process.env.NEXT_PUBLIC_FASTAPI_BACKEND_URL}/api/v1/documents/${sourceDocumentId}/benchmark-data/${item.benchmarkdata_id}/download`,
+				{ method: "GET" }
+			);
+			if (!response.ok) {
+				const err = await response.json().catch(() => ({ detail: "Failed to download benchmark dataset" }));
+				throw new Error(err.detail ?? "Failed to download benchmark dataset");
+			}
+
+			const blob = await response.blob();
+			const objectUrl = URL.createObjectURL(blob);
+			const anchor = document.createElement("a");
+			anchor.href = objectUrl;
+			anchor.download = item.dataset_filename || `benchmark-${item.benchmarkdata_id}.txt`;
+			document.body.appendChild(anchor);
+			anchor.click();
+			anchor.remove();
+			URL.revokeObjectURL(objectUrl);
+		} catch (error) {
+			toast.error(error instanceof Error ? error.message : "Failed to download benchmark dataset");
+		} finally {
+			setBenchmarkDownloadingId(null);
+		}
+	}, [sourceDocumentId]);
+
+	const executeBenchmarkDelete = useCallback(async (item: BenchmarkDatasetSummary) => {
+		if (!sourceDocumentId) return;
+		setBenchmarkDeletingId(item.benchmarkdata_id);
+		try {
+			const response = await authenticatedFetch(
+				`${process.env.NEXT_PUBLIC_FASTAPI_BACKEND_URL}/api/v1/documents/${sourceDocumentId}/benchmark-data/${item.benchmarkdata_id}`,
+				{ method: "DELETE" }
+			);
+			if (!response.ok) {
+				const err = await response.json().catch(() => ({ detail: "Failed to delete benchmark dataset" }));
+				throw new Error(err.detail ?? "Failed to delete benchmark dataset");
+			}
+
+			toast.success("Benchmark dataset removed");
+			await loadBenchmarkDatasets();
+		} catch (error) {
+			toast.error(error instanceof Error ? error.message : "Failed to delete benchmark dataset");
+		} finally {
+			setBenchmarkDeletingId(null);
+		}
+	}, [sourceDocumentId, loadBenchmarkDatasets]);
+
+	const confirmBenchmarkDelete = useCallback(async () => {
+		if (!benchmarkPendingDelete) return;
+		await executeBenchmarkDelete(benchmarkPendingDelete);
+		setBenchmarkPendingDelete(null);
+	}, [benchmarkPendingDelete, executeBenchmarkDelete]);
 
 	// Collect all unique values across variants
 	const allStrategies = useMemo(() => {
@@ -345,6 +652,81 @@ function PipelineListView({
 
 				{/* Chunk content */}
 				<div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
+					<div className="flex items-center gap-2">
+						<div className="relative flex-1">
+							<Search className="pointer-events-none absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
+							<Input
+								placeholder="Search words/phrases in chunks"
+								value={chunkSearchInput}
+								onChange={(e) => setChunkSearchInput(e.target.value)}
+								onKeyDown={(e) => {
+									if (e.key === "Enter") {
+										e.preventDefault();
+										void runChunkSearch();
+									}
+								}}
+								className="h-8 pl-8 text-xs"
+							/>
+						</div>
+						<Button size="sm" className="h-8" onClick={() => void runChunkSearch()} disabled={chunkView.loading}>
+							Search
+						</Button>
+						{chunkView.query && (
+							<Button
+								variant="ghost"
+								size="sm"
+								className="h-8"
+								onClick={() => {
+									setChunkSearchInput("");
+									setChunkView((prev) => (prev ? { ...prev, query: "" } : prev));
+									void fetchVariantChunks(chunkView.variantId, "", {
+										caseinsensitive: chunkCaseInsensitive,
+										smartMatch: chunkSmartMatch,
+										pipelineId: chunkView.pipelineId,
+									})
+										.then((data) => {
+											setChunkView((prev) =>
+												prev
+													? {
+														...prev,
+														query: "",
+														chunks: data.chunks ?? [],
+														total: data.total ?? 0,
+														loading: false,
+														error: null,
+													}
+													: prev
+											);
+										})
+										.catch((e) => {
+											setChunkView((prev) =>
+												prev ? { ...prev, loading: false, error: String(e) } : prev
+											);
+										});
+								}}
+							>
+								Clear
+							</Button>
+						)}
+					</div>
+					<div className="flex items-center gap-2">
+						<Button
+							variant={chunkCaseInsensitive ? "default" : "outline"}
+							size="sm"
+							className="h-7 text-[11px]"
+							onClick={() => setChunkCaseInsensitive((prev) => !prev)}
+						>
+							Caseinsensitive
+						</Button>
+						<Button
+							variant={chunkSmartMatch ? "default" : "outline"}
+							size="sm"
+							className="h-7 text-[11px]"
+							onClick={() => setChunkSmartMatch((prev) => !prev)}
+						>
+							Smart Match
+						</Button>
+					</div>
 					{chunkView.loading && (
 						<div className="flex items-center justify-center py-12">
 							<Spinner className="h-5 w-5 text-muted-foreground" />
@@ -357,11 +739,21 @@ function PipelineListView({
 					)}
 					{!chunkView.loading && !chunkView.error && (
 						<>
-							<p className="text-[11px] text-muted-foreground">{chunkView.total} chunk{chunkView.total !== 1 ? "s" : ""}</p>
+							<p className="text-[11px] text-muted-foreground">
+								{chunkView.total} chunk{chunkView.total !== 1 ? "s" : ""}
+								{chunkView.query ? ` matched for “${chunkView.query}”` : ""}
+							</p>
 							{chunkView.chunks.map((chunk, i) => (
 								<div key={chunk.id} className="rounded-lg border bg-card px-3 py-2.5 space-y-1">
 									<p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">Chunk {i + 1}</p>
-									<p className="text-xs whitespace-pre-wrap leading-relaxed">{chunk.content}</p>
+									<p className="text-xs whitespace-pre-wrap leading-relaxed">
+										{highlightChunkContent(
+											chunk.content,
+											chunkView.query,
+											chunkCaseInsensitive,
+											chunkSmartMatch
+										)}
+									</p>
 								</div>
 							))}
 							{chunkView.chunks.length === 0 && (
@@ -378,15 +770,187 @@ function PipelineListView({
 	return (
 		<div className="flex flex-col h-full overflow-hidden">
 			{/* Header */}
-			<div className="flex items-center justify-between px-4 py-3 border-b shrink-0">
+			<div className="flex items-center justify-between px-4 py-3 border-b shrink-0 gap-2">
 				<div className="flex items-center gap-2 min-w-0">
 					<FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
 					<span className="font-semibold text-sm truncate">{sourceTitle || "Document"}</span>
 				</div>
-				{onClose && (
-					<Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={onClose}>
-						<XIcon className="h-4 w-4" />
+				<div className="flex items-center gap-1.5 shrink-0">
+					<Button
+						variant="outline"
+						size="sm"
+						className="h-7 px-2 text-xs"
+						onClick={() => setBenchmarkUploadOpen((prev) => !prev)}
+						disabled={!sourceDocumentId || benchmarkUploading}
+					>
+						<FlaskConical className="h-3.5 w-3.5 mr-1" />
+						Add Task Benchmark
 					</Button>
+					{onClose && (
+						<Button variant="ghost" size="icon" className="h-7 w-7" onClick={onClose}>
+							<XIcon className="h-4 w-4" />
+						</Button>
+					)}
+				</div>
+			</div>
+
+			<div className="px-4 py-2.5 border-b shrink-0 space-y-2">
+				<div className="flex items-center justify-between gap-2">
+					<p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Associated Benchmarks</p>
+					<Button
+						variant="ghost"
+						size="sm"
+						className="h-6 px-2 text-[10px]"
+						onClick={() => void loadBenchmarkDatasets()}
+						disabled={benchmarkLoading}
+					>
+						Refresh
+					</Button>
+				</div>
+				{benchmarkLoading && (
+					<div className="flex items-center gap-2 text-xs text-muted-foreground">
+						<Spinner className="h-3.5 w-3.5" />
+						Loading benchmark datasets...
+					</div>
+				)}
+				{!benchmarkLoading && benchmarkError && (
+					<p className="text-xs text-destructive">{benchmarkError}</p>
+				)}
+				{!benchmarkLoading && !benchmarkError && benchmarkItems.length === 0 && (
+					<p className="text-xs text-muted-foreground">No benchmark dataset associated yet.</p>
+				)}
+				{!benchmarkLoading && !benchmarkError && benchmarkItems.length > 0 && (
+					<div className="space-y-1.5 max-h-28 overflow-y-auto pr-1">
+						{benchmarkItems.map((item) => (
+							<div
+								key={item.benchmarkdata_id}
+								className="rounded border bg-card px-2 py-1.5 text-[11px] flex items-center justify-between gap-2"
+							>
+								<div className="min-w-0">
+									<p className="truncate font-medium">{item.dataset_filename}</p>
+									<p className="text-muted-foreground truncate">
+										{item.task_type} · Task {item.task_num}
+									</p>
+								</div>
+								<div className="flex items-center gap-1 shrink-0">
+									<span className="text-muted-foreground">
+										{new Date(item.created_date).toLocaleDateString()}
+									</span>
+									<Button
+										variant="ghost"
+										size="icon"
+										className="h-6 w-6"
+										onClick={() => void handleBenchmarkDownload(item)}
+										disabled={benchmarkDownloadingId === item.benchmarkdata_id}
+										title="Download dataset"
+									>
+										{benchmarkDownloadingId === item.benchmarkdata_id ? (
+											<Spinner className="h-3 w-3" />
+										) : (
+											<Download className="h-3.5 w-3.5" />
+										)}
+									</Button>
+									<Button
+										variant="ghost"
+										size="icon"
+										className="h-6 w-6 text-destructive hover:text-destructive"
+										onClick={() => setBenchmarkPendingDelete(item)}
+										disabled={benchmarkDeletingId === item.benchmarkdata_id}
+										title="Delete dataset"
+									>
+										{benchmarkDeletingId === item.benchmarkdata_id ? (
+											<Spinner className="h-3 w-3" />
+										) : (
+											<Trash2 className="h-3.5 w-3.5" />
+										)}
+									</Button>
+								</div>
+							</div>
+						))}
+					</div>
+				)}
+
+				<AlertDialog
+					open={benchmarkPendingDelete !== null}
+					onOpenChange={(open) => {
+						if (!open) setBenchmarkPendingDelete(null);
+					}}
+				>
+					<AlertDialogContent>
+						<AlertDialogHeader>
+							<AlertDialogTitle>Delete benchmark dataset?</AlertDialogTitle>
+							<AlertDialogDescription>
+								This will permanently remove
+								 {benchmarkPendingDelete?.dataset_filename || "this dataset"}
+								 from this document.
+							</AlertDialogDescription>
+						</AlertDialogHeader>
+						<AlertDialogFooter>
+							<AlertDialogCancel disabled={benchmarkDeletingId !== null}>Cancel</AlertDialogCancel>
+							<AlertDialogAction
+								onClick={(event) => {
+									event.preventDefault();
+									void confirmBenchmarkDelete();
+								}}
+								disabled={benchmarkDeletingId !== null}
+							>
+								{benchmarkDeletingId !== null ? "Deleting..." : "Delete"}
+							</AlertDialogAction>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
+
+				{benchmarkUploadOpen && (
+					<div className="rounded-md border bg-card px-2.5 py-2 space-y-2">
+						<div className="grid grid-cols-2 gap-2">
+							<div className="space-y-1">
+								<p className="text-[10px] text-muted-foreground uppercase tracking-wide">Task Type</p>
+								<Input
+									value={benchmarkTaskType}
+									onChange={(e) => setBenchmarkTaskType(e.target.value)}
+									className="h-7 text-xs"
+									placeholder="qa"
+								/>
+							</div>
+							<div className="space-y-1">
+								<p className="text-[10px] text-muted-foreground uppercase tracking-wide">Task Num</p>
+								<Input
+									type="number"
+									min={1}
+									value={benchmarkTaskNum}
+									onChange={(e) => setBenchmarkTaskNum(e.target.value)}
+									className="h-7 text-xs"
+								/>
+							</div>
+						</div>
+						<Input
+							type="file"
+							className="h-8 text-xs"
+							onChange={(e) => {
+								const nextFile = e.target.files?.[0] ?? null;
+								setBenchmarkFile(nextFile);
+							}}
+						/>
+						<div className="flex justify-end gap-2">
+							<Button
+								variant="ghost"
+								size="sm"
+								className="h-7 px-2 text-xs"
+								onClick={() => setBenchmarkUploadOpen(false)}
+								disabled={benchmarkUploading}
+							>
+								Cancel
+							</Button>
+							<Button
+								size="sm"
+								className="h-7 px-2 text-xs"
+								onClick={() => void submitBenchmarkUpload()}
+								disabled={benchmarkUploading || !benchmarkFile}
+							>
+								{benchmarkUploading ? "Uploading..." : "Upload & Associate"}
+							</Button>
+						</div>
+					</div>
 				)}
 			</div>
 
@@ -448,9 +1012,10 @@ function PipelineListView({
 				</p>
 				{filteredVariants.map((v) => {
 					const info = getPipelineInfo(undefined, v.title);
+					const etlLabel = resolveVariantEtlLabel(v);
 					return (
 						<div
-							key={v.id}
+							key={`${v.id}:${v.pipelineId ?? v.title}`}
 							className="rounded-lg border bg-card px-3 py-2.5 flex items-center justify-between gap-2"
 						>
 							<div className="flex flex-wrap gap-1.5 min-w-0 flex-1">
@@ -458,10 +1023,10 @@ function PipelineListView({
 								<span className="inline-flex items-center rounded border px-1.5 py-0.5 text-[10px] font-mono bg-muted/40 text-muted-foreground shrink-0">
 									#{v.id}
 								</span>
-								{/* Stage 1 — ETL/Parse (always Docling) */}
+								{/* Stage 1 — ETL/Parse */}
 								<span className="inline-flex items-center gap-1 rounded-full border border-orange-500/40 bg-orange-500/10 px-2 py-0.5 text-[10px] font-medium text-orange-400">
 									<span className="inline-block h-1.5 w-1.5 rounded-full bg-orange-500 shrink-0" />
-									Docling
+									{etlLabel}
 								</span>
 								{/* Stage 2 — Chunking Strategy */}
 								{info?.chunkingStrategies.map((s) => (

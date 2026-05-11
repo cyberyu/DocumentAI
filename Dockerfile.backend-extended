@@ -29,13 +29,19 @@ COPY source/SurfSense/surfsense_backend/opensearch_chunk_storage.py           /a
 
 # ── Modified surfsense_backend source files ───────────────────────────────────
 COPY source/SurfSense/surfsense_backend/app/indexing_pipeline/indexing_pipeline_service.py /app/app/indexing_pipeline/indexing_pipeline_service.py
+COPY source/SurfSense/surfsense_backend/app/etl_pipeline/etl_pipeline_service.py /app/app/etl_pipeline/etl_pipeline_service.py
+COPY source/SurfSense/surfsense_backend/app/etl_pipeline/parsers/mineru.py /app/app/etl_pipeline/parsers/mineru.py
+COPY source/SurfSense/surfsense_backend/app/db.py                        /app/app/db.py
 COPY source/SurfSense/surfsense_backend/app/routes/documents_routes.py   /app/app/routes/documents_routes.py
+COPY source/SurfSense/surfsense_backend/app/routes/editor_routes.py      /app/app/routes/editor_routes.py
 COPY source/SurfSense/surfsense_backend/app/routes/benchmark_routes.py  /app/app/routes/benchmark_routes.py
 COPY source/SurfSense/surfsense_backend/app/routes/__init__.py           /app/app/routes/__init__.py
+COPY source/SurfSense/surfsense_backend/app/services/mineru_service.py /app/app/services/mineru_service.py
 COPY source/SurfSense/surfsense_backend/app/services/task_dispatcher.py /app/app/services/task_dispatcher.py
 COPY source/SurfSense/surfsense_backend/app/tasks/celery_tasks/document_tasks.py          /app/app/tasks/celery_tasks/document_tasks.py
 COPY source/SurfSense/surfsense_backend/app/tasks/document_processors/file_processors.py /app/app/tasks/document_processors/file_processors.py
 COPY source/SurfSense/surfsense_backend/app/indexing_pipeline/adapters/file_upload_adapter.py /app/app/indexing_pipeline/adapters/file_upload_adapter.py
+COPY source/SurfSense/surfsense_backend/app/utils/file_extensions.py /app/app/utils/file_extensions.py
 
 # ── RAG orchestrator & configuration ─────────────────────────────────────────
 COPY source/SurfSense/surfsense_backend/app/rag_orchestrator.py               /app/app/rag_orchestrator.py

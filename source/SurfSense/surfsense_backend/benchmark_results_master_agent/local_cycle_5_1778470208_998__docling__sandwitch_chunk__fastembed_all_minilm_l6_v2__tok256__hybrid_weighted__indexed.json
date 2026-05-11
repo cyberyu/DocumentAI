@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-11T03:31:48Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/d1b30ea3e70040f2962a452335d12888__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      376
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_weighted"
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "number_match_count": 1,
+    "number_match_rate": 0.5,
+    "unit_match_count": 0,
+    "unit_match_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "number_match_count": 1,
+      "number_match_rate": 0.5,
+      "unit_match_count": 0,
+      "unit_match_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user is asking about a specific value from a document called \"MSFT_FY26Q1_10Q.docx\". Let me find this file in the workspace.The file wasn't found. Let me search more broadly for it.No .docx files found in the workspace. Let me check what's in the workspace.The workspace is empty - there are no documents at all in the user's knowledge base. The file \"MSFT_FY26Q1_10Q.docx\" doesn't exist in the user's connected knowledge base.\n\nI need to follow the knowledge_base_only_policy. I couldn't find the file in the knowledge base, so I should inform the user and ask if they'd like me to answer from general knowledge. But also, I know that Microsoft's FY26 Q1 ended September 30, 2025, and the 10-Q for that period was filed in October 2025. Let me think...\n\nActually, I can't just answer from my general knowledge without asking the user first. Let me inform them that the file wasn't found in their knowledge base.The file `MSFT_FY26Q1_10Q.docx` wasn't found in your knowledge base \u2014 the workspace appears to be empty. \n\nWould you like me to answer from my general knowledge instead? I know the MSFT FY26 Q1 10-Q was filed in October 2025 and I can recall the long-term accounts receivable figure from it.",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": false,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "The user is asking about a specific value in a document called \"MSFT_FY26Q1_10Q.docx\". I need to find this document in the filesystem and search for the relevant information.\n\nLet me first look for the document.The file wasn't found with glob. Let me search more broadly.The workspace tree shows an empty /documents/ folder. There are no files at all in the knowledge base. Let me also try a broader search to see if there's anything indexed.The `/documents/` folder is empty \u2014 there are no files in your knowledge base to search. Could you upload the MSFT_FY26Q1_10Q.docx file so I can find the value you're looking for?",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

@@ -18,4 +18,13 @@ if [ -f "$SCRIPT_DIR/.env" ]; then
     set +a
 fi
 
+# Local frontend dev server default is 3000.
+# Override FRONTEND_PORT if you intentionally use Docker frontend (e.g., 3929).
+FRONTEND_PORT="${FRONTEND_PORT:-3000}"
+FRONTEND_URL="${NEXT_FRONTEND_URL:-http://localhost:${FRONTEND_PORT}}"
+BACKEND_URL="http://localhost:8930"
+
+echo "[SurfSense] Backend URL:       ${BACKEND_URL}"
+echo "[SurfSense] Frontend Login URL: ${FRONTEND_URL}/login"
+
 exec uvicorn app.app:app --host 0.0.0.0 --port 8930 --reload

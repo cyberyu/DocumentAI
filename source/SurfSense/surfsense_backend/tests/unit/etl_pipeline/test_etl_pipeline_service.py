@@ -171,6 +171,29 @@ async def test_extract_pdf_with_docling(tmp_path, mocker):
     assert result.content_type == "document"
 
 
+async def test_extract_pdf_with_mineru(tmp_path, mocker):
+    """A .pdf file with ETL_SERVICE=MINERU routes through MinerU parser."""
+    pdf_file = tmp_path / "report.pdf"
+    pdf_file.write_bytes(b"%PDF-1.4 fake")
+
+    mocker.patch("app.config.config.ETL_SERVICE", "MINERU")
+
+    fake_mineru = mocker.AsyncMock()
+    fake_mineru.process_document.return_value = {"content": "# Parsed by MinerU"}
+    mocker.patch(
+        "app.services.mineru_service.create_mineru_service",
+        return_value=fake_mineru,
+    )
+
+    result = await EtlPipelineService().extract(
+        EtlRequest(file_path=str(pdf_file), filename="report.pdf")
+    )
+
+    assert result.markdown_content == "# Parsed by MinerU"
+    assert result.etl_service == "MINERU"
+    assert result.content_type == "document"
+
+
 # ---------------------------------------------------------------------------
 # Slice 8 - UNSTRUCTURED document parsing
 # ---------------------------------------------------------------------------

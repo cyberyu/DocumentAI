@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import type React from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -30,7 +30,11 @@ import { connectorsAtom } from "@/atoms/connectors/connector-query.atoms";
 import { deleteDocumentMutationAtom } from "@/atoms/documents/document-mutation.atoms";
 import { expandedFolderIdsAtom } from "@/atoms/documents/folder.atoms";
 import { agentCreatedDocumentsAtom } from "@/atoms/documents/ui.atoms";
-import { openEditorPanelAtom, setPendingPipelineVariants } from "@/atoms/editor/editor-panel.atom";
+import {
+	openEditorPanelAtom,
+	setPendingPipelineVariants,
+	type PipelineVariant,
+} from "@/atoms/editor/editor-panel.atom";
 import {
 	folderWatchDialogOpenAtom,
 	folderWatchInitialFolderAtom,
@@ -79,6 +83,7 @@ import { foldersApiService } from "@/lib/apis/folders-api.service";
 import { searchSpacesApiService } from "@/lib/apis/search-spaces-api.service";
 import { authenticatedFetch } from "@/lib/auth-utils";
 import { getMentionDocKey } from "@/lib/chat/mention-doc-key";
+import { AppError } from "@/lib/error";
 import { uploadFolderScan } from "@/lib/folder-sync-upload";
 import { getSupportedExtensionsSet } from "@/lib/supported-extensions";
 import { queries } from "@/zero/queries/index";
@@ -133,6 +138,89 @@ interface WatchedFolderEntry {
 	rootFolderId: number | null;
 	searchSpaceId: number;
 	active: boolean;
+}
+
+type PipelineSignature = {
+	etl_service?: string;
+	chunking_strategy?: string;
+	chunking_strategies?: string[];
+	embedding_models?: string[];
+	chunk_size?: number;
+};
+
+function getSourceKeyFromTitle(title: string): string {
+	const sepIdx = title.indexOf("__");
+	return sepIdx >= 0 ? title.slice(0, sepIdx) : title;
+}
+
+function getMetadataPipelineIds(metadata?: Record<string, unknown> | null): string[] {
+	if (!metadata) return [];
+	const value = metadata.pipeline_ids;
+	if (!Array.isArray(value)) return [];
+	return value.filter((pipelineId): pipelineId is string => typeof pipelineId === "string");
+}
+
+function getMetadataPipelineSignatures(
+	metadata?: Record<string, unknown> | null
+): PipelineSignature[] {
+	if (!metadata) return [];
+	const value = metadata.pipeline_signatures;
+	if (!Array.isArray(value)) return [];
+	return value.filter(
+		(signature): signature is PipelineSignature =>
+			typeof signature === "object" && signature !== null
+	);
+}
+
+function buildPipelineLabel(signature: PipelineSignature | undefined, index: number): string {
+	if (!signature) return `pipeline-${index + 1}`;
+	const strategy =
+		typeof signature.chunking_strategy === "string"
+			? signature.chunking_strategy
+			: Array.isArray(signature.chunking_strategies)
+				? signature.chunking_strategies.find((value) => typeof value === "string")
+				: undefined;
+	const embeddings = Array.isArray(signature.embedding_models)
+		? signature.embedding_models.filter((value): value is string => typeof value === "string")
+		: [];
+	const chunkSize =
+		typeof signature.chunk_size === "number" ? `tok${signature.chunk_size}` : undefined;
+	const labelParts = [strategy, embeddings[0], chunkSize].filter(
+		(value): value is string => !!value
+	);
+	return labelParts.length > 0 ? labelParts.join("__") : `pipeline-${index + 1}`;
+}
+
+function buildMetadataPipelineVariants(doc: DocumentNodeDoc): PipelineVariant[] {
+	const pipelineIds = getMetadataPipelineIds(doc.document_metadata);
+	if (pipelineIds.length === 0) return [];
+	const signatures = getMetadataPipelineSignatures(doc.document_metadata);
+	const source = getSourceKeyFromTitle(doc.title);
+	return pipelineIds.map((pipelineId, index) => {
+		const signature = signatures[index];
+		const label = buildPipelineLabel(signatures[index], index);
+		return {
+			id: doc.id,
+			title: `${source}__${label}`,
+			pipelineId,
+			etlService:
+				typeof signature?.etl_service === "string"
+					? signature.etl_service.toUpperCase()
+					: undefined,
+		};
+	});
+}
+
+function parseEtlServiceFromVariantTitle(title: string): string | undefined {
+	const sepIdx = title.indexOf("__");
+	if (sepIdx < 0) return undefined;
+	const suffix = title.slice(sepIdx + 2);
+	const firstSegment = suffix.split("__", 1)[0]?.trim().toUpperCase();
+	if (!firstSegment) return undefined;
+	if (["DOCLING", "MINERU", "UNSTRUCTURED", "LLAMACLOUD"].includes(firstSegment)) {
+		return firstSegment;
+	}
+	return undefined;
 }
 
 const SHOWCASE_CONNECTORS = [
@@ -191,6 +279,7 @@ function AuthenticatedDocumentsSidebarBase({
 	const t = useTranslations("documents");
 	const tSidebar = useTranslations("sidebar");
 	const params = useParams();
+	const router = useRouter();
 	const isMobile = !useMediaQuery("(min-width: 640px)");
 	const platformElectronAPI = useElectronAPI();
 	const electronAPI = desktopFeaturesEnabled ? platformElectronAPI : null;
@@ -458,6 +547,74 @@ function AuthenticatedDocumentsSidebarBase({
 	const [zeroFolders, zeroFoldersResult] = useQuery(queries.folders.bySpace({ searchSpaceId }));
 	const [zeroAllDocs, zeroAllDocsResult] = useQuery(queries.documents.bySpace({ searchSpaceId }));
 	const [agentCreatedDocs, setAgentCreatedDocs] = useAtom(agentCreatedDocumentsAtom);
+	const [apiFallbackDocs, setApiFallbackDocs] = useState<DocumentNodeDoc[]>([]);
+
+	useEffect(() => {
+		if (!Number.isFinite(searchSpaceId) || searchSpaceId <= 0) {
+			setApiFallbackDocs([]);
+			return;
+		}
+
+		const hasZeroDocs = (zeroAllDocs?.length ?? 0) > 0;
+		const shouldFetchFallback =
+			!hasZeroDocs &&
+			(zeroAllDocsResult.type === "complete" || zeroAllDocsResult.type === "unknown");
+
+		if (!shouldFetchFallback) {
+			setApiFallbackDocs([]);
+			return;
+		}
+
+		let cancelled = false;
+
+		const fetchFallbackDocs = async () => {
+			try {
+				const response = await documentsApiService.getDocuments({
+					queryParams: {
+						search_space_id: searchSpaceId,
+						page: 0,
+						page_size: 500,
+						sort_by: "created_at",
+						sort_order: "desc",
+					},
+				});
+
+				if (cancelled) return;
+
+				const mapped = response.items
+					.filter((doc) => !!doc.title && doc.title.trim() !== "")
+					.map((doc) => {
+						const docWithOptionalFields = doc as typeof doc & {
+							folder_id?: number | null;
+							status?: { state: string; reason?: string | null };
+						};
+
+						return {
+							id: doc.id,
+							title: doc.title,
+							document_type: doc.document_type,
+							folderId: docWithOptionalFields.folder_id ?? null,
+							status: docWithOptionalFields.status ?? { state: "ready" },
+							document_metadata:
+								(doc as typeof doc & {
+									document_metadata?: Record<string, unknown> | null;
+								}).document_metadata ?? null,
+						};
+					});
+
+				setApiFallbackDocs(mapped);
+			} catch (error) {
+				if (cancelled) return;
+				console.warn("[DocumentsSidebar] API fallback documents fetch failed:", error);
+			}
+		};
+
+		fetchFallbackDocs();
+
+		return () => {
+			cancelled = true;
+		};
+	}, [searchSpaceId, zeroAllDocs, zeroAllDocsResult.type]);
 
 	const treeFolders: FolderDisplay[] = useMemo(
 		() =>
@@ -486,22 +643,28 @@ function AuthenticatedDocumentsSidebarBase({
 				document_type: d.documentType,
 				folderId: (d as { folderId?: number | null }).folderId ?? null,
 				status: d.status as { state: string; reason?: string | null } | undefined,
+				document_metadata:
+					(d as { documentMetadata?: Record<string, unknown> | null }).documentMetadata ??
+					null,
 			}));
 
-		const zeroIds = new Set(zeroDocs.map((d) => d.id));
+		const baseDocs = zeroDocs.length > 0 ? zeroDocs : apiFallbackDocs;
+
+		const baseIds = new Set(baseDocs.map((d) => d.id));
 
 		const pendingAgentDocs = agentCreatedDocs
-			.filter((d) => d.searchSpaceId === searchSpaceId && !zeroIds.has(d.id))
+			.filter((d) => d.searchSpaceId === searchSpaceId && !baseIds.has(d.id))
 			.map((d) => ({
 				id: d.id,
 				title: d.title,
 				document_type: d.documentType,
 				folderId: d.folderId ?? null,
 				status: { state: "ready" } as { state: string; reason?: string | null },
+				document_metadata: null,
 			}));
 
-		return [...pendingAgentDocs, ...zeroDocs];
-	}, [zeroAllDocs, agentCreatedDocs, searchSpaceId]);
+		return [...pendingAgentDocs, ...baseDocs];
+	}, [zeroAllDocs, apiFallbackDocs, agentCreatedDocs, searchSpaceId]);
 
 	// Prune agent-created docs once Zero has caught up
 	useEffect(() => {
@@ -943,7 +1106,13 @@ function AuthenticatedDocumentsSidebarBase({
 			: treeDocuments;
 		if (activePipelines.length > 0) {
 			docs = docs.filter((d) =>
-				activePipelines.some((p) => d.title.toLowerCase().includes(p.toLowerCase()))
+				activePipelines.some((p) => {
+					const normalized = p.toLowerCase();
+					if (d.title.toLowerCase().includes(normalized)) return true;
+					return getMetadataPipelineIds(d.document_metadata).some((pipelineId) =>
+						pipelineId.toLowerCase().includes(normalized)
+					);
+				})
 			);
 		}
 		return docs;
@@ -954,14 +1123,35 @@ function AuthenticatedDocumentsSidebarBase({
 	 * so that opening a deduplicated doc always shows all pipeline variants.
 	 */
 	const allVariantsBySource = useMemo(() => {
-		const map = new Map<string, { id: number; title: string }[]>();
+		const map = new Map<string, PipelineVariant[]>();
 		for (const doc of treeDocuments) {
 			const sepIdx = doc.title.indexOf("__");
-			if (sepIdx < 0) continue;
-			const source = doc.title.slice(0, sepIdx);
+			const source = getSourceKeyFromTitle(doc.title);
 			if (!map.has(source)) map.set(source, []);
-			// biome-ignore lint/style/noNonNullAssertion: just set above
-			map.get(source)!.push({ id: doc.id, title: doc.title });
+			if (sepIdx >= 0) {
+				map.get(source)?.push({
+					id: doc.id,
+					title: doc.title,
+					etlService: parseEtlServiceFromVariantTitle(doc.title),
+				});
+				continue;
+			}
+			const metadataVariants = buildMetadataPipelineVariants(doc);
+			if (metadataVariants.length > 0) {
+				map.get(source)?.push(...metadataVariants);
+			}
+		}
+
+		for (const [source, variants] of map.entries()) {
+			const unique = Array.from(
+				new Map(
+					variants.map((variant) => [
+						`${variant.id}:${variant.pipelineId ?? variant.title}`,
+						variant,
+					])
+				).values()
+			);
+			map.set(source, unique);
 		}
 		return map;
 	}, [treeDocuments]);
@@ -975,7 +1165,10 @@ function AuthenticatedDocumentsSidebarBase({
 	const { deduplicatedDocuments, variantsByRepId } = useMemo(() => {
 		// When pipeline filter is active, show matched variants as-is
 		if (activePipelines.length > 0) {
-			return { deduplicatedDocuments: searchFilteredDocuments, variantsByRepId: new Map<number, { id: number; title: string }[]>() };
+			return {
+				deduplicatedDocuments: searchFilteredDocuments,
+				variantsByRepId: new Map<number, PipelineVariant[]>(),
+			};
 		}
 
 		const sourceGroups = new Map<string, (typeof searchFilteredDocuments)[0][]>();
@@ -983,10 +1176,11 @@ function AuthenticatedDocumentsSidebarBase({
 
 		for (const doc of searchFilteredDocuments) {
 			const sepIdx = doc.title.indexOf("__");
-			if (sepIdx < 0) {
+			const metadataVariants = sepIdx < 0 ? buildMetadataPipelineVariants(doc) : [];
+			if (sepIdx < 0 && metadataVariants.length === 0) {
 				standalone.push(doc);
 			} else {
-				const source = doc.title.slice(0, sepIdx);
+				const source = getSourceKeyFromTitle(doc.title);
 				if (!sourceGroups.has(source)) sourceGroups.set(source, []);
 				// biome-ignore lint/style/noNonNullAssertion: just set above
 				sourceGroups.get(source)!.push(doc);
@@ -994,7 +1188,7 @@ function AuthenticatedDocumentsSidebarBase({
 		}
 
 		const grouped: (typeof searchFilteredDocuments) = [];
-		const variantsByRepId = new Map<number, { id: number; title: string }[]>();
+		const variantsByRepId = new Map<number, PipelineVariant[]>();
 		for (const [source, docs] of sourceGroups) {
 			// Pick the representative with the lowest id (first indexed)
 			const rep = docs.reduce((a, b) => (a.id < b.id ? a : b));
@@ -1023,6 +1217,9 @@ function AuthenticatedDocumentsSidebarBase({
 			if (idx >= 0) {
 				const pipelineId = d.title.slice(idx + 2);
 				if (pipelineId) seen.add(pipelineId);
+			}
+			for (const pipelineId of getMetadataPipelineIds(d.document_metadata)) {
+				seen.add(pipelineId);
 			}
 		}
 		return Array.from(seen).sort();
@@ -1058,9 +1255,8 @@ function AuthenticatedDocumentsSidebarBase({
 			for (const id of deletableSelectedIds) {
 				const doc = treeDocMap.get(id);
 				if (doc) {
-					const sepIdx = doc.title.indexOf("__");
-					const sourceKey = sepIdx >= 0 ? doc.title.slice(0, sepIdx) : null;
-					const variants = sourceKey ? allVariantsBySource.get(sourceKey) : null;
+					const sourceKey = getSourceKeyFromTitle(doc.title);
+					const variants = allVariantsBySource.get(sourceKey);
 					if (variants && variants.length > 0) {
 						for (const v of variants) allIdsToDelete.add(v.id);
 					} else {
@@ -1123,6 +1319,15 @@ function AuthenticatedDocumentsSidebarBase({
 				setSidebarDocs((prev) => prev.filter((d) => d.id !== id));
 				return true;
 			} catch (e) {
+				if (
+					e instanceof AppError &&
+					e.status === 409 &&
+					/already being deleted/i.test(e.message)
+				) {
+					setSidebarDocs((prev) => prev.filter((d) => d.id !== id));
+					toast.success(t("delete_success") || "Document deleted");
+					return true;
+				}
 				console.error("Error deleting document:", e);
 				return false;
 			}
@@ -1136,16 +1341,29 @@ function AuthenticatedDocumentsSidebarBase({
 	 */
 	const handleDeleteDocumentAllVariants = useCallback(
 		async (doc: { id: number; title: string }): Promise<void> => {
-			const sepIdx = doc.title.indexOf("__");
-			const sourceKey = sepIdx >= 0 ? doc.title.slice(0, sepIdx) : doc.title;
+			const sourceKey = getSourceKeyFromTitle(doc.title);
 			const variants = allVariantsBySource.get(sourceKey);
+			const uniqueVariants = variants
+				? Array.from(new Map(variants.map((variant) => [variant.id, variant])).values())
+				: undefined;
 
 			// If there are multiple pipeline variants, confirm and delete all
-			if (variants && variants.length > 1) {
-				if (!confirm(`Delete "${sourceKey}" and all ${variants.length} pipeline variants?`)) return;
+			if (uniqueVariants && uniqueVariants.length > 1) {
+				if (!confirm(`Delete "${sourceKey}" and all ${uniqueVariants.length} pipeline variants?`)) return;
 				const results = await Promise.allSettled(
-					variants.map(async (v) => {
-						await deleteDocumentMutation({ id: v.id });
+					uniqueVariants.map(async (v) => {
+						try {
+							await deleteDocumentMutation({ id: v.id });
+						} catch (e) {
+							if (
+								e instanceof AppError &&
+								e.status === 409 &&
+								/already being deleted/i.test(e.message)
+							) {
+								return v.id;
+							}
+							throw e;
+						}
 						return v.id;
 					})
 				);
@@ -1191,7 +1409,15 @@ function AuthenticatedDocumentsSidebarBase({
 			: "cloud";
 	const showCloudSkeleton =
 		currentFilesystemTab === "cloud" &&
-		(zeroFoldersResult.type !== "complete" || zeroAllDocsResult.type !== "complete");
+		(zeroFoldersResult.type !== "complete" || zeroAllDocsResult.type !== "complete") &&
+		apiFallbackDocs.length === 0;
+
+	const cloudDocsSourceLabel =
+		(zeroAllDocs?.length ?? 0) > 0
+			? "Zero"
+			: apiFallbackDocs.length > 0
+				? "API fallback"
+				: "Syncing";
 
 	const cloudContent = (
 		<>
@@ -1324,8 +1550,7 @@ function AuthenticatedDocumentsSidebarBase({
 							onCreateFolder={handleCreateFolder}
 							searchQuery={debouncedSearch.trim() || undefined}
 							onPreviewDocument={(doc) => {
-								const sepIdx = doc.title.indexOf("__");
-								const sourceKey = sepIdx >= 0 ? doc.title.slice(0, sepIdx) : doc.title;
+								const sourceKey = getSourceKeyFromTitle(doc.title);
 								const pipelineVariants = allVariantsBySource.get(sourceKey);
 								// Set side-channel BEFORE calling openEditorPanel to bypass Jotai multi-instance issue
 								setPendingPipelineVariants(pipelineVariants && pipelineVariants.length >= 1 ? pipelineVariants : null);
@@ -1339,11 +1564,16 @@ function AuthenticatedDocumentsSidebarBase({
 								openEditorPanel({
 									documentId: doc.id,
 									searchSpaceId,
-									title: doc.title,
+									title: getSourceKeyFromTitle(doc.title),
 								});
 							}}
 							onDeleteDocument={(doc) => handleDeleteDocumentAllVariants(doc)}
 							onMoveDocument={handleMoveDocument}
+							onBenchmarkDocument={(doc) => {
+								router.push(
+									`/dashboard/${searchSpaceId}/benchmark?doc_id=${doc.id}`
+								);
+							}}
 							onExportDocument={handleExportDocument}
 							onVersionHistory={(doc) => setVersionDocId(doc.id)}
 							activeTypes={activeTypes}
@@ -1398,6 +1628,11 @@ function AuthenticatedDocumentsSidebarBase({
 							</Button>
 						)}
 						<h2 className="select-none text-lg font-semibold">{t("title") || "Documents"}</h2>
+						{currentFilesystemTab === "cloud" && (
+							<span className="rounded-full border border-border bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground select-none">
+								{cloudDocsSourceLabel}
+							</span>
+						)}
 						{showFilesystemTabs && (
 							<Tabs
 								value={currentFilesystemTab}
@@ -1997,6 +2232,7 @@ function AnonymousDocumentsSidebar({
 							return true;
 						}}
 						onMoveDocument={() => gate("organize documents")}
+						onBenchmarkDocument={() => gate("run benchmark")}
 						onExportDocument={() => gate("export documents")}
 						onVersionHistory={() => gate("view version history")}
 						activeTypes={[]}

@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-11T01:11:44Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/6e63833023e94d45a73644253c18cb7b__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      348
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_rrf_plus"
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "number_match_count": 1,
+    "number_match_rate": 0.5,
+    "unit_match_count": 0,
+    "unit_match_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "number_match_count": 1,
+      "number_match_rate": 0.5,
+      "unit_match_count": 0,
+      "unit_match_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user is asking about a specific document. Let me search for it in the knowledge base.The file doesn't appear to be in the workspace yet. Let me check the current directory and see what's available.The workspace is empty. The file MSFT_FY26Q1_10Q.docx isn't in the knowledge base. I need to tell the user I couldn't find that document and, per the knowledge_base_only_policy, ask if they'd like me to answer from general knowledge. But wait - this is a very specific financial document (Microsoft's FY26 Q1 10-Q filing). The actual 10-Q for Microsoft's FY26 Q1 (which ended September 30, 2025) would be a public SEC filing. Since the user has disabled web search and scrape tools, I can't look it up online either.\n\nLet me inform the user that the document isn't in their knowledge base and ask if they'd like me to answer from general knowledge. But since web search is disabled, I can't look up current financial data. Let me check - web search and scrape_webpage are disabled. So even if the user says yes, I won't be able to find this specific information from my training data either since it would be data from after my training cutoff.\n\nActually, Microsoft's FY26 Q1 ended September 30, 2025. My training data likely doesn't include that since today is May 11, 2026. So I can't answer this from either the knowledge base or general knowledge. Let me inform the user accordingly.The document **MSFT_FY26Q1_10Q.docx** is not in your knowledge base \u2014 the workspace is empty and no files matched that name.\n\nCould you upload the file or place it in your knowledge base so I can look up the specific figure you're asking about?",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": false,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "The user is asking about a specific value in a document named \"MSFT_FY26Q1_10Q.docx\". Let me first search for this document in the knowledge base.The file isn't found in the workspace. Let me search more broadly.The document \"MSFT_FY26Q1_10Q.docx\" doesn't appear to be in the user's knowledge base. Let me also check if there are any .docx files at all.The document doesn't exist in the knowledge base at all. The user asked me to find a specific value in a specific document, but that document is not present in their workspace or knowledge base. According to the knowledge_base_only_policy, I should inform the user that I couldn't find the document in their knowledge base, and ask if they'd like me to answer from my general knowledge instead.\n\nHowever, I also need to consider - this is a very specific question about a file that doesn't exist in the user's knowledge base. If the file was supposed to be there, maybe they need to upload it first. Let me inform them.I couldn't find the file `MSFT_FY26Q1_10Q.docx` in your knowledge base \u2014 the workspace is currently empty. There are no `.docx` files or any documents indexed with that name.\n\nWould you like me to answer from my general knowledge instead? (Note: Microsoft's fiscal Q1 2026 ended September 30, 2025, but I'd be drawing from my training data rather than the specific document you're referencing.)",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

@@ -11,6 +11,7 @@ These are reference implementations showing adapter pattern in action.
 
 import logging
 import time
+import importlib
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 import requests
@@ -54,11 +55,28 @@ class MinerUAdapter(ETLAdapter):
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         # Lazy import - only load when using MinerU
-        try:
-            from magic_pdf import MagicPDF  # MinerU main class
-            self.extractor = MagicPDF
-        except ImportError:
-            raise ETLAdapterError("MinerU not installed. Run: pip install magic-pdf")
+        import_errors: list[str] = []
+        self.extractor = None
+        for module_name in ("mineru", "magic_pdf"):
+            try:
+                module = importlib.import_module(module_name)
+                magic_pdf_cls = getattr(module, "MagicPDF", None)
+                if magic_pdf_cls is not None:
+                    self.extractor = magic_pdf_cls
+                    break
+                import_errors.append(
+                    f"module '{module_name}' imported but MagicPDF symbol not found"
+                )
+            except Exception as exc:
+                import_errors.append(f"{module_name}: {type(exc).__name__}: {exc}")
+
+        if self.extractor is None:
+            details = "; ".join(import_errors)
+            raise ETLAdapterError(
+                "MinerU not installed. Install from https://github.com/opendatalab/mineru "
+                "(recommended: uv pip install -U \"mineru[all]\"). "
+                f"Import details: {details}"
+            )
     
     def extract_from_file(self, file_path: Path, **kwargs) -> RawDocument:
         """Extract content using MinerU Python SDK"""

@@ -25,6 +25,8 @@ class TaskDispatcher(Protocol):
         chunking_strategy: str | None = None,
         chunking_strategies: list[str] | None = None,
         chunk_size: int | None = None,
+        etl_service_override: str | None = None,
+        pipeline_id: str | None = None,
     ) -> None: ...
 
 
@@ -46,6 +48,8 @@ class CeleryTaskDispatcher:
         chunking_strategy: str | None = None,
         chunking_strategies: list[str] | None = None,
         chunk_size: int | None = None,
+        etl_service_override: str | None = None,
+        pipeline_id: str | None = None,
     ) -> None:
         from app.tasks.celery_tasks.document_tasks import (
             process_file_upload_with_document_task,
@@ -64,6 +68,8 @@ class CeleryTaskDispatcher:
             chunking_strategy=chunking_strategy,
             chunking_strategies=chunking_strategies,
             chunk_size=chunk_size,
+            etl_service_override=etl_service_override,
+            pipeline_id=pipeline_id,
         )
 
 

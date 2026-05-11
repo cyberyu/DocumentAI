@@ -196,6 +196,7 @@ filterwarnings = [
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["app*", "alembic*"]
+exclude = ["build*", "dist*", "*.egg-info*"]
 
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]

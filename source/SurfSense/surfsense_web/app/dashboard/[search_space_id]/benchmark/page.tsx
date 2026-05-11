@@ -2,8 +2,8 @@
 
 import { useAtomValue, useSetAtom } from "jotai";
 import { AlertTriangle, CheckCircle2, Circle, Clock, Loader2, Play, RotateCcw, Settings, XCircle } from "lucide-react";
-import { useParams } from "next/navigation";
-import { useEffect, useMemo, useState, type Dispatch, type SetStateAction } from "react";
+import { useParams, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from "react";
 import { toast } from "sonner";
 import {
 	type BenchmarkCandidateStatus,
@@ -16,12 +16,39 @@ import {
 import { searchSpaceSettingsDialogAtom } from "@/atoms/settings/settings-dialog.atoms";
 import { EmbeddingModelSelector } from "@/components/sources/EmbeddingModelSelector";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
 import { benchmarkApiService } from "@/lib/apis/benchmark-api.service";
+import { documentsApiService } from "@/lib/apis/documents-api.service";
 import { getBearerToken } from "@/lib/auth-utils";
+
+type EtlServiceOption = "DOCLING" | "MINERU" | "UNSTRUCTURED" | "LLAMACLOUD";
+
+const ETL_SERVICE_OPTIONS: Array<{ key: EtlServiceOption; label: string; desc: string }> = [
+	{
+		key: "DOCLING",
+		label: "Docling",
+		desc: "Multi-format local parser for PDF/Office documents.",
+	},
+	{
+		key: "MINERU",
+		label: "MinerU",
+		desc: "Layout parser for PDFs; MinerU v3+ also supports DOCX/PPTX/XLSX.",
+	},
+	{
+		key: "UNSTRUCTURED",
+		label: "Unstructured",
+		desc: "General-purpose parser for mixed file types.",
+	},
+	{
+		key: "LLAMACLOUD",
+		label: "LlamaCloud",
+		desc: "Cloud parsing pipeline for complex document layouts.",
+	},
+];
 
 const CHUNK_METHODS: ChunkingStrategy[] = [
 	"chunk_text",
@@ -32,15 +59,32 @@ const CHUNK_METHODS: ChunkingStrategy[] = [
 const CHUNK_SIZES = [256, 512, 1024, 2048];
 const RANKING_VARIANTS = ["hybrid_rrf_plus", "hybrid_weighted"];
 
+interface BenchmarkDatasetSummary {
+	benchmarkdata_id: number;
+	doc_id: number;
+	task_type: string;
+	task_num: number;
+	created_date: string;
+	dataset_filename: string;
+	dataset_mime_type?: string | null;
+	dataset_size_bytes: number;
+}
+
 export default function BenchmarkPage() {
 	const params = useParams();
+	const searchParams = useSearchParams();
 	const searchSpaceId = Number(params.search_space_id);
+	const focusedDocIdParam = Number(searchParams.get("doc_id"));
+	const focusedDocId = Number.isFinite(focusedDocIdParam) && focusedDocIdParam > 0 ? focusedDocIdParam : null;
 	const setSearchSpaceSettingsDialog = useSetAtom(searchSpaceSettingsDialogAtom);
 	const { data: preferences = {}, isFetching: preferencesLoading } = useAtomValue(llmPreferencesAtom);
 	const { data: globalConfigs = [], isFetching: globalConfigsLoading } =
 		useAtomValue(globalNewLLMConfigsAtom);
 
 	const [benchmarkFile, setBenchmarkFile] = useState<File | null>(null);
+	const [selectedEtlServices, setSelectedEtlServices] = useState<EtlServiceOption[]>([
+		"DOCLING",
+	]);
 	const [selectedEmbeddingModels, setSelectedEmbeddingModels] = useState<string[]>([
 		"fastembed/bge-base-en-v1.5",
 	]);
@@ -76,6 +120,18 @@ export default function BenchmarkPage() {
 	const [etaSeconds, setEtaSeconds] = useState<number | null>(null);
 	const [rankedReports, setRankedReports] = useState<Record<string, any>[]>([]);
 	const [candidatesStatus, setCandidatesStatus] = useState<BenchmarkCandidateStatus[]>([]);
+	const [focusedBenchmarkDataset, setFocusedBenchmarkDataset] = useState<BenchmarkDatasetSummary | null>(null);
+	const [autoFocusLoading, setAutoFocusLoading] = useState(false);
+	const [variantMappingLoading, setVariantMappingLoading] = useState(false);
+	const [variantMappingLoaded, setVariantMappingLoaded] = useState(false);
+	const [variantMappingSource, setVariantMappingSource] = useState<string | null>(null);
+	const [variantPipelineIdCount, setVariantPipelineIdCount] = useState<number | null>(null);
+	const [availableEtlServices, setAvailableEtlServices] = useState<EtlServiceOption[]>([]);
+	const [focusedPreferredEtlServices, setFocusedPreferredEtlServices] = useState<EtlServiceOption[]>([]);
+	const [availableChunkMethods, setAvailableChunkMethods] = useState<ChunkingStrategy[]>([]);
+	const [availableChunkSizes, setAvailableChunkSizes] = useState<number[]>([]);
+	const [availableEmbeddingModels, setAvailableEmbeddingModels] = useState<string[]>([]);
+	const lastAutoFocusKeyRef = useRef<string | null>(null);
 
 	const agentLlmId = preferences.agent_llm_id;
 	const docSummaryLlmId = preferences.document_summary_llm_id;
@@ -94,14 +150,27 @@ export default function BenchmarkPage() {
 	const isLoading = preferencesLoading || globalConfigsLoading;
 
 	const totalCandidates =
+		selectedEtlServices.length *
 		selectedEmbeddingModels.length *
 		selectedChunkMethods.length *
 		selectedChunkSizes.length *
 		selectedRankingVariants.length;
 
+	const availableEtlServicesSet = useMemo(() => new Set(availableEtlServices), [availableEtlServices]);
+	const availableChunkMethodsSet = useMemo(
+		() => new Set(availableChunkMethods),
+		[availableChunkMethods]
+	);
+	const availableChunkSizesSet = useMemo(() => new Set(availableChunkSizes), [availableChunkSizes]);
+	const availableEmbeddingModelsSet = useMemo(
+		() => new Set(availableEmbeddingModels),
+		[availableEmbeddingModels]
+	);
+
 	const canRun =
 		!!benchmarkFile &&
 		hasBenchmarkLLM &&
+		selectedEtlServices.length > 0 &&
 		selectedEmbeddingModels.length > 0 &&
 		selectedChunkMethods.length > 0 &&
 		selectedChunkSizes.length > 0 &&
@@ -114,6 +183,8 @@ export default function BenchmarkPage() {
 		? "Upload a benchmark .json file to proceed"
 		: !hasBenchmarkLLM
 		? "Configure an Agent or Document Summary LLM in Settings"
+		: selectedEtlServices.length === 0
+		? "Select at least one ETL / Parse variant"
 		: selectedEmbeddingModels.length === 0
 		? "Select at least one embedding model"
 		: selectedChunkMethods.length === 0
@@ -234,6 +305,253 @@ export default function BenchmarkPage() {
 		};
 	}, [jobId]);
 
+	useEffect(() => {
+		if (!focusedDocId) {
+			setFocusedPreferredEtlServices([]);
+			return;
+		}
+
+		let cancelled = false;
+
+		const loadFocusedPreferredEtl = async () => {
+			try {
+				const document = await documentsApiService.getDocument({ id: focusedDocId });
+				if (cancelled) return;
+
+				const etls = new Set<EtlServiceOption>();
+				const metadata = document.document_metadata;
+
+				const signatures = metadata?.pipeline_signatures;
+				if (Array.isArray(signatures)) {
+					for (const signature of signatures) {
+						if (typeof signature !== "object" || signature === null) continue;
+						const rawEtl = (signature as { etl_service?: unknown }).etl_service;
+						if (typeof rawEtl !== "string") continue;
+						const normalized = rawEtl.trim().toUpperCase();
+						if (ETL_SERVICE_OPTIONS.some((option) => option.key === normalized)) {
+							etls.add(normalized as EtlServiceOption);
+						}
+					}
+				}
+
+				if (etls.size === 0) {
+					const raw = metadata?.ETL_SERVICE;
+					if (typeof raw === "string") {
+						const normalized = raw.trim().toUpperCase();
+						if (ETL_SERVICE_OPTIONS.some((option) => option.key === normalized)) {
+							etls.add(normalized as EtlServiceOption);
+						}
+					}
+				}
+
+				setFocusedPreferredEtlServices(Array.from(etls));
+			} catch {
+				if (!cancelled) {
+					setFocusedPreferredEtlServices([]);
+				}
+			}
+		};
+
+		void loadFocusedPreferredEtl();
+
+		return () => {
+			cancelled = true;
+		};
+	}, [focusedDocId]);
+
+	useEffect(() => {
+		if (!searchSpaceId) return;
+
+		let cancelled = false;
+
+		const loadVariantMapping = async () => {
+			setVariantMappingLoading(true);
+			setVariantMappingSource(null);
+			setVariantPipelineIdCount(null);
+			try {
+				const options = await benchmarkApiService.getAvailableOptions(
+					searchSpaceId,
+					focusedDocId ?? undefined
+				);
+
+				if (cancelled) return;
+
+				setAvailableChunkMethods(
+					CHUNK_METHODS.filter((method) => options.chunking_strategies.includes(method))
+				);
+				setAvailableEtlServices(
+					ETL_SERVICE_OPTIONS.map((option) => option.key).filter((key) => {
+						const normalizedOptions = options.etl_services.map((value) => value.trim().toUpperCase());
+						return normalizedOptions.includes(key);
+					})
+				);
+				setAvailableChunkSizes(
+					CHUNK_SIZES.filter((size) => options.chunk_sizes.includes(size))
+				);
+				setAvailableEmbeddingModels(options.embedding_models);
+				setVariantMappingSource(options.source ?? null);
+				setVariantPipelineIdCount(Array.isArray(options.pipeline_ids) ? options.pipeline_ids.length : 0);
+				setVariantMappingLoaded(true);
+			} catch (error) {
+				if (!cancelled) {
+					setVariantMappingLoaded(false);
+					setVariantMappingSource(null);
+					setVariantPipelineIdCount(null);
+					toast.error(
+						error instanceof Error
+							? error.message
+							: "Failed to load pipeline variant mapping"
+					);
+				}
+			} finally {
+				if (!cancelled) setVariantMappingLoading(false);
+			}
+		};
+
+		void loadVariantMapping();
+
+		return () => {
+			cancelled = true;
+		};
+	}, [searchSpaceId, focusedDocId]);
+
+	useEffect(() => {
+		if (!variantMappingLoaded) return;
+
+		if (focusedDocId !== null) {
+			setSelectedEtlServices(availableEtlServices);
+			setSelectedChunkMethods(availableChunkMethods);
+			setSelectedChunkSizes(availableChunkSizes);
+			setSelectedEmbeddingModels(availableEmbeddingModels);
+			return;
+		}
+
+		setSelectedEtlServices((previous) =>
+			{
+				const preferredAvailable = focusedPreferredEtlServices.filter((etl) =>
+					availableEtlServicesSet.has(etl)
+				);
+				if (preferredAvailable.length > 0) {
+					return preferredAvailable;
+				}
+				const filtered = previous.filter((etlService) => availableEtlServicesSet.has(etlService));
+				if (filtered.length > 0) return filtered;
+				return availableEtlServices.length > 0 ? [availableEtlServices[0]] : filtered;
+			}
+		);
+
+		setSelectedChunkMethods((previous) =>
+			{
+				const filtered = previous.filter((method) => availableChunkMethodsSet.has(method));
+				if (filtered.length > 0) return filtered;
+				return availableChunkMethods.length > 0 ? [availableChunkMethods[0]] : filtered;
+			}
+		);
+		setSelectedChunkSizes((previous) =>
+			{
+				const filtered = previous.filter((size) => availableChunkSizesSet.has(size));
+				if (filtered.length > 0) return filtered;
+				return availableChunkSizes.length > 0 ? [availableChunkSizes[0]] : filtered;
+			}
+		);
+		setSelectedEmbeddingModels((previous) =>
+			{
+				const filtered = previous.filter((model) => availableEmbeddingModelsSet.has(model));
+				if (filtered.length > 0) return filtered;
+				return availableEmbeddingModels.length > 0 ? [availableEmbeddingModels[0]] : filtered;
+			}
+		);
+	}, [
+		variantMappingLoaded,
+		focusedPreferredEtlServices,
+		availableEtlServices,
+		availableEtlServicesSet,
+		availableChunkMethods,
+		availableChunkMethodsSet,
+		availableChunkSizes,
+		availableChunkSizesSet,
+		availableEmbeddingModels,
+		availableEmbeddingModelsSet,
+		focusedDocId,
+	]);
+
+	useEffect(() => {
+		if (!focusedDocId || !searchSpaceId) {
+			setFocusedBenchmarkDataset(null);
+			return;
+		}
+
+		const focusKey = `${searchSpaceId}:${focusedDocId}`;
+		if (lastAutoFocusKeyRef.current === focusKey) return;
+		lastAutoFocusKeyRef.current = focusKey;
+
+		let cancelled = false;
+		const controller = new AbortController();
+
+		const loadFocusedBenchmark = async () => {
+			setAutoFocusLoading(true);
+			try {
+				const token = getBearerToken() || "";
+				const listResponse = await fetch(
+					`${process.env.NEXT_PUBLIC_FASTAPI_BACKEND_URL}/api/v1/documents/${focusedDocId}/benchmark-data`,
+					{ headers: { Authorization: `Bearer ${token}` }, signal: controller.signal }
+				);
+				if (!listResponse.ok) {
+					throw new Error("Failed to load focused benchmark datasets");
+				}
+
+				const listPayload = (await listResponse.json()) as {
+					items?: BenchmarkDatasetSummary[];
+				};
+				const items = listPayload.items ?? [];
+				if (cancelled) return;
+
+				if (items.length === 0) {
+					setFocusedBenchmarkDataset(null);
+					toast.info("No benchmark dataset found for selected document");
+					return;
+				}
+
+				const selected = items[0];
+				setFocusedBenchmarkDataset(selected);
+
+				const downloadResponse = await fetch(
+					`${process.env.NEXT_PUBLIC_FASTAPI_BACKEND_URL}/api/v1/documents/${focusedDocId}/benchmark-data/${selected.benchmarkdata_id}/download`,
+					{ headers: { Authorization: `Bearer ${token}` }, signal: controller.signal }
+				);
+				if (!downloadResponse.ok) {
+					throw new Error("Failed to load focused benchmark data file");
+				}
+				const blob = await downloadResponse.blob();
+				if (cancelled) return;
+
+				const filename = selected.dataset_filename || `benchmark-${selected.benchmarkdata_id}.json`;
+				const file = new File([blob], filename, {
+					type: selected.dataset_mime_type || blob.type || "application/json",
+					lastModified: Date.now(),
+				});
+				setBenchmarkFile(file);
+			} catch (error) {
+				if (controller.signal.aborted || cancelled) return;
+				setFocusedBenchmarkDataset(null);
+				toast.error(
+					error instanceof Error
+						? error.message
+						: "Failed to auto-focus benchmark data"
+				);
+			} finally {
+				if (!cancelled) setAutoFocusLoading(false);
+			}
+		};
+
+		void loadFocusedBenchmark();
+
+		return () => {
+			cancelled = true;
+			controller.abort();
+		};
+	}, [focusedDocId, searchSpaceId]);
+
 	const topRows = useMemo(() => rankedReports.slice(0, 24), [rankedReports]);
 
 	const toggleString = <T extends string>(
@@ -273,6 +591,7 @@ export default function BenchmarkPage() {
 			const response = await benchmarkApiService.startJob({
 				benchmark_file: benchmarkFile,
 				search_space_id: searchSpaceId,
+				etl_services: selectedEtlServices,
 				chunking_strategies: selectedChunkMethods,
 				embedding_models: selectedEmbeddingModels,
 				chunk_sizes: selectedChunkSizes,
@@ -337,12 +656,56 @@ export default function BenchmarkPage() {
 
 					<div className="space-y-2">
 						<p className="text-sm font-medium">Benchmark dataset (.json)</p>
+						{focusedBenchmarkDataset && (
+							<p className="text-xs text-muted-foreground">
+								Focused document #{focusedBenchmarkDataset.doc_id} · using {focusedBenchmarkDataset.dataset_filename}
+								 {focusedBenchmarkDataset.task_num ? `(Task ${focusedBenchmarkDataset.task_num})` : ""}
+							</p>
+						)}
+						{autoFocusLoading && (
+							<p className="text-xs text-muted-foreground">Loading focused benchmark data...</p>
+						)}
 						<input
 							type="file"
 							accept="application/json,.json"
 							onChange={(e) => setBenchmarkFile(e.target.files?.[0] ?? null)}
 							className="text-sm"
 						/>
+					</div>
+
+					<div className="space-y-2">
+						<p className="text-xs text-muted-foreground">
+							Benchmark options are mapped to existing pipeline variants; unavailable options are disabled. Chunk Ranking Variants are always available.
+						</p>
+						{variantMappingLoaded && variantMappingSource && (
+							<div className="flex items-center gap-2">
+								<span className="text-xs text-muted-foreground">Mapping source:</span>
+								<Badge variant="outline" className="text-[10px] uppercase tracking-wide">
+									{variantMappingSource === "opensearch" ? "OpenSearch tags" : "Metadata fallback"}
+								</Badge>
+								{variantPipelineIdCount !== null && (
+									<span className="text-xs text-muted-foreground">
+										{variantPipelineIdCount} pipeline IDs
+									</span>
+								)}
+							</div>
+						)}
+						{variantMappingLoading && (
+							<p className="text-xs text-muted-foreground">Loading pipeline variant availability...</p>
+						)}
+						{variantMappingLoaded &&
+							(availableEtlServices.length === 0 ||
+								availableChunkMethods.length === 0 ||
+								availableChunkSizes.length === 0 ||
+								availableEmbeddingModels.length === 0) && (
+								<Alert>
+									<AlertTriangle className="h-4 w-4" />
+									<AlertTitle>Pipeline variants required</AlertTitle>
+									<AlertDescription>
+										Create pipeline variants first (ETL/parse, chunking, embeddings, chunk sizes), then run benchmark.
+									</AlertDescription>
+								</Alert>
+							)}
 					</div>
 
 					<div className="space-y-2">
@@ -356,47 +719,149 @@ export default function BenchmarkPage() {
 						/>
 					</div>
 
-					<EmbeddingModelSelector
-						selectedModels={selectedEmbeddingModels}
-						onSelectionChange={setSelectedEmbeddingModels}
-						estimatedTokens={10000}
-					/>
-
-					<div className="space-y-2">
-						<p className="text-sm font-medium">Chunk methods</p>
-						<div className="grid grid-cols-2 gap-2">
-							{CHUNK_METHODS.map((method) => {
-								const active = selectedChunkMethods.includes(method);
-								return (
-									<Button
-										key={method}
-										type="button"
-										variant={active ? "default" : "outline"}
-										onClick={() => toggleString(setSelectedChunkMethods, selectedChunkMethods, method)}
-									>
-										{method}
-									</Button>
-								);
-							})}
+					<div className="space-y-3 rounded-lg border border-border p-3">
+						<div className="flex items-center justify-between mb-1">
+							<p className="font-semibold text-sm">Pipeline Settings</p>
 						</div>
-					</div>
 
-					<div className="space-y-2">
-						<p className="text-sm font-medium">Chunk sizes</p>
-						<div className="flex flex-wrap gap-2">
-							{CHUNK_SIZES.map((size) => {
-								const active = selectedChunkSizes.includes(size);
-								return (
-									<Button
-										key={size}
-										type="button"
-										variant={active ? "default" : "outline"}
-										onClick={() => toggleNumber(setSelectedChunkSizes, selectedChunkSizes, size)}
-									>
-										{size}
-									</Button>
-								);
-							})}
+						<div className="flex items-center gap-0 text-[10px] font-medium mb-3">
+							{[
+								{ step: "1", label: "ETL / Parse", sub: "PDF → Markdown", color: "bg-orange-500", text: "text-orange-400", border: "border-orange-500/40" },
+								{ step: "2", label: "Chunking Method", sub: "Split strategy", color: "bg-violet-500", text: "text-violet-400", border: "border-violet-500/40" },
+								{ step: "3", label: "Chunk Size", sub: "Token window", color: "bg-emerald-500", text: "text-emerald-400", border: "border-emerald-500/40" },
+								{ step: "4", label: "Embeddings", sub: "Vectors → Index", color: "bg-blue-500", text: "text-blue-400", border: "border-blue-500/40" },
+							].map((stage, index) => (
+								<div key={stage.step} className="flex items-center">
+									<div className={`flex items-center gap-1.5 rounded-md border ${stage.border} bg-muted/60 px-2.5 py-1.5`}>
+										<span className={`inline-flex h-4 w-4 items-center justify-center rounded-full ${stage.color} text-white font-bold text-[9px] shrink-0`}>{stage.step}</span>
+										<div>
+											<p className={`${stage.text} font-semibold leading-none`}>{stage.label}</p>
+											<p className="text-muted-foreground/60 leading-none mt-0.5">{stage.sub}</p>
+										</div>
+									</div>
+									{index < 3 && (
+										<svg className="h-3 w-5 text-muted-foreground/40 shrink-0" viewBox="0 0 20 12" fill="none">
+											<path d="M0 6h16M12 1l6 5-6 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+										</svg>
+									)}
+								</div>
+							))}
+						</div>
+
+						<div className="grid grid-cols-4 divide-x divide-border">
+							<div className="pr-4 space-y-2">
+								<div className="flex items-center gap-2 pb-1 border-b border-border">
+									<span className="inline-block h-2 w-2 rounded-full bg-orange-500 shrink-0" />
+									<p className="font-semibold text-xs uppercase tracking-wider text-foreground">ETL / Parse</p>
+								</div>
+								<p className="text-[10px] text-muted-foreground leading-snug">
+									Converts raw files into clean Markdown. Runs once per document and must exist before benchmarking.
+								</p>
+								{ETL_SERVICE_OPTIONS.map((option) => {
+									const active = selectedEtlServices.includes(option.key);
+									const isAvailable = !variantMappingLoaded || availableEtlServicesSet.has(option.key);
+									return (
+										<button
+											key={option.key}
+											type="button"
+											disabled={!isAvailable}
+											onClick={() =>
+												toggleString(setSelectedEtlServices, selectedEtlServices, option.key)
+											}
+											className={`rounded-lg border px-3 py-2 flex items-start gap-2 text-left ${
+												!isAvailable
+													? "border-border bg-muted/20 opacity-50 cursor-not-allowed"
+													: active
+														? "border-orange-500/50 bg-orange-500/10"
+														: "border-border bg-muted/40 hover:border-orange-500/30"
+											}`}
+										>
+											<span className={`inline-block h-1.5 w-1.5 rounded-full mt-1 shrink-0 ${active ? "bg-orange-500" : "bg-muted-foreground/50"}`} />
+											<div>
+												<p className={`text-xs font-semibold leading-none ${active ? "text-orange-400" : "text-muted-foreground"}`}>
+													{option.label}
+													{active ? " (selected)" : ""}
+												</p>
+												<p className="text-[10px] text-muted-foreground mt-0.5 leading-snug">{option.desc}</p>
+											</div>
+										</button>
+									);
+								})}
+							</div>
+
+							<div className="px-4 space-y-2">
+								<div className="flex items-center gap-2 pb-1 border-b border-border">
+									<span className="inline-block h-2 w-2 rounded-full bg-violet-500 shrink-0" />
+									<p className="font-semibold text-xs uppercase tracking-wider text-foreground">Chunking Method</p>
+								</div>
+								<div className="grid grid-cols-1 gap-1.5">
+									{CHUNK_METHODS.map((method) => {
+										const active = selectedChunkMethods.includes(method);
+										const isAvailable = !variantMappingLoaded || availableChunkMethodsSet.has(method);
+										return (
+											<button
+												key={method}
+												type="button"
+												disabled={!isAvailable}
+												onClick={() => toggleString(setSelectedChunkMethods, selectedChunkMethods, method)}
+												className={`rounded-lg border px-3 py-2 text-left text-xs font-medium transition-colors flex items-center gap-2 ${
+													!isAvailable
+														? "border-border bg-muted/20 text-muted-foreground/50 opacity-50 cursor-not-allowed"
+														: active
+															? "border-violet-500 bg-violet-500/10 text-violet-400"
+															: "border-border hover:border-muted-foreground/50 text-muted-foreground hover:text-foreground"
+												}`}
+											>
+												<span className={`inline-block h-1.5 w-1.5 rounded-full shrink-0 ${active ? "bg-violet-500" : "bg-muted-foreground/40"}`} />
+												{method}
+											</button>
+										);
+									})}
+								</div>
+							</div>
+
+							<div className="px-4 space-y-2">
+								<div className="flex items-center gap-2 pb-1 border-b border-border">
+									<span className="inline-block h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+									<p className="font-semibold text-xs uppercase tracking-wider text-foreground">Chunk Size</p>
+								</div>
+								<div className="grid grid-cols-2 gap-1.5">
+									{CHUNK_SIZES.map((size) => {
+										const active = selectedChunkSizes.includes(size);
+										const isAvailable = !variantMappingLoaded || availableChunkSizesSet.has(size);
+										return (
+											<button
+												key={size}
+												type="button"
+												disabled={!isAvailable}
+												onClick={() => toggleNumber(setSelectedChunkSizes, selectedChunkSizes, size)}
+												className={`rounded-lg border px-2 py-2 text-center text-xs font-medium transition-colors ${
+													!isAvailable
+														? "border-border bg-muted/20 text-muted-foreground/50 opacity-50 cursor-not-allowed"
+														: active
+															? "border-emerald-500 bg-emerald-500/10 text-emerald-400"
+															: "border-border hover:border-muted-foreground/50 text-muted-foreground hover:text-foreground"
+												}`}
+											>
+												{size}
+											</button>
+										);
+									})}
+								</div>
+							</div>
+
+							<div className="pl-4 space-y-2">
+								<div className="flex items-center gap-2 pb-1 border-b border-border">
+									<span className="inline-block h-2 w-2 rounded-full bg-blue-500 shrink-0" />
+									<p className="font-semibold text-xs uppercase tracking-wider text-foreground">Embeddings</p>
+								</div>
+								<EmbeddingModelSelector
+									selectedModels={selectedEmbeddingModels}
+									onSelectionChange={setSelectedEmbeddingModels}
+									availableModelIds={variantMappingLoaded ? availableEmbeddingModels : undefined}
+									estimatedTokens={10000}
+								/>
+							</div>
 						</div>
 					</div>
 
@@ -572,8 +1037,10 @@ export default function BenchmarkPage() {
 								<tr className="text-left border-b border-border">
 									<th className="py-2 pr-2">Rank</th>
 									<th className="py-2 pr-2">Pipeline</th>
-									<th className="py-2 pr-2">Overall</th>
-									<th className="py-2 pr-2">Number</th>
+									<th className="py-2 pr-2">Overall Ratio</th>
+									<th className="py-2 pr-2">Normalized Ratio</th>
+									<th className="py-2 pr-2">Number Ratio</th>
+									<th className="py-2 pr-2">Unit Ratio</th>
 									<th className="py-2 pr-2">F1</th>
 									<th className="py-2">Score</th>
 								</tr>
@@ -587,7 +1054,13 @@ export default function BenchmarkPage() {
 											{(Number(row.overall_correct_rate ?? 0) * 100).toFixed(0)}%
 										</td>
 										<td className="py-2 pr-2">
+											{(Number(row.normalized_exact_rate ?? 0) * 100).toFixed(0)}%
+										</td>
+										<td className="py-2 pr-2">
 											{(Number(row.number_match_rate ?? 0) * 100).toFixed(0)}%
+										</td>
+										<td className="py-2 pr-2">
+											{(Number(row.unit_match_rate ?? 0) * 100).toFixed(0)}%
 										</td>
 										<td className="py-2 pr-2">{Number(row.mean_token_f1 ?? 0).toFixed(4)}</td>
 										<td className="py-2">{Number(row.score ?? 0).toFixed(4)}</td>

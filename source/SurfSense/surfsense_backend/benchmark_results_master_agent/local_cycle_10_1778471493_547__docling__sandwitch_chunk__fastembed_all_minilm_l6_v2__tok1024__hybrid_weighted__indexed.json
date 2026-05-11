@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-11T03:53:56Z",
+  "config": {
+    "base_url": "http://localhost:8000",
+    "resolved_base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "benchmark_file": "/tmp/surfsense_benchmark_jobs/f91f8c9bad224a34bbc0aae7a31d59e0__msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "mentioned_document_ids": [
+      380
+    ],
+    "sanitize_questions": true,
+    "ranking_variant": "hybrid_weighted"
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 1,
+    "overall_correct_rate": 0.5,
+    "number_match_count": 1,
+    "number_match_rate": 0.5,
+    "unit_match_count": 1,
+    "unit_match_rate": 0.5,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "mean_token_f1": 0.007220216606498194,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 1,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 2,
+      "overall_correct_count": 1,
+      "overall_correct_rate": 0.5,
+      "number_match_count": 1,
+      "number_match_rate": 0.5,
+      "unit_match_count": 1,
+      "unit_match_rate": 0.5,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "mean_token_f1": 0.007220216606498194
+    }
+  },
+  "thread_ids_used": [],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user wants a specific value from the MSFT_FY26Q1_10Q.docx file. Let me read the XML file to find the information about long-term accounts receivable.The document appears to be empty or has no content in the knowledge base. Let me search for the specific phrase in the document to locate the relevant content.The document content appears to be empty in the chunk_index and document_content sections. The document metadata shows it was uploaded but the content doesn't seem to be populated with actual chunks. Let me search more broadly to see if there's any content at all.The grep shows it found matches in the file but only returned file paths (files_with_matches mode). Let me get the content output to see the actual matches.I can see chunk_id=485401 mentions \"long-term accounts receivable\". Let me read that specific chunk to get the full value.The chunk is truncated in the grep output. Let me read the actual chunk content to get the full text.The document content seems to be stored differently. Let me search more specifically for the chunk_id 485401 to find where it's stored.Let me search for the exact chunk content.It seems like the chunk content is truncated in the display. The chunk_id=485401 says \"long-term accounts receiva\" which cuts off. Let me try to read the file more fully, or search for nearby content to find the numbers.Let me search more broadly. The chunk content mentions \"long-term accounts receiva\" but cuts off. Let me search for \"receiva\" to find if there's a continuation or more context.I found the answer. Long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025 was $5.0 billion.$5.0 billion [citation:486159], [citation:488240]",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.014440433212996389,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "G1-002",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "asked_question": "In MSFT_FY26Q1_10Q.docx, what is other receivables related to activities to facilitate the purchase of server components as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$14.4 billion USD",
+      "predicted_answer": "",
+      "metrics": {
+        "answer_clean": false,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": false,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

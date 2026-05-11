@@ -335,7 +335,7 @@ async def list_notifications(
     search: str | None = Query(
         None, description="Search notifications by title or message (case-insensitive)"
     ),
-    limit: int = Query(50, ge=1, le=100, description="Number of items to return"),
+    limit: int = Query(50, ge=1, le=200, description="Number of items to return"),
     offset: int = Query(0, ge=0, description="Number of items to skip"),
     user: User = Depends(current_active_user),
     session: AsyncSession = Depends(get_async_session),

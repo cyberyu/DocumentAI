@@ -1098,6 +1098,36 @@ class Document(BaseModel, TimestampMixin):
     chunks = relationship(
         "Chunk", back_populates="document", cascade="all, delete-orphan"
     )
+    benchmark_datasets = relationship(
+        "BenchmarkData", back_populates="document", cascade="all, delete-orphan"
+    )
+
+
+class BenchmarkData(Base):
+    __tablename__ = "benchmarkdata_table"
+
+    benchmarkdata_id = Column(Integer, primary_key=True, index=True)
+    doc_id = Column(
+        Integer,
+        ForeignKey("documents.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    task_type = Column(String(128), nullable=False, index=True)
+    task_num = Column(Integer, nullable=False)
+    created_date = Column(
+        TIMESTAMP(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(UTC),
+        index=True,
+    )
+
+    dataset_filename = Column(String(512), nullable=False)
+    dataset_content = Column(Text, nullable=False)
+    dataset_mime_type = Column(String(255), nullable=True)
+    dataset_size_bytes = Column(Integer, nullable=False, default=0, server_default="0")
+
+    document = relationship("Document", back_populates="benchmark_datasets")
 
 
 class DocumentVersion(BaseModel, TimestampMixin):

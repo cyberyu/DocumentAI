@@ -158,6 +158,10 @@ export const uploadDocumentRequest = z.object({
 	should_summarize: z.boolean().default(false),
 	use_vision_llm: z.boolean().default(false),
 	processing_mode: processingModeEnum.default("basic"),
+	etl_service: z.enum(["DOCLING", "MINERU", "UNSTRUCTURED", "LLAMACLOUD"]).optional(),
+	etl_services: z
+		.array(z.enum(["DOCLING", "MINERU", "UNSTRUCTURED", "LLAMACLOUD"]))
+		.optional(),
 	embedding_models: z.array(z.string()).optional(),
 	chunking_strategy: chunkingStrategyEnum.optional(),
 	chunking_strategies: z.array(chunkingStrategyEnum).optional(),
@@ -173,6 +177,19 @@ export const uploadDocumentResponse = z.object({
 	pending_files: z.number().optional(),
 	skipped_duplicates: z.number().optional(),
 	variant_count: z.number().optional(),
+	pipeline_jobs: z
+		.array(
+			z.object({
+				document_id: z.number(),
+				pipeline_id: z.string(),
+				job_name: z.string(),
+				etl_service: z.string().optional(),
+				chunking_strategy: z.string().nullable().optional(),
+				chunk_size: z.number().nullable().optional(),
+				embedding_models: z.array(z.string()).optional(),
+			})
+		)
+		.optional(),
 });
 
 /**

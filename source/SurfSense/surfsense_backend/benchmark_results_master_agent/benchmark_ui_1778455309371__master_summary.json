@@ -1,0 +1,86 @@
+{
+  "generated_at_utc": "2026-05-10T23:24:15Z",
+  "mode": "indexed_only",
+  "search_space_id": 1,
+  "benchmark_file": "/tmp/surfsense_benchmark_jobs/761a3e0b0997475992f1c23c757ac763__msft_fy26q1_qa_benchmark_100_sanitized.json",
+  "recommended_pipeline": {
+    "candidate": {
+      "etl_service": "MINERU",
+      "chunking_strategy": "sandwitch_chunk",
+      "embedding_model": "fastembed/bge-base-en-v1.5",
+      "chunk_size": 256,
+      "ranking_variant": "hybrid_weighted"
+    },
+    "pipeline_id": "mineru__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__hybrid_weighted",
+    "success": true,
+    "run_name": "benchmark_ui_1778455309371__mineru__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__hybrid_weighted__indexed",
+    "document_id": "indexed",
+    "pipeline_upload_id": 341,
+    "document_title_filter": "mineru__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__hybrid_weighted",
+    "benchmark_json": "benchmark_results_master_agent/benchmark_ui_1778455309371__mineru__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__hybrid_weighted__indexed.json",
+    "benchmark_md": "benchmark_results_master_agent/benchmark_ui_1778455309371__mineru__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__hybrid_weighted__indexed.md",
+    "overall_correct_rate": 1.0,
+    "normalized_exact_rate": 0.0,
+    "number_match_rate": 1.0,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.04239806948726041,
+    "request_failures": 0,
+    "elapsed_seconds": 95.72004771232605,
+    "score": 0.904239806948726,
+    "error": null
+  },
+  "ranked_subagent_reports": [
+    {
+      "candidate": {
+        "etl_service": "MINERU",
+        "chunking_strategy": "sandwitch_chunk",
+        "embedding_model": "fastembed/bge-base-en-v1.5",
+        "chunk_size": 256,
+        "ranking_variant": "hybrid_weighted"
+      },
+      "pipeline_id": "mineru__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__hybrid_weighted",
+      "success": true,
+      "run_name": "benchmark_ui_1778455309371__mineru__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__hybrid_weighted__indexed",
+      "document_id": "indexed",
+      "pipeline_upload_id": 341,
+      "document_title_filter": "mineru__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__hybrid_weighted",
+      "benchmark_json": "benchmark_results_master_agent/benchmark_ui_1778455309371__mineru__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__hybrid_weighted__indexed.json",
+      "benchmark_md": "benchmark_results_master_agent/benchmark_ui_1778455309371__mineru__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__hybrid_weighted__indexed.md",
+      "overall_correct_rate": 1.0,
+      "normalized_exact_rate": 0.0,
+      "number_match_rate": 1.0,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.04239806948726041,
+      "request_failures": 0,
+      "elapsed_seconds": 95.72004771232605,
+      "score": 0.904239806948726,
+      "error": null
+    },
+    {
+      "candidate": {
+        "etl_service": "MINERU",
+        "chunking_strategy": "sandwitch_chunk",
+        "embedding_model": "fastembed/bge-base-en-v1.5",
+        "chunk_size": 256,
+        "ranking_variant": "hybrid_rrf_plus"
+      },
+      "pipeline_id": "mineru__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__hybrid_rrf_plus",
+      "success": true,
+      "run_name": "benchmark_ui_1778455309371__mineru__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__hybrid_rrf_plus__indexed",
+      "document_id": "indexed",
+      "pipeline_upload_id": 341,
+      "document_title_filter": "mineru__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__hybrid_rrf_plus",
+      "benchmark_json": "benchmark_results_master_agent/benchmark_ui_1778455309371__mineru__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__hybrid_rrf_plus__indexed.json",
+      "benchmark_md": "benchmark_results_master_agent/benchmark_ui_1778455309371__mineru__sandwitch_chunk__fastembed_bge_base_en_v1_5__tok256__hybrid_rrf_plus__indexed.md",
+      "overall_correct_rate": 1.0,
+      "normalized_exact_rate": 0.0,
+      "number_match_rate": 1.0,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.032450357937503685,
+      "request_failures": 0,
+      "elapsed_seconds": 146.44179606437683,
+      "score": 0.9032450357937503,
+      "error": null
+    }
+  ]
+}
