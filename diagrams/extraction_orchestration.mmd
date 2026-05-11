@@ -1,0 +1,40 @@
+sequenceDiagram
+    autonumber
+    participant U as User
+    participant API as stream_new_chat
+    participant F as create_surfsense_deep_agent
+    participant R as Tools Registry
+    participant A as LangChain/LangGraph Agent
+    participant SW as scrape_webpage tool
+    participant UM as update_memory tool
+    participant ME as memory_extraction (background)
+    participant DB as Postgres/SearchSpace
+
+    U->>API: Send chat message
+    API->>F: Build agent for turn
+    F->>R: build_tools_async(dependencies)
+    R-->>F: Built-in tools + MCP tools
+    F->>A: create_agent(llm, tools, middleware, checkpointer)
+
+    API->>A: astream_events(input, config, context)
+
+    alt Model decides web/content extraction needed
+        A->>SW: on_tool_start: scrape_webpage(url,...)
+        SW-->>A: Extracted page content/metadata
+        A-->>API: on_tool_end + tool output
+    end
+
+    alt Model decides explicit memory save
+        A->>UM: on_tool_start: update_memory(updated_memory)
+        UM->>DB: Persist user/team memory
+        DB-->>UM: Commit result
+        UM-->>A: status=ok/error
+        A-->>API: on_tool_end(update_memory)
+    else No explicit update_memory call
+        API->>ME: extract_and_save_memory/team_memory (background)
+        ME->>DB: Load current memory + persist merged rewrite
+        DB-->>ME: Commit/no-op
+        ME-->>API: done (fire-and-forget)
+    end
+
+    API-->>U: Stream final answer + events
