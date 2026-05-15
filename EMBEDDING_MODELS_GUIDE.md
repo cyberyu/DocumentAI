@@ -339,7 +339,8 @@ experimental_cohere_compressed:
 
 ```bash
 # 1. Set API key
-export OPENAI_API_KEY=sk-proj-...
+# (REDACTED in repo) Set your key locally, e.g. in your shell or .env
+export OPENAI_API_KEY=<REDACTED>
 
 # 2. Update profile
 export RAG_ACTIVE_PROFILE=experimental_openai_3k
