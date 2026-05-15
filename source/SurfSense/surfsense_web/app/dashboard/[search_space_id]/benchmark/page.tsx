@@ -591,6 +591,7 @@ export default function BenchmarkPage() {
 			const response = await benchmarkApiService.startJob({
 				benchmark_file: benchmarkFile,
 				search_space_id: searchSpaceId,
+				benchmark_document_id: focusedDocId ?? undefined,
 				etl_services: selectedEtlServices,
 				chunking_strategies: selectedChunkMethods,
 				embedding_models: selectedEmbeddingModels,

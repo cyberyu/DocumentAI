@@ -1,0 +1,177 @@
+{
+  "generated_at_utc": "2026-05-14T12:31:06Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "df_santic_qa_failed_eligible_only.json",
+    "document_title_contains": "df.html",
+    "mentioned_document_ids": [
+      391
+    ],
+    "max_questions": 0,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": false,
+    "question_suffix": "",
+    "blend_fund_context": true,
+    "normalize_schema_terms": true,
+    "post_verbatim_stage": false,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 2,
+    "number_match_rate": 1.0,
+    "unit_match_count": 2,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.001805465191932336,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Level1": {
+      "run": 2,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 2,
+      "number_match_rate": 1.0,
+      "unit_match_count": 2,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.001805465191932336
+    }
+  },
+  "thread_ids_used": [
+    3861,
+    3862
+  ],
+  "results": [
+    {
+      "id": "L1-013",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for AUTOMATIC_INVESTMENT_ELIGIBLE from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return a boolean value (Yes/No).",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for automatic investment eligibility from the fund document. Please return a boolean value (Yes/No).",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for automatic investment eligibility from the fund document. Please return a boolean value (Yes/No).",
+      "normalization_applied": [
+        {
+          "term": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+          "normalized": "automatic investment eligibility"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for automatic investment eligibility from the fund document. Please return a boolean value (Yes/No).",
+      "schema_key": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+      "expected_answer_type": "boolean",
+      "gold_answer": "Yes",
+      "predicted_answer": "The user wants me to find information about BNY Mellon Equity Income Fund (Class A) from the document `df.html.xml`. Let me read this document to find the relevant information.The file is large. Let me search for the BNY Mellon Equity Income Fund in the document first using grep.Let me try a broader search - maybe just \"BNY Mellon\" or \"Equity Income\"Let me look at the chunks around \"BNY Mellon Equity Income Fund\" to find the specific fund details. I found several references: 1. Line 980 mentions \"Mellon Equity Income Fund\" (chunk 614544 around lines 977-982) 2. Lines 3481, 3564, 6067 also mention \"Mellon Equity Income Fund\" Let me also search specifically for \"automatic investment eligibility\" or \"automatic investment\" to see if there's a specific field about automatic investment eligibility. Let me read the chunk around line 977 to see the header/title area, and also search more specifically for the term \"automatic investment\".I need to find \"automatic investment eligibility\" as a specific data field for this fund. Let me look at the table at the beginning of the prospectus (the Fund Summary section) which typically has a table with key facts about the fund, including things like \"Automatic Investment Plan\" or \"Automatic Investment Eligibility\". Let me search for more specific terms in the Fund Summary area, particularly around lines 1009-1100 which should contain the Fund Summary table.I need to search for \"Automatic Investment\" as a specific feature or eligibility section, possibly in the \"Shareholder Guide\" or \"Services for Fund Investors\" section. Let me also search more specifically for what might be a table field about automatic investment for this fund. Let me look at the \"Buying and Selling Shares\" or \"Services for Fund Investors\" sections. Let me search for \"Automatic Asset Builder\" or \"automatic investment plan\" which are the common terms used.Let me try searching for \"minimum\" and \"initial\" keywords to find the fund's investment requirements section.Let me look for the \"Shareholder Guide\" section which starts around line 1025. The fund summary section has already been read extensively. Let me look at the \"Buying and Selling Shares\" section which should be deeper in the document, or the \"Services for Fund Investors\" section. Let me also check the table of contents to find the right pages. Let me look at a broader portion of the document - searching for \"Class A\" along with investment minimums specifically.I found the \"Purchase and Sale of Fund Shares\" section. It mentions: - For Class A, C, and I: minimum initial investment is $1,000, minimum subsequent investment is $100 - For Class Y: minimum initial investment is $1,000,000 But the user asked about \"automatic investment eligibility\". Let me now look for the specific \"Automatic Services\" section for mutual fund investors or the \"Services for Fund Investors\" section mentioned in the earlier chunk. Let me search for \"Services for Fund Investors\" or \"Automatic Services\" section.Let me look further into the document, specifically into the sections about services and automatic investment.Let me look at the \"Services for Fund Investors\" section which talks about automatic investment services. Let me navigate further through the document.Let me now look at the \"Services for Fund Investors - Automatic Services\" section which would describe the automatic investment services. Let me search for that section.The grep didn't find them as starting text of sections, but I can see from earlier results that \"Automatic Asset Builder\" and \"Automatic Services\" are mentioned in the document. Let me search for them more broadly.The table of contents says \"Services for Fund Investors\" is on page 18. The bulk of the document seems to be the prospectus. Since this is a large document, let me look at the sections around page 18 which would contain the \"Services for Fund Investors\" section. Let me search for \"Services for Fund Investors\" section header more specifically around the page break.Now I have a clear picture. The \"Automatic Services\" section (starting at line 2351) describes services like \"Automatic Asset Builder\", \"Payroll Savings Plan\", \"Government Direct Deposit\", \"Dividend Sweep\", \"Auto-Exchange Privilege\", and \"Automatic Withdrawal Plan\". But the user is asking about \"automatic investment eligibility\" - specifically whether this fund (Class A) is eligible for automatic investment. From what I've read: 1. The fund has automatic investment services available (Automatic Asset Builder, etc.) 2. These services are available to fund investors - \"Automatic Asset Builder permits you to purchase fund shares (minimum of $100 and maximum of $150,000 per transaction) at regular intervals selected by you.\" 3. The key restriction: \"These services are not available for Class Y shares.\" - line 2355 says this. Since Class A is NOT Class Y, and there's no restriction mentioned for Class A, the automatic investment eligibility for Class A would be \"Yes\". But wait - let me also check if there are any other explicit statements about this. Let me search for \"eligible\" or \"eligibility\" with respect to automatic investment more specifically. Actually, from the document, the \"Automatic Services\" section starts with: - Line 2351: \"Automatic Services\" - Line 2353-2356: \"Buying or selling shares automatically is easy with the services described below. With each service, you select a schedule and amount, subject to certain restrictions. These services are not available for Class Y shares.\" So it says \"These services are not available for Class Y shares\" but doesn't say anything about them not being available for Class A. Since the automatic investment services like Automatic Asset Builder (min $100, max $150,000 per transaction) are available, and the only exclusion is Class Y shares, Class A shares would be eligible. Let me verify this more carefully. The user is asking specifically about \"automatic investment eligibility\" - this is a specific field/flag in a fund data document, not a general question. Let me check if there's a more explicit statement or table. Actually, looking more carefully at the document structure, this is a prospectus document that has been converted to XML. The user likely wants to know whether the fund (Class A) supports automatic investment plans. Based on the document: 1. \"These services are not available for Class Y shares\" (line 2355) - implying they ARE available for other classes including Class A 2. The minimum and maximum for Automatic Asset Builder ($100 - $150,000) is stated 3. The minimum initial investment for Class A is $1,000 and subsequent is $100 So the answer would be Yes. Let me do a final check - is there anything that says Class A specifically is NOT eligible for automatic investment?Based on the document, BNY Mellon Equity Income Fund Class A shares are eligible for automatic investment. The \"Automatic Services\" section describes services like Automatic Asset Builder that allow purchasing fund shares automatically at regular intervals , . The only restriction noted is that \"These services are not available for Class Y shares\" - no such restriction applies to Class A shares. Additionally, the document mentions automatic investment services directly in the context of this fund, including the Automatic Asset Builder program . **Yes**",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0017241379310344827,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-013",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for AUTOMATIC_INVESTMENT_ELIGIBLE from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return a boolean value (Yes/No).",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for automatic investment eligibility from the fund document. Please return a boolean value (Yes/No).",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class C"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for automatic investment eligibility from the fund document. Please return a boolean value (Yes/No).",
+      "normalization_applied": [
+        {
+          "term": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+          "normalized": "automatic investment eligibility"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for automatic investment eligibility from the fund document. Please return a boolean value (Yes/No).",
+      "schema_key": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+      "expected_answer_type": "boolean",
+      "gold_answer": "Yes",
+      "predicted_answer": "The user wants me to find information about BNY Mellon Equity Income Fund (Class C) from the document `df.html.xml` (which is in priority documents). Let me read this file to find the relevant information.This is a large document. Let me search for \"BNY Mellon Equity Income Fund\" or \"automatic investment\" within this file to find the relevant sections quickly.The grep for \"BNY Mellon Equity Income Fund\" returned no matches. Let me search more broadly for \"Equity Income\" or look at the document structure to understand what funds are listed. Let me also search for \"Class C\" as mentioned.Let me look at the area around line 980 where \"Mellon Equity Income Fund\" appears to understand the structure. Also, I need to find the \"automatic investment eligibility\" information specifically for this fund. Let me also search more broadly for eligibility-related terms. Let me look at the chunk around line 977 (chunk_id=614544) which starts the content about BNY Mellon Equity Income Fund, and also the chunk at line 1089 which seems to have the table with Class A, Class C, Class I, Class Y.Let me look at the fund details section. The fund summary starts around line 1040+. Let me also look for the \"Buying and Selling Shares\" section which likely contains information about automatic investment eligibility. Let me search for \"minimum\" and \"automatic\" around this section.I need to find the section about \"automatic investment\" eligibility specifically for this fund. Let me search for more specific terms like \"Automatic Asset Builder\" or \"minimum to open\" or \"minimum investment\" for this fund, and check the Shareholder Guide / Buying and Selling Shares section which usually contains this information. Let me look at the \"Buying and Selling Shares\" section and also search for \"Minimum\" around that area.Let me look at the Shareholder Guide / Buying and Selling section. Based on the table of contents, the Shareholder Guide starts on page 9. Let me search for \"Buying and Selling\" or \"How to Buy\" sections.Let me look at the \"How to Buy Shares\" section (around line 1977) more carefully, and also the section around line 2037 which discusses minimum investments and automatic investment plans.Now I need to find the \"Services for Fund Investors - Automatic Services\" section which is referenced at line 2034. Let me search for that section to find out about automatic investment eligibility for the BNY Mellon Equity Income Fund.Let me look at the \"Automatic Services\" section (around line 2351) to find the specific details about automatic investment eligibility for this fund.Now I can see the automatic services section. The key point is at line 2353-2356: \"Automatic Services: Buying or selling shares automatically is easy with the services described below. With each service, you select a schedule and amount, subject to certain restrictions. These services are not available for Class Y shares.\" So Automatic Services are available for all classes EXCEPT Class Y. Since Class C is not Class Y, Automatic Services (including automatic investment) should be available for Class C shares. But let me also look for the Fund Summary section that was in the beginning of the document (around lines 1290-1310) which may have specific information about automatic investment eligibility for specific classes.Let me now look at the fund summary section more closely. The fund summary talks about minimum investments and purchase/sale of fund shares. It mentions \"for each share class, other than Class Y, the fund's minimum initial investment is $1,000\" and doesn't mention any restriction on automatic investment services. In the Automatic Services section (line 2351-2356), it explicitly says \"These services are not available for Class Y shares.\" Since Class C is not Class Y, automatic investment services ARE available for Class C shares. Let me check if there's a Fund Summary table that might have a specific row about automatic investment eligibility. Let me search for \"automatic\" more broadly in the fund summary area.Okay, so looking at the document thoroughly now. The fund's \"Buying and Selling Shares\" section in the Shareholder Guide notes that you can purchase shares automatically by selecting one of the automatic investment services. The Automatic Services section (line 2353-2356) states: \"Buying or selling shares automatically is easy with the services described below. With each service, you select a schedule and amount, subject to certain restrictions. These services are not available for Class Y shares.\" So automatic investment is indeed available for Class C shares (the only class it's NOT available for is Class Y). Let me also look at the fund summary table to see if there's a specific row about \"automatic investment\" or \"Automatic Asset Builder\" eligibility. Let me also check more of the document to look for a specific \"Automatic Investment\" row in a table.Let me also verify if the exclusive duplicate section (the later copy of the same content) has the same statement.I now have a clear picture. The document states in the Automatic Services section: \"These services are not available for Class Y shares.\" This means that automatic investment services (like Automatic Asset Builder) ARE available for Class C shares. Since the question is specifically about BNY Mellon Equity Income Fund (Class C), the answer is Yes - automatic investment is eligible for Class C. Let me look at the fund summary table from the beginning to see if there's a specific section that lists \"Automatic investment plan\" or \"Automatic Asset Builder\" as available. Let me look at the very first Fund Summary section to see if there's a table about purchase and sale information. Actually, the document is well structured. Let me check the fund summary \"Purchase and Sale of Fund Shares\" section more carefully. I already read lines 1297-1315 which is that section. It doesn't mention automatic investment specifically, but it mentions the general minimums. The How to Buy Shares section (line 1977+) explicitly mentions \"Automatically\" at line 2032: \"You may purchase additional shares by selecting one of the automatic investment services made available to the fund...\" And the Automatic Services section (line 2351+) states the services are available for all classes except Class Y. Since Class C is not Class Y, automatic investment is available/eligible for Class C shares. The answer is: Yes.Based on the fund's prospectus, the **Automatic Services** (including automatic investment plans like Automatic Asset Builder) are available for all share classes **except Class Y** . Since Class C is not Class Y, the answer is: **Yes**",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.001886792452830189,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

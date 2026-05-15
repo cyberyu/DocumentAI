@@ -1,0 +1,74 @@
+flowchart TD
+    A[Client calls new_chat route] --> B[stream_new_chat starts]
+
+    subgraph S1["1) Request Setup"]
+      B --> C[Create StreamResult + StreamingService]
+      C --> D[Mark assistant busy + start token counter]
+      D --> E[Get pinned model config]
+      E --> F{Config valid?}
+      F -->|No| F1[Send stream error + done]
+      F -->|Yes| G[Load model + AgentConfig]
+      G --> H[Optional image support check]
+      H --> I[Optional premium quota hold]
+    end
+
+    subgraph S2["2) Build Runtime Objects"]
+      I --> J[Optional quick model-access check]
+      J --> K[Create connector service + checkpointer]
+      K --> L[Start early create_surfsense_deep_agent]
+      L --> M{Quick check says rate limited?}
+      M -->|Yes| N[Switch model + rebuild agent]
+      M -->|No| O[Use early-built agent]
+      N --> O
+    end
+
+    subgraph S3["3) Prepare Input + Stream Handshake"]
+      O --> P[Load history + gather doc/report context]
+      P --> Q[Build HumanMessage + input_state]
+      Q --> R[Send SSE start events: message/start/turn-info]
+      R --> R1[Save user turn + assistant shell rows]
+      R1 --> R2[Send stable user/assistant message ids]
+      R2 --> R3[Emit initial thinking step]
+      R3 --> R4[Start optional title task]
+    end
+
+    subgraph S4["4) Stream Agent Events"]
+      R4 --> T[_stream_agent_events loop]
+      T --> U[on_chat_model_stream: analysis/text chunks]
+      T --> V[on_tool_start: open tool card + thinking step]
+      T --> W[on_tool_end: parse output + send tool/result events]
+      T --> X[custom events: action log/report/document updates]
+      T --> Y[close parts + get state + last-chance commit]
+      Y --> Z[file-operation rule check]
+      Z --> AA{interrupt requested?}
+      AA -->|Yes| AB[Send interrupt request]
+      AA -->|No| AC[Continue]
+    end
+
+    subgraph S5["5) Retry + Finish"]
+      AC --> AD{Rate limit before first event?}
+      AD -->|Yes| AE[Switch model + rebuild + retry stream loop]
+      AE --> T
+      AD -->|No| AF[Finish normal path]
+      AB --> AF
+      AF --> AG[Send token usage + turn-status idle + finish/done]
+    end
+
+    subgraph S6["6) Error + Always-Run Cleanup"]
+      F1 --> CL[Return]
+      AF --> AH[finally: protected cleanup]
+      AH --> AI[end_turn + clear assistant busy + close session]
+      AI --> AJ[finalize_assistant_turn content + token usage]
+      AJ --> AK[save sandbox files + GC + trim native heap]
+      AK --> CL[Exit]
+    end
+
+    classDef setup fill:#E8F2FF,stroke:#4F6BED,color:#1F2A44
+    classDef stream fill:#EAFBF1,stroke:#1E8E5A,color:#0F5132
+    classDef guard fill:#FFF4E5,stroke:#D97706,color:#7C2D12
+    classDef cleanup fill:#F5F3FF,stroke:#7C3AED,color:#3B0764
+
+    class C,D,E,G,H,I,J,K,L,P,Q,R,R1,R2,R3,R4 setup
+    class T,U,V,W,X,Y,Z,AA,AB,AC stream
+    class F,F1,M,N,AD,AE guard
+    class AF,AG,AH,AI,AJ,AK,CL cleanup

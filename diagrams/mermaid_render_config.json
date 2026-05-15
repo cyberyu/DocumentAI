@@ -1,0 +1,17 @@
+{
+  "theme": "default",
+  "themeVariables": {
+    "background": "#ffffff",
+    "fontFamily": "Arial, Helvetica, sans-serif",
+    "textColor": "#111111",
+    "primaryTextColor": "#111111",
+    "lineColor": "#333333"
+  },
+  "flowchart": {
+    "htmlLabels": false,
+    "useMaxWidth": false
+  },
+  "sequence": {
+    "useMaxWidth": false
+  }
+}

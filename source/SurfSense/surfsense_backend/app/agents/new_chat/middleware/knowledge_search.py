@@ -62,6 +62,24 @@ from app.utils.perf import get_perf_logger
 
 logger = logging.getLogger(__name__)
 _perf_log = get_perf_logger()
+_MATCHED_CHUNK_TEXT_RE = re.compile(r":chunk_text:(\d+)$")
+
+
+def _coerce_matched_chunk_id(value: Any) -> int | None:
+    if isinstance(value, int):
+        return value
+    if isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return None
+        if text.isdigit():
+            return int(text)
+        # Some retrievers emit opaque IDs such as
+        # '<hash>:chunk_text:<ordinal>'. Preserve the ordinal portion.
+        match = _MATCHED_CHUNK_TEXT_RE.search(text)
+        if match:
+            return int(match.group(1))
+    return None
 
 
 class KBSearchPlan(BaseModel):
@@ -953,9 +971,13 @@ class KnowledgePriorityMiddleware(AgentMiddleware):  # type: ignore[type-arg]
             if isinstance(doc_id, int):
                 chunk_ids = doc.get("matched_chunk_ids") or []
                 if chunk_ids:
-                    matched_chunk_ids[doc_id] = [
-                        int(cid) for cid in chunk_ids if isinstance(cid, int | str)
+                    coerced_ids = [
+                        parsed
+                        for parsed in (_coerce_matched_chunk_id(cid) for cid in chunk_ids)
+                        if parsed is not None
                     ]
+                    if coerced_ids:
+                        matched_chunk_ids[doc_id] = coerced_ids
         return priority, matched_chunk_ids
 
 

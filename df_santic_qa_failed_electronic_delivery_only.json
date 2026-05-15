@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "total": 4,
+    "group_counts": {
+      "Level17": 4
+    },
+    "source_file": "df_santic_qa.json",
+    "subset_reason": "failed ELECTRONIC_DELIVERY questions patched to boolean Yes/No + evidence"
+  },
+  "qa_pairs": [
+    {
+      "id": "L17-005",
+      "name": "ELECTRONIC_DELIVERY",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class I",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find out whether the BNY Mellon Equity Income Fund (Class I) allows for electronic delivery eligibility. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "www.im.bnymellon.com",
+        "start_offset": 471040,
+        "end_offset": 471060,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L17-005",
+      "name": "ELECTRONIC_DELIVERY",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find out whether the BNY Mellon Equity Income Fund (Class A) allows for electronic delivery eligibility. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "www.im.bnymellon.com",
+        "start_offset": 471040,
+        "end_offset": 471060,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L17-005",
+      "name": "ELECTRONIC_DELIVERY",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class Y",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find out whether the BNY Mellon Equity Income Fund (Class Y) allows for electronic delivery eligibility. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "www.im.bnymellon.com",
+        "start_offset": 471040,
+        "end_offset": 471060,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L17-005",
+      "name": "ELECTRONIC_DELIVERY",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find out whether the BNY Mellon Equity Income Fund (Class C) allows for electronic delivery eligibility. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "www.im.bnymellon.com",
+        "start_offset": 471040,
+        "end_offset": 471060,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    }
+  ]
+}

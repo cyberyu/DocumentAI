@@ -1,0 +1,34 @@
+{
+  "summary": {
+    "total": 1,
+    "source_file": "df_santic_qa.json"
+  },
+  "qa_pairs": [
+    {
+      "id": "L1-007",
+      "name": "REDEEMBYWIRE",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find out whether the BNY Mellon Equity Income Fund (Class C) allows for redeem by wire. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "Wire Redemption\nand TeleTransfer Privileges",
+        "start_offset": 225066,
+        "end_offset": 225109,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    }
+  ]
+}

@@ -1,0 +1,254 @@
+{
+  "qa_pairs": [
+    {
+      "id": "L1-003",
+      "name": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class I",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "answer": "0.8",
+      "evidence": {
+        "text": ".80",
+        "start_offset": 35180,
+        "end_offset": 35183,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      }
+    },
+    {
+      "id": "L17-002",
+      "name": "PERFORMANCE_TABLE_DATES",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "answer": "12/31/2023",
+      "evidence": {
+        "text": "12/31/23",
+        "start_offset": 69144,
+        "end_offset": 69152,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      }
+    },
+    {
+      "id": "L1-011",
+      "name": "AIP_SUBAMOUNT",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "answer": "100",
+      "evidence": {
+        "text": "100",
+        "start_offset": 217405,
+        "end_offset": 217408,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      }
+    },
+    {
+      "id": "L1-003",
+      "name": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class Y",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "answer": "0.75",
+      "evidence": {
+        "text": ".75",
+        "start_offset": 35381,
+        "end_offset": 35384,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      }
+    },
+    {
+      "id": "L1-010",
+      "name": "COMPANYNAME",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "answer": "BNY Mellon Investment Adviser, Inc.",
+      "evidence": {
+        "text": "BNY Mellon Investment Adviser, Inc.",
+        "start_offset": 105009,
+        "end_offset": 105044,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      }
+    },
+    {
+      "id": "L1-003",
+      "name": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "answer": "1.02",
+      "evidence": {
+        "text": "1.02",
+        "start_offset": 34794,
+        "end_offset": 34798,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      }
+    },
+    {
+      "id": "L1-013",
+      "name": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Extract the value for AUTOMATIC_INVESTMENT_ELIGIBLE from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "answer": "1",
+      "evidence": {
+        "text": "Automatic\nAsset Builder",
+        "start_offset": 217198,
+        "end_offset": 217221,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      }
+    },
+    {
+      "id": "L1-005",
+      "name": "SWP_MINIMUM",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class I",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Extract the value for SWP_MINIMUM from the fund document. Prioritize these sections: statutory. Return only the final value.",
+      "answer": "50",
+      "evidence": {
+        "text": "50",
+        "start_offset": 221448,
+        "end_offset": 221450,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      }
+    },
+    {
+      "id": "L1-010",
+      "name": "COMPANYNAME",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class I",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "answer": "BNY Mellon Investment Adviser, Inc.",
+      "evidence": {
+        "text": "BNY Mellon Investment Adviser, Inc.",
+        "start_offset": 105009,
+        "end_offset": 105044,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      }
+    },
+    {
+      "id": "L1-011",
+      "name": "AIP_SUBAMOUNT",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "answer": "100",
+      "evidence": {
+        "text": "100",
+        "start_offset": 217405,
+        "end_offset": 217408,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      }
+    }
+  ]
+}

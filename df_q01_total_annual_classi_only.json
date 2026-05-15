@@ -1,0 +1,30 @@
+{
+  "qa_pairs": [
+    {
+      "id": "L1-003",
+      "name": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class I",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "0.8",
+      "evidence": {
+        "text": ".80",
+        "start_offset": 35180,
+        "end_offset": 35183,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    }
+  ]
+}

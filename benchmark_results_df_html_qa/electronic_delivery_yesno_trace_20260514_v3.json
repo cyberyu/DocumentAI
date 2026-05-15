@@ -1,0 +1,123 @@
+{
+  "generated_at_utc": "2026-05-14T15:33:36Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "df_santic_qa_failed_electronic_delivery_only.json",
+    "document_title_contains": "df.html",
+    "mentioned_document_ids": [
+      391
+    ],
+    "max_questions": 1,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": false,
+    "question_suffix": "",
+    "print_asked_question": true,
+    "blend_fund_context": true,
+    "normalize_schema_terms": true,
+    "post_verbatim_stage": false,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 1,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 0,
+    "number_match_rate": 0.0,
+    "unit_match_count": 1,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 4,
+    "questions_run": 1,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Level17": {
+      "run": 1,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 1,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [
+    3910,
+    3911,
+    3912
+  ],
+  "results": [
+    {
+      "id": "L17-005",
+      "group": "Level17",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for ELECTRONIC_DELIVERY from the fund document. Prioritize these sections: cover_page, last_page, statutory, summary. Return only the final value. Please return a boolean value (Yes/No).",
+      "blended_question": "Find out whether the BNY Mellon Equity Income Fund (Class I) allows for electronic delivery eligibility. Please return a boolean value (Yes/No).",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Find out whether the BNY Mellon Equity Income Fund (Class I) allows for electronic delivery eligibility. Please return a boolean value (Yes/No).",
+      "normalization_applied": [
+        {
+          "term": "ELECTRONIC_DELIVERY",
+          "normalized": "electronic delivery eligibility"
+        }
+      ],
+      "asked_question": "Find out whether the BNY Mellon Equity Income Fund (Class I) allows for electronic delivery eligibility. Please return a boolean value (Yes/No).",
+      "schema_key": "ELECTRONIC_DELIVERY",
+      "expected_answer_type": "boolean",
+      "gold_answer": "Yes",
+      "pre_coercion_predicted_answer": "The user is asking about the BNY Mellon Equity Income Fund (Class I) and whether it allows for electronic delivery eligibility. They mentioned to use only the pinned document context and search_surfsense_docs. The pinned document is `/documents/df.html.xml` which has a score of 1.000 and is user-mentioned. Let me read that document first.The document is large and the chunk index only shows entries starting from line 977. Let me search for \"electronic delivery\" and \"BNY Mellon\" and \"Equity Income\" in this document to find relevant sections.No matches for \"electronic delivery\" or \"BNY.*Equity.*Income\" in the df.html.xml file. Let me also check the MSFT file and search for \"BNY Mellon\" more broadly.The document mentions \"BNY Mellon Equity Income Fund\" but I need to search specifically for \"electronic delivery eligibility\" in the context of this fund. Let me search for \"electronic\" and \"eligibility\" and \"delivery\" separately.The user is asking specifically about \"electronic delivery eligibility\" for the BNY Mellon Equity Income Fund (Class I). I can see references to \"eligibility\" in the context of share classes, sales charge reductions, etc. But I don't see any specific mention of \"electronic delivery\" as a distinct eligibility concept in this fund document.\n\nLet me search for \"electronic delivery\" more specifically, including \"e-delivery\" or \"e delivery\" or \"delivery\" in the context of electronic/online services.There's no mention of \"electronic delivery eligibility\" in the documents. Let me also search the Surfsense docs as the user suggested, though that's about the Surfsense application, not fund data. The user specifically asked me to use the pinned document context and search_surfsense_docs, but search_surfsense_docs searches the SurfSense documentation (which is about the app itself), not the user's knowledge base. So that wouldn't be relevant here.\n\nLet me also search for \"e-delivery\" \"eDelivery\" etc more broadly in the document.The term \"electronic delivery eligibility\" or any variation of \"electronic delivery\" in the context of fund document delivery (like prospectus delivery) is not found anywhere in the knowledge base documents.\n\nSince the value is not found in the available context, according to the instructions: \"If the value is not found, return exactly N/A.\"N/A",
+      "prepared_prediction_before_coercion": "no",
+      "predicted_answer": "no",
+      "intermediate_verbatim_text": "<text>.",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

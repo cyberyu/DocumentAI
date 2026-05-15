@@ -1,0 +1,198 @@
+{
+  "generated_at_utc": "2026-05-12T20:04:29Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "df_qa.json",
+    "document_title_contains": "df.html",
+    "mentioned_document_ids": [
+      391
+    ],
+    "max_questions": 5,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": true,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 5,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 2,
+    "number_match_rate": 0.4,
+    "unit_match_count": 5,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 44,
+    "questions_run": 5,
+    "request_failures": 3,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Level1": {
+      "run": 4,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 2,
+      "number_match_rate": 0.5,
+      "unit_match_count": 4,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0
+    },
+    "Level17": {
+      "run": 1,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 1,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [
+    3147,
+    3149,
+    3150,
+    3151,
+    3152,
+    3158
+  ],
+  "results": [
+    {
+      "id": "L1-006",
+      "group": "Level1",
+      "question": "Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "asked_question": "Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "Yes",
+      "predicted_answer": "The user is asking me to extract the value for \"PHONESWITCH\" from a fund document. Let me look at the documents available. The workspace shows two documents: `MSFT_FY26Q1_10Q.docx.xml` and `df.html.xml`. Let me search for PHONESWITCH in these documents.\n\nLet me start by searching for PHONESWITCH in the files.No match for \"PHONESWITCH\". Let me try a broader search - maybe it's written differently like \"PhoneSwitch\", \"phone switch\", \"Phone Switch\", etc.No match for \"PHONESWITCH\" or \"PHONE\" in a relevant context. The user said \"PHONESWITCH\" but that might be a specific term from the fund document. Let me search more broadly for \"switch\" and also look at the df.html.xml document which was listed as the priority document.No PHONESWITCH found in either document. Let me look at the df.html.xml document more carefully since it's the one marked as priority and is a fund document. Let me also search for key financial terms or for the specific term in various formats.This file is quite large. Let me search for \"switch\" more broadly in the df.html.xml file specifically, and also look for \"statutory\" or \"summary\" sections which the user mentioned to prioritize.The records show line=0 because these are database hits. Let me read the actual df.html.xml file content to find sections that might contain \"PHONESWITCH\" or financial tables with statutory/summary sections. Let me look at some key content areas.\n\nActually, looking at the filename metadata: \"df__mineru__sandwitch_chunk__fastembed_bge_base_en_v1.5__tok1024.html\" - this has \"sandwitch\" in its name which could be a misspelling of \"sandwich\" but the user is asking for \"PHONESWITCH\". \n\nWait - \"sandwitch_chunk\" - could the user's query \"PHONESWITCH\" be a partial match or something related to \"switch\" in the context of \"sandwitch\"? That doesn't make sense.\n\nLet me look more carefully at the document. Let me read chunks starting from the beginning of the document to understand what it contains.This is a very long file. Let me read the beginning of the document content (after the chunk_index ends) to understand what it's about.This is a BNY Mellon Equity Income Fund prospectus dated September 30, 2024. The user is asking for \"PHONESWITCH\" which I haven't found yet. Let me search more broadly - could this be a specific line item in a financial table? Let me search for common financial terms that might relate to \"switch\" or look for the \"statutory\" and \"summary\" sections.\n\nWait - \"PHONESWITCH\" might be a specific portfolio holding. Let me search for holdings/portfolio data in this prospectus.Let me try a completely different approach. I'll use the task subagent to do a comprehensive search of the document for \"PHONESWITCH\" and related terms. Actually, the user said \"PHONESWITCH\" very specifically. Let me read more of the document content to find this term, especially in the portfolio holdings or financial tables sections.\n\nLet me search more comprehensively.The term \"PHONESWITCH\" isn't found in the fund document (df.html.xml). Let me also check the other document - MSFT_FY26Q1_10Q.docx.xml - even though it's a Microsoft financial document, not a fund document. But the user said \"from the fund document,\" so df.html.xml is the fund document.\n\nWait - let me re-read the user's query. They said \"Extract the value for PHONESWITCH from the fund document.\" But \"PHONESWITCH\" doesn't appear in the document. Could it be that the term is something else? Let me look at the filename more carefully.\n\nThe metadata says: `\"FILE_NAME\": \"df__mineru__sandwitch_chunk__fastembed_bge_base_en_v1.5__tok1024.html\"` - this has \"sandwitch\" which is \"sandwich\" misspelled. It's just the chunking strategy name (sandwich chunking).\n\nLet me look at the other document too - MSFT_FY26Q1_10Q.docx.xml - to see if PHONESWITCH is mentioned there. It's a Microsoft 10-Q filing, so it might have financial terms.\n\nActually, the user said \"fund document\" - the BNY Mellon Equity Income Fund is the fund document. PHONESWITCH is simply not in it.\n\nLet me check the Microsoft 10-Q document as well, since maybe the user identified it wrong.PHONESWITCH doesn't appear in either document. The user asked me to extract a value for PHONESWITCH from the fund document (df.html.xml - BNY Mellon Equity Income Fund prospectus), but this term simply doesn't exist in either document.\n\nI need to inform the user I couldn't find this term in their knowledge base documents and ask if they'd like me to answer from my general knowledge.I searched the fund document thoroughly, but \"PHONESWITCH\" does not appear anywhere in the BNY Mellon Equity Income Fund prospectus (df.html) or in the other available document (MSFT 10-Q). The only \"phone\"-related content in the fund document refers to customer service telephone numbers and redemption policies \u2014 no portfolio holding or financial line item by that name.\n\nCould \"PHONESWITCH\" be a different spelling or abbreviation? Would you like me to answer from my general knowledge instead?",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "asked_question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "0.8",
+      "predicted_answer": "",
+      "metrics": {
+        "answer_clean": false,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L17-002",
+      "group": "Level17",
+      "question": "Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "asked_question": "Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "12/31/2023",
+      "predicted_answer": "",
+      "metrics": {
+        "answer_clean": false,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-011",
+      "group": "Level1",
+      "question": "Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "asked_question": "Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "100",
+      "predicted_answer": "The user wants me to extract the value for AIP_SUBAMOUNT from the fund document, prioritizing statutory/summary sections, and tied to September 30, 2025. Let me start by reading the document.\n\nThe priority document is `/documents/df.html.xml`. Let me read it.The document is large. Let me search for \"AIP_SUBAMOUNT\" directly to find where it's mentioned.The exact string \"AIP_SUBAMOUNT\" wasn't found. Let me search for \"AIP\" and related terms to find what we're looking for.Let me look at the content of the document more carefully. Let me read the beginning of the actual content (after metadata and chunk_index).This is a BNY Mellon Equity Income Fund prospectus from September 30, 2024. The term \"AIP_SUBAMOUNT\" doesn't appear in the document. Let me search for \"subamount\" or related terms, and also search more broadly in the document. Let me also search for \"AIP\" as a broader pattern. Let me search more thoroughly.Let me search more broadly for common accounting/fund terms. The user asked about AIP_SUBAMOUNT. Let me search for AIP-related patterns.Let me also check the other file mentioned in the workspace, MSFT_FY26Q1_10Q.docx.xml, since \"AIP_SUBAMOUNT\" could be there instead.Let me check the second document as well and also search more broadly.Let me search for the MSFT document to see its structure.The term \"AIP_SUBAMOUNT\" is not found in either document. Let me search more broadly in both documents to understand what they contain. Let me search for the word \"subamount\" or \"AIP\" more broadly, and also search the MSFT document for financial terms.\n\nWait, the user said \"fund document\" and the priority document is df.html.xml which is the BNY Mellon Equity Income Fund prospectus. Let me search more broadly in the df.html.xml file for financial data tables that might contain \"AIP\" or similar terms.\n\nLet me read more of the df.html.xml document to understand its structure.Let me search more broadly - maybe the term is used as part of a table or financial schedule structure. Let me look for \"AIP\" as a standalone word or \"subamount\" part of a larger text. Maybe the document format has encoded this data differently.Based on the thorough search of both documents, the term \"AIP_SUBAMOUNT\" does not appear anywhere in the fund document (df.html.xml) or the MSFT 10-Q document. \n\nHowever, I know that in the context of mutual fund data feeds (particularly Morningstar or similar), \"AIP\" often stands for \"Additional Investment Purchase\" or \"Automatic Investment Plan,\" and the subamount likely refers to the minimum subsequent investment amount. In the fund document, the minimum subsequent investment is $100.\n\nBut wait - let me be more careful. The user explicitly asked me to extract \"AIP_SUBAMOUNT\" from the fund document. Let me think about what this could be in context.\n\nIn many financial data schemas (like Morningstar's), \"AIP\" stands for \"Additional Investment Plan\" or similar, and \"AIP_SUBAMOUNT\" would be the minimum subsequent/additional investment amount. \n\nFrom the fund document, I found:\n- Minimum subsequent investment for Classes A, C, I: $100\n- Class Y: no minimum subsequent\n- Automatic Asset Builder: $100\u2013$150,000 per transaction\n\nThe term \"AIP_SUBAMOUNT\" might not be literally in the document text - it could be a data field name from a structured data feed. Since the user asked about this as a specific field from the fund document, let me look at the MSFT 10Q document too in case it's there.\n\nActually wait, the user explicitly said \"from the fund document\" and the fund document is df.html.xml. Let me look more carefully at what \"AIP\" could reference in this context. \"AIP\" in fund contexts often means \"Automatic Investment Plan\" and \"AIP_SUBAMOUNT\" would be the minimum subsequent/additional investment amount.\n\nFrom the fund prospectus data:\n- Automatic Asset Builder: $100\u2013$150,000 per transaction\n- Minimum subsequent investment: $100\n\nBut I need to be more precise. Let me re-read the document for the exact wording about subsequent investments and Automatic Investment Plans.\n\nActually, I realize I should focus on what the document literally contains. The exact string \"AIP_SUBAMOUNT\" is not found. But the user is asking me to find it. Let me think about what this maps to in a fund document context.\n\nIn Morningstar's data schema, \"AIP\" refers to the Additional Investment Purchase (minimum to add to an existing account). The subamount would be the minimum subsequent investment amount. For this fund:\n- The minimum subsequent investment is $100 for most share classes.\n\nBut the user said to prioritize statutory/summary sections and tie to September 30, 2025. Let me look more carefully at the document's expense limitation agreement which mentions September 30, 2025.\n\nActually, let me re-read the key sections more carefully.Let me look at the rest of the document for minimum/subsequent investment information. The \"AIP_SUBAMOUNT\" field in financial data feeds (like Morningstar's) commonly refers to the minimum additional/subsequent investment amount for a fund (\"Automatic Investment Plan\" sub-amount). Let me find the minimum investment amounts in this document.Now I've seen lines 1301-1302 which state:\n- \"the fund's minimum initial investment is $1,000 and the minimum subsequent investment is $100\"\n\nAlso from the earlier document exploration, there was mention of \"Automatic Asset Builder: $100\u2013$150,000 per transaction\" which I saw in the subagent's summary.\n\nSo the minimum subsequent investment is $100. In many financial data schemas, \"AIP\" stands for \"Additional Investment Plan\" or \"Automatic Investment Plan,\" and \"AIP_SUBAMOUNT\" would mean the minimum subsequent/additional investment amount.\n\nGiven:\n- \"Minimum subsequent investment\" = $100 as stated in the statutory summary section\n\nLet me also check if there's more detail about the Automatic Asset Builder program in the shareholder guide section to see if that gives a different amount.Let me also check the \"Services for Fund Investors\" section for Automatic Asset Builder amounts.Let me look at the section describing Automatic Asset Builder amounts in detail.Let me search more broadly in the document for the Automatic Asset Builder amounts.Let me now look at the Automatic Asset Builder section for full context.Now I have a comprehensive picture of the document. The exact string \"AIP_SUBAMOUNT\" does not appear literally in the document. However, based on financial data feed conventions (Morningstar, etc.), \"AIP\" commonly stands for \"Additional Investment Plan\" or \"Automatic Investment Plan\" and \"AIP_SUBAMOUNT\" refers to the minimum subsequent/additional investment amount.\n\nFrom the statutory summary section (Fund Summary) and the Purchase and Sale of Fund Shares section:\n\nIn the Fund Summary (statutory section) - lines 1301-1302:\n\"the fund's minimum initial investment is $1,000 and the minimum subsequent investment is $100\"\n\nThis is repeated in the Shareholder Guide section - line 2037:\n\"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\"\n\nSo the minimum subsequent investment amount is **$100**.\n\nGiven that the document explicitly states the \"minimum subsequent investment\" as $100, and this is exactly what \"AIP_SUBAMOUNT\" would refer to in a mutual fund data schema (the minimum for additional/automatic investment plan purchases), the value should be $100.\n\nHowever, let me reconsider - \"AIP\" could specifically refer to \"Automatic Investment Plan\" (the automatic services), and the Automatic Asset Builder has a minimum of $100 per transaction. This is the same amount as the general minimum subsequent investment.\n\nBoth the general subsequent investment minimum and the Automatic Asset Builder minimum are $100.\n\nSince the user asked to prioritize the \"statutory\" and \"summary\" sections, and the Fund Summary (statutory section) states \"minimum subsequent investment is $100,\" the answer should be $100.\n\nBut wait - the user said \"the exact unit and scale used in the source document.\" The document states \"$100\" so the answer should be $100.\n\nLet me cite the appropriate source. The Fund Summary section at lines 1301-1302 states this most directly in the statutory context.\n\nActually, let me also check if there's a separate \"Automatic Investment Plan\" minimum that differs from the general minimum subsequent investment.Based on the fund document's statutory summary section, the minimum subsequent investment is $100 [citation:614617]. This is the amount widely mapped to the AIP (\"Additional Investment Plan\" or \"Automatic Investment Plan\") subsequent investment minimum in fund data schemas, and it appears consistently throughout the document \u2014 in both the Fund Summary and the Shareholder Guide sections.\n\n$100",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "asked_question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "0.75",
+      "predicted_answer": "",
+      "metrics": {
+        "answer_clean": false,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

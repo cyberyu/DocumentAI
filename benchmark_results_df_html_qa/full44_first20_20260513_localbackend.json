@@ -1,0 +1,1250 @@
+{
+  "generated_at_utc": "2026-05-13T23:57:42Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "df_santic_qa.json",
+    "document_title_contains": "df.html",
+    "mentioned_document_ids": [
+      391
+    ],
+    "max_questions": 20,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": false,
+    "question_suffix": "",
+    "blend_fund_context": true,
+    "normalize_schema_terms": true,
+    "post_verbatim_stage": false,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 20,
+    "overall_correct_count": 8,
+    "overall_correct_rate": 0.4,
+    "normalized_exact_count": 8,
+    "normalized_exact_rate": 0.4,
+    "number_match_count": 19,
+    "number_match_rate": 0.95,
+    "unit_match_count": 20,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.34724542124542124,
+    "questions_total": 43,
+    "questions_run": 20,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Level1": {
+      "run": 16,
+      "overall_correct_count": 5,
+      "overall_correct_rate": 0.3125,
+      "normalized_exact_count": 5,
+      "normalized_exact_rate": 0.3125,
+      "number_match_count": 15,
+      "number_match_rate": 0.9375,
+      "unit_match_count": 16,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.43405677655677655
+    },
+    "Level17": {
+      "run": 4,
+      "overall_correct_count": 3,
+      "overall_correct_rate": 0.75,
+      "normalized_exact_count": 3,
+      "normalized_exact_rate": 0.75,
+      "number_match_count": 4,
+      "number_match_rate": 1.0,
+      "unit_match_count": 4,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [
+    3825,
+    3826,
+    3827,
+    3828,
+    3829,
+    3830,
+    3831,
+    3832,
+    3833,
+    3834,
+    3835,
+    3836,
+    3837,
+    3838,
+    3839,
+    3840,
+    3841,
+    3842,
+    3843,
+    3844,
+    3845,
+    3846,
+    3847,
+    3848,
+    3849,
+    3850,
+    3851,
+    3852,
+    3853,
+    3854,
+    3855,
+    3856,
+    3857,
+    3858
+  ],
+  "results": [
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "normalization_applied": [
+        {
+          "term": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+          "normalized": "total annual fund operating expenses"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "schema_key": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "expected_answer_type": "rate",
+      "gold_answer": "0.8",
+      "predicted_answer": "0.80",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L17-002",
+      "group": "Level17",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value. Please return a date value only.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for performance table date from the fund document. Please return a date value only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for performance table date from the fund document. Please return a date value only.",
+      "normalization_applied": [
+        {
+          "term": "PERFORMANCE_TABLE_DATES",
+          "normalized": "performance table date"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for performance table date from the fund document. Please return a date value only.",
+      "schema_key": "PERFORMANCE_TABLE_DATES",
+      "expected_answer_type": "date",
+      "gold_answer": "12/31/2023",
+      "predicted_answer": "12/31/23",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": true,
+        "match_method": "exact",
+        "start_offset": 0,
+        "end_offset": 8,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": "12/31/23"
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.6666666666666666,
+        "numeric_recall": 0.5,
+        "numeric_f1": 0.5714285714285715,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": true,
+        "source_span_match": true,
+        "source_verbatim_match": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "L1-011",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for minimum subsequent investment amount from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for minimum subsequent investment amount from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "normalization_applied": [
+        {
+          "term": "AIP_SUBAMOUNT",
+          "normalized": "minimum subsequent investment amount"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for minimum subsequent investment amount from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "schema_key": "AIP_SUBAMOUNT",
+      "expected_answer_type": "amount",
+      "gold_answer": "100",
+      "predicted_answer": "$100",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class Y"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "normalization_applied": [
+        {
+          "term": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+          "normalized": "total annual fund operating expenses"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "schema_key": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "expected_answer_type": "rate",
+      "gold_answer": "0.75",
+      "predicted_answer": "0.75",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-010",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for COMPANYNAME from the fund document. Please return a text value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for company name from the fund document. Please return a text value.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class C"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for company name from the fund document. Please return a text value.",
+      "normalization_applied": [
+        {
+          "term": "COMPANYNAME",
+          "normalized": "company name"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for company name from the fund document. Please return a text value.",
+      "schema_key": "COMPANYNAME",
+      "expected_answer_type": "text",
+      "gold_answer": "BNY Mellon Investment Adviser, Inc.",
+      "predicted_answer": "BNY Mellon Investment Adviser, Inc.BNY Mellon Investment Adviser, Inc",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.5714285714285714,
+        "strict_correct": true,
+        "lenient_correct": true,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "normalization_applied": [
+        {
+          "term": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+          "normalized": "total annual fund operating expenses"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "schema_key": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "expected_answer_type": "rate",
+      "gold_answer": "1.02",
+      "predicted_answer": "1.02",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": true,
+        "match_method": "exact",
+        "start_offset": 0,
+        "end_offset": 4,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": "1.02"
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": true,
+        "source_verbatim_match": true,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-013",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for AUTOMATIC_INVESTMENT_ELIGIBLE from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for automatic investment eligibility from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for automatic investment eligibility from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "normalization_applied": [
+        {
+          "term": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+          "normalized": "automatic investment eligibility"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for automatic investment eligibility from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "schema_key": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+      "expected_answer_type": "boolean",
+      "gold_answer": "1",
+      "predicted_answer": "The user wants me to find information about BNY Mellon Equity Income Fund (Class A) from the document, specifically the value for automatic investment eligibility. Let me look at the priority document which is `df.html.xml`. Let me read it first.The file is quite large. Let me search for \"BNY Mellon Equity Income\" and \"automatic investment\" to find the relevant sections.The grep for \"BNY Mellon Equity Income\" returned no matches, but let me search for just \"Equity Income\" and also \"BNY Mellon\" separately to find the relevant fund section in the document.I found \"BNY Mellon Equity Income Fund\" in chunk 614544. Let me read the beginning of that section to understand the fund and find information about \"Automatic Investment\" eligibility. The chunk 614544 starts at line 977. Let me read around that area. Also, let me look at the area around the \"automatic investment\" mentions I found earlier. The grep showed chunk 614916 and 614986, and then also 615427. Let me look at these chunks more carefully. Let me read the chunks around lines 977-1000 and also near lines 2033 and 4618 which had the automatic investment mentions.The user is asking about \"automatic investment eligibility\" from the fund document. They want a specific value/number. Let me look for this more specifically. The \"Automatic Investment\" section mentions that the minimum initial and subsequent investment is $1,000 and $100 respectively. But the user is asking for the \"value for automatic investment eligibility\" which might be a specific dollar amount listed under the fund's details. Let me search more broadly. Let me look at the \"Fund Summary\" section or any table that lists investment minimums or eligibility criteria for the BNY Mellon Equity Income Fund (Class A). Let me check the fund summary section more carefully, and also search for \"Automatic\" or \"minimum\" related to the specific fund.Let me look at the \"Automatic Services\" section which starts around line 2351. Also, let me check if there's a specific mention of \"Automatic Investment Eligibility\" or a minimum amount for automatic investments.I found the \"Automatic Asset Builder\" service which permits you to purchase fund shares (minimum of $100 and maximum of $150,000 per transaction). But the user is asking for the \"value for automatic investment eligibility\" from the fund document. Let me think about this differently. The user might be referring to a specific field in the fund's summary that states the \"automatic investment minimum\" or something similar. Let me look at the fund summary area (the beginning of the document where the fund's key facts are listed) to see if there's a table that lists something like \"Automatic Investment Eligibility\" or a minimum dollar amount. Let me search for \"minimum\" near the fund summary area.I'm looking for the \"automatic investment eligibility\" for the BNY Mellon Equity Income Fund (Class A). Let me search more broadly for what this term means. The document mentions that the Automatic Asset Builder has a minimum of $100 per transaction. Let me see if there's a more specific table or mention of \"Automatic Investment\" eligibility. Let me also look at the MSFT 10Q doc to see if this is about something else, or look more carefully at the df.html document for a table that lists \"Automatic Investment\" as a field. Actually, let me search more carefully in the document for specific terms like \"eligible\", \"minimum\", \"initial\" in the context of the Class A shares, and also look at the second copy of the document (the one starting around line 3481).Let me look at the MSFT document too, and also search more broadly. The user mentions \"automatic investment eligibility\" specifically. Let me search for this term more generically in the document.Let me look at the section \"Shareholder Guide\" which discusses how to buy shares and the minimum investment amounts. Let me also search specifically for what minimum applies to Class A shares for automatic investments. Let me look at the section around line 2037 which mentions minimum initial and subsequent investments. Also, I see the section from around line 2036-2042: \"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\" But this doesn't specify Class A specifically - it seems like a general rule. Let me also check if there's a separate duplicate section near line 4621.I see that the minimum initial investment is $1,000 and the minimum subsequent investment is $100. The Automatic Asset Builder has a minimum of $100 per transaction. Let me think about what \"automatic investment eligibility\" specifically means here. Actually, let me re-read the user's question carefully: \"Extract the value for automatic investment eligibility from the fund document.\" This seems like a specific field that might be in a table. Let me look for any table that has \"Automatic Investment\" as a row label, or similar. Let me search for the term more broadly.The phrase \"automatic investment\" is mentioned in the context of the minimum amounts. Let me look at this more carefully. The text says: \"You may purchase additional shares by selecting one of the automatic investment services made available to the fund on your account application or service application.\" And then it says \"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\" But I'm looking for \"automatic investment eligibility\" which might be a specific value. Let me check if there's perhaps a duplicate section (the document seems to have the same content appearing twice). Let me also look at the chunk IDs more closely. Actually, let me re-read what was returned from the second read at line 4617: \"Automatically.]] You may purchase additional shares by selecting one of the automatic investment services made available to the fund on your account application or service application. See \"Services for Fund Investors - Automatic Services.\" The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\" So - the automatic investment service mentions a $100 minimum for the Automatic Asset Builder. But maybe what the user wants is something different. Let me look more broadly at the document structure. The df.html.xml seems to be a mutual fund prospectus for BNY Mellon funds. Let me search for the specific phrase \"Class A\" near the automatic investment section to see if there's an eligibility threshold.Let me look at the chunk around line 2360 again more carefully. \"Automatic Asset Builder permits you to purchase fund shares (minimum of $100 and maximum of $150,000 per transaction)\" The minimum for Automatic Asset Builder is $100. Let me check if this is what the user is looking for. But the user specifically asked for \"automatic investment eligibility\" which might refer to something else. Let me also check the MSFT document in case it has a different format or contains the specific information.The MSFT document doesn't have any relevant info. Let me go back to the BNY document and look more carefully. Let me also read as much of the document as I can around the \"Automatic Services\" and the \"How to Buy Shares\" sections, looking for a specific eligibility criterion. Actually, let me step back and think about what \"automatic investment eligibility\" could mean in a mutual fund prospectus context. It likely refers to the minimum investment required to set up an automatic investment plan. Looking at the document: 1. For automatic investment services (Automatic Asset Builder), the minimum is $100 per transaction 2. The general minimum subsequent investment is $100 3. The general minimum initial investment is $1,000 Let me also check if there's more context around line 3490 where the fund appears again (the second copy of the document).This is just the back cover / \"For More Information\" section of the prospectus. No automatic investment eligibility here. Let me look more carefully. Maybe the user is referring to something in the Shareholder Guide section of the prospectus that mentions a specific dollar amount or eligibility for automatic investment. Let me search for \"Automatic Services\" section more thoroughly and also look for any explicit mention of \"automatic investment\" eligibility in a table format. Actually, let me re-read the chunk more carefully. In the prospectus, there's a section \"How to Buy Shares\" with a subsection \"Automatically\" which says: \"You may purchase additional shares by selecting one of the automatic investment services made available to the fund on your account application or service application.\" Then it follows with: \"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\" And then in the \"Automatic Services\" section: - Automatic Asset Builder: minimum of $100 and maximum of $150,000 per transaction - Payroll Savings Plan: minimum of $100 per transaction - Government Direct Deposit: minimum of $100 and maximum of $50,000 per transaction For Class A shares, the minimum for automatic investment appears to be $100. But let me see if there's a more specific value. Actually, I think the user might be looking for a specific value from a table. Let me check if there's a table that lists \"Automatic Investment\" as a field somewhere with a minimum amount. Let me look more carefully at the beginning part of the document where the fund summary is.Let me search more broadly for the phrase \"automatic investment\" combined with \"eligibility\" or \"minimum\" specifically for Class A shares. Perhaps I should also search for \"$100\" or \"$1,000\" in relation to Class A. Actually, let me reconsider. The user asked for the \"value for automatic investment eligibility\" for the BNY Mellon Equity Income Fund (Class A). Let me look at the document more carefully to see if there's a specific field or table entry called \"Automatic Investment\" or \"Automatic Investment Eligibility\" with a value next to it. Let me also look at what the document says about minimum amounts for automatic investments specifically for Class A shares.Let me try searching without the caps sensitivity.Now I have the key information. Let me look more carefully at the context around line 1301-1302. \"general, for each share class, other than Class Y, the fund's minimum initial investment is $1,000 and the minimum subsequent investment is $100.\" This says for each share class other than Class Y. Class A is one of the share classes other than Class Y. So the minimum initial investment for Class A is $1,000 and the minimum subsequent investment is $100. But the user is asking about \"automatic investment eligibility.\" Let me look at the full context around line 1301 to understand what section this is in. Also, let me look at the document from around line 1286 to understand the context better.The \"Purchase and Sale of Fund Shares\" section says: \"for each share class, other than Class Y, the fund's minimum initial investment is $1,000 and the minimum subsequent investment is $100.\" Now, let me also check what the \"Automatic Asset Builder\" says again - it says the minimum is $100 per transaction. Let me look at the specific chunk. From my earlier reads: - Chunk 615049 (lines 2359-2361): \"Automatic Asset Builder permits you to purchase fund shares (minimum of $100 and maximum of $150,000 per transaction)\" So the Automatic Asset Builder minimum is $100. But the user asks for \"automatic investment eligibility\" which might be asking for what minimum is needed to be eligible for automatic investment. In many fund documents, there's a specific \"Automatic Investment\" field in a summary table. Let me check if there's a table format that lists something like \"Automatic Investment\" with a value. Let me search for a specific pattern in the document.Let me try a different approach. Let me look more broadly at the document to find what the user is referring to as \"automatic investment eligibility.\" Let me look at the document around the area of the fund summary table.Now I've looked at the full Fund Summary section. The \"Purchase and Sale of Fund Shares\" section says the minimum initial investment is $1,000 and minimum subsequent investment is $100 for all classes except Y. But I'm still looking for \"automatic investment eligibility.\" Let me check the rest of the document more carefully - particularly around line 1960-2040 where the \"How to Buy Shares\" section is. Let me also check the document for any mention of \"minimum\" in the context of automatic investment specifically.OK, I see now. Let me look at the document structure more carefully. This document appears to be a combination of two prospectuses or two copies of similar documents. The document has sections like: 1. BNY Mellon Equity Income Fund Prospectus (lines 979-3510ish - the main prospectus) 2. A second copy of similar content starting around line 3511 Let me look for the specific \"Automatic Investment\" field. In the context of mutual fund disclosure documents, sometimes there's a table or field that lists the \"Automatic Investment\" minimum. Let me search specifically for this in the document.Let me look at this from a different angle. The document is clearly a HTML conversion of a mutual fund prospectus. Let me look at the beginning of the \"Shareholder Guide\" section to see if there is an explicit \"Minimum Investment\" table or something related. Let me read from the start of the Shareholder Guide section.Let me look for a specific section about \"How to Buy Shares\" that might have a structured table or labeled data about minimum investments for Class A shares, possibly specifically about automatic investments. Looking at the \"Automatically\" section (lines 2032-2040), it says: - \"You may purchase additional shares by selecting one of the automatic investment services made available to the fund\" - \"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively\" Since Class A is not Class Y, the minimum subsequent investment for Class A is $100. The Automatic Asset Builder minimum is $100 per transaction. But the user specifically asked for \"the value for automatic investment eligibility.\" Let me think about this differently. Let me check if there's a specific number formatted differently. Let me also look at what the MSFT document says - maybe it has a different type of data. Actually, let me check the MSFT document too, since it was also in the priority documents.The MSFT document has nothing relevant to BNY Mellon or this fund. Let me go back to the df.html.xml document and search more broadly. Let me re-read the user's question: \"Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for automatic investment eligibility from the fund document. Please return the number only. Do not include any unit or scaling unit.\" The user wants \"the value for automatic investment eligibility\" - this likely refers to a specific minimum amount required for automatic investment. Let me look at the Automatic Asset Builder section again: \"Automatic Asset Builder permits you to purchase fund shares (minimum of $100 and maximum of $150,000 per transaction)\" So the minimum for automatic investment through Automatic Asset Builder is $100. But let me also check if there's any other reference to eligibility thresholds for automatic investment. Let me look at the Payroll Savings Plan too: \"Payroll Savings Plan permits you to purchase fund shares (minimum of $100 per transaction) automatically through a payroll deduction\" And Government Direct Deposit: \"Government Direct Deposit permits you to purchase fund shares (minimum of $100 and maximum of $50,000 per transaction)\" So all automatic investment services have a minimum of $100. But I want to make sure I'm extracting the right value. Let me also look for \"Automatic Investment\" as a specific field in the document.OK, I can see that: - Automatic Asset Builder: minimum of $100 - Payroll Savings Plan: minimum of $100 - Government Direct Deposit: minimum of $100 All automatic investment services require a minimum of $100 per transaction. But wait - let me also check if \"Automatic Investment Eligibility\" is a specific field/cell from a table or structured data format in the document. Let me look at the very beginning of how the document is structured, particularly around where the \"Fund Summary\" section lists the key facts about the fund. Let me search for whether there's a specific \"minimum\" for \"Automatic Investment\" as a labeled field in the first part of the document.Let me look at the \"Fund Summary\" chapter more carefully. The fund summary should contain a table at the beginning with key information. Let me look at the document around the section where the prospectus summary typically has the \"Fund Summary\" table that lists key details like investment minimums.OK so the document structure is a standard mutual fund prospectus. Let me look at the \"Purchase and Sale of Fund Shares\" section which is at line 1297-1302, which states: \"In general, for each share class, other than Class Y, the fund's minimum initial investment is $1,000 and the minimum subsequent investment is $100.\" The user is asking for \"automatic investment eligibility.\" Let me look at this from a different angle. The document mentions a \"minimum initial investment\" and \"minimum subsequent investment\". For equity mutual funds, there's often a specific \"Automatic Investment\" minimum which could be different from the regular minimum. Looking at the Automatic Asset Builder (line 2360): \"minimum of $100 and maximum of $150,000 per transaction\" And the general minimum subsequent investment for Class A is $100 (line 1301-1302). So the value for automatic investment eligibility (the minimum) seems to be **$100** or just **100**. But wait - the user said \"Please return the number only. Do not include any unit or scaling unit.\" So they just want the number, like 100 or 1000 or 1000000. Given that: 1. The Automatic Asset Builder minimum is $100 2. The minimum subsequent investment (which applies to automatic investments) is $100 3. \"Automatic investment\" typically refers to automatic investment plans where the minimum is $100 Let me confirm this interpretation is correct. Let me look again at how \"Automatically\" is positioned in the Shareholder Guide. From the \"How to Buy Shares\" section (line 1977): - By Mail - Electronic Check or Wire - Telephone or Online - **Automatically** (line 2032): \"You may purchase additional shares by selecting one of the automatic investment services...\" Then immediately after (line 2036-2037): \"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\" The text \"The minimum initial and subsequent investment...\" directly follows the \"Automatically\" section. It seems like these minimums apply to all purchase methods including automatic investments. Then in the \"Automatic Services\" section (line 2351-2370): the Automatic Asset Builder has a minimum of $100 per transaction. So for the fund's automatic investment eligibility, the minimum is $100. Let me use the source_verbatim tool to confirm this value from the evidence text.The value \"$100\" is verified in the source text as the minimum for the Automatic Asset Builder. Let me also verify the general automatic investment section. Actually, let me also check - the user said \"automatic investment eligibility\" - this could mean the minimum amount required to be eligible to use automatic investment. The Automatic Asset Builder says the minimum is $100 per transaction. And the general document says \"minimum subsequent investment is $100\" for Class A. So the answer should be \"100\". Let me return just the number 100.100",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.005649717514124294,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.011235955056179775,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-005",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for SWP_MINIMUM from the fund document. Prioritize these sections: statutory. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for swp minimum from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for swp minimum from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "normalization_applied": [
+        {
+          "term": "SWP_MINIMUM",
+          "normalized": "swp minimum"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for swp minimum from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "schema_key": "SWP_MINIMUM",
+      "expected_answer_type": "amount",
+      "gold_answer": "50",
+      "predicted_answer": "50",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": true,
+        "match_method": "exact",
+        "start_offset": 0,
+        "end_offset": 2,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": "50"
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": true,
+        "lenient_correct": true,
+        "source_span_match": true,
+        "source_verbatim_match": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "L1-010",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for COMPANYNAME from the fund document. Please return a text value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for company name from the fund document. Please return a text value.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for company name from the fund document. Please return a text value.",
+      "normalization_applied": [
+        {
+          "term": "COMPANYNAME",
+          "normalized": "company name"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for company name from the fund document. Please return a text value.",
+      "schema_key": "COMPANYNAME",
+      "expected_answer_type": "text",
+      "gold_answer": "BNY Mellon Investment Adviser, Inc.",
+      "predicted_answer": "BNY Mellon Investment Adviser, Inc.BNY Mellon Investment Adviser, Inc",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.5714285714285714,
+        "strict_correct": true,
+        "lenient_correct": true,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "L1-011",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for minimum subsequent investment amount from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class C"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for minimum subsequent investment amount from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "normalization_applied": [
+        {
+          "term": "AIP_SUBAMOUNT",
+          "normalized": "minimum subsequent investment amount"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for minimum subsequent investment amount from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "schema_key": "AIP_SUBAMOUNT",
+      "expected_answer_type": "amount",
+      "gold_answer": "100",
+      "predicted_answer": "100",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": true,
+        "match_method": "numeric_entity",
+        "start_offset": 0,
+        "end_offset": 3,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": "100"
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": true,
+        "lenient_correct": true,
+        "source_span_match": true,
+        "source_verbatim_match": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "L1-007",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for REDEEMBYWIRE from the fund document. Prioritize these sections: statutory. Return only the final value. Please return a boolean value (Yes/No).",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for REDEEMBYWIRE from the fund document. Please return a boolean value (Yes/No).",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class C"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for REDEEMBYWIRE from the fund document. Please return a boolean value (Yes/No).",
+      "normalization_applied": [],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for REDEEMBYWIRE from the fund document. Please return a boolean value (Yes/No).",
+      "schema_key": "REDEEMBYWIRE",
+      "expected_answer_type": "text",
+      "gold_answer": "Yes",
+      "predicted_answer": "The user is asking me to find information from a document about BNY Mellon Equity Income Fund (Class C) and extract the value for REDEEMBYWIRE. Let me look at the documents available. The priority document is `/documents/df.html.xml`. Let me search for REDEEMBYWIRE in that document first.The grep search didn't find any matches for \"REDEEMBYWIRE\" or \"BNY Mellon Equity Income Fund\" in the documents. Let me look at the documents more carefully to see what's available. The workspace has two files: - /documents/MSFT_FY26Q1_10Q.docx.xml - /documents/df.html.xml Let me read the df.html.xml file to understand what's in it, since the user mentioned \"the fund document\" and this is the priority document.Let me search for more content in the document to find BNY Mellon or REDEEMBYWIRE. Let me read more of the document and also search for specific terms.I found the document \"df.html.xml\" which is a BNY Mellon Equity Income Fund Prospectus. I can see it mentions \"BNY Mellon Equity Income Fund\" several times. The user is asking about REDEEMBYWIRE, which might be a specific field in a table. Let me look more closely at the chunks around the lines that mention BNY Mellon Equity Income Fund to find the \"REDEEMBYWIRE\" information. Let me read the beginning of the file to see the structure, and also search for \"wire\" to see if REDEEMBYWIRE is there but in a different format.The user is asking about \"REDEEMBYWIRE\" which seems like a specific field/column name, possibly from a structured data table or form. Let me search more specifically for this term. It could be in the document as a column header or field name. Let me try case-insensitive search or search for parts of it. Let me also search for \"WIRE\" more broadly and look at the document around areas that discuss redemption by wire.The user is asking for \"REDEEMBYWIRE\" which seems like a structured data field name. It could be in a table or structured format. Let me look more carefully around the sections about Class C redemption, and search for other table-type data in this document. Let me also look at the MSFT FY26Q1 document briefly to see if it has fund data. Actually, the term \"REDEEMBYWIRE\" looks like a field name that might appear in a data structure or table about fund details. Let me search more broadly.The user is asking about \"REDEEMBYWIRE\" - a specific field name. This is not found in the document. The document is a BNY Mellon Equity Income Fund prospectus in HTML format that was converted to XML. But \"REDEEMBYWIRE\" as a specific field name doesn't appear. Let me think about this more carefully. \"REDEEMBYWIRE\" might be a field name from a data structure/table that describes whether the fund allows redemption by wire. The document mentions \"Wire Redemption Privilege\" which suggests that wire redemption is available. The document does have information about wire redemptions. From chunk 614927: \"to you by wire via the Wire Redemption Privilege ($1,000 minimum)\" - this indicates proceeds can be sent by wire. But the user is specifically asking for \"REDEEMBYWIRE\" as a field/value. Since I cannot find this exact field name in the document, I cannot extract this value. Let me search one more time in case it's in a different format.The user is specifically asking for the value of \"REDEEMBYWIRE\" from the fund document. This looks like it could be a data field name from a structured format (like a JSON, XML, or CSV data feed about the fund), not something that would typically appear in a human-readable prospectus. The document at hand is a BNY Mellon Equity Income Fund prospectus in HTML format (converted to XML). I can see that the fund does allow wire redemption via the \"Wire Redemption Privilege\" - so the answer would logically be \"Yes\" since the fund offers the ability to redeem by wire. However, the specific field name \"REDEEMBYWIRE\" doesn't appear literally in the document. Let me search more thoroughly for it in both documents.The term \"REDEEMBYWIRE\" does not appear anywhere in either document as a literal string. However, the document is clearly a BNY Mellon Equity Income Fund prospectus. The user is asking about \"REDEEMBYWIRE\" which seems to be a field name from a structured data schema - it likely means \"can the fund redeem by wire\" and the answer would be a boolean. Based on the document content, the fund offers a \"Wire Redemption Privilege\" ($1,000 minimum) which allows redemption proceeds to be wired to the shareholder's bank account. This is described in chunks like 614927: \"to you by wire via the Wire Redemption Privilege ($1,000 minimum)\" and 614927-614929 about redemption proceeds being sent by wire. Since the document establishes that the fund does support wire redemptions via the Wire Redemption Privilege, the value for REDEEMBYWIRE would be \"Yes\". But wait - the user asked me to extract the value from \"the fund document\" and return it as a boolean. Since the exact field \"REDEEMBYWIRE\" doesn't exist in the text of the document, let me look at this differently. Perhaps the user has a specific data schema they're working with, and they want to know if the fund allows redemption by wire based on what's in the prospectus. Based on the document: - The fund explicitly offers a \"Wire Redemption Privilege\" - Redemption proceeds can be sent by wire - The minimum for wire redemption is $1,000 So the fund does allow redemption by wire. The answer is Yes. Let me provide this to the user with proper citations.Based on the BNY Mellon Equity Income Fund prospectus, the fund offers a **Wire Redemption Privilege** that allows shareholders to receive redemption proceeds by wire transfer to their bank account . The fund explicitly states that if you request redemption proceeds \"by wire via the Wire Redemption Privilege,\" the proceeds will normally be wired within one business day . **Yes**",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": true,
+        "answer_clean": false,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0020512820512820513,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L17-005",
+      "group": "Level17",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for ELECTRONIC_DELIVERY from the fund document. Prioritize these sections: cover_page, last_page, statutory, summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for electronic delivery from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for electronic delivery from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "normalization_applied": [
+        {
+          "term": "ELECTRONIC_DELIVERY",
+          "normalized": "electronic delivery"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for electronic delivery from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "schema_key": "ELECTRONIC_DELIVERY",
+      "expected_answer_type": "text",
+      "gold_answer": "1",
+      "predicted_answer": "The user wants me to find information about BNY Mellon Equity Income Fund (Class I) from the document `df.html.xml` (which was mentioned as user-mentioned in priority documents). They want the \"value for electronic delivery\" - just the number, no units. Let me read the document to find this information.The document has many chunks. Let me search for \"BNY Mellon Equity Income Fund\" or \"electronic delivery\" within this document to find the relevant section.The grep didn't find matches. Let me check the chunk index more carefully. The document starts at line 977. Let me read the document from the beginning to understand its structure. Let me search more broadly.Let me look at the beginning of the document where \"BNY Mellon Equity Income Fund\" appears - around lines 977-985 (chunks 614544-614545). And also search for \"electronic delivery\" in the broader document.The grep for \"electronic\" didn't find an \"electronic delivery\" phrase. Let me look at more of the document, especially the fee table and shareholder information sections. Let me also read the beginning of the document to get the fee table which often contains the information for \"electronic delivery\" of prospectuses. Maybe I should search for \"Class I\" specifically since the user mentioned \"Class I\" of the BNY Mellon Equity Income Fund.Let me read further to find the fee table which includes the \"Shareholder Fees\" section, where \"electronic delivery\" might be mentioned as a fee. Let me continue reading from around line 1084.Let me look at the Shareholder Guide section which discusses account services, and also search for \"delivery\" specifically.Let me search for \"electronic delivery\" more specifically, or look at the section around the Shareholder Guide and \"Services for Fund Investors\" section. The user mentioned \"value for electronic delivery\" - this might relate to a fee for electronic delivery of documents, or a minimum for electronic delivery. Let me look at the \"Services for Fund Investors\" section and also search for \"electronic\" more broadly in df.html.xml.The term \"electronic delivery\" was not found. Let me look at the MSFT_FY26Q1_10Q.docx.xml document instead or read more of the df.html.xml document around the services section. Wait, maybe the user is talking about a specific \"electronic delivery\" fee/value that might be in the fee table for Class I shares. Let me look more carefully at the Shareholder Fees table. In line 1088-1092, I see: Shareholder Fees (fees paid directly from your investment): - Maximum sales charge (load) imposed on purchases... - Class I: none - Maximum deferred sales charge (load)... - Class I: none Let me also look for \"electronic delivery\" in the other document.The user is asking for \"the value for electronic delivery\" - this could be a specific field in a mutual fund prospectus document. Let me look more carefully. In mutual fund prospectuses, there is typically a section about \"Shareholder Fees\" that includes things like \"Maximum sales charge,\" \"Exchange fee,\" \"Account maintenance fee,\" etc. Let me search for \"electronic\" in the entire df.html.xml document with content output to see all matches. Wait, let me re-read the question: \"Extract the value for electronic delivery from the fund document.\" In mutual fund literature, there might be a specific data point or field related to \"electronic delivery\" - perhaps the minimum investment amount for electronic delivery, or a fee associated with electronic delivery. Let me search more broadly.Let me check the grep more broadly - maybe the file is using a different encoding.The phrase \"electronic delivery\" doesn't appear in the document. However, the user mentioned \"value for electronic delivery from the fund document.\" In mutual fund prospectuses, there might be a reference to \"electronic delivery\" in relation to delivery of documents like prospectuses, statements, etc. Let me look at the back cover and the \"For More Information\" section of the prospectus, as well as the \"Services for Fund Investors\" section. Let me also check the \"Householding\" or \"Electronic delivery\" section that's often found near the back cover of prospectuses. Actually, let me re-read the section around the \"Services for Fund Investors\" area. Let me look at the document more broadly.There is no \"electronic delivery\" mentioned in the document. Let me look at the back cover / \"For More Information\" section at the end of the document. Also let me check if there's information about electronic delivery of prospectuses and reports. Let me read the last few sections of the document.Let me look at the back cover / \"For More Information\" section of the prospectus. This typically contains information about electronic delivery. Let me search for \"back cover\" or \"For More Information\" section.Let me read the \"For More Information\" section, which is the back cover of the prospectus. Let me look around the two locations found.The \"For More Information\" section (back cover) doesn't mention \"electronic delivery\" either. Let me think about this differently. The user asked for \"the value for electronic delivery\" - in mutual fund context, this might refer to the minimum investment to set up electronic delivery of documents, or it could be a specific fee. Let me search the document more comprehensively. Actually, let me look at the MSFT_FY26Q1_10Q.docx.xml file too, since it was in the priority documents search results. Wait - let me re-read the user's question. They said \"Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for electronic delivery from the fund document.\" Maybe the user is referring to a specific data field in the fund document metadata or prospectus. Let me look more broadly. Let me search the entire df.html.xml for \"electronic\" without the case sensitivity issue - I see grep for \"elect\" found results mainly with \"select\", \"elect\", etc. Let me try a different search. Actually wait, maybe this is about \"minimum initial investment\" or a similar value that relates to electronic delivery. Let me look at the MSFT document since that was the other priority document.Let me look at the \"Services for Fund Investors\" section in the duplicate content area. Also, I notice the document contains the prospectus content twice - once starting around line 977 and again starting around line 3561. Let me look at the \"Services for Fund Investors\" section more carefully. Actually, let me try a completely different approach. The user is asking about \"the value for electronic delivery.\" In mutual fund contexts, \"electronic delivery\" usually refers to the option to receive prospectuses, reports, and other documents electronically instead of by mail. This isn't typically a numerical value. Wait - perhaps this is about \"Householding\" or \"Electronic Delivery\" mentioned somewhere in the document. Let me look at the section about account services more carefully. Let me read the \"Services for Fund Investors\" section from around line 2320.Let me look at the section after \"Automatic Services\" to see if there's anything about electronic delivery. Let me read the rest of the Services for Fund Investors section.The document doesn't seem to have any mention of \"electronic delivery.\" Let me look at this from a different angle. This seems to be a BNY Mellon Equity Income Fund prospectus. Maybe the user is referring to a specific data point that's in the document's table structure that I haven't seen yet. Let me search for \"delivery\" more broadly in df.html.xml to find all matches.There's no \"electronic delivery\" or similar phrase in this document. Let me look at the other file, the MSFT_FY26Q1_10Q.docx.xml, to see if it has any information about BNY Mellon or \"electronic delivery.\"The MSFT FY26Q1 10Q document doesn't have any information about BNY Mellon Equity Income Fund. Let me re-read the user's question more carefully: \"Extract the value for electronic delivery from the fund document. Please return the number only.\" Perhaps the user is expecting me to find some field or value in the document. Since I've searched thoroughly and there's no explicit \"electronic delivery\" phrase anywhere in the document, maybe I'm interpreting this wrong. In mutual fund prospectuses, there's often a shareholder fee table that includes items like: - Maximum sales charge (load) imposed on purchases - Maximum deferred sales charge (load) - Maximum sales charge (load) imposed on reinvested dividends - Redemption fee - Exchange fee - Account maintenance fee (for certain accounts) None of these mention \"electronic delivery.\" Maybe the user is referring to the \"TeleTransfer Privilege\" or \"Wire Redemption Privilege\" mentioned in the document? Let me re-read: \"electronic check via the TeleTransfer Privilege ($500 minimum)\" - this mentions an electronic check with a $500 minimum. Actually wait - could \"value for electronic delivery\" refer to the $500 minimum for electronic check? Let me check again: From line 2059: \"to you by wire via the Wire Redemption Privilege ($1,000 minimum) or electronic check via the TeleTransfer Privilege ($500 minimum)\" But the user says \"return the number only\" - and asks for \"electronic delivery.\" Maybe this is $500? But I'm not certain. Let me think about this differently. Perhaps I've been searching for the wrong term. In some fund documents, there's a field called \"Electronic delivery\" under shareholder fees or as a separate line item. Maybe it's $0 or \"none\" for Class I? Actually, looking at the fee table more carefully again: Shareholder Fees (fees paid directly from your investment): | | Class A | Class C | Class I | Class Y | | Maximum sales charge... | 5.75% | none | none | none | | Maximum deferred sales... | none* | 1.00% | none | none | These are the only shareholder fees listed. There's no \"electronic delivery\" fee or value. But wait, let me check if there may be additional data about \"shareholder services fees\" or other fees. For Class I, there's \"none\" for shareholder services fees. Actually, I wonder if the user is asking about some other document or file. Let me check for any other documents.OK so there are only two documents. The df.html.xml is the BNY Mellon Equity Income Fund prospectus. There's no explicit \"electronic delivery\" phrase in the document. Let me search once more more broadly for any text that could be related to \"electronic delivery.\" Actually, let me re-read the exact user request more carefully: \"Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for electronic delivery from the fund document. Please return the number only. Do not include any unit or scaling unit.\" Perhaps \"electronic delivery\" is referring to some specific data field. In mutual fund data, \"electronic delivery\" could refer to: 1. The minimum amount for electronic check/transfer 2. A specific value in the fee table Let me look at the \"Choosing a Share Class\" section and the \"How to Buy Shares\" section where minimum investments are discussed.I still don't see \"electronic delivery\" as a standalone concept in this document. Let me look at the first occurrence of this document again and its chunk index more carefully. Let me read the \"Shareholder Fees\" section more carefully - maybe \"electronic delivery\" appears as a row in the table that I missed. Let me look at the raw text around line 1084-1092 more carefully. From line 1084-1092: ``` of Additional Information. | | | | | | | --- | --- | --- | --- | --- | | | | | | | | Shareholder Fees (fees paid directly from your investment) | | | | | | | Class A | Class C | Class I | Class Y | | Maximum sales charge (load) imposed on purchases (as a percentage of offering price) | 5.75 | none | none | none | | Maximum deferred sales charge (load) (as a percentage of lower of purchase or sale price) | none* | 1.00 | none | none | | | | | | | ``` Wait, but the document says it was an HTML file. Let me try to read the raw document from the very beginning to see if there's metadata about electronic delivery that I'm missing.I've searched the document thoroughly and there is no mention of \"electronic delivery\" as a standalone concept, fee, or value in this BNY Mellon Equity Income Fund prospectus document. Let me take a completely different approach. Maybe the user is referring to a value for \"electronic delivery\" that is mentioned in the context of some specific section. In mutual fund documents, \"electronic delivery\" is commonly referenced on the back cover or \"For More Information\" section regarding electronic delivery of fund documents. But this document doesn't have that. Wait - let me search for the word \"electronically\" which is sometimes used:I've done an exhaustive search. The phrase \"electronic delivery\" does not appear anywhere in this document. However, the user has specifically asked me to \"Extract the value for electronic delivery from the fund document.\" Let me think about this one more time. Perhaps the user is referring to \"Electronic Delivery\" in a data/field sense. Looking at the Shareholder Fees table: ``` | Shareholder Fees (fees paid directly from your investment) | | | | | | | Class A | Class C | Class I | Class Y | | Maximum sales charge (load) imposed on purchases (as a percentage of offering price) | 5.75 | none | none | none | | Maximum deferred sales charge (load) (as a percentage of lower of purchase or sale price) | none* | 1.00 | none | none | ``` Sometimes mutual fund fee tables include a row like \"Electronic delivery fee\" or similar. There's nothing like that here. Actually wait - let me look at the MSFT FY26Q1 10Q document. This is a Microsoft 10-Q filing. It wouldn't have BNY Mellon fund info but let me check if the user might be confused about which document has the info. Actually, I think I should just answer honestly - I've searched the document thoroughly and cannot find any mention of \"electronic delivery\" in the BNY Mellon Equity Income Fund prospectus document. Let me inform the user. Wait... one more thought. Let me check if there's something I missed by reading the document from a completely different starting point.I have searched the BNY Mellon Equity Income Fund prospectus document thoroughly and have not found any explicit mention of \"electronic delivery\" as a data field or value. Let me check if perhaps the MSFT filing document has some reference. Actually, the user specifically said \"from the fund document\" so it's about the BNY Mellon prospectus. However, let me reconsider. In mutual fund prospectuses, there's often a section about electronic delivery of documents near the back. Let me check the Appendix section, which goes from around line A-1 onwards. Actually, let me look at the appendix section starting from around line 2900.Let me read the Appendix section of the prospectus, which starts around line 2800:The document is a BNY Mellon Equity Income Fund prospectus and its appendix about sales charge waivers through various financial intermediaries. I haven't found any reference to \"electronic delivery\" in the entire document. Let me think about this from a completely different angle. Could the user be referring to something else? The phrase \"value for electronic delivery\" - in some fund data systems (like Morningstar or similar), there are data fields like \"Electronic Delivery\" that might be a fee or value. But this is a prospectus document, not a data feed. Wait - maybe I need to look at the document differently. The document title is \"df.html\" - could this be a specific document format from a data provider where \"electronic delivery\" is a known data field? Let me try grepping for any numbers that are followed or preceded by related terms.I've searched thoroughly and cannot find \"electronic delivery\" in this document. The closest match I found related to electronic transactions is: - \"electronic check via the TeleTransfer Privilege ($500 minimum)\" - but this is about electronic check redemptions, not \"electronic delivery.\" Let me reconsider the user's phrase. Could \"electronic delivery\" mean something specific in a fund document context? In mutual fund documents, the concept of \"electronic delivery\" typically refers to the option to receive shareholder reports, prospectuses, and other documents electronically. This is sometimes discussed in the \"Householding\" section or near the back cover. But this specific prospectus doesn't seem to have such a section. Given I cannot find \"electronic delivery\" in the document, I should inform the user. But wait - let me check once more if there's a section I might have missed by searching for the term \"delivery\" in broader context. Actually, I've checked and rechecked. The term \"electronic delivery\" simply does not appear in this document. Let me inform the user.I've searched the entire BNY Mellon Equity Income Fund prospectus document thoroughly and cannot find any mention of \"electronic delivery\" as a data field, fee, or value. The term does not appear anywhere in the document. The document is a September 30, 2024 prospectus for the fund (Class I ticker: DQIRX) and covers fees, expenses, investment strategy, risks, and shareholder services, but it does not contain a specific value for \"electronic delivery.\" Could you clarify what you're looking for? For example, are you referring to: - A minimum investment amount for electronic transactions? - The $500 minimum for electronic check via TeleTransfer? - A specific data field from a particular data provider? This will help me locate the exact value you need",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": true,
+        "answer_clean": false,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.014492753623188406,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.02857142857142857,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-007",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for REDEEMBYWIRE from the fund document. Prioritize these sections: statutory. Return only the final value. Please return a boolean value (Yes/No).",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for REDEEMBYWIRE from the fund document. Please return a boolean value (Yes/No).",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for REDEEMBYWIRE from the fund document. Please return a boolean value (Yes/No).",
+      "normalization_applied": [],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for REDEEMBYWIRE from the fund document. Please return a boolean value (Yes/No).",
+      "schema_key": "REDEEMBYWIRE",
+      "expected_answer_type": "text",
+      "gold_answer": "Yes",
+      "predicted_answer": "The user wants me to find information about the BNY Mellon Equity Income Fund (Class I) from the document `df.html.xml` and extract the value for REDEEMBYWIRE. Let me search for this in the document.The grep didn't find any matches for \"REDEEMBYWIRE\" or \"BNY Mellon Equity Income\". Let me read the document to see its content and structure.The chunk index starts at line 977 and goes up. Let me search for \"BNY Mellon\" or \"Equity Income\" in the document more broadly.I found the document contains \"BNY Mellon Equity Income Fund Prospectus\". The chunk index starts around line 977. Let me look at the chunks more carefully. I need to find \"REDEEMBYWIRE\" or something similar related to redeem by wire. Let me search for \"wire\" or \"redeem\" in the document.I found mentions of \"wire\" and \"redeem\" but not \"REDEEMBYWIRE\" specifically. This seems to be a specific field/flag in a fund document. Let me look for it more carefully. Let me look at the beginning of the document to understand the structure better. Let me also look for \"REDEEM\" in uppercase.I see the document is a prospectus for BNY Mellon Equity Income Fund. It mentions Class I (ticker DQIRX). But I'm not finding \"REDEEMBYWIRE\" as a literal string. This might be a field name from a structured data source, not plain text. Let me search more broadly. Let me look at the Financial Highlights section and any tables in the document. The term \"REDEEMBYWIRE\" could be a field in a data file embedded within the HTML/XML. Let me search for it with various patterns.\"REDEEMBYWIRE\" doesn't appear as a literal string in the document. This field name doesn't appear in the document text. Let me look at the other document (MSFT_FY26Q1_10Q.docx.xml) as well, but that seems to be about Microsoft, not BNY Mellon. Let me re-read the document more carefully. The user mentioned \"REDEEMBYWIRE\" - this could be a field/data element from a structured fund data document. Let me look at the whole document structure to understand what kind of data it contains. Let me look at more of the document content to see if there are any data tables with header rows or field names.I've looked extensively through the document but can't find \"REDEEMBYWIRE\" as a text field. This may be a field from a structured data format (like a data file or XML/JSON) that was converted into the HTML prospectus. The document appears to be a prospectus for the BNY Mellon Equity Income Fund. Let me try to search more broadly - maybe it's in the HTML source in a different format, or in XML attributes. Let me look at the beginning of the file to check its structure.I've searched thoroughly through the document and \"REDEEMBYWIRE\" is not present as a literal text string. This field name might be from a different data source or this document might not contain that specific field. However, the user asked about this specific field. Let me try one more thing - maybe it's in the raw HTML source of the file before it was converted to XML. Let me look at the raw source lines at the beginning of the document that might contain metadata or data attributes.I've searched thoroughly through both documents and \"REDEEMBYWIRE\" isn't present as a literal text string in either document. This might be a data field name that would appear in a different format (like a data feed or a fund data spreadsheet). The document `df.html.xml` is a BNY Mellon Equity Income Fund prospectus document, which was originally an HTML file. Since REDEEMBYWIRE doesn't appear as a text string, let me look more carefully. Let me search the entire document in a more targeted way.After thorough searching, I cannot find the exact text \"REDEEMBYWIRE\" anywhere in the document. This appears to be a specific data field name (perhaps from a fund data feed or a structured database) that is not present as plain text in the prospectus HTML document. However, the document does describe the Wire Redemption Privilege extensively. The fund does offer wire redemptions for shares. Let me look at the \"Services for Fund Investors - Wire Redemption and TeleTransfer Privileges\" section to understand the redemption policies. Let me check the relevant section around line 2420-2440.I've done an extensive search and \"REDEEMBYWIRE\" as a literal string does not exist in the document. This term sounds like it could be a field name from a structured fund data file (like a Morningstar or Lipper data feed). Let me try one more search pattern to see if there's anything resembling this.The document doesn't contain the exact string \"REDEEMBYWIRE\" anywhere. This appears to be a prospectus document (PDF/HTML) for the BNY Mellon Equity Income Fund. The field \"REDEEMBYWIRE\" is likely a structured data field from a fund data feed (e.g., Morningstar, Lipper, Bloomberg) and not from this prospectus document. Based on the document content, I can confirm: 1. The document is the BNY Mellon Equity Income Fund Prospectus 2. It contains Class I shares (ticker DQIRX) 3. The fund offers a \"Wire Redemption Privilege\" which allows shareholders to redeem shares and have proceeds wired to them 4. But the specific field name \"REDEEMBYWIRE\" as a data element doesn't appear in this document Since I cannot find \"REDEEMBYWIRE\" in the document, I need to inform the user that this specific field was not found in the available document.I searched thoroughly through the BNY Mellon Equity Income Fund prospectus document (`df.html.xml`), but the field **REDEEMBYWIRE** does not appear anywhere in the document as a text string or data element. The document is a standard mutual fund prospectus (September 30, 2024) for the BNY Mellon Equity Income Fund, which includes Class I shares (ticker: DQIRX). It does describe a **Wire Redemption Privilege** - shareholders can redeem shares by phone or online and have proceeds wired to their bank account , . However, the specific field name \"REDEEMBYWIRE\" is not present in this document. This field may exist in a different type of source (e.g., a structured fund data feed, a compliance data file, or a fund fact sheet) that isn't among the available documents. Could you clarify what type of document or data source you're referencing for this field?",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": true,
+        "answer_clean": false,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-007",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for REDEEMBYWIRE from the fund document. Prioritize these sections: statutory. Return only the final value. Please return a boolean value (Yes/No).",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for REDEEMBYWIRE from the fund document. Please return a boolean value (Yes/No).",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for REDEEMBYWIRE from the fund document. Please return a boolean value (Yes/No).",
+      "normalization_applied": [],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for REDEEMBYWIRE from the fund document. Please return a boolean value (Yes/No).",
+      "schema_key": "REDEEMBYWIRE",
+      "expected_answer_type": "text",
+      "gold_answer": "Yes",
+      "predicted_answer": "The user wants me to find the BNY Mellon Equity Income Fund (Class A) in the document `df.html.xml` and extract the value for REDEEMBYWIRE. Let me first read this document to find the relevant information.The chunk_index shows the document has many chunks. I need to search for \"BNY Mellon Equity Income\" and \"REDEEMBYWIRE\" in the document. Let me grep for these terms first.No matches for either \"BNY Mellon Equity Income\" or \"REDEEMBYWIRE\" in the document. Let me also check the other document MSFT_FY26Q1_10Q.docx.xml since it was also in the priority list. But this is about BNY Mellon fund, so it's likely in df.html.xml. Let me search more broadly.Let me look at the document more carefully. I can see \"BNY Mellon Equity Income Fund\" appears in several places. Let me look at the chunks that reference REDEEMBYWIRE specifically. The grep didn't find \"REDEEMBYWIRE\" directly in the document. Let me search more broadly - maybe the term appears differently or is embedded in a table or HTML. Let me read parts of the document to understand the structure better, particularly around where the fund details are listed.Let me search more broadly in the document. The term \"REDEEMBYWIRE\" might be within a table in HTML or in some other format. Let me search for variations.I'm not finding \"REDEEMBYWIRE\" as a literal string in the document. This term might be a table column header or field name that could appear differently in the document. Let me look at the document's HTML more carefully. Let me look for tables that might have fund-specific data fields. Maybe \"REDEEMBYWIRE\" is a field in a structured table that has been converted. Let me search across the full document for things like \"Wire\" in the context of redemption, as there were matches earlier. Maybe it's in a different section. Let me also try to search for this term in the other document.The term REDEEMBYWIRE doesn't appear literally in either document. Let me look at the original HTML file to get a better sense of the structure. The df.html.xml is a parsed HTML document. Let me look for more of the document, especially around areas where fund-specific data might be in table format. Actually, let me reconsider. The term \"REDEEMBYWIRE\" could be a field name from a structured data set, possibly from the document itself or from some other source. Let me check the full document for all content systematically. Let me search for common OCR/PDF extracted table headers or content that could contain this kind of field name.The exact term \"REDEEMBYWIRE\" doesn't exist in the document. However, the document does discuss wire redemption options. Let me look at the document structure more comprehensively to see if there are tables with fund-specific fields. Let me search more broadly for any structured data or tables.There are only two documents. Let me look at more of the df.html.xml file to see if there's a section with structured fund data that might contain fields like \"REDEEMBYWIRE\". Let me look at the full chunk index first.The document is very large. Let me look for a table structure that might contain fund-specific field information. Let me search for any structured data, maybe in a different format, like table rows with field-value pairs. Let me search for some more unique patterns. Actually, I realize \"REDEEMBYWIRE\" is not a standard English phrase and doesn't appear in the document as-is. But it could be embedded in HTML table data that was parsed. Let me look at more content from the document, specifically looking at tables that might contain fund data fields. Let me read more chunks around the middle of the document to find any mention of this.The document is a prospectus for BNY Mellon Equity Income Fund. The term \"REDEEMBYWIRE\" is not appearing in the document. This sounds like it could be a field name from a database or structured data format, possibly from a fund data feed or from financial data aggregation (like Morningstar, Lipper, etc.). Let me try looking for table headers or structured data that might contain this field. Let me search the document more broadly for specially formatted content.I have looked through the document extensively and I can't find \"REDEEMBYWIRE\" as a literal string in the document. This might be a field name from a data feed or a different document structure. Let me check if there are any other documents or files that might contain this information. Let me search more broadly - perhaps \"REDEEM\" with different case or as part of a CSV table.The term \"REDEEMBYWIRE\" does not appear in any of the documents in the knowledge base. It may be a field name from another data format (e.g., a database export, a spreadsheet field, a data feed from Morningstar/Lipper/etc.) that is not present in the PDF/HTML prospectus document. Let me search one more time in case there's a slightly different format.The term \"REDEEMBYWIRE\" is not found anywhere in the document. This appears to be a field name that might exist in a structured data format (like a database table, CSV, or financial data feed) but not in the textual content of the prospectus itself. Since I cannot find the exact field \"REDEEMBYWIRE\" in the document, I need to inform the user that this specific field name was not found in the document. However, the document does discuss wire redemption as a service available to fund investors. Let me look one more time at the beginning of the document where fund summaries/tables might have structured data.The document is a prospectus in HTML format converted from PDF. The field \"REDEEMBYWIRE\" does not exist as text in this document. This field name sounds like it could be from a structured data feed or database schema for mutual fund data. Let me try one more thing - searching the document's raw text more aggressively by looking for any sections that might contain structured/fund data tables with field names like this.The term \"REDEEMBYWIRE\" does not appear anywhere in the document. I've searched thoroughly through the df.html.xml document using multiple approaches: 1. `grep` for \"REDEEMBYWIRE\" - no results 2. `grep` for \"REDEEM\" - found results but none with \"REDEEMBYWIRE\" 3. `grep` for \"BYWIRE\" - no results 4. `grep` for \"wire redemption\" - found related content but not the field name 5. Read through large portions of the document The document is a mutual fund prospectus for BNY Mellon Equity Income Fund (Class A) converted from HTML to XML format. The field name \"REDEEMBYWIRE\" doesn't appear as-is in this document. This field name might be from a different data source (like a Morningstar data feed, a fund database, or a structured data table) that isn't present in this prospectus document. I should inform the user that the field \"REDEEMBYWIRE\" was not found in the document.I searched the BNY Mellon Equity Income Fund prospectus document thoroughly for the field **REDEEMBYWIRE**. The exact field name `REDEEMBYWIRE` does not appear anywhere in the document. The document discusses wire redemption as a service - it notes that investors can redeem via the Wire Redemption Privilege (with a $1,000 minimum) and proceeds are normally wired within one business day , - but this is not presented as a structured field value. **Answer: No**, the field `REDEEMBYWIRE` was not found in the document",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": true,
+        "answer_clean": false,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-012",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for AIP_INITIALAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for aip initialamount from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for aip initialamount from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "normalization_applied": [
+        {
+          "term": "AIP_INITIALAMOUNT",
+          "normalized": "aip initialamount"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for aip initialamount from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "schema_key": "AIP_INITIALAMOUNT",
+      "expected_answer_type": "text",
+      "gold_answer": "1000",
+      "predicted_answer": "The user wants me to find the AIP initial amount for BNY Mellon Equity Income Fund (Class A) from the pinned document `df.html.xml`. Let me read that document first.Let me search for \"BNY Mellon Equity Income Fund\" and \"aip initialamount\" in the document.The grep didn't find any matches. Let me try different search patterns. The document might have the text in a different format. Let me try searching for \"Equity Income\" or \"BNY\" more broadly.Found \"Mellon Equity Income Fund\" references. Let me look at those lines in the document. The chunks around those lines should contain the relevant info. Let me read the relevant sections. First, let me read lines around 977-982 (chunk 614544 which is the first match), and also around 3481, 3564, 6067. Also, \"AIP\" didn't match - let me try \"Automatic Investment\" or similar patterns.I need to find the fund details section that contains information about Class A shares and AIP (Automatic Investment Plan) information. Let me look at the fund details sections more carefully. Let me search for terms like \"Class A\", \"initial\", \"minimum\", \"investment\" in the document.I found the minimum investment info. Let me look at the section about minimum investments more carefully. Line 1301 says \"the fund's minimum initial investment is $1,000\" - but I'm looking for \"aip initialamount\" which likely refers to Automatic Investment Plan minimum initial amount. Let me look at the area around line 1296-1315 to see the full context of the minimum investments section.The minimum initial investment for Class A is $1,000, and subsequent minimum is $100. But the user asked for \"aip initialamount\" which likely refers to an Automatic Investment Plan (AIP) initial amount. Let me search for \"automatic\" or \"AIP\" in the document.Let me look at the \"Services for Fund Investors - Automatic Services\" section, particularly around chunk 614916 and the section about automatic investment plans. Let me also look at lines around 2350-2375 for the automatic services details.I've looked through the document extensively. The user is asking for \"aip initialamount\" - AIP likely stands for \"Automatic Investment Plan\" (or something similar). Looking at the document, I found: - \"Automatic Asset Builder\" permits purchasing fund shares with a minimum of $100 and maximum of $150,000 per transaction - The minimum initial investment for Class A shares is $1,000 - The minimum subsequent investment is $100 However, I'm not finding a specific field called \"aip initialamount\" in this document. Let me also search the other document - MSFT_FY26Q1_10Q.docx.xml - as it was mentioned as a priority document. But wait, the user said \"Use only the pinned document context\" so they want me to focus on the pinned documents. Let me look again more carefully. Maybe there's a specific table or section in the fund summary. Let me look at the fund summary area more carefully, around lines 1084-1125 which seems to be around the fee table and might have AIP info.Let me search more broadly for \"AIP\" or the term in the document. The user's query says \"aip initialamount\" - perhaps this document doesn't use the exact phrase \"AIP initial amount\" but rather has it structured in a table or a different format. Let me search the Microsoft document as well since it was listed as a priority document. But the user said \"Use only the pinned document context and search_surfsense_docs\" so they want me to focus on the pinned documents. Wait, the pinned documents are: 1. /documents/df.html.xml (this is the BNY Mellon fund document) 2. /documents/MSFT_FY26Q1_10Q.docx.xml (this is Microsoft's quarterly report, irrelevant) Let me also try searching the document for \"AIP\" or \"Automatic Investment Plan\" more carefully, and also try reading more portions of the document. Actually, let me search more broadly for any table/data about the AIP initial amount.I'm not finding an explicit \"AIP initial amount\" value in this document. The document is a prospectus for the BNY Mellon Equity Income Fund. Let me look at the other pinned document (MSFT) to see if possibly this value is there, or perhaps I should search more extensively in the df.html.xml document for any structured data about AIP. Let me look at the beginning of the document for any metadata or structured data sections.The document is very long. Let me search for specific things like the fund's \"Purchase and Sale\" section which I already found. The user mentioned \"aip initialamount\" - this likely refers to Automatic Investment Plan initial amount. Let me also search for \"AIP\" in the MSFT document as a wild guess, but more importantly, let me look more carefully at the df.html.xml document. Actually, I've searched extensively. The term \"aip\" or \"AIP\" doesn't appear in the document. The closest things are \"Automatic Asset Builder\" (minimum of $100 per transaction) and \"Automatic Investment Plan\" mentioned in passing. Let me look at the \"Purchase and Sale\" section which in fund summaries typically includes minimum investment amounts. I already found that the minimum initial investment is $1,000 for Class A . But \"aip initialamount\" specifically - \"AIP\" sometimes stands for \"Automatic Investment Plan\" in the context of mutual funds. The Automatic Asset Builder (which is essentially an automatic investment plan) has a minimum of $100 per transaction . However, I'm still looking for a specific value called \"aip initialamount\" which could be the initial investment amount for an Automatic Investment Plan. Let me search the document once more comprehensively.The term \"AIP\" or \"Automatic Investment Plan initial amount\" is not explicitly found in this document. I've searched extensively. The closest values found are: 1. The minimum initial investment for Class A shares is $1,000 2. The Automatic Asset Builder (automatic investment plan) has a minimum of $100 per transaction 3. The minimum subsequent investment is $100 Since the user specifically asked for \"aip initialamount\" and I cannot find this exact term in the document, I should return N/A as instructed. Let me also check the MSFT document quickly just in case.The value \"aip initialamount\" is not found in the pinned document. N/A",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": true,
+        "answer_clean": false,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.02,
+        "numeric_recall": 0.5,
+        "numeric_f1": 0.038461538461538464,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L17-002",
+      "group": "Level17",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value. Please return a date value only.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for performance table date from the fund document. Please return a date value only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class C"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for performance table date from the fund document. Please return a date value only.",
+      "normalization_applied": [
+        {
+          "term": "PERFORMANCE_TABLE_DATES",
+          "normalized": "performance table date"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for performance table date from the fund document. Please return a date value only.",
+      "schema_key": "PERFORMANCE_TABLE_DATES",
+      "expected_answer_type": "date",
+      "gold_answer": "12/31/2023",
+      "predicted_answer": "12/31/23",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": true,
+        "match_method": "exact",
+        "start_offset": 0,
+        "end_offset": 8,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": "12/31/23"
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.6666666666666666,
+        "numeric_recall": 0.5,
+        "numeric_f1": 0.5714285714285715,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": true,
+        "source_span_match": true,
+        "source_verbatim_match": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "L1-010",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for COMPANYNAME from the fund document. Please return a text value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for company name from the fund document. Please return a text value.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class Y"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for company name from the fund document. Please return a text value.",
+      "normalization_applied": [
+        {
+          "term": "COMPANYNAME",
+          "normalized": "company name"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for company name from the fund document. Please return a text value.",
+      "schema_key": "COMPANYNAME",
+      "expected_answer_type": "text",
+      "gold_answer": "BNY Mellon Investment Adviser, Inc.",
+      "predicted_answer": "BNY Mellon Investment Adviser, Inc",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": true,
+        "match_method": "exact",
+        "start_offset": 0,
+        "end_offset": 34,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": "BNY Mellon Investment Adviser, Inc"
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8000000000000002,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "source_span_match": true,
+        "source_verbatim_match": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "L1-002",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for NET_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for net expenses after fee waiver and/or expense reimbursement from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class C"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for net expenses after fee waiver and/or expense reimbursement from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "normalization_applied": [
+        {
+          "term": "NET_EXPENSES",
+          "normalized": "net expenses after fee waiver and/or expense reimbursement"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for net expenses after fee waiver and/or expense reimbursement from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "schema_key": "NET_EXPENSES",
+      "expected_answer_type": "rate",
+      "gold_answer": "1.78",
+      "predicted_answer": "78",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": true,
+        "match_method": "exact",
+        "start_offset": 2,
+        "end_offset": 4,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": "78"
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": true,
+        "source_verbatim_match": true,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-002",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for NET_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for net expenses after fee waiver and/or expense reimbursement from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class Y"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for net expenses after fee waiver and/or expense reimbursement from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "normalization_applied": [
+        {
+          "term": "NET_EXPENSES",
+          "normalized": "net expenses after fee waiver and/or expense reimbursement"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for net expenses after fee waiver and/or expense reimbursement from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "schema_key": "NET_EXPENSES",
+      "expected_answer_type": "rate",
+      "gold_answer": "0.75",
+      "predicted_answer": "0.75",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": true,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 1.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L17-002",
+      "group": "Level17",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value. Please return a date value only.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for performance table date from the fund document. Please return a date value only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for performance table date from the fund document. Please return a date value only.",
+      "normalization_applied": [
+        {
+          "term": "PERFORMANCE_TABLE_DATES",
+          "normalized": "performance table date"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for performance table date from the fund document. Please return a date value only.",
+      "schema_key": "PERFORMANCE_TABLE_DATES",
+      "expected_answer_type": "date",
+      "gold_answer": "12/31/2023",
+      "predicted_answer": "12/31/23",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": true,
+        "match_method": "exact",
+        "start_offset": 0,
+        "end_offset": 8,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": "12/31/23"
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.6666666666666666,
+        "numeric_recall": 0.5,
+        "numeric_f1": 0.5714285714285715,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": true,
+        "source_span_match": true,
+        "source_verbatim_match": true,
+        "overall_correct": true
+      }
+    }
+  ]
+}

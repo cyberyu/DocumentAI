@@ -1,0 +1,653 @@
+{
+  "generated_at_utc": "2026-05-13T13:29:35Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "df_qa_smoke10_skip_L1-006.json",
+    "document_title_contains": "df.html",
+    "mentioned_document_ids": [
+      391
+    ],
+    "max_questions": 0,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": false,
+    "question_suffix": "",
+    "blend_fund_context": true,
+    "normalize_schema_terms": true,
+    "post_verbatim_stage": false,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 10,
+    "overall_correct_count": 2,
+    "overall_correct_rate": 0.2,
+    "normalized_exact_count": 1,
+    "normalized_exact_rate": 0.1,
+    "number_match_count": 8,
+    "number_match_rate": 0.8,
+    "unit_match_count": 10,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 10,
+    "questions_run": 10,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Level1": {
+      "run": 9,
+      "overall_correct_count": 1,
+      "overall_correct_rate": 0.1111111111111111,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 7,
+      "number_match_rate": 0.7777777777777778,
+      "unit_match_count": 9,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0
+    },
+    "Level17": {
+      "run": 1,
+      "overall_correct_count": 1,
+      "overall_correct_rate": 1.0,
+      "normalized_exact_count": 1,
+      "normalized_exact_rate": 1.0,
+      "number_match_count": 1,
+      "number_match_rate": 1.0,
+      "unit_match_count": 1,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [
+    3436,
+    3437,
+    3438,
+    3439,
+    3440,
+    3441,
+    3442,
+    3443,
+    3444,
+    3445,
+    3446,
+    3447
+  ],
+  "results": [
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "normalization_applied": [
+        {
+          "term": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+          "normalized": "total annual fund operating expenses"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "schema_key": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "expected_answer_type": "rate",
+      "gold_answer": "0.8",
+      "predicted_answer": "0.80%",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L17-002",
+      "group": "Level17",
+      "question": "Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for performance table date from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Extract the value for performance table date from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "normalization_applied": [
+        {
+          "term": "PERFORMANCE_TABLE_DATES",
+          "normalized": "performance table date"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for performance table date from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "schema_key": "PERFORMANCE_TABLE_DATES",
+      "expected_answer_type": "date",
+      "gold_answer": "12/31/2023",
+      "predicted_answer": "12/31/23",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": true,
+        "match_method": "exact",
+        "start_offset": 0,
+        "end_offset": 8,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": "12/31/23"
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.6666666666666666,
+        "numeric_recall": 0.5,
+        "numeric_f1": 0.5714285714285715,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": true,
+        "source_span_match": true,
+        "source_verbatim_match": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "L1-011",
+      "group": "Level1",
+      "question": "Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for minimum subsequent investment amount from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Extract the value for minimum subsequent investment amount from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "normalization_applied": [
+        {
+          "term": "AIP_SUBAMOUNT",
+          "normalized": "minimum subsequent investment amount"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for minimum subsequent investment amount from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "schema_key": "AIP_SUBAMOUNT",
+      "expected_answer_type": "amount",
+      "gold_answer": "100",
+      "predicted_answer": "$100",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class Y"
+      },
+      "normalized_question": "Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "normalization_applied": [
+        {
+          "term": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+          "normalized": "total annual fund operating expenses"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "schema_key": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "expected_answer_type": "rate",
+      "gold_answer": "0.75",
+      "predicted_answer": "0.75%",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-010",
+      "group": "Level1",
+      "question": "Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class C"
+      },
+      "normalized_question": "Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "normalization_applied": [],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "schema_key": "COMPANYNAME",
+      "expected_answer_type": "text",
+      "gold_answer": "BNY Mellon Investment Adviser, Inc.",
+      "predicted_answer": "1",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "normalization_applied": [
+        {
+          "term": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+          "normalized": "total annual fund operating expenses"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "schema_key": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "expected_answer_type": "rate",
+      "gold_answer": "1.02",
+      "predicted_answer": "1.02%",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-013",
+      "group": "Level1",
+      "question": "Extract the value for AUTOMATIC_INVESTMENT_ELIGIBLE from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for automatic investment eligible from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Extract the value for automatic investment eligible from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "normalization_applied": [
+        {
+          "term": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+          "normalized": "automatic investment eligible"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for automatic investment eligible from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "schema_key": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+      "expected_answer_type": "text",
+      "gold_answer": "1",
+      "predicted_answer": "Yes",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-005",
+      "group": "Level1",
+      "question": "Extract the value for SWP_MINIMUM from the fund document. Prioritize these sections: statutory. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for swp minimum from the fund document. Prioritize these sections: statutory. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Extract the value for swp minimum from the fund document. Prioritize these sections: statutory. Return only the final value.",
+      "normalization_applied": [
+        {
+          "term": "SWP_MINIMUM",
+          "normalized": "swp minimum"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for swp minimum from the fund document. Prioritize these sections: statutory. Return only the final value. Restrict extraction to this fund and class only.",
+      "schema_key": "SWP_MINIMUM",
+      "expected_answer_type": "amount",
+      "gold_answer": "50",
+      "predicted_answer": "9",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-010",
+      "group": "Level1",
+      "question": "Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "normalization_applied": [],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "schema_key": "COMPANYNAME",
+      "expected_answer_type": "text",
+      "gold_answer": "BNY Mellon Investment Adviser, Inc.",
+      "predicted_answer": "no",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "L1-011",
+      "group": "Level1",
+      "question": "Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Extract the value for minimum subsequent investment amount from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class C"
+      },
+      "normalized_question": "Extract the value for minimum subsequent investment amount from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "normalization_applied": [
+        {
+          "term": "AIP_SUBAMOUNT",
+          "normalized": "minimum subsequent investment amount"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Extract the value for minimum subsequent investment amount from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "schema_key": "AIP_SUBAMOUNT",
+      "expected_answer_type": "amount",
+      "gold_answer": "100",
+      "predicted_answer": "$100",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "generated_at_utc": "2026-05-14T15:59:01Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "df_santic_qa.json",
+    "document_title_contains": "df.html",
+    "mentioned_document_ids": [
+      391
+    ],
+    "max_questions": 1,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": false,
+    "question_suffix": "",
+    "print_asked_question": true,
+    "blend_fund_context": true,
+    "normalize_schema_terms": true,
+    "post_verbatim_stage": false,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 1,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 0,
+    "number_match_rate": 0.0,
+    "unit_match_count": 1,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 43,
+    "questions_run": 1,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Level1": {
+      "run": 1,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 1,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [
+    3913,
+    3914,
+    3915
+  ],
+  "results": [
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "normalization_applied": [
+        {
+          "term": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+          "normalized": "total annual fund operating expenses"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "schema_key": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "expected_answer_type": "rate",
+      "gold_answer": "0.8",
+      "pre_coercion_predicted_answer": "The user wants me to find the total annual fund operating expenses for BNY Mellon Equity Income Fund (Class I) from the documents. Let me first check the priority documents - the user mentioned \"the document\" and the priority documents include `/documents/df.html.xml` which has a high relevance score and is user-mentioned. Let me read that file first.The document is large. Let me search for \"BNY Mellon Equity Income Fund\" or \"operating expenses\" in this document to find the relevant chunk.The grep found some matches. Let me look at the chunks related to BNY Mellon Equity Income Fund. Let me first look at chunk 614544 which seems to be the prospectus header, and explore around it to find operating expenses.Great! I found the relevant data. Let me read the chunk around line 1104 to see the full table with context.\n\nFrom the grep output:\n- Line 1104: `| Total annual fund operating expenses | 1.02 | 1.81 | .80 | .75 |`\n- This gives us Class A = 1.02%, Class C = 1.81%, Class I = 0.80%, Class Y = 0.75%\n\nThe user asked for BNY Mellon Equity Income Fund (Class I). So the total annual fund operating expenses for Class I would be 0.80%.\n\nBut wait - there's also line 1106: `| Total annual fund operating expenses (after fee waiver and/or expense reimbursement) | 1.02 | 1.78 | .78 | .75 |`\n\nSo for Class I, the total annual fund operating expenses (before fee waivers) is 0.80%, and after fee waivers it's 0.78%.\n\nThe user asked for \"total annual fund operating expenses\" - this typically refers to the gross figure (before fee waiver). Let me read the full context to make sure.The table clearly shows:\n\nFor Class I (the one requested):\n- Total annual fund operating expenses: **.80** (0.80%)\n\nThe user asked: \"Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.\"\n\nThen they also say: \"Return exactly one concrete numeric value with unit.\"\n\nThere's a slight conflict - \"Do not include any unit or scaling unit\" vs \"Return exactly one concrete numeric value with unit.\" But looking at the table, the values are percentages. The value in the source is `.80` which is 0.80%. Let me just return `.80` as that's what appears in the source.\n\nActually, re-reading: \"Please return the number only. Do not include any unit or scaling unit.\" So I should return the value as it appears in the source: `.80`.80",
+      "prepared_prediction_before_coercion": "80",
+      "predicted_answer": "80",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": true,
+        "match_method": "exact",
+        "start_offset": 1,
+        "end_offset": 3,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": "80"
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": true,
+        "source_verbatim_match": true,
+        "overall_correct": false
+      }
+    }
+  ]
+}

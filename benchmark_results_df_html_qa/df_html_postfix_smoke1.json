@@ -1,0 +1,92 @@
+{
+  "generated_at_utc": "2026-05-12T22:17:45Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "df_qa.json",
+    "document_title_contains": "df.html",
+    "mentioned_document_ids": [
+      391
+    ],
+    "max_questions": 1,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": false,
+    "blend_fund_context": true,
+    "normalize_schema_terms": true,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 1,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 1,
+    "number_match_rate": 1.0,
+    "unit_match_count": 1,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 44,
+    "questions_run": 1,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Level1": {
+      "run": 1,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 1,
+      "number_match_rate": 1.0,
+      "unit_match_count": 1,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [
+    3167
+  ],
+  "results": [
+    {
+      "id": "L1-006",
+      "group": "Level1",
+      "question": "Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class Y"
+      },
+      "normalized_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "normalization_applied": [],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "gold_answer": "Yes",
+      "predicted_answer": "The user wants me to find the BNY Mellon Equity Income Fund (Class Y) in the fund document and extract the PHONESWITCH value. The priority document is `/documents/df.html.xml`. Let me read it to find the relevant information.The file is large. I need to search for \"BNY Mellon Equity Income Fund\" and \"PHONESWITCH\" within the document. Let me use grep first to locate the relevant sections.The grep didn't find matches. Let me try different search terms. The file is large, so let me search more broadly. Maybe the names are slightly different. Let me search for \"Equity Income\" or \"BNY\" or \"PHONE\" to see what's there.I can see \"BNY Mellon Equity Income Fund\" is mentioned in the document. Let me look at chunk 614544 which seems to contain the prospectus header. Let me also search for \"Class Y\" and the specific term \"PHONESWITCH\". It might be a table field name. Let me look at the chunks around the fund name.\"PHONESWITCH\" is not found anywhere in the document. Let me look for \"PHONE\" or \"SWITCH\" more broadly. The search for \"SWITCH\" didn't return results either. Let me search for just \"SWITCH\" to see if maybe it's a column header or field name.\"PHONESWITCH\" is not found in the document. Let me read chunk 614544 which contains the prospectus header for BNY Mellon Equity Income Fund, and also look at nearby chunks. Let me also search more broadly in the document for the relevant sections like \"statutory\" or \"summary\" or see the table structure around line 1089 which shows Class A | Class C | Class I | Class Y.\n\nLet me read the chunk index from line 100 onwards, and then look at the chunk that starts around line 977 (chunk 614544).I see the fund document is the BNY Mellon Equity Income Fund prospectus. I can see Class Y is listed with ticker DQIYX. But I don't see \"PHONESWITCH\" anywhere in the document so far. Let me continue reading and also search for \"PHONESWITCH\" or similar terms in the other file (MSFT_FY26Q1_10Q.docx.xml) just in case.\n\nActually, wait \u2014 the user said \"Extract the value for PHONESWITCH from the fund document.\" PHONESWITCH might be a field name in a table or a specific data field. Let me search for this in the entire document more carefully. Let me also check the other file.So \"PHONESWITCH\" and \"SWITCH\" don't appear as standalone terms in the document at all. Let me search the document more thoroughly. Maybe it's a table field name that appears in the document as HTML or raw content. Let me also check if the term might be \"Phone Switch\" (with a space) or appear in some table attribute.Let me look at the table of contents or general policies section more carefully. \"PHONESWITCH\" might be a row label in the summary section of the shareholder guide. Let me search more broadly. Let me also look at the raw file content for any fields that might be related to this.\n\nActually, let me look at the chunk index more thoroughly. The file is large, so let me read the full chunk index first.The chunk index is very long. Let me search more specifically. \"PHONESWITCH\" doesn't appear in the document. Let me try other search terms like \"phone\" as a standalone word, and maybe look for the table of contents or general policies section that might list switch-related fees.\"PHONESWITCH\" doesn't appear in the document at all. Let me look for the specific section of the prospectus that discusses telephone switching or exchange. In mutual fund prospectuses, there's often a section about exchanging shares between funds by telephone. Let me look at the \"General Policies\" section and surrounding text more carefully.\n\nLet me also try to search for \"exchange\" or \"switching\" in the context of telephone/phone. This might be listed as \"Telephone Exchange\" or \"Phone Exchange\" or similar in the statutory prospectus summary.The term \"PHONESWITCH\" doesn't appear anywhere in the document. Let me search for \"exchange\" or look at the services section to find a field that could be \"PHONESWITCH\". In mutual fund prospectuses, there's often a section about telephone exchange privileges. Let me look at the \"Services for Fund Investors\" section.The term \"PHONESWITCH\" is simply not present in the document. Let me search for it one more time more carefully. Maybe it appears as part of a merged word in a table or something.The term \"PHONESWITCH\" doesn't exist anywhere in this document. Let me also check the other document just to be thorough.\"PHONESWITCH\" is not found in either document. The user asked me to extract the value for PHONESWITCH from the fund document, but this field name simply does not appear anywhere in the documents available to me.\n\nLet me be transparent with the user about this.The term **PHONESWITCH** does not appear anywhere in the document for BNY Mellon Equity Income Fund (Class Y) (`/documents/df.html.xml`), nor in the other available document.\n\nI searched the full document for \"PHONESWITCH\", \"PhoneSwitch\", \"phone switch\", \"SWITCH\", and related variations \u2014 none matched. The document is the fund's prospectus (dated September 30, 2024) and contains sections like the Fund Summary, Fees and Expenses, Shareholder Guide, Financial Highlights, etc., but no field named PHONESWITCH.\n\nCould this field go by a different name in the document (e.g., \"Telephone Exchange\" or \"TeleTransfer Privilege\")? If you can point me to the specific section where you'd expect to find it, or confirm an alternate label, I can look again.",
+      "metrics": {
+        "off_topic_document_reference": true,
+        "answer_clean": false,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

@@ -529,19 +529,15 @@ _PREFLIGHT_MAX_TOKENS: int = 1
 
 
 async def _preflight_llm(llm: Any) -> None:
-    """Issue a minimal completion to confirm the pinned model isn't 429'ing.
+    """Run a tiny model check before full chat processing starts.
 
-    Used before agent build / planner / classifier / title-gen so a known-bad
-    free OpenRouter deployment is detected and repinned before it cascades
-    into multiple wasted internal calls. The probe is intentionally cheap:
-    one token, low timeout, tagged ``surfsense:internal`` so token tracking
-    and SSE pipelines treat it as overhead rather than user output.
+    This sends a minimal completion to verify the current pinned model is
+    reachable and not currently rate-limited. Doing this early avoids wasting
+    planner/classifier/title calls on a model that will fail immediately.
 
-    Raises the original exception when the provider responds with a
-    rate-limit-shaped error so the caller can drive the cooldown/repin
-    branch via :func:`_is_provider_rate_limited`. Other transient failures
-    are swallowed — the caller continues to the normal stream path and the
-    in-stream recovery loop remains the safety net.
+    If the provider error clearly indicates rate limiting, re-raise so the
+    caller can mark this config as temporarily unhealthy and switch models.
+    For other transient failures, log and continue on the normal stream path.
     """
     from litellm import acompletion
 
@@ -573,23 +569,15 @@ async def _preflight_llm(llm: Any) -> None:
 
 
 async def _settle_speculative_agent_build(task: asyncio.Task[Any]) -> None:
-    """Wait for a discarded speculative agent build to release shared state.
+    """Wait for the no-longer-used build task to fully release shared state.
 
-    Used by the parallel preflight + agent-build path. The speculative build
-    closes over the request-scoped ``AsyncSession`` (for the brief connector
-    discovery / tool-factory window before its CPU work moves into a worker
-    thread). If preflight reports a 429 we want to fall back to the original
-    repin → reload → rebuild path, but we MUST NOT touch ``session`` again
-    until any in-flight session work owned by the speculative build has
-    fully settled — :class:`sqlalchemy.ext.asyncio.AsyncSession` is not
-    concurrency-safe and the same hazard cost us a hard ``InvalidRequestError``
-    earlier in this PR (see ``connector_service`` parallel-gather revert).
+    In the parallel "quick model check + agent build" path, both tasks can
+    briefly touch request-scoped session state. If the model check says
+    "rate limited", we switch models and rebuild. Before that, we must wait
+    for the first build task to finish any session usage.
 
-    We simply ``await`` the task and swallow any exception: in this path the
-    build's outcome is irrelevant — success populates the agent cache (a free
-    side effect), failure is discarded. The wasted CPU is acceptable since
-    429 fallbacks are rare and the original sequential code also paid the
-    full build cost on the same path.
+    We await the task and ignore its outcome because in this branch we only
+    need session safety; the old build result is not reused.
     """
     with contextlib.suppress(BaseException):
         await task
@@ -2697,25 +2685,16 @@ async def stream_new_chat(
             yield streaming_service.format_done()
             return
 
-        # Auto-mode preflight ping. Runs ONLY for thread-pinned auto cfgs
-        # (negative ids selected via ``resolve_or_get_pinned_llm_config_id``)
-        # whose health hasn't already been confirmed within the TTL window.
-        # Detecting a 429 here lets us repin BEFORE the planner/classifier/
-        # title-generation LLM calls fan out and each independently hit the
-        # same upstream rate limit.
+        # Quick model-access check for auto-selected pinned configs
+        # (negative ids from ``resolve_or_get_pinned_llm_config_id``) that have
+        # not been marked healthy recently.
         #
-        # PERF: preflight is a network round-trip to the LLM provider (~1-5s)
-        # and is independent of the agent build (CPU-bound, ~5-7s). They used
-        # to run sequentially → ``preflight + build`` on cold cache = 11.5s.
-        # We now kick off preflight as a background task FIRST, then run the
-        # synchronous setup work and the agent build in parallel. In the
-        # success path (the common case) total wall time drops to roughly
-        # ``max(preflight, build)`` — the preflight finishes during the
-        # agent compile and we just consume its result. In the rare 429
-        # path the speculative build is awaited to completion (so its
-        # session usage is fully released) via
-        # :func:`_settle_speculative_agent_build`, then discarded, and
-        # we fall back to the original repin-and-rebuild flow.
+        # We run this in parallel with agent build to reduce startup latency:
+        # check is network-bound, build is mostly CPU-bound.
+        #
+        # If the check reports rate limiting, we wait for the first build to
+        # release any shared session work, discard that build, switch to a new
+        # model, then rebuild once with the new config.
         preflight_needed = (
             requested_llm_config_id == 0
             and llm_config_id < 0
@@ -2754,10 +2733,9 @@ async def stream_new_chat(
 
         visibility = thread_visibility or ChatVisibility.PRIVATE
         _t0 = time.perf_counter()
-        # Speculative agent build — runs in parallel with the preflight
-        # task (if any). Built with the *current* ``llm`` / ``agent_config``;
-        # if preflight reports 429 we will discard this future and rebuild
-        # against the freshly pinned config below.
+        # Start building with the current model while the quick check runs.
+        # If the quick check later reports rate limiting, this result is
+        # dropped and rebuilt with a new model.
         agent_build_task = asyncio.create_task(
             create_surfsense_deep_agent(
                 llm=llm,
@@ -2788,17 +2766,13 @@ async def stream_new_chat(
                     time.perf_counter() - _t_preflight,
                 )
             except Exception as preflight_exc:
-                # Both branches below need the session: the non-429 path
-                # may unwind via cleanup that uses ``session``, and the
-                # 429 path explicitly calls ``resolve_or_get_pinned_llm_config_id``
-                # against it. Wait for the speculative build to release its
-                # session usage before we proceed.
+                # Both branches below may touch ``session``. Wait for the
+                # in-flight build to finish session usage first.
                 await _settle_speculative_agent_build(agent_build_task)
                 if not _is_provider_rate_limited(preflight_exc):
                     raise
-                # 429: speculative agent is discarded; run the original
-                # repin → reload → rebuild path against the freshly
-                # pinned config.
+                # Model is rate-limited: discard the first build, switch to a
+                # different model, reload config, and rebuild.
                 previous_config_id = llm_config_id
                 mark_runtime_cooldown(
                     previous_config_id, reason="preflight_rate_limited"
@@ -2835,10 +2809,9 @@ async def stream_new_chat(
                     )
                     yield streaming_service.format_done()
                     return
-                # Trust the freshly-resolved cfg for the remainder of this
-                # turn rather than recursing into another preflight; the
-                # in-stream 429 recovery loop is still in place as the
-                # safety net if even this fallback hits an upstream cap.
+                # Use this newly selected config for the rest of the turn.
+                # If it still rate-limits, the in-stream retry branch below
+                # handles that case.
                 mark_healthy(llm_config_id)
                 _log_chat_stream_error(
                     flow=flow,
@@ -2861,8 +2834,7 @@ async def stream_new_chat(
                         "fallback_config_id": llm_config_id,
                     },
                 )
-                # Rebuild against the new llm/agent_config. Sequential
-                # here because we no longer have anything to overlap with.
+                # Rebuild once using the newly selected model/config.
                 agent = await create_surfsense_deep_agent(
                     llm=llm,
                     search_space_id=search_space_id,
@@ -2880,8 +2852,7 @@ async def stream_new_chat(
                 )
 
         if agent is None:
-            # Either no preflight was needed, or preflight succeeded —
-            # in both cases the speculative build is the agent we want.
+            # If no quick check ran, or it passed, keep the first build.
             agent = await agent_build_task
         _perf_log.info(
             "[stream_new_chat] Agent created in %.3fs", time.perf_counter() - _t0
@@ -3415,9 +3386,8 @@ async def stream_new_chat(
 
                 runtime_rate_limit_recovered = True
                 previous_config_id = llm_config_id
-                # The failed attempt may still hold the per-thread busy mutex
-                # (middleware teardown can lag behind raised provider errors).
-                # Force release before we retry within the same request.
+                # The failed attempt may still hold the per-thread busy lock.
+                # Release it before retrying in this same request.
                 end_turn(str(chat_id))
                 mark_runtime_cooldown(
                     previous_config_id,
@@ -3442,9 +3412,8 @@ async def stream_new_chat(
                 if llm_load_error:
                     raise stream_exc
 
-                # Title generation uses the initial llm object. After a runtime
-                # repin we keep the stream focused on response recovery and skip
-                # title generation for this turn.
+                # Title generation was started with the old model object.
+                # After switching models mid-turn, skip title generation here.
                 if title_task is not None and not title_task.done():
                     title_task.cancel()
                 title_task = None
@@ -4051,11 +4020,9 @@ async def stream_resume_chat(
             yield streaming_service.format_done()
             return
 
-        # Auto-mode preflight ping (resume path). Mirrors ``stream_new_chat``:
-        # one cheap probe before the agent is rebuilt so a 429'd pin gets
-        # repinned without burning planner/classifier/title calls first.
-        # See ``stream_new_chat`` for the full rationale on the speculative
-        # parallel build pattern below.
+        # Resume path: same quick model-access check as ``stream_new_chat``.
+        # Run it before full processing so a rate-limited pinned model can be
+        # replaced early.
         preflight_needed = (
             requested_llm_config_id == 0
             and llm_config_id < 0
@@ -4121,7 +4088,8 @@ async def stream_resume_chat(
                     time.perf_counter() - _t_preflight,
                 )
             except Exception as preflight_exc:
-                # Same session-safety rationale as ``stream_new_chat``.
+                # Same session-safety rule as ``stream_new_chat``: wait until
+                # the in-flight build finishes session usage before DB calls.
                 await _settle_speculative_agent_build(agent_build_task)
                 if not _is_provider_rate_limited(preflight_exc):
                     raise
@@ -4338,8 +4306,8 @@ async def stream_resume_chat(
 
                 runtime_rate_limit_recovered = True
                 previous_config_id = llm_config_id
-                # Ensure the same-request recovery retry does not trip the
-                # BusyMutex lock retained by the failed attempt.
+                # Ensure the retry in this same request does not hit the busy
+                # lock left behind by the failed attempt.
                 end_turn(str(chat_id))
                 mark_runtime_cooldown(
                     previous_config_id,

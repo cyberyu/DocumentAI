@@ -1,0 +1,64 @@
+{
+  "summary": {
+    "total": 2,
+    "group_counts": {
+      "Level1": 2
+    },
+    "source_file": "df_santic_qa.json",
+    "subset_reason": "failed eligibility questions patched to boolean Yes/No"
+  },
+  "qa_pairs": [
+    {
+      "id": "L1-013",
+      "name": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for AUTOMATIC_INVESTMENT_ELIGIBLE from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "Automatic\nAsset Builder",
+        "start_offset": 217198,
+        "end_offset": 217221,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L1-013",
+      "name": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for AUTOMATIC_INVESTMENT_ELIGIBLE from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "Automatic\nAsset Builder",
+        "start_offset": 217198,
+        "end_offset": 217221,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    }
+  ]
+}

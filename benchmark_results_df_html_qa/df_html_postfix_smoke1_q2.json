@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-05-12T22:22:55Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "df_qa.json",
+    "document_title_contains": "df.html",
+    "mentioned_document_ids": [
+      391
+    ],
+    "max_questions": 1,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": false,
+    "blend_fund_context": true,
+    "normalize_schema_terms": true,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 1,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 1,
+    "number_match_rate": 1.0,
+    "unit_match_count": 1,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 44,
+    "questions_run": 1,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Level1": {
+      "run": 1,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 1,
+      "number_match_rate": 1.0,
+      "unit_match_count": 1,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [
+    3170
+  ],
+  "results": [
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "normalization_applied": [
+        {
+          "term": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+          "normalized": "total annual fund operating expenses"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "gold_answer": "0.8",
+      "predicted_answer": "The user wants me to find the total annual fund operating expenses for BNY Mellon Equity Income Fund (Class I) from the fund document. Let me look at the priority documents. The most relevant one is `/documents/df.html.xml` which is user-mentioned with a score of 1.000. Let me read it.Let me search for \"BNY Mellon Equity Income Fund\" and \"total annual fund operating expenses\" in the document.The grep for \"BNY Mellon Equity Income\" returned no matches, but the \"total annual fund operating\" exists in the df.html.xml file. Let me search with a broader pattern and also check for \"Equity Income\" on its own.I can see two matches for the \"Annual Fund Operating Expenses\" table. One is in chunk 614564 and one in 615363. Let me read the first one (chunk 614564, lines 1093-1107) which appears to be from the initial \"BNY Mellon Equity Income Fund Prospectus\" section (chunk 614544 at lines 977-982). Let me read around those lines to find the Class I row with the total annual fund operating expenses.I found the data. For BNY Mellon Equity Income Fund, Class I:\n\nFrom the table:\n- **Total annual fund operating expenses**: 0.80 (i.e., 0.80%)\n- Note there's also a fee waiver of (.02), giving a \"Total annual fund operating expenses (after fee waiver and/or expense reimbursement)\" of 0.78%\n\nThe user asked for \"total annual fund operating expenses\" - I'll return the value before fee waiver/reimbursement, which is **0.80%**.0.80%",
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

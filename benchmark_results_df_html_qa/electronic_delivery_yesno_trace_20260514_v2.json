@@ -1,0 +1,123 @@
+{
+  "generated_at_utc": "2026-05-14T15:31:03Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "df_santic_qa_failed_electronic_delivery_only.json",
+    "document_title_contains": "df.html",
+    "mentioned_document_ids": [
+      391
+    ],
+    "max_questions": 1,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": false,
+    "question_suffix": "",
+    "print_asked_question": true,
+    "blend_fund_context": true,
+    "normalize_schema_terms": true,
+    "post_verbatim_stage": false,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 1,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 0,
+    "number_match_rate": 0.0,
+    "unit_match_count": 1,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 4,
+    "questions_run": 1,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Level17": {
+      "run": 1,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 1,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [
+    3907,
+    3908,
+    3909
+  ],
+  "results": [
+    {
+      "id": "L17-005",
+      "group": "Level17",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for ELECTRONIC_DELIVERY from the fund document. Prioritize these sections: cover_page, last_page, statutory, summary. Return only the final value. Please return a boolean value (Yes/No).",
+      "blended_question": "Find out whether the BNY Mellon Equity Income Fund (Class I) allows for electronic delivery eligibility. Please return a boolean value (Yes/No).",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Find out whether the BNY Mellon Equity Income Fund (Class I) allows for electronic delivery eligibility. Please return a boolean value (Yes/No).",
+      "normalization_applied": [
+        {
+          "term": "ELECTRONIC_DELIVERY",
+          "normalized": "electronic delivery eligibility"
+        }
+      ],
+      "asked_question": "Find out whether the BNY Mellon Equity Income Fund (Class I) allows for electronic delivery eligibility. Please return a boolean value (Yes/No).",
+      "schema_key": "ELECTRONIC_DELIVERY",
+      "expected_answer_type": "boolean",
+      "gold_answer": "Yes",
+      "pre_coercion_predicted_answer": "The user is asking about the BNY Mellon Equity Income Fund (Class I) and whether it allows for electronic delivery eligibility. They want me to check the pinned documents (the priority documents are `/documents/df.html.xml` and `/documents/MSFT_FY26Q1_10Q.docx.xml`). Let me look at the `df.html.xml` document first since it's the most relevant.\n\nLet me read the df.html.xml file to find information about BNY Mellon Equity Income Fund and electronic delivery eligibility.The document is quite large. Let me search for \"BNY Mellon\" and \"electronic delivery\" in the document.The grep for \"electronic delivery\" found no matches. Let me also search for \"Equity Income\" and \"Class I\" to find the specific fund. Let me also look for \"e-delivery\" or \"e-delivery eligibility\" variations.The document mentions the \"BNY Mellon Equity Income Fund\" and its Class I shares, but I need to specifically find whether it allows \"electronic delivery eligibility\". The grep for \"electronic\", \"e-delivery\", \"delivery\" returned no matches. Let me search more broadly in the document to see what it says about statements, documents, or account materials delivery.Let me search for more general terms like \"delivery\", \"e-\", \"online\", \"internet\", \"website\" or \"electronic\" in the document to find anything related to electronic delivery.Let me look at the chunk index more carefully. I saw earlier that there are many chunks. Let me search for specific terms like \"householding\" or \"shareholder\" or \"documents\" which might relate to delivery of materials.I haven't found any reference to \"electronic delivery eligibility\" in the document. Let me also check the search_surfsense_docs as the user mentioned. But that's for SurfSense documentation, not for fund prospectus info. \n\nLet me check if there's anything about electronic delivery specifically by reading a relevant section of the prospectus, particularly the \"For More Information\" section which might discuss how documents are delivered.Let me read the \"For More Information\" section at the back of the prospectus, which might discuss how documents are delivered.I've examined the document thoroughly, and I found no mention of \"electronic delivery eligibility\" anywhere in the BNY Mellon Equity Income Fund prospectus document. The document mentions how to obtain information online (www.im.bnymellon.com) but doesn't explicitly state whether the fund allows for electronic delivery eligibility.\n\nLet me also check the MSFT FY26Q1 10Q document for completeness, though it's unlikely to contain info about BNY Mellon fund.I've thoroughly searched the pinned document (df.html.xml - the BNY Mellon Equity Income Fund prospectus) and found no mention of \"electronic delivery eligibility\". The search_surfsense_docs also returned only generic connector setup documentation, not fund-specific info.\n\nSince I cannot find the information in the available documents, according to the instructions, I should return \"N/A\" if the value is not found.N/A",
+      "prepared_prediction_before_coercion": "no",
+      "predicted_answer": "no",
+      "intermediate_verbatim_text": "N/ANo text in the document addresses electronic delivery eligibility for the BNY Mellon Equity Income Fund (Class I). The document mentions reports are available online at www.im.bnymellon.com [citation:614544], but contains no statement about an electronic delivery enrollment program.",
+      "predicted_span_offsets": {
+        "found": true,
+        "match_method": "exact",
+        "start_offset": 225,
+        "end_offset": 227,
+        "offset_convention": {
+          "reference": "model_verbatim_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": "no"
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": true,
+        "source_verbatim_match": true,
+        "overall_correct": false
+      }
+    }
+  ]
+}

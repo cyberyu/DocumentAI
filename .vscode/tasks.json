@@ -1,0 +1,22 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "rerun-5q-docpin",
+			"type": "shell",
+			"command": "/home/syu/anaconda3/envs/documentai/bin/python",
+			"args": [
+				"scripts/run_surfsense_benchmark.py",
+				"--config",
+				"benchmark_runner_config.json",
+				"--max-questions",
+				"5",
+				"--run-name",
+				"df_rerun5_docpin",
+				"--output-dir",
+				"benchmark_results_df_html_qa"
+			],
+			"isBackground": false
+		}
+	]
+}

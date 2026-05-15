@@ -1,0 +1,81 @@
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "fontSize": "26px",
+    "fontFamily": "Inter, Segoe UI, Arial",
+    "primaryTextColor": "#111827",
+    "lineColor": "#374151"
+  },
+  "sequence": {
+    "actorFontSize": 24,
+    "messageFontSize": 22,
+    "noteFontSize": 20
+  }
+}}%%
+
+sequenceDiagram
+    autonumber
+    participant U as User
+    participant TH as Dashboard Thread UI
+    participant PG as new-chat page.tsx
+    participant API as POST /api/v1/new_chat
+    participant TASK as stream_new_chat
+  participant AG as Main Chat Agent
+  participant TLS as Common Tools
+    participant DB as Postgres / SearchSpace
+
+    U->>TH: Type question + optional @mentions/images
+    TH->>PG: onSubmit -> aui.composer().send()
+
+    alt First question in fresh chat
+        PG->>DB: createThread(search_space_id, "New Chat")
+        DB-->>PG: thread_id
+        PG->>TH: Update URL /dashboard/{space}/new-chat/{thread_id}
+    end
+
+    PG->>TH: Add optimistic user message (msg-user-*)
+    PG->>API: POST new_chat payload
+    Note over PG,API: includes user_query, chat_id, search_space_id,\nmessage history, mentions, disabled_tools, user_images
+
+    API->>API: Check thread, permissions, and file mode
+    API->>TASK: Start stream_new_chat(...)
+    TASK->>DB: Persist user turn + assistant shell
+    TASK->>AG: Build agent (model + tools + middleware)
+
+    AG->>TLS: Typical call: search_surfsense_docs
+    TLS-->>AG: Knowledge hits / citations
+    AG->>TLS: read_file, glob/grep/ls (when needed)
+    TLS-->>AG: Matching files / text snippets
+    AG->>TLS: web_search then scrape_webpage (if needed)
+    TLS-->>AG: Web results + page content
+    AG->>TLS: generate_report (if user asks for output)
+    TLS-->>AG: Report id / status
+
+    TASK-->>PG: SSE stream (text/analysis/tool events)
+    PG->>TH: Live UI updates + tool cards + thinking steps
+    TASK-->>PG: data-user-message-id / data-assistant-message-id
+    PG->>TH: Rename optimistic IDs to canonical msg-{db_id}
+    TASK-->>PG: data-token-usage + data-action-log + data-turn-info
+
+    alt Interrupt needed (permission / HITL)
+        TASK-->>PG: data-interrupt-request
+        PG->>TH: Show interrupt UI and pause
+        TH->>PG: User decisions
+        PG->>API: POST /api/v1/threads/{id}/resume-chat
+        API->>TASK: stream_resume_chat(...)
+        TASK-->>PG: Resume SSE until completion
+    end
+
+    TASK->>DB: finalize_assistant_turn (always-run cleanup)
+    TASK-->>PG: Final SSE completion
+    PG->>TH: Final rendered answer + persisted thread state
+
+    alt User cancels mid-stream
+        TH->>PG: Cancel run
+        PG->>API: POST /api/v1/threads/{id}/cancel-active-turn
+        API-->>TASK: Mark turn cancelling
+        TASK-->>PG: turn-status / graceful stop events
+    else Pre-accept failure
+        API-->>PG: HTTP error before stream accepted
+        PG->>TH: Roll back optimistic user msg + show error
+    end

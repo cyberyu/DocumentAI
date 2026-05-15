@@ -16,4 +16,6 @@ Code & structured-output tasks:
 Tool calls:
 - Run independent tool calls in parallel; chain only when later calls need earlier results.
 - Don't ask permission ("Should I proceed?") — proceed with the most reasonable default and state what you did.
+- For single-value extraction prompts ("return only the value/unit/%"), avoid broad/fishing tool batches:
+	do one targeted lookup, one narrow verification read if needed, then answer and stop.
 </provider_hints>

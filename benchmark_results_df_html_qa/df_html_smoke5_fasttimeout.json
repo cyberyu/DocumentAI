@@ -1,0 +1,199 @@
+{
+  "generated_at_utc": "2026-05-12T20:04:29Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "df_qa.json",
+    "document_title_contains": "df.html",
+    "mentioned_document_ids": [
+      391
+    ],
+    "max_questions": 5,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": true,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 5,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 2,
+    "number_match_rate": 0.4,
+    "unit_match_count": 5,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.00015378700499807765,
+    "questions_total": 44,
+    "questions_run": 5,
+    "request_failures": 3,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Level1": {
+      "run": 4,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 2,
+      "number_match_rate": 0.5,
+      "unit_match_count": 4,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.00019223375624759706
+    },
+    "Level17": {
+      "run": 1,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 1,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [
+    3146,
+    3148,
+    3153,
+    3154,
+    3155,
+    3156,
+    3157
+  ],
+  "results": [
+    {
+      "id": "L1-006",
+      "group": "Level1",
+      "question": "Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "asked_question": "Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "Yes",
+      "predicted_answer": "The user wants me to extract the value for PHONESWITCH from the fund document. Let me first read the priority document (df.html.xml) to find this information.The file is quite large. Let me search for \"PHONESWITCH\" within it to find the relevant section quickly.No matches for \"PHONESWITCH\". Let me also search for \"PHONE\" or \"SWITCH\" or maybe the term is \"PHONE SWITCH\" or \"Phone Switch\" (with a space or different casing).No result for \"PHONESWITCH\" or \"PhoneSwitch\" or \"phone switch\" in either document. Let me also check the Microsoft 10-Q document (MSFT_FY26Q1_10Q.docx.xml) as it might also contain fund information, and maybe PHONESWITCH is a different term. Let me also search more generically in the df.html.xml file for \"SWITCH\" or check the document more thoroughly - maybe it's a table with a column header.\n\nActually, let me also look at the beginning of df.html.xml to understand what type of document this is, and also search for \"switch\" case-insensitively.The term \"PHONESWITCH\" is not found in either document. Let me also check if it might be \"PHONE_SWITCH\" or \"Phone_Switch\" or some variation. Let me also look at the first few lines of the df.html.xml document to understand what type of document it is, and also look for any terms like \"SWAP\" or \"EXCHANGE\" or similar - maybe PHONESWITCH is a term used in financial reporting.\n\nActually, let me search for it without case sensitivity using a broader approach. Let me also try reading the beginning of the df.html.xml document to understand what it is.Let me check the beginning of the document to understand its structure.The document has chunks starting at line 977. Let me read the first chunk to understand what type of document this is. Let me also read the document's beginning content area, starting from line 977.This is a BNY Mellon Equity Income Fund prospectus. The term \"PHONESWITCH\" is not appearing in the document so far. Let me search more broadly. Maybe this is a term found in a financial table somewhere. Let me continue reading more of the document and also search for other patterns.\n\nActually, since PHONESWITCH doesn't appear in either document, let me search for \"PHONE\" or \"Phone\" related terms in the context of a table or portfolio holdings list. The term might appear in the financial statements section of the prospectus or in the MSFT 10-Q.\n\nLet me also search for \"PhoneSw\" or \"Phone_Sw\" or \"PHONE_SW\" or \"PHONE SW\" etc.Let me also search for \"SWITCH\" within the df.html.xml document specifically, case insensitive - maybe the word is at the beginning of a line or in a table. Also, maybe \"PHONESWITCH\" is an investment/portfolio holding that appears only in a specific table. Let me also search the MSFT 10-Q for it.\n\nActually, let me also search the Microsoft 10-Q document for \"SWITCH\" and for this term.The term \"PHONESWITCH\" was not found in either document. According to the user's instructions: \"If the value is not found, return exactly N/A.\"N/A",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "asked_question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "0.8",
+      "predicted_answer": "",
+      "metrics": {
+        "answer_clean": false,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L17-002",
+      "group": "Level17",
+      "question": "Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "asked_question": "Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "12/31/2023",
+      "predicted_answer": "",
+      "metrics": {
+        "answer_clean": false,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-011",
+      "group": "Level1",
+      "question": "Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "asked_question": "Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "100",
+      "predicted_answer": "",
+      "metrics": {
+        "answer_clean": false,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "asked_question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Search the full document before answering (not only the first retrieved chunk). If the answer is not in the first retrieved chunk, continue retrieval silently until found. Do not mention tools, chunks, file-reading steps, or inability to access content. If multiple candidates appear, select the value explicitly tied to September 30, 2025. For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA). Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions). Return only one final value with unit and no extra prose.",
+      "gold_answer": "0.75",
+      "predicted_answer": "The user wants me to find the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document (df.html.xml). Let me read the file to find this value.The file is quite large. Let me search for the specific term \"TOTAL_ANNUAL_FUND_OPERATING_EXPENSES\" or similar patterns to find where this value is located.There are matches in two chunks - 614564 and 615363. Let me read chunk 614564 first to see the table. The chunk starts at line 1093 in the file.I found the table. The \"Total annual fund operating expenses\" row shows values for each share class. Let me look at what the user is asking for:\n\nThe user wants \"TOTAL_ANNUAL_FUND_OPERATING_EXPENSES\" \u2014 looking at the table, this appears to be the \"Total annual fund operating expenses\" line.\n\nBut the user says \"If multiple candidates appear, select the value explicitly tied to September 30, 2025.\" Looking at the fee waiver section, there's a contractual agreement until September 30, 2025. The row \"Total annual fund operating expenses (after fee waiver and/or expense reimbursement)\" shows values after waivers/reimbursements.\n\nWait, let me re-read the user's request more carefully: \"If multiple candidates appear, select the value explicitly tied to September 30, 2025.\"\n\nThe fee waiver is tied to September 30, 2025, but the question is about TOTAL_ANNUAL_FUND_OPERATING_EXPENSES. Let me look at this more carefully.\n\nActually the user just says \"TOTAL_ANNUAL_FUND_OPERATING_EXPENSES\" \u2014 looking at the table, there are two rows:\n1. \"Total annual fund operating expenses\" (line 1104) \u2014 gross expenses\n2. \"Total annual fund operating expenses (after fee waiver and/or expense reimbursement)\" (line 1106) \u2014 net expenses\n\nThe fee waiver agreement is \"until September 30, 2025\" so the net expenses (after fee waiver) are tied to September 30, 2025.\n\nBut there are 4 class values. The user says \"Return only the final value\" \u2014 which single value? Looking at the table more carefully:\n\nClass A: 1.02 (gross), 1.02 (net, after waiver)\nClass C: 1.81 (gross), 1.78 (net, after waiver)\nClass I: 0.80 (gross), 0.78 (net, after waiver)\nClass Y: 0.75 (gross), 0.75 (net, after waiver)\n\nHmm, the user might want a specific class. But they just said \"TOTAL_ANNUAL_FUND_OPERATING_EXPENSES\" without specifying a class. Let me re-read the instruction.\n\n\"Return only the final value\" \u2014 this is ambiguous. But looking at the raw table, the line \"Total annual fund operating expenses\" has 4 values.\n\nWait, maybe the user wants the one tied to September 30, 2025. The expense limitation agreement says \"until September 30, 2025... so that the direct expenses of none of the fund's share classes... exceed .78%.\" The .78% value corresponds to Class I's net expenses (0.78).\n\nActually, I think the user might just want me to return the value. But I'm confused which one since there are 4 classes. Let me look if there's a summary section or a specific section that mentions TOTAL_ANNUAL_FUND_OPERATING_EXPENSES as a single number.\n\nLet me see if there's a \"summary\" section as the user mentioned to prioritize.Let me read the \"Fees and Expenses\" section which is part of the Fund Summary to see if there's a single TOTAL_ANNUAL_FUND_OPERATING_EXPENSES value or a table with class-specific values.\n\nThe table shows 4 classes (A, C, I, Y) with different values. The user asked for \"TOTAL_ANNUAL_FUND_OPERATING_EXPENSES\" and \"Return only the final value\" \u2014 this is ambiguous since there are 4 values.\n\nLet me look at the \"Fund Summary\" section more carefully. The user said \"Prioritize these sections: summary.\" So let me look at what's in the summary section.\n\nThe table I already read (lines 1093-1107) shows the \"Fees and Expenses\" table which is part of the Fund Summary section.\n\nThe values are:\n- Class A: 1.02\n- Class C: 1.81\n- Class I: 0.80\n- Class Y: 0.75\n\nAnd then after fee waiver:\n- Class A: 1.02\n- Class C: 1.78\n- Class I: 0.78\n- Class Y: 0.75\n\nThe fee waiver is tied to September 30, 2025. The user says \"select the value explicitly tied to September 30, 2025.\"\n\nLooking at the fee waiver agreement: \"The fund's investment adviser, BNY Mellon Investment Adviser, Inc., has contractually agreed, until September 30, 2025, to waive receipt of its fees and/or assume the direct expenses of the fund so that the direct expenses of none of the fund's share classes (excluding Rule 12b-1 fees, shareholder services fees, taxes, interest expense, brokerage commissions, commitment fees on borrowings and extraordinary expenses) exceed .78%.\"\n\nSo the .78% cap applies to \"direct expenses\" (similar to management fees / other expenses), not necessarily to the total annual fund operating expenses directly. But the row \"Total annual fund operating expenses (after fee waiver and/or expense reimbursement)\" shows the values after waiver.\n\nFor Class I, after waiver: 0.78 \u2014 this equals the .78% expense limitation.\n\nBut wait, the question is just \"TOTAL_ANNUAL_FUND_OPERATING_EXPENSES\" \u2014 not \"after fee waiver.\" Let me re-read the table:\n\nLine 1104: \"Total annual fund operating expenses\" \u2192 Class A: 1.02, Class C: 1.81, Class I: .80, Class Y: .75\nLine 1106: \"Total annual fund operating expenses (after fee waiver and/or expense reimbursement)\" \u2192 Class A: 1.02, Class C: 1.78, Class I: .78, Class Y: .75\n\nIf I'm looking for the value \"explicitly tied to September 30, 2025\", that refers to the fee waiver agreement that lasts until September 30, 2025. The values after waiver are tied to this date. \n\nBut actually, the user said \"If multiple candidates appear, select the value explicitly tied to September 30, 2025.\" The \"Total annual fund operating expenses\" is a table row with 4 values. But maybe the user is asking about the fund as a whole.\n\nHmm, but the user said \"Return only the final value\" and \"Return only one final value with unit.\" Since these are percentages, the values are percentages. But which class?\n\nActually, looking at the expense limitation note: \"so that the direct expenses of none of the fund's share classes... exceed .78%\" \u2014 this .78% is the key number tied to September 30, 2025. Looking at the \"Total annual fund operating expenses (after fee waiver and/or expense reimbursement)\" row, Class I shows 0.78.\n\nBut actually I'm overthinking this. Let me re-read the user's request: \"Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES\" - they're referring to the specific row labeled \"Total annual fund operating expenses\" in the fees table.\n\nSince the table has 4 classes, there are 4 values. But the user wants only one value. Maybe the most common interpretation is looking for a single value that represents the fund's total annual fund operating expenses.\n\nLet me look at the document more carefully - maybe there's a summary section that gives a single value.\n\nActually, I think the user is asking for the \"Total annual fund operating expenses\" (gross, before waivers) as the main value, but since there are multiple share classes with different values, and the user says \"select the value explicitly tied to September 30, 2025\" \u2014 the waiver agreement expires September 30, 2025, and the net expenses after waiver are the ones tied to this date.\n\nLooking at it again: the fee waiver agreement caps expenses at 0.78%, and Class I's net expenses are 0.78%. This seems like the right match.\n\nBut actually, the user might be confused and just want a single answer. Since the user says \"Return only one final value with unit\" and the values are percentages, and the fee waiver tied to September 30, 2025 is the key distinguishing factor...\n\nLet me look if there's another section of the document that summarizes this differently.Let me now look for a different part of the document. Maybe there's a second occurrence (chunk 615363) that might contain different info. Let me search for it.Let me search for the second occurrence (chunk 615363) to see what it contains.Let me read around line 3677 to see what the second occurrence contains.OK, so both occurrences show the same table. The \"Total annual fund operating expenses\" values are:\n\nClass A: 1.02%\nClass C: 1.81%\nClass I: 0.80%\nClass Y: 0.75%\n\nAnd after fee waiver:\nClass A: 1.02%\nClass C: 1.78%\nClass I: 0.78%\nClass Y: 0.75%\n\nThe user says \"If multiple candidates appear, select the value explicitly tied to September 30, 2025.\" \n\nThe fee waiver agreement is explicitly tied to September 30, 2025. Looking at the fee waiver rows:\n- Fee waiver for Class C: (.03)\n- Fee waiver for Class I: (.02)\n- Fee waiver for Class A and Y: none\n\nThe \"Total annual fund operating expenses (after fee waiver and/or expense reimbursement)\" values are:\n- Class A: 1.02%\n- Class C: 1.78%\n- Class I: 0.78%\n- Class Y: 0.75%\n\nBut the user asked specifically for \"TOTAL_ANNUAL_FUND_OPERATING_EXPENSES\" which is the exact row name. Let me re-read the table header:\n\n\"Total annual fund operating expenses\" \u2014 this is the gross total (line 3688)\n\"Total annual fund operating expenses (after fee waiver and/or expense reimbursement)\" \u2014 this is the net total (line 3690)\n\nThe user asks for \"TOTAL_ANNUAL_FUND_OPERATING_EXPENSES\" \u2014 the all-caps seems like they want the exact row labeled \"Total annual fund operating expenses\" which is the gross amount.\n\nBut then there are 4 share classes. The user says \"Return only the final value\" \u2014 so which one?\n\nActually, I think the user may be expecting me to know what they're asking for from context, but they haven't specified a share class. The document doesn't have a single blended value \u2014 it has class-specific values.\n\nWait, let me reconsider. The user said \"If multiple candidates appear, select the value explicitly tied to September 30, 2025.\" \n\nThe fee waiver agreement is effective \"until September 30, 2025\" \u2014 so the values after fee waiver/expense reimbursement are tied to that date. Among the \"after fee waiver\" values, the one that's explicitly limited by the agreement is 0.78% (the cap mentioned in the agreement). This corresponds to Class I's net expenses of 0.78%.\n\nBut I'm not fully confident. Let me think about this differently.\n\nActually, re-reading the user's instructions: \"select the value explicitly tied to September 30, 2025\" \u2014 the only value in the table that is directly tied to the September 30, 2025 date in the notes is the expense limitation cap of 0.78%. The fee waiver agreement says expenses won't exceed 0.78% until September 30, 2025.\n\nThe \"Total annual fund operating expenses (after fee waiver and/or expense reimbursement)\" for Class I is 0.78, which equals that cap.\n\nHmm, but actually let me look at this from the perspective of someone asking for \"TOTAL_ANNUAL_FUND_OPERATING_EXPENSES\" \u2014 if this were some kind of structured data extraction task, maybe there's a single value expected.\n\nLet me look at whether there are other sections in the document that might list a single \"Total Annual Fund Operating Expenses\" value.\n\nActually, let me look at the second occurrence more carefully. It's in a different part of the document. Let me check where it appears.So this is just a duplicate of the same table from the Fund Summary section. Both occurrences show the same data.\n\nThe user wants \"TOTAL_ANNUAL_FUND_OPERATING_EXPENSES\" \u2014 which is the row label in the table. Since there are 4 share classes with different values, and the user asks for \"only one final value\" tied to September 30, 2025...\n\nI think the user might be treating \"TOTAL_ANNUAL_FUND_OPERATING_EXPENSES\" as a single field name that they expect to have a single value. In some financial data extraction contexts, this might refer to a specific line.\n\nGiven the instruction to \"select the value explicitly tied to September 30, 2025\" \u2014 the 0.78% expense cap is the number explicitly tied to that date. Class I's \"Total annual fund operating expenses (after fee waiver and/or expense reimbursement)\" is 0.78%.\n\nBut wait, the user specifically asked for \"TOTAL_ANNUAL_FUND_OPERATING_EXPENSES\" not \"TOTAL_ANNUAL_FUND_OPERATING_EXPENSES (AFTER FEE WAIVER).\" Let me look at the gross values.\n\nHmm, but there are still 4 values. Let me reconsider...\n\nActually, I think the user might be doing some structured data extraction and the answer they want could be context-dependent. Since they explicitly said \"If multiple candidates appear, select the value explicitly tied to September 30, 2025\" \u2014 the only value directly tied to September 30, 2025 is the 0.78% expense limitation cap. The note says:\n\n\"The fund's investment adviser, BNY Mellon Investment Adviser, Inc., has contractually agreed, until September 30, 2025, to waive receipt of its fees and/or assume the direct expenses of the fund so that the direct expenses of none of the fund's share classes (excluding Rule 12b-1 fees, shareholder services fees, taxes, interest expense, brokerage commissions, commitment fees on borrowings and extraordinary expenses) exceed .78%.\"\n\nSo the 0.78% is the cap tied to September 30, 2025.\n\nAnd looking at the \"Total annual fund operating expenses (after fee waiver and/or expense reimbursement)\" row, Class I shows 0.78%, which equals the cap.\n\nBut actually, I should note that \"Total annual fund operating expenses (after fee waiver and/or expense reimbursement)\" is a different row than \"Total annual fund operating expenses.\" The gross row doesn't include waivers. The after-waiver row does.\n\nGiven the ambiguity, I'll go with: the user asked for \"TOTAL_ANNUAL_FUND_OPERATING_EXPENSES\" which maps to the row \"Total annual fund operating expenses\" (gross, before waivers). Among the 4 class values, and given the instruction about September 30, 2025, the only one explicitly tied to that date via the fee waiver agreement is the 0.78% cap, which appears as Class I's net expenses after waiver.\n\nBut wait \u2014 maybe I should just return all four values? No, the user said \"Return only one final value with unit and no extra prose.\"\n\nOK, I think the most defensible answer given all the instructions is: the \"Total annual fund operating expenses (after fee waiver and/or expense reimbursement)\" for Class I is 0.78%, which equals the expense cap of 0.78% that is explicitly tied to September 30, 2025.\n\nActually, let me reconsider one more time. The user said \"select the value explicitly tied to September 30, 2025\" \u2014 the fee waiver note that mentions September 30, 2025 says the adviser will waive fees so that direct expenses don't exceed 0.78%. This means the 0.78% figure itself is explicitly tied to September 30, 2025. And in the table, the \"Total annual fund operating expenses (after fee waiver)\" for Class I is 0.78%.\n\nBut the column also has notes that the fee waiver for Class I is (.02), meaning without waiver it would be 0.80%, and with waiver it drops to 0.78%.\n\nHmm, but I'm going back and forth. Let me just go with what makes most sense: the user asked for the \"TOTAL_ANNUAL_FUND_OPERATING_EXPENSES\" value. Since there are multiple classes, and the instruction says to prefer the one tied to September 30, 2025, the most relevant value is 0.78% \u2014 the Class I net expense ratio after fee waiver, which equals the 0.78% expense limitation cap effective through September 30, 2025.\n\nActually, wait. Let me re-read: \"Total annual fund operating expenses\" is listed as .80 for Class I. \"Total annual fund operating expenses (after fee waiver and/or expense reimbursement)\" is listed as .78 for Class I.\n\nThe user said \"TOTAL_ANNUAL_FUND_OPERATING_EXPENSES\" \u2014 this exactly matches the row label \"Total annual fund operating expenses\" (line 3688), not \"Total annual fund operating expenses (after fee waiver and/or expense reimbursement)\" (line 3690). So maybe I should look at the gross value.\n\nBut then among the 4 gross values, which is tied to September 30, 2025? None of them directly \u2014 the fee waiver agreement impacts the net values, not the gross ones.\n\nOK I think I may be overthinking this. Let me just go with the most sensible answer. The expense limitation of 0.78% is explicitly tied to September 30, 2025, and this corresponds to Class I's Total annual fund operating expenses (after fee waiver and/or expense reimbursement) of 0.78%.\n\nLet me just return 0.78%.0.78%",
+      "metrics": {
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.00398406374501992,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.007936507936507936,
+        "primary_value_match": true,
+        "token_f1": 0.0007689350249903882,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

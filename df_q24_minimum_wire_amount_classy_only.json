@@ -1,0 +1,30 @@
+{
+  "qa_pairs": [
+    {
+      "id": "L17-006",
+      "name": "MINIMUM_WIRE_AMOUNT",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class Y",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for MINIMUM_WIRE_AMOUNT from the fund document. Prioritize these sections: statutory. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "1000",
+      "evidence": {
+        "text": "1,000",
+        "start_offset": 182047,
+        "end_offset": 182052,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    }
+  ]
+}

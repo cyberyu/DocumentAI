@@ -1,0 +1,29 @@
+{
+  "qa_pairs": [
+    {
+      "id": "L17-002",
+      "name": "PERFORMANCE_TABLE_DATES",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "answer": "12/31/2023",
+      "evidence": {
+        "text": "12/31/23",
+        "start_offset": 69144,
+        "end_offset": 69152,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      }
+    }
+  ]
+}

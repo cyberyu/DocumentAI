@@ -1,0 +1,667 @@
+{
+  "generated_at_utc": "2026-05-13T20:54:06Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "df_qa_smoke10_skip_L1-006.json",
+    "document_title_contains": "df.html",
+    "mentioned_document_ids": [
+      391
+    ],
+    "max_questions": 0,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": false,
+    "question_suffix": "",
+    "blend_fund_context": true,
+    "normalize_schema_terms": true,
+    "post_verbatim_stage": false,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 10,
+    "overall_correct_count": 3,
+    "overall_correct_rate": 0.3,
+    "normalized_exact_count": 1,
+    "normalized_exact_rate": 0.1,
+    "number_match_count": 8,
+    "number_match_rate": 0.8,
+    "unit_match_count": 10,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.13714285714285715,
+    "questions_total": 10,
+    "questions_run": 10,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Level1": {
+      "run": 9,
+      "overall_correct_count": 2,
+      "overall_correct_rate": 0.2222222222222222,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 7,
+      "number_match_rate": 0.7777777777777778,
+      "unit_match_count": 9,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.1523809523809524
+    },
+    "Level17": {
+      "run": 1,
+      "overall_correct_count": 1,
+      "overall_correct_rate": 1.0,
+      "normalized_exact_count": 1,
+      "normalized_exact_rate": 1.0,
+      "number_match_count": 1,
+      "number_match_rate": 1.0,
+      "unit_match_count": 1,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [
+    3573,
+    3574,
+    3576,
+    3578,
+    3580,
+    3582,
+    3584,
+    3587,
+    3590,
+    3592,
+    3599,
+    3603,
+    3608,
+    3613,
+    3616,
+    3617
+  ],
+  "results": [
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Extract the value for total annual fund operating expenses from the fund document.",
+      "normalization_applied": [
+        {
+          "term": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+          "normalized": "total annual fund operating expenses"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document.",
+      "schema_key": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "expected_answer_type": "rate",
+      "gold_answer": "0.8",
+      "predicted_answer": "0.80%",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L17-002",
+      "group": "Level17",
+      "question": "Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for performance table date from the fund document.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Extract the value for performance table date from the fund document.",
+      "normalization_applied": [
+        {
+          "term": "PERFORMANCE_TABLE_DATES",
+          "normalized": "performance table date"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for performance table date from the fund document.",
+      "schema_key": "PERFORMANCE_TABLE_DATES",
+      "expected_answer_type": "date",
+      "gold_answer": "12/31/2023",
+      "predicted_answer": "12/31/23",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": true,
+        "match_method": "exact",
+        "start_offset": 0,
+        "end_offset": 8,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": "12/31/23"
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": true,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.6666666666666666,
+        "numeric_recall": 0.5,
+        "numeric_f1": 0.5714285714285715,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": true,
+        "source_span_match": true,
+        "source_verbatim_match": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "L1-011",
+      "group": "Level1",
+      "question": "Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for minimum subsequent investment amount from the fund document.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Extract the value for minimum subsequent investment amount from the fund document.",
+      "normalization_applied": [
+        {
+          "term": "AIP_SUBAMOUNT",
+          "normalized": "minimum subsequent investment amount"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for minimum subsequent investment amount from the fund document.",
+      "schema_key": "AIP_SUBAMOUNT",
+      "expected_answer_type": "amount",
+      "gold_answer": "100",
+      "predicted_answer": "$100",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class Y"
+      },
+      "normalized_question": "Extract the value for total annual fund operating expenses from the fund document.",
+      "normalization_applied": [
+        {
+          "term": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+          "normalized": "total annual fund operating expenses"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document.",
+      "schema_key": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "expected_answer_type": "rate",
+      "gold_answer": "0.75",
+      "predicted_answer": "75%",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-010",
+      "group": "Level1",
+      "question": "Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Extract the value for company name from the fund document.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class C"
+      },
+      "normalized_question": "Extract the value for company name from the fund document.",
+      "normalization_applied": [
+        {
+          "term": "COMPANYNAME",
+          "normalized": "company name"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Extract the value for company name from the fund document.",
+      "schema_key": "COMPANYNAME",
+      "expected_answer_type": "text",
+      "gold_answer": "BNY Mellon Investment Adviser, Inc.",
+      "predicted_answer": "BNY Mellon Investment Adviser, Inc",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": true,
+        "match_method": "exact",
+        "start_offset": 0,
+        "end_offset": 34,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": "BNY Mellon Investment Adviser, Inc"
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.8000000000000002,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "source_span_match": true,
+        "source_verbatim_match": true,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Extract the value for total annual fund operating expenses from the fund document.",
+      "normalization_applied": [
+        {
+          "term": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+          "normalized": "total annual fund operating expenses"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document.",
+      "schema_key": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "expected_answer_type": "rate",
+      "gold_answer": "1.02",
+      "predicted_answer": "1.02%",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-013",
+      "group": "Level1",
+      "question": "Extract the value for AUTOMATIC_INVESTMENT_ELIGIBLE from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for automatic investment eligibility from the fund document.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Extract the value for automatic investment eligibility from the fund document.",
+      "normalization_applied": [
+        {
+          "term": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+          "normalized": "automatic investment eligibility"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for automatic investment eligibility from the fund document.",
+      "schema_key": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+      "expected_answer_type": "boolean",
+      "gold_answer": "1",
+      "predicted_answer": "The user wants me to find a specific fund document and extract a value about automatic investment eligibility. The priority documents mention `/documents/df.html.xml` which is likely the fund document. Let me read it first.Let me search for \"BNY Mellon Equity Income Fund\" or \"automatic investment\" in this document.Let me look at the chunk around line 980 which mentions BNY Mellon Equity Income Fund and look at the section about minimums/purchase requirements. Let me read more of the document around the fund name and also look at the automatic investment minimum.Let me read the relevant sections more closely.I found the section about minimum investments but it doesn't specifically say \"automatic investment eligibility.\" Let me search for \"Automatic Asset Builder\" or \"Automatic Services\" which seem to be the automatic investment options mentioned.Let me try a broader search for \"automatic\" within the context of the fund document to find specific eligibility details.Let me look at the section about \"Automatic Services\" to find the minimum investment for automatic investment plans for Class A shares.Now let me also check if there is any specific mention of automatic investment eligibility specifically for the \"BNY Mellon Equity Income Fund (Class A)\" - the user is asking about \"automatic investment eligibility\" which might be a specific field in the fund's document. Let me search for \"Class A\" and \"minimum\" near the automatic investment section. Let me also check if there is a table or a specific field about this. Looking at chunk 614916-614922, the minimums are: - Minimum initial investment: $1,000 - Minimum subsequent investment: $100 - Class Y: $1,000,000 initial, no minimum subsequent - Retirement Plans or IRAs: $750 initial - Coverdell ESA: $500 initial - TeleTransfer: $100 minimum, $150,000 maximum And for Automatic Asset Builder: minimum of $100 and maximum of $150,000 per transaction. But the user is asking about \"automatic investment eligibility\" specifically. This could be a specific field in a data document about the fund. Let me also check the MSFT document and also look for any table or structured data about the fund. Let me search for \"Eligibility\" or similar terms.Let me check if there's more specific language in the Fund Summary section about the minimum initial investment or automatic investment for Class A shares. Let me look at the Fund Summary part which should mention the purchase minimums.The grep is case-sensitive, let me try with lowercase.Now I have the picture: From chunk 614617: For Class A shares, the minimum initial investment is $1,000 and minimum subsequent investment is $100. From chunk 615049 (Automatic Asset Builder): minimum of $100 and maximum of $150,000 per transaction. From chunk 615050 (Payroll Savings Plan): minimum of $100 per transaction. From chunk 615051 (Government Direct Deposit): minimum of $100 and maximum of $50,000 per transaction. But the user is asking about \"automatic investment eligibility\" which seems like a specific field. Let me check if the document mentions a specific eligibility condition like \"no minimum\" or something in the context of automatic investments. Let me search more specifically. The chunk 614916 says \"You may purchase additional shares by selecting one of the automatic investment services made available to the fund on your account application or service application.\" The chunk 614917 says \"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\" So the automatic investment eligibility seems to be: after the initial investment of $1,000, you can set up automatic investments with a minimum of $100 per transaction (through Automatic Asset Builder). Let me also check if there's a table in the fund summary that mentions automatic investment eligibility.Now I understand the document structure. The user is asking for \"automatic investment eligibility\" from the fund document. Let me look more thoroughly. The document mentions: 1. In the Fund Summary section (around line 1300): \"for each share class, other than Class Y, the fund's minimum initial investment is $1,000 and the minimum subsequent investment is $100.\" 2. For Automatic Asset Builder (line 2360): \"minimum of $100 and maximum of $150,000 per transaction\" 3. The \"Automatic Services\" section mentions that you can purchase additional shares through automatic investment services But I don't see a specific \"automatic investment eligibility\" field. Let me check if this might be a specific field name in a table or other structured data format. Let me look for any table with rows about investment minimums/eligibility. Let me search for the phrase \"eligible\" or \"you may purchase\" more broadly.Let me look for the section that might specifically deal with \"automatic investment eligibility\" as a labeled field. Let me look at the initial summary table/area more carefully.Let me search for the section on \"Purchase and Sale of Fund Shares\" in the Fund Summary section more carefully. Let me also look at the text that mentions how to purchase shares. The user's question is about \"automatic investment eligibility\" for the BNY Mellon Equity Income Fund (Class A). Let me look at the \"How to Buy Shares\" section or \"Purchase and Sale of Fund Shares\" section more carefully. From what I've seen: - Chunk 614617: \"for each share class, other than Class Y, the fund's minimum initial investment is $1,000 and the minimum subsequent investment is $100\" - Chunk 614916: \"You may purchase additional shares by selecting one of the automatic investment services made available to the fund on your account application or service application.\" - Chunk 615049: Automatic Asset Builder: \"minimum of $100 and maximum of $150,000 per transaction\" Let me also check the section about \"Buying Shares\" in the Shareholder Guide section to see if there's a table that includes something about automatic investment eligibility.Looking at this more carefully, the section \"Automatically\" (lines 2032-2034) describes the automatic investment service. The text says: \"You may purchase additional shares by selecting one of the automatic investment services made available to the fund on your account application or service application.\" The minimum investment for Class A is $1,000 initial, $100 subsequent. And for Automatic Asset Builder, the minimum is $100 per transaction. But the user is asking about \"automatic investment eligibility\" as a specific field/parameter. Let me look more carefully - this may be in a table or a specific section I haven't found yet. Let me search specifically for the exact phrase \"automatic investment eligibility\" or look for structured data about the fund.Let me look at the section about \"Choosing a Share Class\" which might have a table with specific eligibility information for Class A shares.I'm not finding a specific \"automatic investment eligibility\" field. Let me try a different approach - let me look at the very beginning of the fund summary table to see if there's a structured table with purchase minimums, including automatic investment eligibility.Let me try yet another area of this document. The user is asking specifically about \"automatic investment eligibility\" which might be a specific named field. Let me search for \"Eligibility\" in the context of the fund document, and also search for the phrase in a broader way. Actually, let me re-read the user's request carefully: \"Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for automatic investment eligibility from the fund document.\" This could refer to a specific row/field in a data table about the fund. Let me look at the document more broadly to find any structured data about the fund classes and their features.Let me also look at the MSFT FY26 Q1 10Q document to see if the fund data is there instead.The fund is only in the df.html.xml document. Let me look at the full section on \"Choosing a Share Class\" which starts around page 9, to see if there's a comparison table for share classes that includes automatic investment eligibility.Let me check if there's a comparison table that shows features like \"automatic investment eligibility\" across share classes. I notice there's a table of contents entry \"Choosing a Share Class\" and I should look for any comparison table of class features.Let me check if there's a specific kind of comparison table or matrix that includes different features across share classes, including automatic investment plans.So from chunk 615048, we know automatic services are \"not available for Class Y shares.\" Class A shares are not excluded, so they are eligible. Let me look more carefully at what the document says about automatic investment specifically for Class A shares. Let me also search for any structured table that shows eligibility criteria. Let me look at what section of the document mentions the specific \"minimum to open\" or \"minimum initial investment\" for automatic investment programs. I should also look at whether there's a specific field called \"automatic investment eligibility\" somewhere in this document that I'm missing.Let me look at the very first fund summary section again - the section that has the purchase and sale of fund shares. There's a table or description that typically has the purchase minimums. Let me re-read the Fund Summary portion more carefully.Let me look at the \"Purchase and Sale of Fund Shares\" section in the Fund Summary. I already found this earlier (lines 1297-2042). It says: Line 1300-1302: \"In general, for each share class, other than Class Y, the fund's minimum initial investment is $1,000 and the minimum subsequent investment is $100.\" And in the \"How to Buy Shares\" section: Line 2032-2034: \"Automatically. You may purchase additional shares by selecting one of the automatic investment services made available to the fund on your account application or service application.\" Line 2036-2037: \"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\" And in the Automatic Services section: Line 2358-2361: \"Automatic Asset Builder permits you to purchase fund shares (minimum of $100 and maximum of $150,000 per transaction) at regular intervals selected by you.\" So for Class A shares specifically: - The automatic investment services are available (they're \"not available for Class Y\" but available for Class A) - The minimum for Automatic Asset Builder is $100 per transaction, $150,000 max - The minimum initial investment is $1,000 - The minimum subsequent investment is $100 I think the answer the user is looking for is that automatic investment is available for Class A shares with a minimum of $100 per transaction. But let me look more broadly if there's a specific term called \"automatic investment eligibility.\" Wait - the user asked for \"automatic investment eligibility\" specifically. This might be a field in a database or data file about the fund. Let me search for this phrase or similar data-oriented terms.The exact phrase \"automatic investment eligibility\" doesn't appear in the document. The user might be referring to the eligibility conditions for automatic investment. Let me read the full \"Automatic Services\" section more carefully to get the complete picture of what's available and the conditions.Now I have a comprehensive picture. Let me consolidate what the document says about automatic investment eligibility for BNY Mellon Equity Income Fund (Class A): 1. **Automatic Services** are available for Class A shares (not available for Class Y only) 2. **Minimum initial investment for Class A**: $1,000 3. **Minimum subsequent investment for Class A**: $100 4. **Automatic Asset Builder** (the primary automatic investment plan): minimum of **$100** and maximum of **$150,000** per transaction 5. **Payroll Savings Plan**: minimum of **$100** per transaction 6. **Government Direct Deposit**: minimum of **$100** and maximum of **$50,000** per transaction So the \"automatic investment eligibility\" for Class A shares means: - You can set up automatic investments after making the initial $1,000 investment - The minimum automatic investment is $100 per transaction The key value is that Class A shares are **eligible** for automatic investment services, with a minimum of **$100 per transaction** through Automatic Asset Builder. Let me provide a clear answer based on what I found.Based on the BNY Mellon Equity Income Fund prospectus, here's what I found: **Automatic investment eligibility for Class A shares:** Eligible. Automatic investment services are available for Class A shares (they are only excluded for Class Y shares) . You can purchase additional shares automatically through the **Automatic Asset Builder** program with a **minimum of $100 per transaction** (maximum of $150,000) . Other details relevant to eligibility: - Minimum initial investment for Class A: **$1,000** - Minimum subsequent investment: **$100** - Payroll Savings Plan minimum: **$100 per transaction** - Government Direct Deposit minimum: **$100 per transaction**",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.008064516129032258,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.016,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-005",
+      "group": "Level1",
+      "question": "Extract the value for SWP_MINIMUM from the fund document. Prioritize these sections: statutory. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for swp minimum from the fund document.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Extract the value for swp minimum from the fund document.",
+      "normalization_applied": [
+        {
+          "term": "SWP_MINIMUM",
+          "normalized": "swp minimum"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for swp minimum from the fund document.",
+      "schema_key": "SWP_MINIMUM",
+      "expected_answer_type": "amount",
+      "gold_answer": "50",
+      "predicted_answer": "$5,000",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-010",
+      "group": "Level1",
+      "question": "Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for company name from the fund document.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Extract the value for company name from the fund document.",
+      "normalization_applied": [
+        {
+          "term": "COMPANYNAME",
+          "normalized": "company name"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for company name from the fund document.",
+      "schema_key": "COMPANYNAME",
+      "expected_answer_type": "text",
+      "gold_answer": "BNY Mellon Investment Adviser, Inc.",
+      "predicted_answer": "BNY Mellon Investment Adviser, Inc.BNY Mellon Investment Adviser, Inc",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.5714285714285714,
+        "strict_correct": true,
+        "lenient_correct": true,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "L1-011",
+      "group": "Level1",
+      "question": "Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Extract the value for minimum subsequent investment amount from the fund document.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class C"
+      },
+      "normalized_question": "Extract the value for minimum subsequent investment amount from the fund document.",
+      "normalization_applied": [
+        {
+          "term": "AIP_SUBAMOUNT",
+          "normalized": "minimum subsequent investment amount"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Extract the value for minimum subsequent investment amount from the fund document.",
+      "schema_key": "AIP_SUBAMOUNT",
+      "expected_answer_type": "amount",
+      "gold_answer": "100",
+      "predicted_answer": "$100",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

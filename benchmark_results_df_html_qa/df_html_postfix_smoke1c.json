@@ -1,0 +1,93 @@
+{
+  "generated_at_utc": "2026-05-12T22:19:29Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "df_qa.json",
+    "document_title_contains": "df.html",
+    "mentioned_document_ids": [
+      391
+    ],
+    "max_questions": 1,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": false,
+    "blend_fund_context": true,
+    "normalize_schema_terms": true,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 1,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 1,
+    "number_match_rate": 1.0,
+    "unit_match_count": 1,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 44,
+    "questions_run": 1,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Level1": {
+      "run": 1,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 1,
+      "number_match_rate": 1.0,
+      "unit_match_count": 1,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [
+    3168,
+    3169
+  ],
+  "results": [
+    {
+      "id": "L1-006",
+      "group": "Level1",
+      "question": "Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class Y"
+      },
+      "normalized_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "normalization_applied": [],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "gold_answer": "Yes",
+      "predicted_answer": "The user wants me to find the value for \"PHONESWITCH\" from the BNY Mellon Equity Income Fund (Class Y) document. They mention \"pinned document\" which likely refers to the priority documents. Let me check those documents.\n\nThe priority documents are:\n1. /documents/df.html.xml (score=1.000, user-mentioned)\n2. /documents/MSFT_FY26Q1_10Q.docx.xml (score=0.016)\n\nThe first one \"df.html.xml\" seems most likely related to a fund document. Let me search for it and also search for the relevant terms.\n\nLet me also use search_surfsense_docs as requested.\n\nWait, search_surfsense_docs searches the SurfSense documentation, not the user's knowledge base. The user might be confused about that. Let me just read the priority document first.Let me start by reading the priority document that's most relevant.The document index starts at chunk 614544 at line 977. Let me read more to see what's near the beginning of the document and also search for \"BNY Mellon\" and \"PHONESWITCH\" specifically.No match for \"PHONESWITCH\" in the document. Let me also search for variations - perhaps \"PHONE SWITCH\" or \"phoneswitch\" with different casing.The document is about BNY Mellon Equity Income Fund. The term \"PHONESWITCH\" is not found in the document. Let me check the MSFT document just in case, but also let me search more broadly within the df.html.xml for \"PHONESWITCH\" as a possible field name or abbreviation. Let me check the chunks around the statutory/prospectus sections more carefully to see if PHONESWITCH appears as a column header or table field.\n\nActually, \"PHONESWITCH\" is likely a specific field code used in fund documents - it could be a code for a telephone switching privilege or similar. Let me search more carefully through the document.\"PHONESWITCH\" is not found anywhere in the document. Let me also check the MSFT document to be thorough, as there was a slight chance, but it's likely not there.\n\nActually, the user specifically said to use only the pinned document context and search_surfsense_docs. Let me also try search_surfsense_docs for completeness, though that searches SurfSense documentation (like app help docs), not the user's knowledge base.\n\nLet me try it anyway as the user explicitly requested it.\n\nActually wait - \"PHONESWITCH\" could be a field in a statutory document like a summary prospectus or SAI. Let me look at the beginning of the document to see if there's a statutory section with a table of fee-related data.The search_surfsense_docs returned irrelevant results about SurfSense connectors, not about BNY Mellon funds. That's expected - it searches SurfSense documentation, not the user's knowledge base.\n\nPHONESWITCH is not found anywhere in the document. Let me check the MSFT document as well, though it's unlikely. But let me also look deeper at the fund fee table or statutory/summary sections of the BNY Mellon document - maybe PHONESWITCH appears in a table format that wasn't captured by the text search.\n\nActually, let me also look for it with any case variations in the full document.I've now read through a large portion of the relevant sections of the document (Fund Summary, Fee tables, etc.) and no \"PHONESWITCH\" field exists in the document. I also did a comprehensive grep for \"PHONESWITCH\", \"PHONE\", and \"SWITCH\" with no matches for \"PHONESWITCH\" or \"SWITCH\".\n\nPer the user's instructions: \"If the value is not found, return exactly N/A.\"\n\nSo I should return N/A.N/A",
+      "metrics": {
+        "off_topic_document_reference": true,
+        "answer_clean": false,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

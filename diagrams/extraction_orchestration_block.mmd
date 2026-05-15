@@ -17,39 +17,68 @@
 flowchart TB
   U[User Query]
   API[stream_new_chat]
-  FACTORY[create_surfsense_deep_agent]
-  REG[Tools Registry<br/>build_tools_async]
-  AGENT[LangChain / LangGraph Agent<br/>create_agent + middleware]
+  FACTORY[create_deep_extraction_agent]
+  DETECT[Find connectors and document types<br/>available_connectors + available_document_types]
+  REG[Set up tools<br/>build_tools_async]
+  AGENT[Main chat agent<br/>LangChain / LangGraph + middleware]
   STREAM[agent.astream_events]
 
-  SCRAPE[scrape_webpage Tool<br/>extracts web content]
-  UPDATE[update_memory Tool<br/>explicit memory save]
-  BG[Background Memory Extraction<br/>extract_and_save_memory / team]
+  SDOCS[search_surfsense_docs<br/>knowledge retrieval]
+  RFILE[read_file<br/>targeted file reads]
+  FTOOLS[glob / grep / ls<br/>find files and text]
+  WSEARCH[web_search<br/>external search when needed]
+  SCRAPE[scrape_webpage<br/>URL content extraction]
+  REPORT[generate_report<br/>final structured output]
+  UPDATE[update_memory tool<br/>explicit memory save]
+  BG[Background memory save<br/>extract_and_save_memory / team]
   DB[(Postgres / SearchSpace Memory)]
 
-  OUT[Streamed Final Answer]
+  OUT[Final streamed answer]
 
-  U --> API --> FACTORY --> REG --> AGENT --> STREAM
+  U --> API --> FACTORY --> DETECT --> REG --> AGENT --> STREAM
+
+  STREAM -->|Tool call| SDOCS
+  SDOCS --> STREAM
+
+  STREAM -->|Tool call| RFILE
+  RFILE --> STREAM
+
+  STREAM -->|Tool call| FTOOLS
+  FTOOLS --> STREAM
+
+  STREAM -->|Tool call| WSEARCH
+  WSEARCH --> STREAM
 
   STREAM -->|Tool call| SCRAPE
   SCRAPE --> STREAM
+
+  STREAM -->|Tool call| REPORT
+  REPORT --> STREAM
 
   STREAM -->|Tool call| UPDATE
   UPDATE --> DB
   DB --> UPDATE
   UPDATE --> STREAM
 
-  STREAM -->|if update_memory not called| BG
+  STREAM -->|if update_memory was not called| BG
   BG --> DB
 
   STREAM --> OUT
 
   classDef core fill:#dbeafe,stroke:#1d4ed8,stroke-width:2px,color:#111827;
-  classDef tool fill:#dcfce7,stroke:#15803d,stroke-width:2px,color:#111827;
+  classDef docsTool fill:#bfdbfe,stroke:#1d4ed8,stroke-width:2px,color:#111827;
+  classDef fileTool fill:#fde68a,stroke:#b45309,stroke-width:2px,color:#111827;
+  classDef webTool fill:#bbf7d0,stroke:#15803d,stroke-width:2px,color:#111827;
+  classDef reportTool fill:#ddd6fe,stroke:#6d28d9,stroke-width:2px,color:#111827;
+  classDef memTool fill:#fecaca,stroke:#b91c1c,stroke-width:2px,color:#111827;
   classDef store fill:#fef3c7,stroke:#b45309,stroke-width:2px,color:#111827;
   classDef out fill:#ede9fe,stroke:#6d28d9,stroke-width:2px,color:#111827;
 
   class API,FACTORY,REG,AGENT,STREAM core;
-  class SCRAPE,UPDATE,BG tool;
+  class SDOCS docsTool;
+  class RFILE,FTOOLS fileTool;
+  class WSEARCH,SCRAPE webTool;
+  class REPORT reportTool;
+  class UPDATE,BG memTool;
   class DB store;
   class OUT out;

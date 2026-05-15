@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>df.html QA Benchmark Frame (full43)</title>
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: Inter, Arial, sans-serif; }
+    .layout { display: grid; grid-template-columns: 390px 1fr; height: 100vh; }
+    .left {
+      border-right: 1px solid #27324d;
+      background: #121a2c;
+      color: #dbe5ff;
+      overflow: auto;
+      padding: 12px;
+      box-sizing: border-box;
+    }
+    .main { height: 100%; }
+    iframe { width: 100%; height: 100%; border: 0; }
+    h2 { margin: 0 0 8px; font-size: 16px; }
+    .hint { margin: 0 0 12px; color: #9fb5ff; font-size: 12px; line-height: 1.35; }
+    .summary { font-size: 12px; color: #b7c9ff; margin-bottom: 10px; }
+    .filters {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .filters label {
+      display: block;
+      font-size: 11px;
+      color: #9fb5ff;
+      margin-bottom: 3px;
+    }
+    .filters select {
+      width: 100%;
+      background: #0f1729;
+      color: #dbe5ff;
+      border: 1px solid #304162;
+      border-radius: 6px;
+      padding: 5px 6px;
+      font-size: 12px;
+    }
+    .qa-card {
+      border: 1px solid #2c395a;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+      background: #10192b;
+    }
+    .qa-card.qa-card-active {
+      border-color: #ffd84d;
+      box-shadow: 0 0 0 2px rgba(255, 216, 77, 0.35), 0 0 0 4px rgba(255, 216, 77, 0.14);
+      background: #152239;
+    }
+    .meta { color: #9fb5ff; font-size: 12px; margin-bottom: 6px; }
+    .q, .a { margin-bottom: 6px; font-size: 12px; line-height: 1.35; word-break: break-word; }
+    .jump { color: #70e1ff; text-decoration: none; font-size: 12px; }
+    .jump:hover { text-decoration: underline; }
+    .status {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .status.match { background: #d9ffd8; color: #1c5b1a; }
+    .status.cannot {
+      background: #ffd84d;
+      color: #111;
+      box-shadow: inset 0 0 0 1px #c59a00;
+    }
+    .rule-badge {
+      display: inline-block;
+      margin-left: 6px;
+      font-size: 10px;
+      line-height: 1;
+      padding: 3px 5px;
+      border-radius: 4px;
+      background: #24406f;
+      color: #d6e8ff;
+      border: 1px solid #3a5d95;
+      text-transform: lowercase;
+    }
+    .err { color: #ffb8b8; font-size: 12px; line-height: 1.4; background: #2a1521; border: 1px solid #5c2d44; padding: 8px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="left">
+      <h2>Q&A Linked List (full43)</h2>
+      <p class="hint">Predicted value is matched against verbatim text in the main page. If prediction is wrong or text is not found, <b>Cannot Match</b> is highlighted.</p>
+      <div id="summary" class="summary">Loading benchmark results...</div>
+      <div class="filters">
+        <div>
+          <label for="viewFilter">View</label>
+          <select id="viewFilter">
+            <option value="all">All</option>
+            <option value="recoverable">Recoverable (rule-assisted)</option>
+            <option value="cannot">Cannot Match</option>
+            <option value="matched">Matched</option>
+          </select>
+        </div>
+        <div>
+          <label for="ruleFilter">Rule</label>
+          <select id="ruleFilter">
+            <option value="all">All rules</option>
+          </select>
+        </div>
+      </div>
+      <div id="qaList"></div>
+    </aside>
+    <main class="main">
+      <iframe id="mainFrame" src="about:blank" title="Main Document"></iframe>
+    </main>
+  </div>
+
+  <script src="df_html.payload.js?v=20260514-redeembywire-sync-6"></script>
+  <script src="full43_rerun_20260514_apply_fixtures.payload.js?v=20260514-full43-rerun-sync-1"></script>
+  <script src="qa_match_enhancement_rules.js?v=20260514-numeric-boundary-fix-1"></script>
+  <script>
+    const RESULTS_FILE = 'full43_rerun_20260514_apply_fixtures.json';
+    const mainFrame = document.getElementById('mainFrame');
+    const qaList = document.getElementById('qaList');
+    const summary = document.getElementById('summary');
+    const viewFilterEl = document.getElementById('viewFilter');
+    const ruleFilterEl = document.getElementById('ruleFilter');
+    let _resultsCache = [];
+    let _matchMapCache = {};
+    let _activeMarkId = null;
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function getPredicted(row) {
+      return String(row.predicted_exact || row.predicted_answer || '').trim();
+    }
+
+    function canAttemptMatch(row) {
+      const prediction = getPredicted(row);
+      return prediction.length > 0 && prediction.length <= 120 && !prediction.toLowerCase().startsWith('the user ');
+    }
+
+    function isWrongPrediction(row) {
+      if (window.QaMatchEnhancement && typeof window.QaMatchEnhancement.isWrongPrediction === 'function') {
+        return window.QaMatchEnhancement.isWrongPrediction(row);
+      }
+      const m = row && row.metrics ? row.metrics : {};
+      return !(m && m.overall_correct);
+    }
+
+    function buildMatchCandidates(prediction) {
+      if (window.QaMatchEnhancement && typeof window.QaMatchEnhancement.buildCandidates === 'function') {
+        return window.QaMatchEnhancement.buildCandidates(prediction);
+      }
+      return prediction ? [{ text: prediction, rule: 'exact' }] : [];
+    }
+
+    function isEligibilityRow(row) {
+      const key = String(row.schema_key || row.name || '').toUpperCase();
+      return key.includes('ELIGIBLE') || key.includes('ELIGIBILITY');
+    }
+
+    function getEvidenceText(row) {
+      return String(
+        row.display_evidence_text ||
+        row.intermediate_verbatim_text ||
+        (((row.evidence || {}).text) || '')
+      ).trim();
+    }
+
+    function getToolVerbatimMatch(row) {
+      const metrics = row && row.metrics ? row.metrics : {};
+      const offsets = row && row.predicted_span_offsets && typeof row.predicted_span_offsets === 'object'
+        ? row.predicted_span_offsets
+        : {};
+
+      const hasData =
+        typeof metrics.source_verbatim_match === 'boolean' ||
+        typeof metrics.source_span_match === 'boolean' ||
+        typeof offsets.found === 'boolean' ||
+        typeof offsets.match_method === 'string' ||
+        typeof offsets.span_text === 'string';
+
+      return {
+        hasData,
+        sourceVerbatimMatch: metrics.source_verbatim_match === true,
+        sourceSpanMatch: metrics.source_span_match === true || offsets.found === true,
+        spanText: String(offsets.span_text || '').trim(),
+        matchMethod: String(offsets.match_method || '').trim(),
+      };
+    }
+
+    function highlightFirstTextOccurrence(doc, needle, markId) {
+      if (!needle) return false;
+
+      const exact = String(needle);
+      const exactLower = exact.toLowerCase();
+      const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        if (!node || !node.nodeValue) continue;
+        if (!node.parentElement) continue;
+
+        const parentTag = node.parentElement.tagName;
+        if (parentTag === 'SCRIPT' || parentTag === 'STYLE' || parentTag === 'MARK') continue;
+
+        const text = node.nodeValue;
+        let idx = text.indexOf(exact);
+        if (idx < 0) idx = text.toLowerCase().indexOf(exactLower);
+        if (idx < 0) continue;
+
+        const range = doc.createRange();
+        range.setStart(node, idx);
+        range.setEnd(node, idx + exact.length);
+
+        const mark = doc.createElement('mark');
+        mark.className = 'qa-hit-pred';
+        mark.id = markId;
+        mark.setAttribute('data-prediction', exact);
+
+        try {
+          range.surroundContents(mark);
+          return true;
+        } catch {
+          continue;
+        }
+      }
+      return false;
+    }
+
+    function hasTextOccurrence(doc, needle) {
+      if (!needle) return false;
+      const exact = String(needle);
+      const exactLower = exact.toLowerCase();
+      const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        if (!node || !node.nodeValue || !node.parentElement) continue;
+        const parentTag = node.parentElement.tagName;
+        if (parentTag === 'SCRIPT' || parentTag === 'STYLE') continue;
+        const text = node.nodeValue;
+        if (text.indexOf(exact) >= 0) return true;
+        if (text.toLowerCase().indexOf(exactLower) >= 0) return true;
+      }
+      return false;
+    }
+
+    function highlightByCandidates(doc, candidates, markId) {
+      for (const candidate of candidates) {
+        const text = typeof candidate === 'string' ? candidate : candidate.text;
+        const rule = typeof candidate === 'string' ? 'exact' : (candidate.rule || 'exact');
+        if (highlightFirstTextOccurrence(doc, text, markId)) {
+          return { matched: true, rule, text };
+        }
+      }
+      return { matched: false, rule: null, text: null };
+    }
+
+    function installHighlightStyle(doc) {
+      const style = doc.createElement('style');
+      style.textContent = `
+        .qa-hit-pred{background:#ffd84d;color:#111;padding:1px 2px;border-radius:2px;box-shadow:inset 0 0 0 1px #c79d00;transition:all .2s ease;}
+        .qa-hit-pred.qa-hit-muted{opacity:.35;filter:saturate(.65);}
+        .qa-hit-pred.qa-hit-active{position:relative;opacity:1;outline:2px solid #00e1ff;outline-offset:3px;box-shadow:0 0 0 2px #001b22,0 0 0 5px rgba(0,225,255,.75),0 0 16px 4px rgba(0,225,255,.5), inset 0 0 0 1px #7d5c00;z-index:2;animation:qaHitPulse 1.25s ease-in-out infinite;}
+        @keyframes qaHitPulse {
+          0%, 100% { box-shadow:0 0 0 2px #001b22,0 0 0 5px rgba(0,225,255,.75),0 0 16px 4px rgba(0,225,255,.5), inset 0 0 0 1px #7d5c00; }
+          50% { box-shadow:0 0 0 2px #001b22,0 0 0 7px rgba(0,225,255,.92),0 0 24px 8px rgba(0,225,255,.7), inset 0 0 0 1px #7d5c00; }
+        }
+      `;
+      doc.head.appendChild(style);
+    }
+
+    function setActiveHighlight(markId) {
+      const doc = mainFrame.contentDocument;
+      if (!doc) return;
+
+      const marks = doc.querySelectorAll('mark.qa-hit-pred');
+      marks.forEach((mark) => {
+        mark.classList.remove('qa-hit-active');
+        mark.classList.add('qa-hit-muted');
+      });
+
+      const active = doc.getElementById(markId);
+      if (active) {
+        active.classList.remove('qa-hit-muted');
+        active.classList.add('qa-hit-active');
+        _activeMarkId = markId;
+      }
+    }
+
+    function setActiveCard(markId) {
+      qaList.querySelectorAll('.qa-card').forEach((card) => card.classList.remove('qa-card-active'));
+      const targetCard = qaList.querySelector(`.qa-card[data-mark-id="${markId}"]`);
+      if (targetCard) targetCard.classList.add('qa-card-active');
+    }
+
+    function scrollToMatch(markId) {
+      const doc = mainFrame.contentDocument;
+      if (!doc) return;
+      setActiveHighlight(markId);
+      setActiveCard(markId);
+      const target = doc.getElementById(markId);
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function buildSrcDoc(fragmentHtml) {
+      return `<!doctype html><html><head><meta charset="utf-8"><title>df.html</title></head><body>${fragmentHtml || ''}</body></html>`;
+    }
+
+    async function ensureMainFrameReady() {
+      if (typeof window.__DF_HTML__ === 'string' && window.__DF_HTML__.length > 0) {
+        await new Promise((resolve) => {
+          mainFrame.addEventListener('load', () => resolve(), { once: true });
+          mainFrame.srcdoc = buildSrcDoc(window.__DF_HTML__);
+        });
+        return;
+      }
+
+      await new Promise((resolve) => {
+        if (mainFrame.contentDocument && mainFrame.contentDocument.readyState === 'complete') {
+          resolve();
+          return;
+        }
+        mainFrame.addEventListener('load', () => resolve(), { once: true });
+        mainFrame.src = 'df.html';
+      });
+    }
+
+    function updateRuleFilterOptions(results, matchMap) {
+      const selected = ruleFilterEl.value || 'all';
+      const rules = new Set();
+      results.forEach((row, idx) => {
+        const markId = `match-q-${String(idx + 1).padStart(2, '0')}`;
+        const info = matchMap[markId] || {};
+        if (info.recoverableByRule && info.rule) rules.add(info.rule);
+      });
+
+      const options = ['<option value="all">All rules</option>']
+        .concat(Array.from(rules).sort().map((rule) => `<option value="${escapeHtml(rule)}">${escapeHtml(rule)}</option>`));
+      ruleFilterEl.innerHTML = options.join('');
+      if (Array.from(rules).includes(selected)) {
+        ruleFilterEl.value = selected;
+      } else {
+        ruleFilterEl.value = 'all';
+      }
+    }
+
+    function renderSidebar(results, matchMap) {
+      let matchedCount = 0;
+      let cannotCount = 0;
+      const viewMode = viewFilterEl.value || 'all';
+      const ruleMode = ruleFilterEl.value || 'all';
+
+      const entries = results.map((row, idx) => {
+        const qNum = idx + 1;
+        const markId = `match-q-${String(qNum).padStart(2, '0')}`;
+        const matchInfo = matchMap[markId] || { matched: false, rule: null, recoverableByRule: false };
+        const matched = !!matchInfo.matched;
+        const wrongPrediction = isWrongPrediction(row);
+        const cannotMatch = wrongPrediction || !matched;
+        if (cannotMatch) cannotCount += 1;
+        else matchedCount += 1;
+        return { row, idx, qNum, markId, matchInfo, matched, wrongPrediction, cannotMatch };
+      });
+
+      const filtered = entries.filter((entry) => {
+        if (viewMode === 'matched' && !entry.matched) return false;
+        if (viewMode === 'cannot' && !entry.cannotMatch) return false;
+        if (viewMode === 'recoverable' && !entry.matchInfo.recoverableByRule) return false;
+        if (ruleMode !== 'all' && entry.matchInfo.rule !== ruleMode) return false;
+        return true;
+      });
+
+      const html = filtered.map((entry) => {
+        const { row, qNum, markId, matchInfo, matched, cannotMatch } = entry;
+
+        const evidenceText = getEvidenceText(row);
+        const ruleBadge = matched
+          ? `<span class="rule-badge">matched by ${escapeHtml(matchInfo.rule || 'exact')}</span>`
+          : '';
+
+        const statusHtml = cannotMatch
+          ? '<span class="status cannot">Cannot Match</span>'
+          : '<span class="status match">Matched</span>';
+
+        const actionHtml = cannotMatch
+          ? '<span class="jump" style="opacity:.8;cursor:default;text-decoration:none;">Cannot Match</span>'
+          : `<a class="jump" href="#" data-target="${markId}">Go to matched prediction</a>`;
+
+        return `
+          <div class="qa-card" data-mark-id="${markId}">
+            <div class="meta">Q${qNum.toString().padStart(2, '0')} · ${escapeHtml(row.id || '')} · ${escapeHtml(row.group || '')} ${statusHtml}${ruleBadge}</div>
+            <div class="q"><b>Q:</b> ${escapeHtml(row.asked_question || row.blended_question || row.question || '')}</div>
+            <div class="a"><b>Pred:</b> ${escapeHtml(getPredicted(row))}</div>
+            <div class="a"><b>Gold:</b> ${escapeHtml(row.gold_answer || '')}</div>
+            ${evidenceText ? `<div class="a"><b>Evidence:</b> ${escapeHtml(evidenceText)}</div>` : ''}
+            <div>${actionHtml}</div>
+          </div>`;
+      }).join('');
+
+      qaList.innerHTML = html;
+      summary.textContent = `Questions: ${results.length} · Matched: ${matchedCount} · Cannot Match: ${cannotCount} · Showing: ${filtered.length}`;
+
+      qaList.querySelectorAll('a.jump[data-target]').forEach((link) => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          scrollToMatch(link.getAttribute('data-target'));
+        });
+      });
+
+      if (_activeMarkId) {
+        setActiveCard(_activeMarkId);
+      }
+    }
+
+    function renderSidebarFromCache() {
+      renderSidebar(_resultsCache, _matchMapCache);
+    }
+
+    async function loadResults() {
+      if (window.__QA_FRAME_PAYLOAD__ && Array.isArray(window.__QA_FRAME_PAYLOAD__.results)) {
+        return window.__QA_FRAME_PAYLOAD__;
+      }
+
+      if (window.__FULL43_RESULTS__ && Array.isArray(window.__FULL43_RESULTS__.results)) {
+        return window.__FULL43_RESULTS__;
+      }
+
+      const res = await fetch(RESULTS_FILE);
+      if (!res.ok) throw new Error(`Failed to load ${RESULTS_FILE}: ${res.status}`);
+      return await res.json();
+    }
+
+    async function boot() {
+      try {
+        const payload = await loadResults();
+        const results = Array.isArray(payload.results) ? payload.results : [];
+
+        await ensureMainFrameReady();
+
+        const doc = mainFrame.contentDocument;
+        if (!doc || !doc.body || !doc.head) {
+          throw new Error('Main frame document not accessible.');
+        }
+
+        installHighlightStyle(doc);
+
+        const matchMap = {};
+        results.forEach((row, idx) => {
+          const qNum = idx + 1;
+          const markId = `match-q-${String(qNum).padStart(2, '0')}`;
+          const prediction = getPredicted(row);
+          const toolMatch = getToolVerbatimMatch(row);
+
+          if (toolMatch.hasData) {
+            if (!toolMatch.sourceVerbatimMatch) {
+              matchMap[markId] = {
+                matched: false,
+                rule: toolMatch.sourceSpanMatch ? 'tool-source-span-only' : 'tool-no-verbatim-span',
+                text: toolMatch.spanText || null,
+                directPredictionMatch: hasTextOccurrence(doc, prediction),
+                recoverableByRule: false,
+                fromTool: true,
+              };
+              return;
+            }
+
+            const toolCandidates = [];
+            if (toolMatch.spanText) {
+              toolCandidates.push({ text: toolMatch.spanText, rule: `tool-${toolMatch.matchMethod || 'verbatim-span'}` });
+            }
+            if (prediction) {
+              toolCandidates.push({ text: prediction, rule: 'tool-prediction' });
+            }
+
+            const matchedInfo = highlightByCandidates(doc, toolCandidates, markId);
+            const directPredictionMatch = hasTextOccurrence(doc, prediction);
+            matchedInfo.directPredictionMatch = directPredictionMatch;
+            matchedInfo.recoverableByRule = !!(matchedInfo.matched && !directPredictionMatch);
+            if (matchedInfo.matched && (!matchedInfo.rule || matchedInfo.rule === 'exact')) {
+              matchedInfo.rule = `tool-${toolMatch.matchMethod || 'verbatim-span'}`;
+            }
+            matchedInfo.fromTool = true;
+            matchMap[markId] = matchedInfo;
+            return;
+          }
+
+          const wrongPrediction = isWrongPrediction(row);
+          if (wrongPrediction || !canAttemptMatch(row)) {
+            matchMap[markId] = { matched: false, rule: null, text: null };
+            return;
+          }
+
+          const directPredictionMatch = hasTextOccurrence(doc, prediction);
+          const candidates = [];
+          const evidenceText = getEvidenceText(row);
+          if (evidenceText) {
+            candidates.push({ text: evidenceText, rule: isEligibilityRow(row) ? 'evidence-verbatim' : 'evidence-fallback' });
+            candidates.push({ text: evidenceText.replace(/\s+/g, ' '), rule: 'evidence-whitespace-normalized' });
+          }
+          candidates.push(...buildMatchCandidates(prediction));
+          const matchedInfo = highlightByCandidates(doc, candidates, markId);
+          matchedInfo.directPredictionMatch = directPredictionMatch;
+          matchedInfo.recoverableByRule = !!(matchedInfo.matched && !directPredictionMatch);
+          matchMap[markId] = matchedInfo;
+        });
+
+        _resultsCache = results;
+        _matchMapCache = matchMap;
+        updateRuleFilterOptions(results, matchMap);
+        renderSidebarFromCache();
+        viewFilterEl.addEventListener('change', renderSidebarFromCache);
+        ruleFilterEl.addEventListener('change', renderSidebarFromCache);
+      } catch (error) {
+        summary.innerHTML = `<div class="err">Unable to load benchmark frame data.<br>${escapeHtml(error.message || error)}</div>`;
+      }
+    }
+
+    boot();
+  </script>
+</body>
+</html>

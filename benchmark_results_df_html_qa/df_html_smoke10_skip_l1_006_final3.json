@@ -1,0 +1,460 @@
+{
+  "generated_at_utc": "2026-05-12T22:42:15Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "df_qa_smoke10_skip_L1-006.json",
+    "document_title_contains": "df.html",
+    "mentioned_document_ids": [
+      391
+    ],
+    "max_questions": 10,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": false,
+    "blend_fund_context": true,
+    "normalize_schema_terms": true,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 10,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 10,
+    "number_match_rate": 1.0,
+    "unit_match_count": 10,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.0015424740071051668,
+    "questions_total": 10,
+    "questions_run": 10,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Level1": {
+      "run": 9,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 9,
+      "number_match_rate": 1.0,
+      "unit_match_count": 9,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0017138600078946296
+    },
+    "Level17": {
+      "run": 1,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 1,
+      "number_match_rate": 1.0,
+      "unit_match_count": 1,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [
+    3193,
+    3196,
+    3199,
+    3201,
+    3203,
+    3209,
+    3211,
+    3214,
+    3216,
+    3219,
+    3221
+  ],
+  "results": [
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "normalization_applied": [
+        {
+          "term": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+          "normalized": "total annual fund operating expenses"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "gold_answer": "0.8",
+      "predicted_answer": "The user wants me to find the BNY Mellon Equity Income Fund (Class I) from the fund document and extract the \"total annual fund operating expenses\" value. Let me look at the priority documents - the user mentioned a \"fund document\" which is likely `df.html.xml`. Let me read it.The file is quite large. Let me search for \"BNY Mellon Equity Income Fund\" and \"total annual fund operating expenses\" to find the relevant section.Let me read the chunks that contain the expense information. Chunk 614564 seems relevant. Let me also search for \"Equity Income\" more broadly.I can see the data clearly. Chunk 614564 contains a fee table for the BNY Mellon Equity Income Fund. Let me look at Class I specifically.\n\nFrom the table:\n- Class I column for \"Total annual fund operating expenses\" = 0.80\n\nLet me verify the column headers: Class A | Class C | Class I | Class Y\nSo Class I is the 3rd column.\n\nRow \"Total annual fund operating expenses\" gives: 1.02 | 1.81 | .80 | .75\n\nSo for Class I, the value is 0.80%.\n\nBut wait, I need to make sure this is for the BNY Mellon Equity Income Fund and not some other fund. Let me check what precedes this chunk.This confirms this is the BNY Mellon Equity Income Fund. Class I ticker is DQIRX. And I can see the fee table clearly. For Class I:\n\nTotal annual fund operating expenses: 0.80%\n\nLet me also check if there's a different fee table elsewhere. The grep also showed chunk 615363 which has the same table structure. But this first one at chunk 614564 is clearly the summary/prospectus fee table section.\n\nThe value is **0.80%**.0.80% [citation:614544], [citation:614564]",
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.045454545454545456,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.08695652173913045,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L17-002",
+      "group": "Level17",
+      "question": "Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for performance table date from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "normalization_applied": [
+        {
+          "term": "PERFORMANCE_TABLE_DATES",
+          "normalized": "performance table date"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for performance table date from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "gold_answer": "12/31/2023",
+      "predicted_answer": "The user wants me to find a specific fund document and extract the \"performance table date\" from it. They mention \"BNY Mellon Equity Income Fund (Class A)\" and \"BNY Mellon Funds\". The priority document is `/documents/df.html.xml`. Let me search for this fund in that document.The document is quite large with many chunks. Let me search for \"BNY Mellon\" or \"Equity Income Fund\" within this document to find the relevant sections.The search didn't find exact matches. Let me look for \"BNY\" or \"Mellon\" or variations to find the fund. Let me search more broadly.I can see \"BNY Mellon Equity Income Fund\" is in the document. Let me look around line 977-982 where chunk 614544 is, which mentions \"BNY\" and \"Mellon Equity Income Fund\". Let me read that section and nearby content to find the performance table date.I found the fund document. It mentions \"BNY Mellon Equity Income Fund\" with ticker DQIAX for Class A. Let me search for the performance table section. The \"performance table date\" is typically a date at the top of the performance table in the Fund Summary section. Let me search for \"performance\" or \"annual total return\" or similar terms.The chunks might contain HTML with tables, and the text might be fragmented. Let me search for \"year\" or \"return\" to find the performance table section.I can see the performance table data. The \"performance table date\" is likely the date that the performance table uses. Looking at the chunks around lines 1240-1283, I can see there's a bar chart and a performance table. Let me read the context more carefully.\n\nLooking at the chunks:\n- Line 1250: \"The table compares the average annual total returns of the fund's shares to those of a broad measure of market performance.\"\n- Line 1260: \"The year-to-date total return of the fund's Class A shares as of June 30, 2024 was 17.51%.\"\n- Lines 1278-1283: The performance table data with returns for Class A, C, I, Y.\n\nAnd then I see it's duplicated around lines 3833-3867.\n\nThe \"performance table date\" is the date referenced in the performance table section. Let me read the area around lines 1240-1260 to see if there's a date header for the performance table.Now I can see the performance table. The performance table date is \"as of 12/31/23\" which appears on line 1276: \"| Average Annual Total Returns (as of 12/31/23) | | | |\". This is the \"performance table date\" - the date for which the performance data in the table is reported.\n\nLet me also check the other instance (around line 3833) to see if it's the same or different.The document contains two duplicates of the same content. The performance table date is \"as of 12/31/23\" - which appears in both instances at line 1276 and line 3860.\n\nThe user asked: \"Extract the value for performance table date from the fund document. Return only the final value.\"\n\nThe performance table date is \"12/31/23\" (or \"as of 12/31/23\"). Let me look at the exact header: \"Average Annual Total Returns (as of 12/31/23)\". So the date is 12/31/23.\n\nLet me also check if there's a different \"performance table date\" mentioned anywhere else, perhaps at the very beginning of the performance section. The date could also be \"September 30, 2024\" which is the prospectus date (line 985).\n\nBut the \"performance table date\" typically refers to the date as of which the performance data in the table is presented, which is \"12/31/23\" based on the header \"Average Annual Total Returns (as of 12/31/23)\".\n\nLet me return just the value.12/31/23",
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.05714285714285714,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.1081081081081081,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-011",
+      "group": "Level1",
+      "question": "Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for minimum subsequent investment amount from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "normalization_applied": [
+        {
+          "term": "AIP_SUBAMOUNT",
+          "normalized": "minimum subsequent investment amount"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for minimum subsequent investment amount from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "gold_answer": "100",
+      "predicted_answer": "The user wants me to find the minimum subsequent investment amount for the BNY Mellon Equity Income Fund (Class A) from the fund document. The priority document is `/documents/df.html.xml`. Let me read it to find the relevant information.The file is large. Let me search for the relevant fund name and the minimum subsequent investment amount within this document.Let me look at the chunks around the minimum subsequent investment to understand the context. The first match is at chunk_id 614617. Let me read that section of the file to see which fund and class it refers to.\n\nThe chunk mentions \"general, for each share class, other than Class Y, the fund's minimum initial investment is $1,000 and the minimum subsequent investment is $100.\" But I need to verify this applies specifically to the BNY Mellon Equity Income Fund (Class A).\n\nLet me read a broader section to find the specific fund name and class A details.I need to find which fund this section belongs to. Let me read earlier lines to see the fund name mentioned in context. The chunk says \"general, for each share class, other than Class Y\" - I need to find the specific fund name.I can see the minimum subsequent investment is $100 for general share classes other than Class Y. But I need to confirm this is specifically the BNY Mellon Equity Income Fund. Let me look earlier in the document to find the fund name. Let me search for \"Equity Income\" in this file.Good. The document is indeed about the BNY Mellon Equity Income Fund. Now let me read the section that establishes context for the fund name to make sure the \"minimum subsequent investment\" chunk is tied to this specific fund. Let me also look earlier near chunk 614544 where the title is.\n\nActually, I can see from the chunk info that chunk_id 614544 is the prospectus title \"BNY Mellon Equity Income Fund Prospectus\". Let me read near chunk 614544 to see the context, and also read more of the area around the minimum investment to look for any class-specific details for Class A.Great. So this is the BNY Mellon Equity Income Fund prospectus. Now let me look at the full \"Purchase and Sale of Fund Shares\" section more carefully. I need to see if there are any specific class A sub-investment amounts. The text says \"general, for each share class, other than Class Y, the fund's minimum initial investment is $1,000 and the minimum subsequent investment is $100.\" This applies to all classes including Class A.\n\nLet me also look for a statutory or summary section that might mention this more specifically, or any fee table that shows the minimums for Class A specifically.Let me search for \"subsequent investment\" with exact case.The document clearly shows that the minimum subsequent investment for share classes other than Class Y is $100. Class A is a share class other than Class Y, so the minimum subsequent investment for Class A is $100.\n\nThis information appears in two places:\n1. The \"Purchase and Sale of Fund Shares\" section (chunks 614617-614618) - this is the summary section\n2. A later section (chunks 614917-614918) - this is likely the \"statutory\" section\n\nBoth consistently say the same thing: $100 minimum subsequent investment for classes other than Class Y.\n\nLet me also confirm that Class A is indeed one of the classes offered by this fund. From chunk 614546, I can see:\n- Class A: DQIAX\n- Class C: DQICX\n- Class I: DQIRX\n- Class Y: DQIYX\n\nSo Class A exists for this fund and falls under \"each share class, other than Class Y\" which has a minimum subsequent investment of $100.$100",
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class Y"
+      },
+      "normalized_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "normalization_applied": [
+        {
+          "term": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+          "normalized": "total annual fund operating expenses"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "gold_answer": "0.75",
+      "predicted_answer": "The user wants me to find information about the BNY Mellon Equity Income Fund (Class Y) from what appears to be a document about BNY Mellon Funds. Let me look at the priority document `df.html.xml` which was user-mentioned and likely contains this information. Let me read it.I need to search for \"BNY Mellon Equity Income Fund\" and \"Class Y\" and \"total annual fund operating expenses\" in this document. Let me grep for these terms.I can see the data I need. The table has Class A, Class C, Class I, and Class Y columns. The \"Total annual fund operating expenses\" row values are:\n\n| Class A | Class C | Class I | Class Y |\n|---------|---------|---------|---------|\n| 1.02    | 1.81    | .80     | .75     |\n\nSo for Class Y, the value is 0.75%. Let me read the surrounding context to confirm this is for the BNY Mellon Equity Income Fund specifically. Let me read around the chunk that contains this table.I can see the data. The table clearly shows the \"Total annual fund operating expenses\" for Class Y is **.75** (0.75%). Now let me also confirm this is for the BNY Mellon Equity Income Fund by searching for the fund name earlier in the document.The document is confirmed to be the \"BNY Mellon Equity Income Fund\" prospectus. The \"Total annual fund operating expenses\" for Class Y is **.75** (0.75%).0.75%",
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-010",
+      "group": "Level1",
+      "question": "Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class C"
+      },
+      "normalized_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "normalization_applied": [],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "gold_answer": "BNY Mellon Investment Adviser, Inc.",
+      "predicted_answer": "The user wants me to find a specific fund document (BNY Mellon Equity Income Fund, Class C, of BNY Mellon Funds) and extract the value for COMPANYNAME from it. They want only the final value returned.\n\nLet me search for this fund document in the knowledge base. The user mentioned \"df.html.xml\" as a priority document - let me look at that first.The document has many chunks. Let me search for specific terms related to \"BNY Mellon\", \"Equity Income\", \"CompanyName\" or \"COMPANYNAME\" in this document to find the right section.The grep didn't find any matches, but that might be because the search is across indexed chunks and the content might be in a different format. Let me search more broadly for \"CompanyName\" or \"BNY\" or \"Mellon\" in the df.html.xml file.\"CompanyName\" didn't match anything. Let me search more broadly. This is a fund document (prospectus/SAI) for BNY Mellon funds. The user is looking for the COMPANYNAME field, which is likely a metadata/structured data field in the document. Let me look at the earlier parts of the document to understand its structure better, and also look for \"Equity Income\" near the beginning where the fund name would be listed.\n\nLet me also search for \"Equity Income\" and \"Class C\" specifically.Let me look at the very beginning of the document where the fund summary or statutory sections would be located. The document seems to have two copies of the fund content (one starting around line 977 and another around line 3564). Let me read the beginning to see the metadata and fund information.Let me read the beginning sections to understand the document structure better.Looking at the document, this is a prospectus for BNY Mellon Equity Income Fund with Class C shares (ticker DQICX). The user wants the value for \"COMPANYNAME\". This doesn't seem to be in the document as a labeled field. Let me search more carefully for anything that could represent COMPANYNAME - this is likely about identifying the company name that this fund belongs to or the investment adviser company.\n\nLet me look at the statutory/prospectus sections more carefully, and also search for the MSFT document in case the data is there. Let me also search more specifically for \"BNY Mellon Funds\" or similar organizational names.\n\nActually, wait - the user mentions \"BNY Mellon Funds\" which is the series/trust name. Let me check the lines around the fund details more carefully, and also look at the other document (MSFT) to see if there's anything relevant there.\n\nActually, looking more carefully, \"COMPANYNAME\" might be a structured data field that was part of a different extraction format. Let me look at the document more carefully for any structured data or fund family references.\n\nLet me search for \"BNY Mellon Funds\" in the document.Let me look at the \"A series of BNY\" context to understand the full company name, and also look more carefully at the document structure for COMPANYNAME. Let me also check the back cover / \"For More Information\" section as it usually has the company name there.Now I can see that:\n- The fund is \"BNY Mellon Equity Income Fund\"\n- It is a series of \"BNY Mellon Investment Funds III\"\n- Class C ticker is DQICX\n\nThe user is asking for the value of \"COMPANYNAME\" from this fund document. COMPANYNAME would be the name of the company that this fund belongs to. Let me look more carefully at the statutory/prospectus sections. Let me read the beginning of the Fund Summary section and look for the company name.\n\nActually, let me re-read. The user said \"BNY Mellon Funds\" in their query. And the document refers to:\n- \"BNY Mellon Investment Funds III\" as the trust/series\n- \"BNY Mellon Investment Adviser, Inc.\" as the investment adviser\n- \"BNY\" or \"The Bank of New York Mellon Corporation\" as the parent\n\nCOMPANYNAME could refer to:\n1. \"BNY Mellon Investment Funds III\" (the trust)\n2. \"The Bank of New York Mellon Corporation\" (the parent company)\n3. \"BNY Mellon\" or \"BNY\" (the brand)\n\nLet me search for \"COMPANYNAME\" more broadly in the entire document structure to see if it's an HTML id or attribute.Let me look more carefully. The user mentioned \"statutory\" and \"summary\" sections. Let me search for \"statutory\" in the document. Also, the value COMPANYNAME - I'm now thinking this might not be a label that literally appears in the document. Let me search for \"Statutory\" more broadly, and also check the MSFT document since it was a priority document.\n\nWait, let me also search for metadata or data dictionary type content. The user might be referring to a data extraction task where COMPANYNAME is a known field from a structured data format related to this prospectus.\n\nLet me search for anything resembling a structured data field name like \"COMPANYNAME\" or similar.Let me step back and think about this differently. \"COMPANYNAME\" is likely the name of the company/institution that this fund belongs to. In mutual fund documents, this would be the fund's corporate entity or the trust/company name.\n\nLooking at the document structure:\n- The fund is \"BNY Mellon Equity Income Fund\"\n- It's a series of \"BNY Mellon Investment Funds III\"\n- The ticker for Class C is DQICX\n- The investment adviser is \"BNY Mellon Investment Adviser, Inc.\"\n- The parent company is \"The Bank of New York Mellon Corporation\" (BNY)\n\nGiven that the user mentioned \"BNY Mellon Funds\" as the company grouping, and the statutory/trust name, COMPANYNAME is most likely \"BNY Mellon Investment Funds III\" - which is the registered investment company (the trust) of which this fund is a series.\n\nLet me look for any other place where the trust/company name is stated in the prospectus, perhaps in the SAI or the back cover. Let me also see the full For More Information section.So \"BNY Mellon Equity Income Fund\" is \"A series of BNY Mellon Investment Funds III.\" \n\nThe user mentioned \"BNY Mellon Funds\" and wants to extract COMPANYNAME. In fund documents, COMPANYNAME typically refers to the name of the investment company/trust, which is \"BNY Mellon Investment Funds III.\"\n\nBut wait - the user might also be referring to this as part of a data extraction task from a specific schema. Let me look at whether this document contains specific data tags or structured XML fields that might have a COMPANYNAME element.\n\nLet me search for \"Mellon Investment Funds\" in the document to see if it appears multiple times, and also look at the back cover more carefully.The document has the trust name as \"BNY Mellon Investment Funds III\" - this is the registered investment company under which the BNY Mellon Equity Income Fund series operates.\n\nGiven that the user's question mentions:\n- Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds\n- Extract the value for COMPANYNAME\n- Prioritize statutory, summary sections\n- Restrict to this fund and class only\n\nIn the context of mutual fund documents, COMPANYNAME would refer to the name of the investment company/trust. From the \"For More Information\" section (back cover), the fund is identified as \"A series of BNY Mellon Investment Funds III.\"\n\nThe full name would be: **BNY Mellon Investment Funds III**\n\nLet me also check if there's a more explicit reference in the earlier part of the document, like the SAI/statutory section which might explicitly state the company name.Let me search for \"BNY Mellon Investment Funds III\" as the full company name including the \"BNY\" part in the same chunk. The document has the text split across chunks - let me read the full context.\n\nChunk 615329 (around line 3458-3483) said: \"A series of BNY\" and then chunk 615330 says: \"Mellon Investment Funds III\"\n\nSo the full text is: \"A series of BNY Mellon Investment Funds III\"\n\nThis is clearly the trust/company name. In fund prospectuses, this is the registered investment company. So COMPANYNAME = \"BNY Mellon Investment Funds III\".\n\nActually, let me re-examine. The user says \"BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds.\" They mention \"BNY Mellon Funds\" as the broader entity. The document shows this fund is a series of \"BNY Mellon Investment Funds III.\"\n\nWait - let me also search for whether there's a more definitive statement in the document about what the \"Company\" is. In SEC filings (N-1A), the first page usually identifies the fund's trust name.So the fund is \"BNY Mellon Equity Income Fund\" and it's \"A series of BNY Mellon Investment Funds III.\"\n\nIn the context of fund prospectuses and SEC filings, the \"Company\" is the registered investment company under which the fund series operates. In this case, \"BNY Mellon Investment Funds III\" is the company/trust name.\n\nHowever, let me look at the first page of the prospectus more carefully to see if there's a more explicit \"Company\" reference. Let me also check for the \"statutory\" section - in N-1A filings, this is typically the \"Statutory Prospectus\" section.\n\nLet me search for \"The Bank of New York\" since that's the ultimate parent.Let me look at the complete front page of the document. The front page should state the full name of the fund and the investment company. Looking at what I've found:\n\n1. The document is a prospectus for \"BNY Mellon Equity Income Fund\" \n2. The fund is a series of \"BNY Mellon Investment Funds III\"\n3. Class C ticker is DQICX\n\nIn the context of mutual funds, the \"Company Name\" often refers to the Investment Company Act registered entity. For this fund, it's \"BNY Mellon Investment Funds III.\"\n\nBut wait - the user says \"BNY Mellon Funds\" which could refer to \"BNY Mellon Family of Funds\" or \"BNY Mellon Investment Funds III\" or just \"BNY Mellon\" as a brand.\n\nLet me think about this more carefully. The user is specifically asking about \"COMPANYNAME\" as a data extraction field from a fund document. In the mutual fund data world (e.g., Morningstar, Lipper, SEC EDGAR), COMPANYNAME typically refers to:\n1. The fund's legal corporate entity (the trust) - \"BNY Mellon Investment Funds III\"\n2. Or the fund management company - \"BNY Mellon Investment Adviser, Inc.\"\n3. Or the parent corporation - \"The Bank of New York Mellon Corporation\"\n\nGiven the user said \"of BNY Mellon Funds\" - this suggests the company/group is \"BNY Mellon Funds.\" And the statutory trust name from the document is \"BNY Mellon Investment Funds III.\"\n\nLet me look more carefully at the SAI (Statement of Additional Information) section or the \"Fund Details\" section for the formal company name.The grep is not matching from the chunk content lines after line 1000 but the content very clearly shows \"BNY Mellon Investment Funds III\" in the document. Let me look more carefully at what the original HTML might have been structured as.\n\nLet me read more of the document around the back cover area to see the full text of the \"For More Information\" section.OK, so the document clearly states: \"BNY Mellon Equity Income Fund - A series of BNY Mellon Investment Funds III.\"\n\nThe user is asking for COMPANYNAME. In the context of mutual fund documents:\n- The \"Company\" that this fund is a series of is \"BNY Mellon Investment Funds III\"\n\nBut let me think about whether there might be something else. Let me look at the very beginning of the document more carefully to see if there's a \"Statutory Prospectus\" section or similar structure.\n\nActually, let me also check the MSFT document since it was listed as a priority document too - but that's unrelated to BNY Mellon.\n\nLet me read the full front page of the prospectus again.I now have a complete picture of the document. The fund is \"BNY Mellon Equity Income Fund\" which is a series of \"BNY Mellon Investment Funds III.\"\n\nFor the field COMPANYNAME in a mutual fund context, this refers to the name of the investment company (the registered management investment company under the Investment Company Act of 1940) that the fund belongs to.\n\nIn this prospectus:\n- The fund is \"BNY Mellon Equity Income Fund\" \n- It is \"A series of BNY Mellon Investment Funds III\"\n\nSo COMPANYNAME = \"BNY Mellon Investment Funds III\"\n\nThis is the statutory/registered name of the investment company. The back cover (\"For More Information\" section) explicitly states this is the company the fund is a series of, and this is typically where you'd find the COMPANYNAME in fund documents.\n\nLet me now provide the answer.COMPANYNAME: **BNY Mellon Investment Funds III**\n\nThe document is the prospectus for the BNY Mellon Equity Income Fund (Class C, ticker DQICX), a series of BNY Mellon Investment Funds III [citation:614544], [citation:614545], [citation:615329], [citation:615330].",
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0047732696897374695,
+        "strict_correct": true,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "normalization_applied": [
+        {
+          "term": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+          "normalized": "total annual fund operating expenses"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for total annual fund operating expenses from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "gold_answer": "1.02",
+      "predicted_answer": "The user wants me to find the BNY Mellon Equity Income Fund (Class A) expense information from the fund document. The priority document mentioned is `/documents/df.html.xml`. Let me read it.The document is large. I need to search for \"BNY Mellon Equity Income Fund\" and \"Class A\" within this document. Let me first search for the relevant sections.No matches for \"BNY Mellon Equity Income Fund\". Let me try broader searches - maybe the fund name is formatted differently.I found references to BNY Mellon, but I need to find the specific fund \"BNY Mellon Equity Income Fund (Class A)\". Let me search for \"Equity Income\" specifically.Good, I can see references to \"BNY Mellon Equity Income Fund\" and it's a series of BNY Mellon Funds. Let me read the initial sections of the document where the fee table should be (around the beginning), especially chunks around the start of the document.I can see the Fund Summary section beginning around line 1060. Let me continue reading to find the fee table, especially the total annual fund operating expenses for Class A.I found the fee table. For BNY Mellon Equity Income Fund, Class A:\n\n- Total annual fund operating expenses: **1.02%**\n- Fee waiver and/or expense reimbursement: none (-)\n- Total annual fund operating expenses (after fee waiver and/or expense reimbursement): **1.02%**\n\nThe user asked for \"total annual fund operating expenses\" - this typically refers to the figure before waivers, which is 1.02%. But let me check - the table clearly shows:\n\nLine 1104: `| Total annual fund operating expenses | 1.02 | 1.81 | .80 | .75 |`\nLine 1105: `| Fee waiver and/or expense reimbursement\\*\\* | - | (.03) | (.02) | - |`\nLine 1106: `| Total annual fund operating expenses (after fee waiver and/or expense reimbursement) | 1.02 | 1.78 | .78 | .75 |`\n\nSo for Class A, both the \"total annual fund operating expenses\" (before waivers) and \"after fee waiver\" are 1.02% since there's no waiver/reimbursement for Class A.\n\nThe user said \"total annual fund operating expenses\" - the standard line item in the table is line 1104. That value for Class A is 1.02%.\n\nLet me return just the value.1.02%",
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.038461538461538464,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.07407407407407407,
+        "primary_value_match": true,
+        "token_f1": 0.005797101449275362,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-013",
+      "group": "Level1",
+      "question": "Extract the value for AUTOMATIC_INVESTMENT_ELIGIBLE from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for AUTOMATIC_INVESTMENT_ELIGIBLE from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for automatic investment eligible from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "normalization_applied": [
+        {
+          "term": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+          "normalized": "automatic investment eligible"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for automatic investment eligible from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "gold_answer": "1",
+      "predicted_answer": "The user is asking me to find information about the \"BNY Mellon Equity Income Fund (Class A)\" from the fund document (df.html.xml) that's in their knowledge base. They want the value for \"automatic investment eligible\" - just the value.\n\nLet me read the relevant document first.Let me search for \"BNY Mellon Equity Income\" and \"automatic investment\" in the document to find the relevant section.Let me search more specifically for this fund name - it might be formatted differently in the HTML. Let me search for \"Equity Income\" or \"BNY Mellon\" in the document.Let me look at the area around \"Mellon Equity Income Fund\" in the document more closely. Let me search for sections that might contain summary or statutory information about the fund, and specifically look for \"automatic investment eligible\" or similar phrasing.I see the fund document starts at line 977. This is the BNY Mellon Equity Income Fund prospectus. Let me look at the table of contents and find the summary section. Let me also search for the specific fee table or summary section that might include information about automatic investment eligibility.Let me look at the Fee table section which should be around here. I need to find data specific to Class A shares. This is the \"Fund Summary\" section. Let me look for the fee table for Class A shares.I need to find the specific information about \"automatic investment eligible\" for this fund. The fee table and summary section don't seem to contain this specific term. Let me search for \"automatic investment\" in the document more broadly and find the section that talks about this, or look for it in context of the fund's specific class.\n\nActually, let me think about what \"automatic investment eligible\" means - it's likely a field from a structured fund data table. Let me look more broadly in the document for terms like \"Automatic Asset Builder\", \"Automatic Investment Plan\" or similar.\n\nLet me search for more specific terms that might relate to automatic investment eligibility.The document is a mutual fund prospectus. It doesn't seem to have a structured data field called \"automatic investment eligible\" explicitly. Let me look further in the document for the \"Services for Fund Investors\" section which would talk about Automatic Services / Automatic Asset Builder / automatic investment plans, and see if there's any mention of eligibility for this fund.\n\nLet me look at the section around services for fund investors.This is a mutual fund prospectus document in HTML format. The user is asking about \"automatic investment eligible\" which is likely a field from a structured data source, not explicitly labeled in the prospectus text. However, the prospectus does talk about automatic investment services being available.\n\nLet me look at the \"Services for Fund Investors \u2013 Automatic Services\" section to see if there's more specific information about automatic investment eligibility, particularly for Class A shares.\n\nLet me also look in the MSFT 10Q document briefly to see if it has a table or structured data about this fund.\n\nActually, let me reconsider. The user specifically said \"fund document\" and I need to extract the value for \"automatic investment eligible.\" This sounds like it could be a field from a structured table or database, perhaps in the MSFT 10Q document. Let me check.Let me look at the \"Automatic Services\" section to see if it mentions eligibility requirements or whether automatic investment is available for this fund's Class A shares.The Automatic Services section notes: \"These services are not available for Class Y shares.\" So the services are available for Class A shares. But the user is asking for a specific field \"automatic investment eligible\" which sounds like a structured data field. Let me look at the statutory/summary sections more carefully. \n\nLet me also look at the \"Choosing a Share Class\" section which may have a table comparing the share classes with details about eligibility.Let me search for \"eligible\" in the document as it relates to automatic investment for the fund.The document doesn't have an explicit field called \"automatic investment eligible\" with a value of yes/no. This appears to be a mutual fund prospectus (the \"df\" likely stands for \"data file\" or similar).\n\nWait - let me re-read the user's request: \"Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for automatic investment eligible from the fund document.\"\n\nThis sounds like metadata/a field from a structured data source. Let me look at the beginning of the document more carefully - perhaps there's a table with fund features, or perhaps the MSFT document has related data.\n\nActually, looking at the document title \"df.html.xml\" - this might be a document filed with the SEC. Let me look at more of the document content near the beginning.\n\nLet me look at what's before line 977 to see if there's any structured fund data.The document starts at line 977 with the content. The file is an HTML document of the BNY Mellon Equity Income Fund Prospectus. It doesn't appear to have a structured field called \"automatic investment eligible.\" However, looking at the \"Automatic Services\" section (starting at line 2351), it says \"These services are not available for Class Y shares\" - which means they ARE available for Class A shares.\n\nLet me also look at the very beginning of the document (lines before 977) to see if there's something before the prospectus itself, like a table of fund features.Let me look at the complete automatic investment services section more carefully. From the document:\n\n1. In the \"Automatic Services\" section (line 2351-2355):\n   \"Buying or selling shares automatically is easy with the services described below. With each service, you select a schedule and amount, subject to certain restrictions. These services are not available for Class Y shares.\"\n\nThis is the key statement. Since Class A shares are not Class Y shares, automatic investment services ARE available for Class A shares. But the user is asking for a specific field value \"automatic investment eligible\" which is likely \"Yes\" or similar.\n\nLet me look more broadly across the document for any structured table with fund characteristics that might contain this field.I'm not finding a structured field called \"automatic investment eligible\" in the prospectus. The document is a prospectus (HTML) for the BNY Mellon Equity Income Fund. Let me think about this differently.\n\nThe user is asking about a specific data field \"automatic investment eligible\" from \"the fund document.\" This could be a field from a structured database or a data table. Let me check the MSFT document as well - it's a 10Q filing which might contain a table listing mutual fund holdings or investments.\n\nActually, looking at the workspace, we have:\n1. `/documents/df.html.xml` - The BNY Mellon Equity Income Fund prospectus\n2. `/documents/MSFT_FY26Q1_10Q.docx.xml` - A Microsoft 10Q filing\n\nThe \"df.html\" likely stands for something related to the fund document. Let me look at the MSFT document to see if it references this fund with structured data fields.\n\nLet me search more broadly for any structured data in the document.The grep for \"yes\" with case-insensitive matching returned no matches. Let me try different patterns to find structured data in the document.The document doesn't seem to contain a structured field called \"automatic investment eligible.\" However, based on the prospectus content, I've gathered:\n\n1. The \"Automatic Services\" section (line 2351-2355) states: \"These services are not available for Class Y shares.\" This implies automatic investment services ARE available for Class A shares (the default).\n\n2. \"You may purchase additional shares by selecting one of the automatic investment services made available to the fund on your account application or service application\" (line 2033-2034) - this is in the general buying section that applies to all share classes except where noted otherwise.\n\nSo the answer would be \"Yes\" - Class A shares are eligible for automatic investment. But let me verify this once more by looking at the complete buying section to see if there are any Class A-specific restrictions on automatic investment.OK, I've searched extensively through the document. The document is a mutual fund prospectus (HTML format) for the BNY Mellon Equity Income Fund. The field \"automatic investment eligible\" is not explicitly present as a structured field in this document. However, based on the prospectus content:\n\n1. The \"Automatic Services\" section explicitly states: \"These services are not available for Class Y shares\" - which means they ARE available for other classes including Class A.\n2. The buying section says: \"You may purchase additional shares by selecting one of the automatic investment services made available to the fund\" - this is in the general section that applies to all share classes unless noted.\n\nSince the document is a prospectus and not a structured database, the field \"automatic investment eligible\" isn't explicitly labeled. But the prospectus clearly indicates that automatic investment services are available for Class A shares (the only exclusion is Class Y).\n\nLet me see the MSFT 10Q document too, to see if it has structured mutual fund data.The MSFT document is a Microsoft 10Q filing, not related to the BNY Mellon fund. The only document that contains the BNY Mellon fund data is `df.html.xml`, which is a prospectus.\n\nI've thoroughly searched the document. The term \"automatic investment eligible\" as a specific structured data field is not present in the document. The prospectus describes the availability of automatic investment services (Automatic Asset Builder, Payroll Savings Plan, etc.) in the \"Automatic Services\" section, and clearly states:\n\n- \"These services are not available for Class Y shares\" [citation:615048] - line 2355, chunk 615048\n\nThis means automatic investment services ARE available for Class A shares, since Class A is not Class Y.\n\nThe value is implicitly \"Yes\" based on the exclusion of only Class Y shares from automatic services.\n\nLet me provide the answer.Yes",
+      "metrics": {
+        "off_topic_document_reference": true,
+        "answer_clean": false,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.025,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.04878048780487806,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-005",
+      "group": "Level1",
+      "question": "Extract the value for SWP_MINIMUM from the fund document. Prioritize these sections: statutory. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for SWP_MINIMUM from the fund document. Prioritize these sections: statutory. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for swp minimum from the fund document. Prioritize these sections: statutory. Return only the final value. Restrict extraction to this fund and class only.",
+      "normalization_applied": [
+        {
+          "term": "SWP_MINIMUM",
+          "normalized": "swp minimum"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for swp minimum from the fund document. Prioritize these sections: statutory. Return only the final value. Restrict extraction to this fund and class only.",
+      "gold_answer": "50",
+      "predicted_answer": "The user wants me to find the BNY Mellon Equity Income Fund (Class I) in the fund document and extract the \"swp minimum\" value. Let me look at the priority document /documents/df.html.xml which is mentioned as relevant. Let me read it first.The document is quite large with many chunks. Let me search for \"BNY Mellon Equity Income\" and \"swp minimum\" to narrow this down.The grep didn't find exact matches. This could be because the content is within XML chunks with CDATA sections. Let me search for partial terms. Let me try \"Equity Income\" and \"SWP\" separately since the text might be structured differently in the HTML document.\"SWP\" didn't match at all. Let me try \"swp\" (lowercase) or \"systematic withdrawal\" as it might be spelled out. Also, let me search for the specific fund class \"Class I\".I see the fund is BNY Mellon Equity Income Fund and there are Class I shares. The user wants the \"swp minimum\" value. SWP stands for \"Systematic Withdrawal Plan.\" Let me look for the systematic withdrawal plan minimum specifically for Class I shares of this fund. \n\nLet me look at chunk 614876, 615059. Let me read around the areas mentioning systematic withdrawal.I found the \"Automatic Withdrawal Plan\" section which mentions a minimum of $50 for withdrawals. But the user is asking for \"swp minimum\" which likely stands for \"Systematic Withdrawal Plan minimum.\"\n\nLet me look at the Statutory section/SAI (Statement of Additional Information) which the user mentioned to prioritize. Let me search for the SAI section of the document, as the \"statutory\" sections typically refer to the statutory prospectus or SAI information.The user asked me to prioritize \"statutory\" sections. Let me look for the statutory prospectus section. The document is a prospectus for the BNY Mellon Equity Income Fund. Let me search for where the Class I shares specific details are, particularly the minimums and the Systematic Withdrawal Plan (SWP) minimum.\n\nLet me read around the area where the Automatic Withdrawal Plan is described, and also look at the \"How to Buy Shares\" section which discusses minimums. Let me also look at the beginning of the document to understand its structure.\n\nActually, let me search for \"Automatic Withdrawal Plan\" more specifically to find its minimum.Let me look at the entire document structure to find the \"Statutory\" section or the SAI section. The document is a prospectus. Let me also look at what's around the area where \"Automatic Withdrawal Plan\" is mentioned with the minimum of $50, and check if that's the SWP minimum.\n\nActually, SWP = Systematic Withdrawal Plan, which is the same as \"Automatic Withdrawal Plan\" in BNY Mellon's terminology. The document says:\n\n\"Automatic Withdrawal Plan permits you to make withdrawals (minimum of $50) on a specific day each month, quarter or semi-annual or annual period, provided your account balance is at least $5,000.\"\n\nBut the user asked to restrict extraction to \"this fund and class only\" - the BNY Mellon Equity Income Fund (Class I). Let me check if the $50 minimum is specific to Class I or if it applies to all classes. The Automatic Withdrawal Plan section appears to apply generally across classes.\n\nLet me search for whether there's a separate section for Class I shares regarding the SWP minimum. Also, the user asked to prioritize \"statutory\" sections. Let me look at the SAI (Statement of Additional Information) part of the document, which would be later in the document.\n\nLet me look for where the SAI begins in this document.The actual SAI is referenced but not included in this document. The document is a prospectus. Let me look at the \"Statutory Prospectus\" which is actually the main part of the document. The Beginning of the statutory prospectus should be around the beginning of the document. Let me read the beginning.\n\nLet me look at the table of contents or beginning sections.Let me read the beginning of the document content (from line 977 where the chunks start) and the first few chunks to understand the document structure, particularly to find the \"Statutory\" section.Now I have a better understanding of the document. The \"Statutory\" section likely refers to the \"Statutory Prospectus\" which is the standard prospectus content. The document is a prospectus for the BNY Mellon Equity Income Fund. Let me find the section about \"Services for Fund Investors\" which likely contains the Automatic Withdrawal Plan / Systematic Withdrawal Plan information.\n\nActually, let me look at the section about \"Services for Fund Investors\" which was listed in the table of contents. Let me also search for where the specific Class I share information is presented regarding dividends and withdrawal plans.\n\nLet me look at the \"Services for Fund Investors\" section around the area where the \"Automatic Withdrawal Plan\" is discussed. I already found this at lines 2392-2396 which says \"permits you to make withdrawals (minimum of $50) on a specific day each month...\"\n\nThe user asked for \"swp minimum\" which stands for \"Systematic Withdrawal Plan minimum.\" I found that the Automatic Withdrawal Plan (which is the same thing as SWP) has a minimum of $50 per withdrawal. Let me also check if there's a specific reference to SWP minimum in the fee table or elsewhere specific to Class I.\n\nLet me also look at the \"Choosing a Share Class\" section that discusses Class I shares to see if there's any specific SWP-related info.Let me now look at the \"Services for Fund Investors\" section which would include the Automatic Withdrawal Plan (SWP) details. That section was around line 2300-2500 range. Let me check it more carefully.Let me continue reading a few more lines to get the Automatic Withdrawal Plan section.The \"Automatic Withdrawal Plan\" section is the equivalent of a Systematic Withdrawal Plan (SWP). It says the minimum withdrawal is $50. This is a general provision that applies across share classes.\n\nHowever, the user specifically asked for the \"swp minimum\" from this fund and class (Class I). Let me also check the fee table / shareholder fees table that shows Class I's specific information to see if there's a specific SWP minimum listed there. Let me look at the fee table section again around lines 1084-1092.I don't see an \"SWP minimum\" or \"Systematic Withdrawal Plan minimum\" in the shareholder fees table. The shareholder fees table only shows sales charges and CDSC.\n\nThe \"Automatic Withdrawal Plan\" (which is the SWP) mentions a minimum of $50 per withdrawal, with a minimum account balance of $5,000.\n\nLet me also search for \"swp\" or \"SWP\" specifically in the MSFT document to see if there's something there, though it seems unlikely.\n\nActually, let me look at the duplicate section of the document (around line 3500+) which seems to be a second copy of the prospectus content.Alright, so the Automatic Withdrawal Plan (which is the Systematic Withdrawal Plan / SWP) consistently mentions a minimum of **$50** per withdrawal across both copies of the prospectus. This is a general provision that applies to all share classes (except Class Y as noted earlier: \"These services are not available for Class Y shares\").\n\nThe user asked for the \"swp minimum\" value for the BNY Mellon Equity Income Fund (Class I). Based on the prospectus content, the SWP (Automatic Withdrawal Plan) minimum withdrawal amount is $50. Since Class Y shares are the only ones excluded from these automatic services, and Class I is explicitly available for these services, the $50 minimum applies to Class I.\n\nLet me also check if there's a second copy of the fund summary with the statutory prospectus section that might have different information. Let me look at the \"Statutory\" section mentioned by the user. Actually, looking again at the table of contents:\n\nThe document seems to contain the full prospectus which includes:\n1. Fund Summary (pages 1-4)\n2. Fund Details (pages 5-8)\n3. Shareholder Guide (pages 9-20)\n4. Financial Highlights (page 21)\n5. Appendix (A-1)\n\nThe \"statutory\" section the user mentioned likely refers to the Statutory Prospectus (the formal legal prospectus sections). The SWP minimum of $50 is found in the \"Services for Fund Investors\" section of the Shareholder Guide.\n\nLet me also verify if there's any specific Class I minimum mentioned for SWP that might be different from the general $50.The Automatic Withdrawal Plan (Systematic Withdrawal Plan / SWP) for the BNY Mellon Equity Income Fund states a minimum withdrawal of **$50**, with the requirement that the account balance be at least $5,000 [citation:615059], [citation:615060]. This applies to Class I shares (Class Y is the only class excluded from automatic services) [citation:615048].\n\n$50",
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-010",
+      "group": "Level1",
+      "question": "Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "normalization_applied": [],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "gold_answer": "BNY Mellon Investment Adviser, Inc.",
+      "predicted_answer": "The user wants me to find the BNY Mellon Equity Income Fund (Class I) in the fund document (df.html.xml) and extract the value for COMPANYNAME. Let me read the document first.The document is large. Let me search for \"BNY Mellon Equity Income Fund\" and \"COMPANYNAME\" within the document.Let me search more broadly. The document might contain variations of \"BNY\" or \"Equity Income\". Let me search for \"Equity Income\" and also search for \"COMPANY\" to see what's in the document.\n\nLet me also search for \"Class I\" or the fund name more broadly.I can see \"BNY Mellon Equity Income Fund\" is mentioned, and there's a prospectus. I need to find the COMPANYNAME value specifically for this fund (Class I). Let me search for \"Class I\" near \"Equity Income\" and also look at the section that mentions the fund more specifically. Let me also search for a broader range of terms to locate the statutory/summary section.\n\nLet me also look at the chunks near the grep matches to understand the document structure better. The first match at line 980 mentions \"Mellon Equity Income Fund\" - let me read around that area.I see the document contains a prospectus for the BNY Mellon Equity Income Fund with Class I (ticker: DQIRX). The user is asking for the COMPANYNAME value. Let me search for \"COMPANYNAME\" more specifically - maybe it's in a table or structured data section. Let me also look for \"Investment Adviser\" or \"company name\" or check the statutory and summary sections more carefully.\n\nLet me search for phrases like \"company\" or look at the statutory/summary sections of the document. Let me also check what the full document content looks like at the beginning of the prospectus.Let me look at the Fund Summary section more closely to see if there's a COMPANYNAME field. Let me read the chunks around the Fund Summary area (lines around 1005-1070, which would be chunks 614548-614557).Let me continue reading to see the fee table and any potential COMPANYNAME field.\n\nActually, wait - the user asked \"Extract the value for COMPANYNAME\". This sounds like it might be a specific field name used in a structured data representation of the fund. Let me search for \"COMPANY\" as a field/label, or maybe the document is structured with XML-like fields. Let me search more specifically.There's no explicit \"COMPANYNAME\" field in this document. Let me look at the other document (MSFT_FY26Q1_10Q.docx.xml) since it was also in the priority documents and might be relevant.\n\nActually, the user's instruction says \"Use only the pinned document context\" which means df.html.xml. Let me search more comprehensively. Maybe COMPANYNAME refers to the investment adviser company name. Let me look at the management section.\n\nLet me also check the beginning of the MSFT document just in case.\n\nActually, wait. Let me re-read the user's request carefully: \"Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary.\"\n\nThis might be referencing a specific data field labeled \"COMPANYNAME\" that appears in a structured data format within the document. Let me look at the document more carefully for XML-like field names or table headers.\n\nLet me also try to search for \"Company Name\" (with space) or \"company_name\".I'm not finding an explicit \"COMPANYNAME\" field in this document. Let me also check the MSFT document since it's in the priority documents. But first, let me think about what COMPANYNAME might refer to in the context of a fund prospectus.\n\nIn fund documents, COMPANYNAME typically refers to the company that sponsors/manages the fund - i.e., the investment adviser or the trust/company name. For the BNY Mellon Equity Income Fund (Class I), this could be:\n\n1. \"BNY Mellon Investment Adviser, Inc.\" (the investment adviser)\n2. \"BNY Mellon\" or \"BNY Mellon Funds\" (the fund family)\n3. \"The Bank of New York Mellon Corporation\" (the parent company)\n\nBut let me search more broadly for structured field labels in the document. Maybe the document has hidden fields or structured data sections.The user is asking for \"COMPANYNAME\" value. This could be a specific data field from a structured data format. Let me search more comprehensively. Maybe it's from a different part of the document, or let me check the MSFT document too. Let me also search the entire document for uppercase fields or label patterns.\n\nLet me also search for \"Company\" as a standalone word or label.Let me check the other document (MSFT) to see if it has COMPANYNAME. And let me also try to look at the \"Financial Highlights\" and \"Fund Details\" sections of this document, as they might contain more structured data.\n\nActually, wait. Let me look more carefully at the document. The user said \"COMPANYNAME\" - this could be a field from the original HTML that was converted. Let me search for it in the MSFT document too.The COMPANYNAME field doesn't appear anywhere in the knowledge base. Let me look at this more carefully. It's possible that COMPANYNAME refers to the name of the company that manages or offers the fund. In fund documents, the \"company\" could be:\n\n1. The fund series - \"BNY Mellon Funds\" or \"BNY Mellon Family of Funds\"\n2. The investment adviser - \"BNY Mellon Investment Adviser, Inc.\"\n3. The parent company - \"The Bank of New York Mellon Corporation\"\n4. The distributor - \"BNY Mellon Securities Corporation\"\n\nLet me also check more of the document, especially the statutory/prospectus sections, particularly looking at the \"Fund Details\" section and the \"Management\" section to find a clear company name.\n\nActually, let me look for \"BNY Mellon Funds\" or \"BNY Mellon Family of Funds\" in a section heading context, as that would typically be the \"company name\" in the context of a fund prospectus. The prospectus title says \"BNY Mellon Equity Income Fund\" which is \"A series of BNY Mellon Funds\" as indicated in chunk 615329.\n\nLet me look at that chunk.The document mentions \"The Bank of New York Mellon Corporation (BNY)\" as the parent company. Let me also check the section near the beginning of the document that might have the fund's full name and company.\n\nLet me look at the chunk that says \"A series of BNY Mellon Funds\" which was chunk 615329.Let me look at the back of the prospectus (chunk 615329 area) for the \"For More Information\" section which typically lists the fund's full legal name and registration details.So the fund is \"BNY Mellon Equity Income Fund\" - \"A series of BNY Mellon Investment Funds III\". \n\nI'm still not finding a specific label \"COMPANYNAME\" anywhere in the document. Let me look more carefully at what the user might be asking for. In many mutual fund documents, COMPANYNAME might be the name of the company offering the fund - this could be the investment adviser or the trust company.\n\nLet me look at the beginning and end sections of the prospectus more carefully, especially the \"For More Information\" sections, which usually contain the full legal information.Let me check the very beginning of the document content more carefully. The document has images, but let me see what text is available around the prospectus heading.Let me re-examine. The user asked for COMPANYNAME. In mutual fund prospectuses, the notion of a \"company name\" can vary. Let me look at the very beginning of the document, before the prospectus content starts.Let me look at more of the document to find the \"statutory\" section which might contain the legal company name. Let me search for text like \"The Bank of New York\" or look at the management section more carefully. Also let me see if the back cover has the \"company name\" information.\n\nActually, let me look at the entire document size and check the end of the document as well.Let me also look at the end of the document.Ok, the document ends around line 6148. Let me read the remaining lines.OK, so the document has an SEC file number 811-00524 and is from \u00a9 2024 BNY Mellon Securities Corporation.\n\nLet me now also look at the \"statutory\" section near the beginning of the document, around the area where the \"Fund Summary\" starts. Let me also look at the \"Fund Details\" section to find the management/adviser information which would contain the company name.\n\nActually, let me look at what I have comprehensively. The user is asking for \"COMPANYNAME\" from a BNY Mellon fund document. This is a specific field name. Let me search for it more creatively.\n\nLet me also look at the first part of the document to understand the structure - from the beginning of the content section.I've searched exhaustively through the document. There is no explicit field named \"COMPANYNAME\" in the document. The user asked for COMPANYNAME which could mean the name of the company that manages the fund. \n\nIn the context of the BNY Mellon Equity Income Fund (Class I), the most relevant \"company name\" could be:\n- The fund series: \"BNY Mellon Investment Funds III\" (the fund is a series of this trust)\n- The investment adviser: \"BNY Mellon Investment Adviser, Inc.\"\n- The parent company: \"The Bank of New York Mellon Corporation\" (BNY)\n- The distributor: \"BNY Mellon Securities Corporation\"\n\nLet me also search for something more specific. Let me search for any HTML-like attributes or data fields.There is no explicit field named \"COMPANYNAME\" in this document. The document is a prospectus HTML converted to text/XML format. Let me think about what COMPANYNAME typically means in a fund context.\n\nLooking at the prospectus document, the fund is:\n- \"BNY Mellon Equity Income Fund\" - the fund name\n- \"A series of BNY Mellon Investment Funds III\" - the trust/series\n- Investment Adviser: \"BNY Mellon Investment Adviser, Inc.\"\n- Parent company: \"The Bank of New York Mellon Corporation (BNY)\"\n- Distributor: \"BNY Mellon Securities Corporation\"\n\nSince the user asked about a specific field \"COMPANYNAME\" and said \"Prioritize these sections: statutory, summary\" - in mutual fund statutory prospectuses and summary prospectuses, the company name typically refers to the investment company or trust that issues the fund. \n\nFor the BNY Mellon Equity Income Fund (Class I), looking at the prospectus, the opening states it's \"A series of BNY Mellon Investment Funds III\". This would typically be the COMPANYNAME - the name of the issuing investment company/trust.\n\nHowever, since I cannot find an explicit \"COMPANYNAME\" field, and the user has given strict instructions to return N/A if not found, I should think harder. Let me search for whether there's something I'm missing by looking at the whole document structure one more time.The search_surfsense_docs results don't have any relevant information about COMPANYNAME. Let me think about this differently.\n\nThe user is asking me to extract the value for \"COMPANYNAME\" from the fund document. This might be a field in a structured data context. Since I can't find a literal \"COMPANYNAME\" field, let me consider what COMPANYNAME would mean in the context of a mutual fund:\n\nIn mutual fund context, the \"company name\" is typically the name of the investment company that issues the fund shares. For \"BNY Mellon Equity Income Fund - A series of BNY Mellon Investment Funds III\", the company name would be \"BNY Mellon Investment Funds III\" (the trust/issuing company).\n\nHowever, since the user is very specific about the field name \"COMPANYNAME\" and I cannot find this exact field name in the document, I should return N/A as instructed.\n\nWait, let me reconsider. The user said this is a BNY Mellon fund document. Let me look at the document more carefully. Perhaps COMPANYNAME refers to the name of the company managing the fund, which from the document is \"BNY Mellon Investment Adviser, Inc.\"\n\nBut actually, the user specifically asked for a field called \"COMPANYNAME\". Since I can't find it anywhere, I should return N/A.\n\nActually, let me re-read the instructions carefully: \"Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only. Final answer now. Return only one value with unit. Use only the pinned document context and search_surfsense_docs. Do not ask follow-up questions. Do not suggest web search. If the value is not found, return exactly N/A.\"\n\nI've searched thoroughly. The document is a prospectus HTML file for BNY Mellon Equity Income Fund. There is no literal \"COMPANYNAME\" field or label in this document. Per the user's explicit instruction: \"If the value is not found, return exactly N/A.\"\n\nN/AN/A",
+      "metrics": {
+        "off_topic_document_reference": true,
+        "answer_clean": false,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0048543689320388345,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    },
+    {
+      "id": "L1-011",
+      "group": "Level1",
+      "question": "Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class C"
+      },
+      "normalized_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Extract the value for minimum subsequent investment amount from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "normalization_applied": [
+        {
+          "term": "AIP_SUBAMOUNT",
+          "normalized": "minimum subsequent investment amount"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Extract the value for minimum subsequent investment amount from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.",
+      "gold_answer": "100",
+      "predicted_answer": "The user wants me to find the minimum subsequent investment amount for the BNY Mellon Equity Income Fund (Class C) from the fund document (df.html.xml). Let me read this document to find the relevant information.The file is quite large. Let me search for \"Equity Income\" and \"Class C\" and \"subsequent investment\" to find the right section.The grep results show that the general rule for non-Class Y shares is minimum initial investment $1,000 and minimum subsequent investment $100. But I need to verify this applies specifically to Class C shares of the BNY Mellon Equity Income Fund. Let me check more carefully.\n\nLet me look at the context around the fund to find the specific class information. Let me read the Statutory/Summary sections around the \"Equity Income Fund\" mentions to find the Class C specific information.So the Fund Summary section states: \"In general, for each share class, other than Class Y, the fund's minimum initial investment is $1,000 and the minimum subsequent investment is $100.\"\n\nClass C is one of the listed share classes (Ticker DQICX). Since it's not Class Y, this general rule applies. The minimum subsequent investment for Class C is $100.\n\nLet me also check the \"Fund Details\" section (later in the document) to see if there's a separate section about minimums for specific classes, including any exceptions for Class C.Let me look at the \"Fund Details\" section around line 2020-2050 where there might be details about minimums for different classes.Both the Fund Summary (Fund Summary section, around line 1301) and the Fund Details section (around line 2037) state the same thing:\n\nFor the BNY Mellon Equity Income Fund:\n- For each share class other than Class Y: minimum initial investment is $1,000 and minimum subsequent investment is $100\n- For Class Y: minimum initial investment is $1,000,000 with no minimum subsequent investment\n\nClass C is listed as one of the share classes (ticker DQICX) and is not Class Y, so the general rule applies. The minimum subsequent investment amount for Class C is $100. There are no exceptions listed for Class C specifically.\n\nThe answer is $100.$100",
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": true,
+        "lenient_correct": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

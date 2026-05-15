@@ -102,6 +102,7 @@ from .report import create_generate_report_tool
 from .resume import create_generate_resume_tool
 from .scrape_webpage import create_scrape_webpage_tool
 from .search_surfsense_docs import create_search_surfsense_docs_tool
+from .source_verbatim import create_source_verbatim_tool
 from .teams import (
     create_list_teams_channels_tool,
     create_read_teams_messages_tool,
@@ -244,6 +245,12 @@ BUILTIN_TOOLS: list[ToolDefinition] = [
             db_session=deps["db_session"],
         ),
         requires=["db_session"],
+    ),
+    ToolDefinition(
+        name="source-verbatim-match",
+        description="Normalize final answers to exact source spans and return start/end offsets",
+        factory=lambda deps: create_source_verbatim_tool(),
+        requires=[],
     ),
     # =========================================================================
     # SERVICE ACCOUNT DISCOVERY

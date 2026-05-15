@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>df Q&A Sidebar (5Q)</title>
+  <style>
+    body { font-family: Inter, Arial, sans-serif; margin: 0; padding: 12px; background: #121a2c; color: #dbe5ff; }
+    h2 { margin: 0 0 12px; font-size: 16px; }
+    .hint { font-size: 12px; color: #9fb5ff; margin-bottom: 10px; }
+    .qa-card { border: 1px solid #2c395a; border-radius: 8px; padding: 10px; margin-bottom: 10px; background: #10192b; }
+    .meta { color: #9fb5ff; font-size: 12px; margin-bottom: 6px; }
+    .q, .a { margin-bottom: 6px; font-size: 13px; line-height: 1.35; }
+    .jump { color: #70e1ff; text-decoration: none; font-size: 13px; }
+    .jump:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h2>Q&A Linked List (5 questions)</h2>
+  <div class="hint">Pred is raw model output. Highlight is benchmark GOLD evidence text in your original df.html clone.</div>
+  <div class="qa-card">
+  <div class="meta">L1-006</div>
+  <div class="q"><b>Q (df_qa.json):</b> Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value.</div>
+  <div class="q"><b>Effective query:</b> Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.</div>
+  <div class="a"><b>Pred (raw model):</b> no</div>
+  <div class="a"><b>Gold:</b> Yes</div>
+  <div><a class="jump" target="mainFrame" href="df_marked_5q.html#match-L1-006-001">Go to GOLD evidence highlight</a></div>
+</div><div class="qa-card">
+  <div class="meta">L1-003</div>
+  <div class="q"><b>Q (df_qa.json):</b> Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.</div>
+  <div class="q"><b>Effective query:</b> Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.</div>
+  <div class="a"><b>Pred (raw model):</b> 78%</div>
+  <div class="a"><b>Gold:</b> 0.8</div>
+  <div><a class="jump" target="mainFrame" href="df_marked_5q.html#match-L1-003-002">Go to GOLD evidence highlight</a></div>
+</div><div class="qa-card">
+  <div class="meta">L17-002</div>
+  <div class="q"><b>Q (df_qa.json):</b> Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value.</div>
+  <div class="q"><b>Effective query:</b> Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.</div>
+  <div class="a"><b>Pred (raw model):</b> no</div>
+  <div class="a"><b>Gold:</b> 12/31/2023</div>
+  <div><a class="jump" target="mainFrame" href="df_marked_5q.html#match-L17-002-003">Go to GOLD evidence highlight</a></div>
+</div><div class="qa-card">
+  <div class="meta">L1-011</div>
+  <div class="q"><b>Q (df_qa.json):</b> Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value.</div>
+  <div class="q"><b>Effective query:</b> Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Restrict extraction to this fund and class only.</div>
+  <div class="a"><b>Pred (raw model):</b> no</div>
+  <div class="a"><b>Gold:</b> 100</div>
+  <div><a class="jump" target="mainFrame" href="df_marked_5q.html#match-L1-011-004">Go to GOLD evidence highlight</a></div>
+</div><div class="qa-card">
+  <div class="meta">L1-003</div>
+  <div class="q"><b>Q (df_qa.json):</b> Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value.</div>
+  <div class="q"><b>Effective query:</b> Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Restrict extraction to this fund and class only.</div>
+  <div class="a"><b>Pred (raw model):</b> no</div>
+  <div class="a"><b>Gold:</b> 0.75</div>
+  <div><a class="jump" target="mainFrame" href="df_marked_5q.html#match-L1-003-005">Go to GOLD evidence highlight</a></div>
+</div>
+</body>
+</html>

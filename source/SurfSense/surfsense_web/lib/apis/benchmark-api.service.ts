@@ -21,6 +21,9 @@ class BenchmarkApiService {
 		const formData = new FormData();
 		formData.append("benchmark_file", parsed.data.benchmark_file);
 		formData.append("search_space_id", String(parsed.data.search_space_id));
+		if (parsed.data.benchmark_document_id) {
+			formData.append("benchmark_document_id", String(parsed.data.benchmark_document_id));
+		}
 		if (parsed.data.source_doc_path) formData.append("source_doc_path", parsed.data.source_doc_path);
 		formData.append("etl_services", JSON.stringify(parsed.data.etl_services));
 		formData.append("chunking_strategies", JSON.stringify(parsed.data.chunking_strategies));

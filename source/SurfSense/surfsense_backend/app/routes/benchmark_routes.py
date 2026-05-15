@@ -16,10 +16,10 @@ from urllib.parse import urlparse
 import redis as _redis_lib
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile, WebSocket, WebSocketDisconnect
 from pydantic import BaseModel, Field
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db import Document, Permission, User, get_async_session
+from app.db import BenchmarkData, Document, Permission, User, get_async_session
 from app.users import current_active_user
 from app.utils.rbac import check_permission
 
@@ -1595,6 +1595,7 @@ async def create_benchmark_job(
     request: Request,
     benchmark_file: UploadFile = File(...),
     search_space_id: int = Form(...),
+    benchmark_document_id: int | None = Form(None),
     source_doc_path: str | None = Form(None),
     etl_services: str = Form("DOCLING"),
     chunking_strategies: str = Form("chunk_text,sandwitch_chunk"),
@@ -1655,6 +1656,60 @@ async def create_benchmark_job(
 
     content = await benchmark_file.read()
     await asyncio.to_thread(benchmark_file_path.write_bytes, content)
+
+    if benchmark_document_id is not None:
+        result = await session.execute(select(Document).filter(Document.id == benchmark_document_id))
+        document = result.scalars().first()
+
+        if not document:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Document with id {benchmark_document_id} not found",
+            )
+
+        if document.search_space_id != search_space_id:
+            raise HTTPException(
+                status_code=400,
+                detail="benchmark_document_id does not belong to the provided search_space_id",
+            )
+
+        await check_permission(
+            session,
+            user,
+            document.search_space_id,
+            Permission.DOCUMENTS_UPDATE.value,
+            "You don't have permission to associate benchmark datasets with this document",
+        )
+
+        try:
+            dataset_content = content.decode("utf-8")
+        except UnicodeDecodeError as decode_error:
+            raise HTTPException(
+                status_code=400,
+                detail="benchmark_file must be UTF-8 text (JSON)",
+            ) from decode_error
+
+        max_task_num_result = await session.execute(
+            select(func.max(BenchmarkData.task_num)).where(
+                BenchmarkData.doc_id == benchmark_document_id,
+                BenchmarkData.task_type == "benchmark_job",
+            )
+        )
+        next_task_num = int(max_task_num_result.scalar() or 0) + 1
+
+        benchmark_row = BenchmarkData(
+            doc_id=benchmark_document_id,
+            task_type="benchmark_job",
+            task_num=next_task_num,
+            created_date=datetime.now(UTC),
+            dataset_filename=benchmark_file.filename or f"benchmark-job-{job_id}.json",
+            dataset_content=dataset_content,
+            dataset_mime_type=benchmark_file.content_type,
+            dataset_size_bytes=len(content),
+        )
+        session.add(benchmark_row)
+        await session.flush()
+        await session.commit()
 
     initial_job: dict[str, Any] = {
         "job_id": job_id,

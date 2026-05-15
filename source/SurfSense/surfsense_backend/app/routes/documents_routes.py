@@ -200,6 +200,7 @@ async def create_documents_file_upload(
     from pathlib import PurePosixPath
 
     from app.db import DocumentStatus
+    from app.etl_pipeline.file_classifier import FileCategory, classify_file
     from app.etl_pipeline.etl_document import ProcessingMode
     from app.tasks.document_processors.base import (
         check_document_by_unique_identifier,
@@ -496,9 +497,17 @@ async def create_documents_file_upload(
             try:
                 file_stem, file_ext = os.path.splitext(filename)
                 file_suffix = PurePosixPath(filename).suffix.lower()
+                file_category = classify_file(filename)
                 file_variant_specs: list[dict[str, Any]] = []
                 for spec in variant_specs:
                     variant_etl_service = str(spec.get("etl_service") or resolved_etl_service)
+                    if file_category in {
+                        FileCategory.PLAINTEXT,
+                        FileCategory.AUDIO,
+                        FileCategory.DIRECT_CONVERT,
+                    }:
+                        file_variant_specs.append(spec)
+                        continue
                     supported_exts = get_document_extensions_for_service(variant_etl_service)
                     if file_suffix and file_suffix not in supported_exts:
                         logger.info(

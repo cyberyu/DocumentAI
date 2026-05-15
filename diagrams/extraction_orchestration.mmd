@@ -3,21 +3,53 @@ sequenceDiagram
     autonumber
     participant U as User
     participant API as stream_new_chat
-    participant F as create_surfsense_deep_agent
-    participant R as Tools Registry
-    participant A as LangChain/LangGraph Agent
+    participant F as create_deep_extraction_agent
+    participant C as Connector/Doc type lookup
+    participant R as Tool setup
+    participant A as Main chat agent (LangChain/LangGraph)
+    participant SD as search_surfsense_docs tool
+    participant RF as read_file tool
+    participant FG as glob/grep/ls tools
+    participant WS as web_search tool
     participant SW as scrape_webpage tool
+    participant GR as generate_report tool
     participant UM as update_memory tool
     participant ME as memory_extraction (background)
     participant DB as Postgres/SearchSpace
 
     U->>API: Send chat message
     API->>F: Build agent for turn
+    F->>C: Find available connectors and document types
+    C-->>F: available_connectors + available_document_types
     F->>R: build_tools_async(dependencies)
     R-->>F: Built-in tools + MCP tools
     F->>A: create_agent(llm, tools, middleware, checkpointer)
 
     API->>A: astream_events(input, config, context)
+
+    rect rgb(219, 234, 254)
+        A->>SD: on_tool_start: search_surfsense_docs(query)
+        SD-->>A: Knowledge hits + citations
+        A-->>API: on_tool_end + tool output
+    end
+
+    rect rgb(254, 243, 199)
+        A->>RF: on_tool_start: read_file(path)
+        RF-->>A: File content snippets
+        A-->>API: on_tool_end + tool output
+    end
+
+    rect rgb(254, 226, 226)
+        A->>FG: on_tool_start: glob/grep/ls(...)
+        FG-->>A: Matching files/lines/folders
+        A-->>API: on_tool_end + tool output
+    end
+
+    rect rgb(220, 252, 231)
+        A->>WS: on_tool_start: web_search(query)
+        WS-->>A: External results
+        A-->>API: on_tool_end + tool output
+    end
 
     alt Model decides web/content extraction needed
         A->>SW: on_tool_start: scrape_webpage(url,...)
@@ -25,15 +57,21 @@ sequenceDiagram
         A-->>API: on_tool_end + tool output
     end
 
+    rect rgb(237, 233, 254)
+        A->>GR: on_tool_start: generate_report(...)
+        GR-->>A: Report id/status
+        A-->>API: on_tool_end + tool output
+    end
+
     alt Model decides explicit memory save
         A->>UM: on_tool_start: update_memory(updated_memory)
-        UM->>DB: Persist user/team memory
+        UM->>DB: Save user/team memory
         DB-->>UM: Commit result
         UM-->>A: status=ok/error
         A-->>API: on_tool_end(update_memory)
     else No explicit update_memory call
         API->>ME: extract_and_save_memory/team_memory (background)
-        ME->>DB: Load current memory + persist merged rewrite
+        ME->>DB: Load current memory + save merged update
         DB-->>ME: Commit/no-op
         ME-->>API: done (fire-and-forget)
     end

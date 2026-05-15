@@ -1,0 +1,1138 @@
+{
+  "summary": {
+    "total": 32,
+    "group_counts": {
+      "Level1": 16,
+      "Level17": 16
+    },
+    "sanitized_questions": true,
+    "sanitized_source_file": "RFID3142960_gt.json",
+    "sanitized_question_count": 32,
+    "santic_rewritten": true,
+    "santic_source_file": "df_qa.json",
+    "santic_output_file": "df_santic_qa.json",
+    "santic_unit_instruction_patch": true,
+    "numeric_no_unit_instruction_count": 25,
+    "numeric_with_unit_instruction_count": 0
+  },
+  "qa_pairs": [
+    {
+      "id": "L1-003",
+      "name": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class I",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "0.8",
+      "evidence": {
+        "text": ".80",
+        "start_offset": 35180,
+        "end_offset": 35183,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L17-002",
+      "name": "PERFORMANCE_TABLE_DATES",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value. Please return a date value only.",
+      "answer": "12/31/2023",
+      "evidence": {
+        "text": "12/31/23",
+        "start_offset": 69144,
+        "end_offset": 69152,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "date"
+    },
+    {
+      "id": "L1-011",
+      "name": "AIP_SUBAMOUNT",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "100",
+      "evidence": {
+        "text": "100",
+        "start_offset": 217405,
+        "end_offset": 217408,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L1-003",
+      "name": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class Y",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "0.75",
+      "evidence": {
+        "text": ".75",
+        "start_offset": 35381,
+        "end_offset": 35384,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L1-010",
+      "name": "COMPANYNAME",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for COMPANYNAME from the fund document. Please return a text value.",
+      "answer": "BNY Mellon Investment Adviser, Inc.",
+      "evidence": {
+        "text": "BNY Mellon Investment Adviser, Inc.",
+        "start_offset": 105009,
+        "end_offset": 105044,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "text"
+    },
+    {
+      "id": "L1-003",
+      "name": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "1.02",
+      "evidence": {
+        "text": "1.02",
+        "start_offset": 34794,
+        "end_offset": 34798,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L1-013",
+      "name": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for AUTOMATIC_INVESTMENT_ELIGIBLE from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "Automatic\nAsset Builder",
+        "start_offset": 217198,
+        "end_offset": 217221,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L1-005",
+      "name": "SWP_MINIMUM",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class I",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for SWP_MINIMUM from the fund document. Prioritize these sections: statutory. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "50",
+      "evidence": {
+        "text": "50",
+        "start_offset": 221448,
+        "end_offset": 221450,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L1-010",
+      "name": "COMPANYNAME",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class I",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for COMPANYNAME from the fund document. Please return a text value.",
+      "answer": "BNY Mellon Investment Adviser, Inc.",
+      "evidence": {
+        "text": "BNY Mellon Investment Adviser, Inc.",
+        "start_offset": 105009,
+        "end_offset": 105044,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "text"
+    },
+    {
+      "id": "L1-011",
+      "name": "AIP_SUBAMOUNT",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for AIP_SUBAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "100",
+      "evidence": {
+        "text": "100",
+        "start_offset": 217405,
+        "end_offset": 217408,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L1-007",
+      "name": "REDEEMBYWIRE",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find out whether the BNY Mellon Equity Income Fund (Class C) allows for redeem by wire. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "Wire Redemption\nand TeleTransfer Privileges",
+        "start_offset": 225066,
+        "end_offset": 225109,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L17-005",
+      "name": "ELECTRONIC_DELIVERY",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class I",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for ELECTRONIC_DELIVERY from the fund document. Prioritize these sections: cover_page, last_page, statutory, summary. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "www.im.bnymellon.com",
+        "start_offset": 471040,
+        "end_offset": 471060,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L1-007",
+      "name": "REDEEMBYWIRE",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class I",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for REDEEMBYWIRE from the fund document. Prioritize these sections: statutory. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "Wire Redemption\nand TeleTransfer Privileges",
+        "start_offset": 225066,
+        "end_offset": 225109,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L1-007",
+      "name": "REDEEMBYWIRE",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for REDEEMBYWIRE from the fund document. Prioritize these sections: statutory. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "Wire Redemption\nand TeleTransfer Privileges",
+        "start_offset": 225066,
+        "end_offset": 225109,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L1-012",
+      "name": "AIP_INITIALAMOUNT",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for AIP_INITIALAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "1000",
+      "evidence": {
+        "text": "1,000",
+        "start_offset": 179793,
+        "end_offset": 179798,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L17-002",
+      "name": "PERFORMANCE_TABLE_DATES",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value. Please return a date value only.",
+      "answer": "12/31/2023",
+      "evidence": {
+        "text": "12/31/23",
+        "start_offset": 69144,
+        "end_offset": 69152,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "date"
+    },
+    {
+      "id": "L1-010",
+      "name": "COMPANYNAME",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class Y",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for COMPANYNAME from the fund document. Please return a text value.",
+      "answer": "BNY Mellon Investment Adviser, Inc.",
+      "evidence": {
+        "text": "BNY Mellon Investment Adviser, Inc.",
+        "start_offset": 105009,
+        "end_offset": 105044,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "text"
+    },
+    {
+      "id": "L1-002",
+      "name": "NET_EXPENSES",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for NET_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "1.78",
+      "evidence": {
+        "text": "1.78",
+        "start_offset": 37949,
+        "end_offset": 37953,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L1-002",
+      "name": "NET_EXPENSES",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class Y",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for NET_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "0.75",
+      "evidence": {
+        "text": ".75",
+        "start_offset": 38488,
+        "end_offset": 38491,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L17-002",
+      "name": "PERFORMANCE_TABLE_DATES",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class I",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value. Please return a date value only.",
+      "answer": "12/31/2023",
+      "evidence": {
+        "text": "12/31/23",
+        "start_offset": 69144,
+        "end_offset": 69152,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "date"
+    },
+    {
+      "id": "L1-008",
+      "name": "SWP",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for SWP from the fund document. Prioritize these sections: statutory. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "Automatic\nWithdrawal Plan",
+        "start_offset": 221243,
+        "end_offset": 221268,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L1-006",
+      "name": "PHONESWITCH",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "You can request your exchange by calling 1-800-373-9387 (inside the U.S.\nonly) or your financial representative.",
+        "start_offset": 222589,
+        "end_offset": 222701,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L17-006",
+      "name": "MINIMUM_WIRE_AMOUNT",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for MINIMUM_WIRE_AMOUNT from the fund document. Prioritize these sections: statutory. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "1000",
+      "evidence": {
+        "text": "1,000",
+        "start_offset": 182047,
+        "end_offset": 182052,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L17-006",
+      "name": "MINIMUM_WIRE_AMOUNT",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class Y",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for MINIMUM_WIRE_AMOUNT from the fund document. Prioritize these sections: statutory. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "1000",
+      "evidence": {
+        "text": "1,000",
+        "start_offset": 182047,
+        "end_offset": 182052,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L17-005",
+      "name": "ELECTRONIC_DELIVERY",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for ELECTRONIC_DELIVERY from the fund document. Prioritize these sections: cover_page, last_page, statutory, summary. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "www.im.bnymellon.com",
+        "start_offset": 471040,
+        "end_offset": 471060,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L1-006",
+      "name": "PHONESWITCH",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "You can request your exchange by calling 1-800-373-9387 (inside the U.S.\nonly) or your financial representative.",
+        "start_offset": 222589,
+        "end_offset": 222701,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L1-013",
+      "name": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for AUTOMATIC_INVESTMENT_ELIGIBLE from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "Automatic\nAsset Builder",
+        "start_offset": 217198,
+        "end_offset": 217221,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L1-008",
+      "name": "SWP",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for SWP from the fund document. Prioritize these sections: statutory. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "Automatic\nWithdrawal Plan",
+        "start_offset": 221243,
+        "end_offset": 221268,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L17-006",
+      "name": "MINIMUM_WIRE_AMOUNT",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class I",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for MINIMUM_WIRE_AMOUNT from the fund document. Prioritize these sections: statutory. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "1000",
+      "evidence": {
+        "text": "1,000",
+        "start_offset": 182047,
+        "end_offset": 182052,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L1-003",
+      "name": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "1.81",
+      "evidence": {
+        "text": "1.81",
+        "start_offset": 34987,
+        "end_offset": 34991,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L1-012",
+      "name": "AIP_INITIALAMOUNT",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for AIP_INITIALAMOUNT from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "1000",
+      "evidence": {
+        "text": "1,000",
+        "start_offset": 179793,
+        "end_offset": 179798,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L17-002",
+      "name": "PERFORMANCE_TABLE_DATES",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class Y",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for PERFORMANCE_TABLE_DATES from the fund document. Prioritize these sections: summary. Return only the final value. Please return a date value only.",
+      "answer": "12/31/2023",
+      "evidence": {
+        "text": "12/31/23",
+        "start_offset": 69144,
+        "end_offset": 69152,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "date"
+    },
+    {
+      "id": "L1-007",
+      "name": "REDEEMBYWIRE",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class Y",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for REDEEMBYWIRE from the fund document. Prioritize these sections: statutory. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "Wire Redemption\nand TeleTransfer Privileges",
+        "start_offset": 225066,
+        "end_offset": 225109,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L1-002",
+      "name": "NET_EXPENSES",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class I",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for NET_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "0.78",
+      "evidence": {
+        "text": ".78",
+        "start_offset": 38219,
+        "end_offset": 38222,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L1-008",
+      "name": "SWP",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class I",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for SWP from the fund document. Prioritize these sections: statutory. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "Automatic\nWithdrawal Plan",
+        "start_offset": 221243,
+        "end_offset": 221268,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L17-005",
+      "name": "ELECTRONIC_DELIVERY",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class Y",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for ELECTRONIC_DELIVERY from the fund document. Prioritize these sections: cover_page, last_page, statutory, summary. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "www.im.bnymellon.com",
+        "start_offset": 471040,
+        "end_offset": 471060,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L1-005",
+      "name": "SWP_MINIMUM",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for SWP_MINIMUM from the fund document. Prioritize these sections: statutory. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "50",
+      "evidence": {
+        "text": "50",
+        "start_offset": 221448,
+        "end_offset": 221450,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L17-005",
+      "name": "ELECTRONIC_DELIVERY",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for ELECTRONIC_DELIVERY from the fund document. Prioritize these sections: cover_page, last_page, statutory, summary. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "www.im.bnymellon.com",
+        "start_offset": 471040,
+        "end_offset": 471060,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L1-002",
+      "name": "NET_EXPENSES",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for NET_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "1.02",
+      "evidence": {
+        "text": "1.02",
+        "start_offset": 37679,
+        "end_offset": 37683,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L17-006",
+      "name": "MINIMUM_WIRE_AMOUNT",
+      "group": "Level17",
+      "difficulty": 17,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for MINIMUM_WIRE_AMOUNT from the fund document. Prioritize these sections: statutory. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "1000",
+      "evidence": {
+        "text": "1,000",
+        "start_offset": 182047,
+        "end_offset": 182052,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    },
+    {
+      "id": "L1-006",
+      "name": "PHONESWITCH",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class I",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for PHONESWITCH from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return a boolean value (Yes/No).",
+      "answer": "Yes",
+      "evidence": {
+        "text": "You can request your exchange by calling 1-800-373-9387 (inside the U.S.\nonly) or your financial representative.",
+        "start_offset": 222589,
+        "end_offset": 222701,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "boolean"
+    },
+    {
+      "id": "L1-010",
+      "name": "COMPANYNAME",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for COMPANYNAME from the fund document. Please return a text value.",
+      "answer": "BNY Mellon Investment Adviser, Inc.",
+      "evidence": {
+        "text": "BNY Mellon Investment Adviser, Inc.",
+        "start_offset": 105009,
+        "end_offset": 105044,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "text"
+    },
+    {
+      "id": "L1-005",
+      "name": "SWP_MINIMUM",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for SWP_MINIMUM from the fund document. Prioritize these sections: statutory. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "answer": "50",
+      "evidence": {
+        "text": "50",
+        "start_offset": 221448,
+        "end_offset": 221450,
+        "offset_convention": {
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        }
+      },
+      "expected_answer_type": "number"
+    }
+  ]
+}

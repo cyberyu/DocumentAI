@@ -133,6 +133,12 @@ those sections instead of reading the entire file sequentially.
 
 Use `<chunk id='...'>` values as citation IDs in your answers.
 
+For short factual extraction questions (e.g., "Return only the value with unit"):
+- Do NOT read large documents end-to-end.
+- Prefer targeted search (`grep`) and then a small `read_file` window around the match.
+- Stop tool exploration once one authoritative matching sentence/table cell is found.
+- If the user asked for "only" the value, output only the value.
+
 ## Priority List
 
 You receive a `<priority_documents>` system message each turn listing the

@@ -1,0 +1,177 @@
+{
+  "generated_at_utc": "2026-05-13T18:40:46Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "df_santic_smoke2_l1_010_013.json",
+    "document_title_contains": "df.html",
+    "mentioned_document_ids": [
+      391
+    ],
+    "max_questions": 0,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": false,
+    "question_suffix": "",
+    "blend_fund_context": true,
+    "normalize_schema_terms": true,
+    "post_verbatim_stage": false,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 2,
+    "overall_correct_count": 1,
+    "overall_correct_rate": 0.5,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 2,
+    "number_match_rate": 1.0,
+    "unit_match_count": 2,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.3,
+    "questions_total": 2,
+    "questions_run": 2,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Level1": {
+      "run": 2,
+      "overall_correct_count": 1,
+      "overall_correct_rate": 0.5,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 2,
+      "number_match_rate": 1.0,
+      "unit_match_count": 2,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.3
+    }
+  },
+  "thread_ids_used": [
+    3534,
+    3535
+  ],
+  "results": [
+    {
+      "id": "L1-010",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for COMPANYNAME from the fund document. Please return a text value.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for company name from the fund document. Please return a text value.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class C"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for company name from the fund document. Please return a text value.",
+      "normalization_applied": [
+        {
+          "term": "COMPANYNAME",
+          "normalized": "company name"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class C) of BNY Mellon Funds from the document. Extract the value for company name from the fund document. Please return a text value.",
+      "schema_key": "COMPANYNAME",
+      "expected_answer_type": "text",
+      "gold_answer": "BNY Mellon Investment Adviser, Inc.",
+      "predicted_answer": "BNY Mellon Investment Funds III",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.6,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": true
+      }
+    },
+    {
+      "id": "L1-013",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for AUTOMATIC_INVESTMENT_ELIGIBLE from the fund document. Prioritize these sections: statutory, summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for automatic investment eligibility from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class A"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for automatic investment eligibility from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "normalization_applied": [
+        {
+          "term": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+          "normalized": "automatic investment eligibility"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class A) of BNY Mellon Funds from the document. Extract the value for automatic investment eligibility from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "schema_key": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+      "expected_answer_type": "boolean",
+      "gold_answer": "1",
+      "predicted_answer": "The user wants me to find information about \"BNY Mellon Equity Income Fund (Class A)\" from the documents. Let me look at the priority documents, particularly `/documents/df.html.xml` which has the highest relevance score. Let me read the document to find the relevant information.I need to search for \"BNY Mellon Equity Income\" and \"automatic investment\" in the document. Let me search for relevant keywords.Let me search more broadly for \"Equity Income\" and \"BNY\" in the document.Let me look at the chunks that mention \"BNY Mellon Equity Income Fund\" and also look at the automatic investment eligibility. Let me read near line 980 where \"Mellon Equity Income Fund\" appears.Let me look for the automatic investment section more closely. The grep showed chunk_id 614916 mentions \"automatic investment services\" and \"minimum initial investment\" related content. Let me read around that area.Let me search more specifically for \"automatic investment eligibility\" or look for fund-specific minimums for automatic investment. Let me look at the \"Fund Summary\" section which would include key info about each class.Let me look at the \"Services for Fund Investors - Automatic Services\" section to find the automatic investment eligibility information.Let me read a broader range of the document. Let me look at the BNY Mellon Equity Income Fund section, likely near the beginning where Class A shares are described. Let me read the fund summary section.I see chunk 614917 which says: \"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\" But that's talking about general minimums. The user is asking for \"automatic investment eligibility\". Let me search for what the minimum is specifically for automatic investment plans. Let me search more specifically for this information.Strange, no matches. Let me try case-insensitive search or search for different terms.Let me look at the \"Automatic Services\" section of the document to understand the minimum for automatic investment.Now I can see the \"Automatic Services\" section. The Automatic Asset Builder has a minimum of $100 per transaction. But the user is asking about \"automatic investment eligibility\" - which might refer to the minimum investment required to qualify for automatic investment. Let me also look at the section at the beginning about how to buy shares including minimums for Class A. From chunk 614917: \"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\" But wait - the user is asking specifically about \"automatic investment eligibility.\" This might be about the minimum for automatic investment plans. The Automatic Asset Builder says \"minimum of $100 per transaction.\" However, let me look more carefully - the chunk 614916 says: \"You may purchase additional shares by selecting one of the automatic investment services made available to the fund...\" - this refers to \"additional shares\" not initial. Let me search a bit more broadly - maybe there's a specific line about eligibility for automatic investment, such as a minimum balance or something. Actually, looking at the Automatic Asset Builder description in chunk 615049: \"permits you to purchase fund shares (minimum of $100 and maximum of $150,000 per transaction) at regular intervals selected by you.\" But the user asked for \"automatic investment eligibility\" specifically. Let me also check the initial investment minimums more carefully, perhaps there's a minimum for setting up automatic investment for the first time. Let me re-read chunk 614917 more carefully: \"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\" And chunk 614919: \"The minimum initial investment for Retirement Plans or IRAs (other than Coverdell Education Savings Accounts) sponsored by BNYM Investment Adviser or its affiliates is $750, with no minimum subsequent investment.\" Let me check if there's a specific \"automatic investment\" minimum mentioned anywhere else in the document. Actually, let me look at the beginning of the \"How to Buy Shares\" section to see what the minimum initial investment for Class A is, and if there's something about automatic investment eligibility.Let me look at the \"Minimum Investment\" information. The chunk 614917 shows: \"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\" But let me look at this more carefully in context, especially what the full sentence says about \"Class A\" specifically. Let me look at the lines around 2036-2042 more carefully. Actually wait, let me also look at the \"Fund Summary\" table which might have Class A minimum investment information. Let me re-read the document around the \"Automatically\" section and look at the complete context.Now I understand the document structure better. The \"minimum initial and subsequent investment\" of $1,000 and $100 respectively applies to Class A shares (since it's in the general How to Buy Shares section, and Class Y has separate rules of $1,000,000). But the user is asking specifically about \"automatic investment eligibility.\" Let me think about this differently. The question might be asking for the minimum amount needed to start automatic investment for Class A shares. The Automatic Asset Builder has a minimum of $100 per transaction. But that's the minimum per automatic investment transaction, not an initial requirement. Let me think about what \"automatic investment eligibility\" might mean. It could be referring to the \"minimum initial investment\" required to qualify or start automatic investing. Actually, re-reading the document: - \"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\" - This applies to the fund generally (Class A, C, I based on the context) So the minimum initial investment for Class A is $1,000 and the minimum subsequent investment is $100. But wait - chunk 614916 says \"You may purchase additional shares by selecting one of the automatic investment services\" - the word \"additional\" suggests this is for subsequent investments, not initial. Looking at the \"Automatic Asset Builder\" section (chunk 615049): \"permits you to purchase fund shares (minimum of $100 and maximum of $150,000 per transaction) at regular intervals selected by you.\" So for automatic investment, the minimum per transaction is $100. But the user might be looking for the number from the fund summary or the \"minimum initial investment\" for the fund - $1,000, or the minimum for automatic investment which is $100. Let me look at the information more carefully. The user said \"automatic investment eligibility\" - this is likely specifically about what minimum amount makes you eligible to use automatic investment services. Looking at the fund structure, for Class A shares of BNY Mellon Equity Income Fund: - Minimum initial investment: $1,000 (chunk 614917) - Minimum subsequent investment: $100 - Automatic Asset Builder: minimum $100 per transaction (chunk 615049) I think the most likely answer is 100, since the automatic investment services (like Automatic Asset Builder) have a $100 minimum per transaction. But the question could also be referring to the minimum $1,000 initial investment. Let me check what the \"Minimum Initial Investment\" section says more precisely about automatic investment. Actually, let me also look for a table or section that explicitly lists \"automatic investment eligibility\".Let me check the context around chunk 614617. That seems to be in the \"Shareholder Guide\" or similar section specifically addressing each share class.So for each share class (other than Class Y), the minimum initial investment is $1,000 and minimum subsequent investment is $100. But I need to find specifically what the \"automatic investment eligibility\" value is. Let me re-read the context more carefully. The user is asking for \"automatic investment eligibility\" from the fund document. Let me look at what the Automatic Services say. The Automatic Asset Builder allows purchases with a minimum of $100 per transaction. But does the fund also specify a requirement to be eligible for automatic investment? Let me also look at section chunk 614916 more carefully: \"You may purchase additional shares by selecting one of the automatic investment services made available to the fund on your account application or service application.\" This says \"additional shares\" - meaning the shares purchased via automatic investment are subsequent purchases (after the initial account opening). So the minimum initial investment is $1,000 to open the account, and then you can use automatic investment for subsequent purchases. But the user asked for the \"automatic investment eligibility\" value. Let me think about what number represents this. Looking at the context again - the section says \"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\" This appears right after the \"Automatically\" section which talks about automatic investment services. But actually, let me look at this differently. The chunk 614916 says \"You may purchase additional shares by selecting one of the automatic investment services\" and then the next chunk 614917 says \"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\" I think the $100 is the minimum subsequent investment amount, which could be the amount for automatic investment eligibility. But let me search if there's a more specific mention. Wait, let me look at the document more carefully. Let me search for \"eligible\" in the document as it might relate to automatic investment.Let me search for the term \"eligibility\" in the document.Let me look at the chunk 614753 and surrounding context - \"To be eligible for the share classes and/or shareholder privileges or services described in this prospectus...\" This might have information about what's needed for eligibility.I'm not finding a specific \"automatic investment eligibility\" value like a minimum amount. Let me look more carefully. The user's question says \"automatic investment eligibility\" - maybe this is a specific field in the fund document. Let me search for the phrase \"automatic investment\" more broadly.Let me look at the full document more carefully. The document seems to be a prospectus for the BNY Mellon Equity Income Fund (Class A). I see that the minimum initial investment for Class A is $1,000 and the minimum subsequent investment is $100. The Automatic Asset Builder has a minimum of $100 per transaction. But maybe the question is asking about a specific field in the document that says \"automatic investment eligibility\" with a minimum value. Let me check if there's another format or section I haven't looked at. Actually, let me look at the beginning of the document more carefully - specifically the \"Fund Summary\" section which usually contains a table with key information.Let me look at the later section of the document where it might discuss the specific fund details. Let me also look at the section about automatic investment more broadly and check if there are multiple copies of this document (the chunks seem to repeat - lines starting at 977 and again at 6067). Looking at the data, there appear to be duplicate sections in the document - BNY Mellon Equity Income Fund sections at line 977 (~614544) and at line 6067. Let me look at the duplicate section at line 6067.OK, so the second occurrence at line 6067 is just the \"For More Information\" back cover of the prospectus. The main content is in the first section. Let me now re-examine what the user is asking. They said \"Extract the value for automatic investment eligibility from the fund document.\" The document is a prospectus for BNY Mellon Equity Income Fund. In the \"How to Buy Shares\" section, it discusses minimum investments. The Automatic Asset Builder service has a minimum of $100 per transaction. But I'm not seeing an explicit \"automatic investment eligibility\" field with a specific value. Let me search for anything that mentions eligibility relating to automatic investment plans more broadly. Actually, let me look at this from a different angle. Let me look at what minimum is required specifically for Class A shares of this fund for automatic investment. From the document: 1. Chunk 614917: \"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\" 2. Chunk 615049 (Automatic Asset Builder): \"permits you to purchase fund shares (minimum of $100 and maximum of $150,000 per transaction)\" 3. Chunk 615050 (Payroll Savings Plan): \"permits you to purchase fund shares (minimum of $100 per transaction)\" The minimum initial investment for Class A shares is $1,000. The minimum subsequent investment is $100. And the Automatic Asset Builder minimum is $100 per transaction. But the question specifically asks about \"automatic investment eligibility.\" This might refer to the minimum required to be eligible for the automatic investment program. The Automatic Asset Builder clearly states \"minimum of $100 and maximum of $150,000 per transaction.\" I think the answer is 100. Let me look at if the document has a table or specific section about minimums. Let me also check the second copy of the document to see if it has any additional info.OK, that's just the appendix/\"For More Information\" section. Let me look at the second copy of the full prospectus content. Let me look around line 3564 where \"Mellon Equity Income Fund\" appears again, and also check the broader document structure. Actually, let me look at the chunk_index more carefully to understand the document structure.This is a duplicate copy of the full prospectus (the document seems to contain the prospectus twice). The key information about minimum investments for Class A shares is consistent throughout. Now, I need to figure out what \"automatic investment eligibility\" means specifically. The user asked for \"the value for automatic investment eligibility from the fund document\" and to \"return the number only.\" Looking at the fund document: 1. Minimum initial investment for Class A (and non-Y classes): $1,000 (chunks 614617, 614917) 2. Minimum subsequent investment: $100 (chunks 614617, 614917) 3. Automatic Asset Builder minimum: $100 per transaction (chunk 615049) The term \"automatic investment eligibility\" most likely refers to the minimum amount needed to be eligible to set up automatic investment. Since the Automatic Asset Builder states a \"minimum of $100 per transaction,\" and this is an automatic investment service, the value would be 100. But let me verify by looking at the exact phrase more carefully. The user says \"automatic investment eligibility\" - this could be referring to a specific minimum balance or amount needed to qualify. Actually, wait. Let me look at another interpretation. Maybe the \"automatic investment eligibility\" is the minimum amount required to open an account with automatic investment capability, which could be $1,000 (the minimum initial investment). Or could it be the $100 minimum subsequent investment which is the minimum for automatic investment transactions? Looking at the way the document is structured: - Chunk 614916: \"You may purchase additional shares by selecting one of the automatic investment services...\" - Chunk 614917: \"The minimum initial and subsequent investment (except as set forth below) is $1,000 and $100, respectively.\" Since the automatic investment is for purchasing \"additional shares\" (subsequent investments), the minimum for automatic investment would be $100 (the minimum subsequent investment). And the Automatic Asset Builder specifically says \"minimum of $100.\" I think 100 is the answer. Let me just look at the data one more time - the \"$100\" in chunk 615049 is explicitly the minimum for the Automatic Asset Builder program.The source_verbatim confirms the value \"100\" from the text \"minimum of $100\". But I want to make sure this is the right value. Let me think about what \"automatic investment eligibility\" means in the context of a mutual fund prospectus. The user is asking me to find the value for \"automatic investment eligibility\" from the document. In the context of a fund prospectus, this typically means the minimum amount you need to invest to be eligible to use the automatic investment service. Looking at the Automatic Services section: - \"Automatic Asset Builder permits you to purchase fund shares (minimum of $100 and maximum of $150,000 per transaction)\" - chunk 615049 - \"Payroll Savings Plan permits you to purchase fund shares (minimum of $100 per transaction)\" - chunk 615050 - \"Government Direct Deposit permits you to purchase fund shares (minimum of $100 and maximum of $50,000 per transaction)\" - chunk 615051 So for automatic investment services, the minimum is $100 per transaction. This is the eligibility threshold for automatic investment. Also, the \"minimum initial investment\" for Class A shares is $1,000, but that's for manual initial investment, not specifically for automatic investment eligibility. I'm confident the answer is 100.The value for automatic investment eligibility (Automatic Asset Builder minimum per transaction) is **100**",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.005988023952095809,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.011904761904761906,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

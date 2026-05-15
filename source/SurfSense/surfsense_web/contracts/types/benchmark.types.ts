@@ -6,6 +6,7 @@ export const benchmarkJobStatusEnum = z.enum(["queued", "running", "completed", 
 export const benchmarkJobCreateRequest = z.object({
 	benchmark_file: z.instanceof(File),
 	search_space_id: z.number(),
+	benchmark_document_id: z.number().int().positive().optional(),
 	source_doc_path: z.string().optional(),
 	etl_services: z.array(z.string()).min(1),
 	chunking_strategies: z.array(chunkingStrategyEnum),

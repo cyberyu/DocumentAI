@@ -32,6 +32,7 @@ from .registry import (
 )
 from .scrape_webpage import create_scrape_webpage_tool
 from .search_surfsense_docs import create_search_surfsense_docs_tool
+from .source_verbatim import create_source_verbatim_tool
 from .update_memory import create_update_memory_tool, create_update_team_memory_tool
 from .video_presentation import create_generate_video_presentation_tool
 
@@ -48,6 +49,7 @@ __all__ = [
     "create_generate_video_presentation_tool",
     "create_scrape_webpage_tool",
     "create_search_surfsense_docs_tool",
+    "create_source_verbatim_tool",
     "create_update_memory_tool",
     "create_update_team_memory_tool",
     "format_documents_for_context",

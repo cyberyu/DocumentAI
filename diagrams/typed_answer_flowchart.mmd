@@ -1,0 +1,43 @@
+flowchart TD
+    A[Question + Schema Key] --> B[Schema Normalization\nAlias Mapping + Prompt Cleanup]
+    B --> C[Expected Type Resolver]
+
+    C -->|boolean| D1[Boolean Intent Rewrite\nYes/No + Evidence Prompt]
+    C -->|date| D2[Date-Specific Output Constraints]
+    C -->|numeric\namount/rate/ratio/delta| D3[Numeric Output Constraints]
+    C -->|text| D4[Text/Entity Constraints\nCOMPANYNAME guardrails]
+
+    D1 --> E[Primary Model Call]
+    D2 --> E
+    D3 --> E
+    D4 --> E
+
+    E --> F{Output Looks Malformed\nfor Expected Type?}
+
+    F -->|Yes: numeric/date got bool-like| G1[Typed Retry #1\nforce concrete typed value]
+    G1 --> G2{Still malformed?}
+    G2 -->|Yes| G3[Typed Retry #2]
+    G2 -->|No| H
+    G3 --> H
+
+    F -->|Yes: text got bool/number/noise| T1[Text Retry #1]
+    T1 --> T2{Still malformed?}
+    T2 -->|Yes| T3[Strict Text Retry #2]
+    T2 -->|No| H
+    T3 --> H
+
+    F -->|No| H[Prepare Prediction for Scoring\nType-specific extraction]
+
+    H --> I[Type-Aware Evaluation]
+    I --> I1[Boolean: normalize Yes/No/1/0]
+    I --> I2[Date: normalize to ISO]
+    I --> I3[Numeric: entity/primary-value match]
+    I --> I4[Text: token + semantic checks]
+
+    I --> J[Source-Span Coercion\nFind verbatim evidence span]
+    J --> K[Final Metrics + Frame Output]
+
+    classDef imp fill:#0f2b46,stroke:#55b1ff,color:#eaf6ff,stroke-width:1.2px;
+    classDef core fill:#1f2937,stroke:#9ca3af,color:#f9fafb,stroke-width:1px;
+    class C,D1,D2,D3,D4,G1,G3,T1,T3,I,J imp;
+    class A,B,E,F,H,K core;

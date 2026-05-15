@@ -1,0 +1,124 @@
+{
+  "generated_at_utc": "2026-05-14T20:49:54Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "df_q24_minimum_wire_amount_classy_only.json",
+    "document_title_contains": "df.html",
+    "mentioned_document_ids": [
+      391
+    ],
+    "max_questions": 1,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": false,
+    "question_suffix": "",
+    "print_asked_question": true,
+    "blend_fund_context": true,
+    "normalize_schema_terms": true,
+    "post_verbatim_stage": false,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 1,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 0,
+    "number_match_rate": 0.0,
+    "unit_match_count": 1,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 1,
+    "questions_run": 1,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Level17": {
+      "run": 1,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 0,
+      "number_match_rate": 0.0,
+      "unit_match_count": 1,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [
+    3921,
+    3922,
+    3923,
+    3924
+  ],
+  "results": [
+    {
+      "id": "L17-006",
+      "group": "Level17",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for MINIMUM_WIRE_AMOUNT from the fund document. Prioritize these sections: statutory. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for minimum wire amount from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class Y"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for minimum wire amount from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "normalization_applied": [
+        {
+          "term": "MINIMUM_WIRE_AMOUNT",
+          "normalized": "minimum wire amount"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class Y) of BNY Mellon Funds from the document. Extract the value for minimum wire amount from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "schema_key": "MINIMUM_WIRE_AMOUNT",
+      "expected_answer_type": "amount",
+      "gold_answer": "1000",
+      "pre_coercion_predicted_answer": "The user wants me to find the minimum wire amount for BNY Mellon Equity Income Fund (Class Y) from the pinned document `/documents/df.html.xml`. Let me read the relevant document.The document is large. Let me search for \"BNY Mellon Equity Income Fund\" and \"minimum wire\" within it.No matches for \"BNY Mellon Equity Income\" or \"minimum wire\" in the documents. Let me try broader searches to find the relevant fund name.I found the document mentions \"BNY Mellon Equity Income Fund\". Let me look at the prospectus document for the fund-specific information. I found chunk_id 614544 mentions \"BNY Mellon Equity Income Fund Prospectus\" and the document is a prospectus. Let me read around that area to find the specific fund data, particularly looking for Class Y and minimum wire amounts.\n\nLet me look at the prospectus document around the beginning where fund information would typically be found.So Class Y ticker is DQIYX. Now I need to find the minimum wire amount. Let me look for minimum investment amounts or wire amounts in the document. Let me search for \"minimum investment\" or \"minimum\" in the context of the fund.Let me try broader searches.The user is asking for the \"minimum wire amount.\" Let me look more carefully at the document. I see references to \"wire\" but those are about Wire Redemption Privilege ($1,000 minimum) which is about selling shares, not buying.\n\nThe user asked for \"minimum wire amount\" from the fund document. Let me search more specifically for \"wire\" in the context of Class Y or initial investment.\n\nLet me read around the area where the document talks about purchasing shares by wire.I don't see a specific \"minimum wire amount\" defined for purchases by wire. The document says \"To purchase shares by wire or electronic check, please call 1-800-373-9387 (inside the U.S. only) for more information\" - it doesn't give a specific wire minimum amount for purchases.\n\nThe only wire minimum I see is $1,000 for the Wire Redemption Privilege (selling shares), but that's not what the user is asking for.\n\nThe document doesn't have a specific \"minimum wire amount\" field. Let me search more broadly in the document for a table or section that might contain this information about \"minimum wire\" for BNY Mellon funds.\n\nLet me also check if there's some kind of fund-specific table that lists a minimum wire amount.No specific \"minimum wire amount\" found. The user asked for the \"minimum wire amount\" specifically. I just see:\n\n1. Wire Redemption Privilege: $1,000 minimum (for selling/redemption via wire)\n2. For purchases by wire: \"To purchase shares by wire or electronic check, please call 1-800-373-9387 (inside the U.S. only) for more information.\" - No amount specified.\n\nLet me also check if the prospectus summary or fee table has a specific minimum wire amount line item. Let me read more sections of the prospectus.I've searched the document thoroughly. The document doesn't have a specific \"minimum wire amount\" field. The only wire-related minimum mentioned is the Wire Redemption Privilege ($1,000 minimum), which is the minimum to have proceeds wired to you when selling shares.\n\nFor purchasing shares by wire, the document says to call for more information without specifying an amount.\n\nThe document does not contain a specific \"minimum wire amount\" for BNY Mellon Equity Income Fund (Class Y). Since the question asks for the minimum wire amount and I cannot find it, I should return N/A.N/A",
+      "prepared_prediction_before_coercion": "$1,000",
+      "predicted_answer": "$1,000",
+      "intermediate_verbatim_text": "",
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": false,
+        "unit_match": true,
+        "numeric_precision": 0.0,
+        "numeric_recall": 0.0,
+        "numeric_f1": 0.0,
+        "primary_value_match": false,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

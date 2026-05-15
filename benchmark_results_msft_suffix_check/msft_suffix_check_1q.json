@@ -1,0 +1,93 @@
+{
+  "generated_at_utc": "2026-05-12T23:35:19Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "msft_fy26q1_qa_benchmark_100_sanitized.json",
+    "document_title_contains": "MSFT_FY26Q1_10Q.docx",
+    "mentioned_document_ids": [
+      390
+    ],
+    "max_questions": 1,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": false,
+    "blend_fund_context": true,
+    "normalize_schema_terms": true,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 1,
+    "overall_correct_count": 1,
+    "overall_correct_rate": 1.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 1,
+    "number_match_rate": 1.0,
+    "unit_match_count": 1,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.025974025974025972,
+    "questions_total": 100,
+    "questions_run": 1,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Group1": {
+      "run": 1,
+      "overall_correct_count": 1,
+      "overall_correct_rate": 1.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 1,
+      "number_match_rate": 1.0,
+      "unit_match_count": 1,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.025974025974025972
+    }
+  },
+  "thread_ids_used": [
+    3222
+  ],
+  "results": [
+    {
+      "id": "G1-001",
+      "group": "Group1",
+      "question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "blended_question": "In MSFT_FY26Q1_10Q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "fund_context_applied": {},
+      "normalized_question": "In msft fy26q1 10q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "normalization_applied": [
+        {
+          "term": "MSFT_FY26Q1_10Q",
+          "normalized": "msft fy26q1 10q"
+        }
+      ],
+      "asked_question": "In msft fy26q1 10q.docx, what is long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025? Return only the value with unit.",
+      "gold_answer": "$5.0 billion USD",
+      "predicted_answer": "The user is asking for a specific financial figure from the MSFT_FY26Q1_10Q document. Let me read the relevant document to find the long-term accounts receivable, net of allowance for doubtful accounts as of September 30, 2025.The document is quite large. Let me search for \"long-term accounts receivable\" or \"long-term\" within the document to find the specific figure.Found it. Let me read the relevant lines to confirm and get the exact text with citation.$5.0 billion",
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": true,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": false,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 0.14285714285714285,
+        "numeric_recall": 1.0,
+        "numeric_f1": 0.25,
+        "primary_value_match": true,
+        "token_f1": 0.025974025974025972,
+        "strict_correct": false,
+        "lenient_correct": true,
+        "overall_correct": true
+      }
+    }
+  ]
+}

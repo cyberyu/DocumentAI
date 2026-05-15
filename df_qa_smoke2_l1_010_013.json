@@ -1,0 +1,42 @@
+{
+  "qa_pairs": [
+    {
+      "id": "L1-010",
+      "name": "COMPANYNAME",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class C",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Extract the value for COMPANYNAME from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "answer": "BNY Mellon Investment Adviser, Inc.",
+      "evidence": {
+        "text": "BNY Mellon Investment Adviser, Inc.",
+        "start_offset": 105009,
+        "end_offset": 105044
+      }
+    },
+    {
+      "id": "L1-013",
+      "name": "AUTOMATIC_INVESTMENT_ELIGIBLE",
+      "group": "Level1",
+      "difficulty": 1,
+      "multiple_entities": false,
+      "dps": [],
+      "fund_name": "BNY Mellon Equity Income Fund",
+      "fund_family": "BNY Mellon Funds",
+      "class": "Class A",
+      "SAN_NO": "0000053808-24-000031",
+      "question": "Extract the value for AUTOMATIC_INVESTMENT_ELIGIBLE from the fund document. Prioritize these sections: statutory, summary. Return only the final value.",
+      "answer": "1",
+      "evidence": {
+        "text": "Automatic\nAsset Builder",
+        "start_offset": 217198,
+        "end_offset": 217221
+      }
+    }
+  ]
+}

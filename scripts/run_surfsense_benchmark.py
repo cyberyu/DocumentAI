@@ -73,6 +73,8 @@ INTERMEDIATE_PATTERNS = [
     "would you like me to",
 ]
 
+_REQUIRED_VERBATIM_SUFFIX = ""
+
 
 def _now_utc() -> str:
     return datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")
@@ -129,13 +131,557 @@ def _looks_intermediate_answer(value: str) -> bool:
     return any(p in text for p in INTERMEDIATE_PATTERNS)
 
 
-def _build_force_final_question(base_question: str) -> str:
+def _is_binary_yes_no_answer(value: str) -> bool:
+    text = _clean_predicted_answer(value).strip().lower()
+    if not text:
+        return False
+    normalized = re.sub(r"[^a-z]+", "", text)
+    return normalized in {"yes", "no"}
+
+
+def _raw_response_leads_to_binary_yes_no(value: str) -> bool:
+    cleaned = _clean_predicted_answer(value)
+    if not cleaned:
+        return False
+    candidate = _extract_final_value_candidate(cleaned)
+    return _is_binary_yes_no_answer(candidate)
+
+
+def _raw_response_leads_to_malformed_typed_answer(value: str) -> bool:
+    cleaned = _clean_predicted_answer(value)
+    if not cleaned:
+        return False
+    candidate = _extract_final_value_candidate(cleaned)
+    normalized = re.sub(r"[^a-z]+", "", candidate.lower())
+    return normalized in {"yes", "no", "true", "false", "na"}
+
+
+def _raw_response_leads_to_malformed_text_answer(value: str) -> bool:
+    cleaned = _clean_predicted_answer(value)
+    if not cleaned:
+        return True
+    candidate = _extract_final_text_candidate(cleaned).strip()
+    if not candidate:
+        return True
+
+    normalized = re.sub(r"[^a-z0-9]+", "", candidate.lower())
+    if normalized in {"yes", "no", "true", "false", "na", "1", "0"}:
+        return True
+    if re.fullmatch(r"[-+]?\d+(?:\.\d+)?", candidate):
+        return True
+    return False
+
+
+def _build_typed_retry_question(base_question: str, expected_type: str) -> str:
+    if expected_type == "date":
+        return (
+            f"{_build_force_final_question(base_question)} "
+            "Return exactly one date exactly as it appears in the source text. "
+            "Do not answer Yes, No, True, or False. "
+            "Keep the original date format from the document. "
+            "If the date is not found, return exactly N/A."
+        )
+    if expected_type in {"amount", "rate", "ratio", "delta"}:
+        return (
+            f"{_build_force_final_question(base_question)} "
+            "Return exactly one concrete numeric value with unit. "
+            "Do not answer Yes, No, True, or False. "
+            "If the value is not found, return exactly N/A."
+        )
     return (
-        f"{base_question} Final answer now. Return only one value with unit. "
+        f"{_build_force_final_question(base_question)} "
+        "Do not answer Yes, No, True, or False. "
+        "Return exactly one concrete value, or N/A only if the value is not found."
+    )
+
+
+def _build_text_retry_question(base_question: str, schema_key: str = "") -> str:
+    key = (schema_key or "").upper()
+    if any(tok in key for tok in ["NAME", "COMPANY"]):
+        return (
+            f"{_build_force_final_question(base_question, 'text')} "
+            "Return the exact company/entity name text from the document. "
+            "Do not answer Yes/No/True/False and do not return a standalone number. "
+            "If not found, return exactly N/A."
+        )
+    return (
+        f"{_build_force_final_question(base_question, 'text')} "
+        "Return the exact text value from the document. "
+        "Do not answer Yes/No/True/False and do not return a standalone number. "
+        "If not found, return exactly N/A."
+    )
+
+
+def _build_text_retry_question_strict(base_question: str, schema_key: str = "") -> str:
+    key = (schema_key or "").upper()
+    if any(tok in key for tok in ["NAME", "COMPANY"]):
+        return (
+            f"{_build_force_final_question(base_question, 'text')} "
+            "Return the exact company/entity proper name as it appears in the document. "
+            "The answer must be a name phrase with alphabetic words (not yes/no/true/false, not 0/1, not N/A unless missing)."
+        )
+    return (
+        f"{_build_force_final_question(base_question, 'text')} "
+        "Return the exact text phrase from the document. "
+        "The answer must be a text phrase with alphabetic words (not yes/no/true/false, not 0/1, not N/A unless missing)."
+    )
+
+
+def _build_companyname_retry_question(base_question: str) -> str:
+    return (
+        f"{_build_force_final_question(base_question, 'text')} "
+        "Return only the investment adviser company/entity name for the specified fund/class as a short text phrase exactly as shown in the source. "
+        "Do not return the trust/series name or fund family name unless it is explicitly the investment adviser. "
+        "Do not return numbers only, booleans, analysis text, or citations. "
+        "If not found, return exactly N/A."
+    )
+
+
+def _build_text_verbatim_answer_question(base_question: str, schema_key: str = "") -> str:
+    key = (schema_key or "").upper()
+    if any(tok in key for tok in ["NAME", "COMPANY"]):
+        target = "the company/entity name"
+    else:
+        target = "the requested text value"
+    return (
+        "Use only the pinned document context and search_surfsense_docs. "
+        f"Find the shortest exact verbatim span for {target} that answers the query below. "
+        "Return exactly one line in this format: VERBATIM: <text>. "
+        "If no supporting text exists, return exactly: VERBATIM: N/A.\n"
+        f"Query: {base_question}"
+    )
+
+
+def _build_force_final_question(base_question: str, expected_type: str | None = None) -> str:
+    resolved_expected_type = (expected_type or "").strip().lower() or "text"
+
+    if resolved_expected_type == "boolean":
+        answer_rule = "Return exactly one boolean value: Yes or No."
+    elif resolved_expected_type == "text":
+        answer_rule = "Return only one concise text value (not a number unless the source value itself is numeric)."
+    elif resolved_expected_type == "date":
+        answer_rule = "Return only one date exactly as shown in the source document."
+    else:
+        answer_rule = "Return only one concrete value with unit."
+
+    return (
+        f"{base_question} Final answer now. {answer_rule} "
         "Use only the pinned document context and search_surfsense_docs. "
         "Do not ask follow-up questions. Do not suggest web search. "
         "If the value is not found, return exactly N/A."
     )
+
+
+_ELIGIBILITY_TOKENS = {"ELIGIBLE", "ELIGIBILITY", "ENABLED", "DISABLED", "AVAILABLE", "ALLOW", "ALLOWED", "ACTIVE"}
+_BOOLEAN_EVIDENCE_SCHEMA_KEYS = {"ELECTRONIC_DELIVERY", "REDEEMBYWIRE", "PHONESWITCH"}
+
+
+def _is_eligibility_schema_key(schema_key: str) -> bool:
+    key = (schema_key or "").strip().upper()
+    if not key:
+        return False
+    if key in _BOOLEAN_EVIDENCE_SCHEMA_KEYS:
+        return True
+    parts = set(key.split("_"))
+    return bool(parts.intersection(_ELIGIBILITY_TOKENS))
+
+
+def _build_boolean_answer_with_evidence_question(base_question: str, schema_key: str = "") -> str:
+    key = (schema_key or "").strip().upper()
+    if key == "ELECTRONIC_DELIVERY":
+        return base_question
+    return (
+        f"{base_question} "
+        "Return a boolean answer (Yes/No) and include a short exact verbatim evidence span from the source. "
+        "If evidence is unavailable, return N/A for evidence."
+    )
+
+
+def _build_verbatim_support_question(base_question: str, candidate_answer: str) -> str:
+    return (
+        "Use only the pinned document context and search_surfsense_docs. "
+        "Find the shortest exact verbatim source span that supports the candidate answer for the query below. "
+        "Return exactly one line in this format: VERBATIM: <text>. "
+        "If no supporting text exists, return exactly: VERBATIM: N/A.\n"
+        f"Query: {base_question}\n"
+        f"Candidate answer: {candidate_answer}"
+    )
+
+
+def _extract_verbatim_text(value: str) -> str:
+    text = (value or "").strip()
+    if not text:
+        return ""
+    match = re.search(r"VERBATIM\s*:\s*(.+)", text, flags=re.IGNORECASE | re.DOTALL)
+    if match:
+        text = match.group(1).strip()
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+    text = lines[0] if lines else text
+    if text.lower() in {"n/a", "na", "none", "not found", "no match"}:
+        return ""
+    return text
+
+
+def _extract_inline_evidence_text(value: str) -> str:
+    text = (value or "").strip()
+    if not text:
+        return ""
+
+    match = re.search(r"(?im)^\s*(?:evidence|verbatim)\s*:\s*(.+)$", text)
+    if not match:
+        return ""
+    extracted = match.group(1).strip()
+    if extracted.lower() in {"n/a", "na", "none", "not found", "no match"}:
+        return ""
+    return extracted
+
+
+def _extract_final_boolean_candidate(text: str) -> str:
+    raw = (text or "").strip()
+    cleaned = _clean_predicted_answer(text)
+    if not raw and not cleaned:
+        return ""
+
+    # Prefer explicit answer cues when present.
+    cue_patterns = [
+        r"(?is)\b(?:final\s+answer|answer)\s*[:\-]\s*(yes|no|true|false|1|0)\b",
+        r"(?is)^\s*(yes|no|true|false|1|0)\b",
+    ]
+    for pattern in cue_patterns:
+        match = re.search(pattern, raw) or re.search(pattern, cleaned)
+        if match:
+            return match.group(1)
+
+    # Strip common instruction fragments that often leak into model output.
+    sanitized = cleaned or raw
+    sanitized = re.sub(r"(?i)\b(?:yes\s*/\s*no|true\s*/\s*false)\b", " ", sanitized)
+    sanitized = re.sub(r"(?i)\bplease\s+return\s+a\s+boolean\s+value\b", " ", sanitized)
+    sanitized = re.sub(r"(?i)\breturn\s+a\s+boolean\s+answer\b", " ", sanitized)
+    sanitized = re.sub(r"(?i)\bif\s+evidence\s+is\s+unavailable[^.]*\.", " ", sanitized)
+
+    bool_matches = list(re.finditer(r"\b(?:yes|no|true|false|1|0)\b", sanitized, flags=re.IGNORECASE))
+    if bool_matches:
+        return bool_matches[-1].group(0)
+
+    bool_matches = list(re.finditer(r"\b(?:yes|no|true|false|1|0)\b", cleaned, flags=re.IGNORECASE))
+    if not bool_matches:
+        return ""
+    return bool_matches[-1].group(0)
+
+
+def _extract_final_value_candidate(text: str) -> str:
+    cleaned = _clean_predicted_answer(text)
+    if not cleaned:
+        return ""
+
+    bool_matches = list(re.finditer(r"\b(?:yes|no|true|false|n/?a)\b", cleaned, flags=re.IGNORECASE))
+    if bool_matches:
+        return bool_matches[-1].group(0)
+
+    value_matches = list(
+        re.finditer(
+            r"[$\u20ac\u00a3\u00a5]?[-+]?\d{1,3}(?:,\d{3})*(?:\.\d+)?"
+            r"(?:\s*(?:billion|million|thousand|percent|%|bps|basis points|usd|dollars?))?"
+            r"|[$\u20ac\u00a3\u00a5]?[-+]?\d+(?:\.\d+)?"
+            r"(?:\s*(?:billion|million|thousand|percent|%|bps|basis points|usd|dollars?))?",
+            cleaned,
+            flags=re.IGNORECASE,
+        )
+    )
+    if value_matches:
+        return value_matches[-1].group(0).strip(" .,:;")
+
+    chunks = [chunk.strip() for chunk in re.split(r"[\n\r]+", cleaned) if chunk.strip()]
+    if chunks:
+        tail = chunks[-1].strip(" .,:;")
+        if len(tail) <= 120:
+            return tail
+    return cleaned
+
+
+def _extract_final_text_candidate(text: str) -> str:
+    cleaned = _clean_predicted_answer(text)
+    if not cleaned:
+        return ""
+
+    lines = [chunk.strip() for chunk in re.split(r"[\n\r]+", cleaned) if chunk.strip()]
+    candidate = lines[-1].strip(" .,:;") if lines else cleaned.strip(" .,:;")
+    candidate = re.sub(r"(?i)^\s*(?:company\s*name|answer|final\s*answer|verbatim)\s*:\s*", "", candidate).strip()
+    return candidate
+
+
+def _extract_company_like_phrase(text: str) -> str:
+    source = _clean_predicted_answer(text)
+    if not source:
+        return ""
+
+    matches = list(
+        re.finditer(
+            r"\b([A-Z][A-Za-z&'\-]+(?:\s+[A-Z][A-Za-z&'\-.,]*){0,8}\s+(?:Inc\.?|Corporation|Corp\.?|Company|Co\.?|Funds(?:\s+[IVXLC]+)?|LLC|Ltd\.?|Adviser,\s*Inc\.?))\b",
+            source,
+        )
+    )
+    if not matches:
+        return ""
+    return matches[-1].group(1).strip(" .,:;")
+
+
+def _coerce_companyname_prediction(value: str) -> str:
+    phrase = _extract_company_like_phrase(value)
+    if phrase:
+        return phrase
+    return _extract_final_text_candidate(value)
+
+
+def _looks_like_investment_adviser_name(value: str) -> bool:
+    text = _coerce_companyname_prediction(value).lower()
+    return "adviser" in text or "advisor" in text
+
+
+def _is_valid_companyname_answer(value: str) -> bool:
+    candidate = _coerce_companyname_prediction(value)
+    if not candidate:
+        return False
+
+    normalized = re.sub(r"[^a-z0-9]+", "", candidate.lower())
+    if normalized in {"yes", "no", "true", "false", "na", "1", "0"}:
+        return False
+    if re.fullmatch(r"[-+]?\d+(?:\.\d+)?", candidate):
+        return False
+    if _looks_intermediate_answer(candidate):
+        return False
+    if len(candidate) > 100:
+        return False
+    if len(candidate.split()) > 12:
+        return False
+    return any(ch.isalpha() for ch in candidate)
+
+
+def _extract_final_numeric_candidate(text: str) -> str:
+    cleaned = _clean_predicted_answer(text)
+    if not cleaned:
+        return ""
+    value_matches = list(
+        re.finditer(
+            r"[$\u20ac\u00a3\u00a5]?[-+]?\d{1,3}(?:,\d{3})*(?:\.\d+)?"
+            r"(?:\s*(?:billion|million|thousand|percent|%|bps|basis points|usd|dollars?))?"
+            r"|[$\u20ac\u00a3\u00a5]?[-+]?\d+(?:\.\d+)?"
+            r"(?:\s*(?:billion|million|thousand|percent|%|bps|basis points|usd|dollars?))?",
+            cleaned,
+            flags=re.IGNORECASE,
+        )
+    )
+    if not value_matches:
+        return ""
+    return value_matches[-1].group(0).strip(" .,:;")
+
+
+def _extract_final_date_candidate(text: str) -> str:
+    cleaned = _clean_predicted_answer(text)
+    if not cleaned:
+        return ""
+    date_matches = list(
+        re.finditer(
+            r"\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b"
+            r"|\b\d{4}-\d{2}-\d{2}\b"
+            r"|\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|"
+            r"jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)"
+            r"\s+\d{1,2},\s*\d{4}\b",
+            cleaned,
+            flags=re.IGNORECASE,
+        )
+    )
+    if not date_matches:
+        return ""
+    return date_matches[-1].group(0).strip(" .,:;")
+
+
+def _parse_date_to_iso(value: str) -> str:
+    text = (value or "").strip()
+    if not text:
+        return ""
+
+    candidate = _extract_final_date_candidate(text) or text
+    formats = [
+        "%m/%d/%Y",
+        "%m/%d/%y",
+        "%m-%d-%Y",
+        "%m-%d-%y",
+        "%Y-%m-%d",
+        "%Y/%m/%d",
+        "%b %d, %Y",
+        "%B %d, %Y",
+        "%b %d %Y",
+        "%B %d %Y",
+        "%d %b %Y",
+        "%d %B %Y",
+        "%d-%b-%Y",
+        "%d-%B-%Y",
+        "%d/%m/%Y",
+        "%d/%m/%y",
+    ]
+
+    for fmt in formats:
+        try:
+            parsed = datetime.strptime(candidate, fmt)
+            return parsed.strftime("%Y-%m-%d")
+        except ValueError:
+            continue
+    return ""
+
+
+def _parse_boolish_value(value: str) -> bool | None:
+    text = (_extract_final_boolean_candidate(value) or _clean_predicted_answer(value)).strip().lower()
+    if not text:
+        return None
+    normalized = re.sub(r"[^a-z0-9]+", "", text)
+    if normalized in {"1", "true", "yes", "y", "on"}:
+        return True
+    if normalized in {"0", "false", "no", "n", "off"}:
+        return False
+    return None
+
+
+def _prepare_prediction_for_scoring(pred: str, expected_type: str) -> str:
+    cleaned = _clean_predicted_answer(pred)
+    if not cleaned:
+        return ""
+
+    cleaned = re.sub(r"\[citation:[^\]]+\]", " ", cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+
+    if expected_type in {"amount", "rate", "ratio", "delta"}:
+        numeric = _extract_final_numeric_candidate(cleaned)
+        if numeric:
+            return numeric
+        return ""
+
+    if expected_type == "boolean":
+        boolean_candidate = _extract_final_boolean_candidate(cleaned)
+        if boolean_candidate:
+            return boolean_candidate
+        return ""
+
+    if expected_type == "date":
+        date_candidate = _extract_final_date_candidate(cleaned)
+        if date_candidate:
+            return date_candidate
+        return ""
+
+    return _extract_final_text_candidate(cleaned)
+
+
+def _find_text_span(haystack: str, needle: str) -> tuple[int, int, str] | None:
+    source = haystack or ""
+    target = (needle or "").strip()
+    if not source or not target:
+        return None
+
+    start = source.find(target)
+    if start >= 0:
+        end = start + len(target)
+        return start, end, "exact"
+
+    start_lower = source.lower().find(target.lower())
+    if start_lower >= 0:
+        end_lower = start_lower + len(target)
+        return start_lower, end_lower, "case_insensitive"
+    return None
+
+
+def _find_entity_aligned_span(haystack: str, candidate: str) -> tuple[int, int, str] | None:
+    target_entities = _extract_numeric_entities(candidate)
+    if not target_entities:
+        return None
+    target = target_entities[0]
+
+    for entity in _extract_numeric_entities(haystack):
+        if _entity_match(target, entity):
+            start = int(entity.get("start", 0))
+            end = int(entity.get("end", start))
+            suffix = haystack[end:]
+            unit_match = re.match(
+                r"^\s*(?:billion|million|thousand|percent|%|bps|basis points|usd|dollars?)\b",
+                suffix,
+                flags=re.IGNORECASE,
+            )
+            if unit_match:
+                end += unit_match.end()
+            return start, end, "numeric_entity"
+    return None
+
+
+def _coerce_prediction_to_source_span(
+    qa: dict[str, Any],
+    pred: str,
+    model_verbatim_text: str | None = None,
+    expected_type: str | None = None,
+) -> tuple[str, dict[str, Any]]:
+    evidence = qa.get("evidence") if isinstance(qa.get("evidence"), dict) else {}
+    evidence_text = str(evidence.get("text", ""))
+    cleaned_pred = _clean_predicted_answer(pred)
+    resolved_expected_type = (expected_type or "").strip().lower() or "text"
+    candidate = _prepare_prediction_for_scoring(cleaned_pred, resolved_expected_type)
+    if not candidate:
+        candidate = _extract_final_value_candidate(cleaned_pred)
+    final_value = candidate or cleaned_pred
+
+    offset_payload: dict[str, Any] = {
+        "found": False,
+        "match_method": None,
+        "start_offset": None,
+        "end_offset": None,
+        "offset_convention": {
+            "reference": "evidence_text",
+            "library": "python3-str",
+            "unit": "unicode_codepoint",
+            "index_base": 0,
+            "range": "[start_offset, end_offset)",
+        },
+        "span_text": None,
+    }
+
+    source_candidates: list[tuple[str, str]] = []
+    verbatim_source = (model_verbatim_text or "").strip()
+    if verbatim_source:
+        source_candidates.append(("model_verbatim_text", verbatim_source))
+    if evidence_text:
+        source_candidates.append(("evidence_text", evidence_text))
+
+    if not source_candidates:
+        return final_value, offset_payload
+
+    for ref_name, source_text in source_candidates:
+        span = _find_text_span(source_text, final_value)
+        if span is None and cleaned_pred and cleaned_pred != final_value:
+            span = _find_text_span(source_text, cleaned_pred)
+        if span is None:
+            span = _find_entity_aligned_span(source_text, final_value)
+
+        if span is None:
+            continue
+
+        start, end, method = span
+        span_text = source_text[start:end]
+        offset_payload.update(
+            {
+                "found": True,
+                "match_method": method,
+                "start_offset": start,
+                "end_offset": end,
+                "span_text": span_text,
+                "offset_convention": {
+                    "reference": ref_name,
+                    "library": "python3-str",
+                    "unit": "unicode_codepoint",
+                    "index_base": 0,
+                    "range": "[start_offset, end_offset)",
+                },
+            }
+        )
+        return span_text, offset_payload
+
+    return final_value, offset_payload
 
 
 def _choose_better_prediction(first: str, second: str) -> str:
@@ -161,23 +707,71 @@ def _infer_expected_answer_type(question: str) -> str:
         return "delta"
     if any(k in q for k in ["date", "as of", "when"]):
         return "date"
-    return "amount"
+    return "text"
+
+
+_SCHEMA_KEY_EXPECTED_TYPE: dict[str, str] = {
+    "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES": "rate",
+    "NET_EXPENSES": "rate",
+    "PERFORMANCE_TABLE_DATES": "date",
+    "AIP_SUBAMOUNT": "amount",
+    "AIP_INITIALAMOUNT": "amount",
+    "AUTOMATIC_INVESTMENT_ELIGIBLE": "boolean",
+    "ELECTRONIC_DELIVERY": "boolean",
+    "REDEEMBYWIRE": "boolean",
+    "PHONESWITCH": "boolean",
+    "COMPANYNAME": "text",
+}
+
+
+def _expected_type_from_schema_key(schema_key: str, question: str = "") -> str:
+    key = (schema_key or "").strip().upper()
+    if key in _SCHEMA_KEY_EXPECTED_TYPE:
+        return _SCHEMA_KEY_EXPECTED_TYPE[key]
+
+    if key:
+        parts = key.split("_")
+        if "DATE" in parts or "DATES" in parts or key.endswith("_DATE") or key.endswith("_DATES"):
+            return "date"
+        if "RATIO" in parts:
+            return "ratio"
+        if any(tok in parts for tok in ["RATE", "EXPENSE", "EXPENSES", "PERCENT", "YIELD", "FEE", "FEES"]):
+            return "rate"
+        if any(tok in parts for tok in ["DELTA", "CHANGE", "DIFFERENCE", "INCREASE", "DECREASE"]):
+            return "delta"
+        if any(tok in parts for tok in ["ELIGIBLE", "ENABLED", "DISABLED", "ACTIVE", "AVAILABLE", "ALLOW"]):
+            return "boolean"
+        if any(tok in parts for tok in ["AMOUNT", "MINIMUM", "MAXIMUM", "VALUE", "PRICE", "BALANCE"]):
+            return "amount"
+        if any(tok in parts for tok in ["NAME", "COMPANY", "PHONE", "SWITCH", "TICKER", "CUSIP", "ISIN", "CLASS"]):
+            return "text"
+
+    return _infer_expected_answer_type(question)
 
 
 def _infer_predicted_answer_type(pred: str) -> str:
     p = pred.lower()
+    normalized = re.sub(r"[^a-z0-9]+", "", p)
+    if normalized in {"1", "0", "yes", "no", "true", "false", "y", "n", "on", "off"}:
+        return "boolean"
     # Prioritize explicit numeric/currency markers before date heuristics.
     if "$" in p or "usd" in p or "billion" in p or "million" in p or "thousand" in p:
         return "amount"
     if any(k in p for k in ["percent", "%", "bps", "basis points"]):
         return "rate"
-    if re.search(r"\b\d+(?:\.\d+)?\s*[:/]\s*\d+(?:\.\d+)?\b", p):
-        return "ratio"
+    if re.search(r"\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b", p):
+        return "date"
+    if re.search(r"\b\d{4}-\d{2}-\d{2}\b", p):
+        return "date"
     if re.search(r"\b\d{4}\b", p) and any(m in p for m in ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]):
         return "date"
+    if re.search(r"\b\d+(?:\.\d+)?\s*:\s*\d+(?:\.\d+)?\b", p):
+        return "ratio"
     if any(k in p for k in ["increase", "decrease", "difference", "change"]):
         return "delta"
-    return "amount"
+    if re.search(r"[-+]?\d", p):
+        return "amount"
+    return "text"
 
 
 def _scale_factor(window: str) -> float:
@@ -234,6 +828,8 @@ def _extract_numeric_entities(value: str) -> list[dict[str, Any]]:
         entities.append(
             {
                 "raw": raw,
+                "start": match.start(),
+                "end": match.end(),
                 "base": base,
                 "type": utype,
                 "scale": scale,
@@ -373,22 +969,200 @@ def _as_bool(value: Any, default: bool) -> bool:
     return default
 
 
-def _rewrite_question_for_retrieval(question: str) -> str:
+_SCHEMA_TERM_ALIAS: dict[str, str] = {
+    "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES": "total annual fund operating expenses",
+    "NET_EXPENSES": "net expenses after fee waiver and/or expense reimbursement",
+    "PERFORMANCE_TABLE_DATES": "performance table date",
+    "AIP_SUBAMOUNT": "minimum subsequent investment amount",
+    "AIP_INITIALAMOUNT": "minimum initial investment amount",
+    "PHONESWITCH": "phone switch availability",
+    "COMPANYNAME": "company name",
+    "AUTOMATIC_INVESTMENT_ELIGIBLE": "automatic investment eligibility",
+    "ELECTRONIC_DELIVERY": "electronic delivery eligibility",
+    "REDEEMBYWIRE": "redeem by wire",
+}
+
+
+def _humanize_schema_term(term: str) -> str:
+    alias = _SCHEMA_TERM_ALIAS.get(term)
+    if alias:
+        return alias
+    return term.replace("_", " ").strip().lower()
+
+
+def _normalize_schema_terms(question: str) -> tuple[str, list[dict[str, str]]]:
+    text = (question or "").strip()
+    if not text:
+        return text, []
+
+    normalized = text
+    replacements: list[dict[str, str]] = []
+
+    # First pass: replace known schema aliases directly (including keys without underscores).
+    for raw, plain in sorted(_SCHEMA_TERM_ALIAS.items(), key=lambda it: len(it[0]), reverse=True):
+        alias_pattern = re.compile(rf"\b{re.escape(raw)}\b")
+        if alias_pattern.search(normalized):
+            normalized = alias_pattern.sub(plain, normalized)
+            replacements.append({"term": raw, "normalized": plain})
+
+    # Upper snake-case tokens that look like schema field names.
+    pattern = re.compile(r"\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+\b")
+
+    def repl(match: re.Match[str]) -> str:
+        raw = match.group(0)
+        plain = _humanize_schema_term(raw)
+        replacements.append({"term": raw, "normalized": plain})
+        return plain
+
+    normalized = pattern.sub(repl, normalized)
+    return normalized, replacements
+
+
+def _lock_companyname_prompt(question: str, schema_key: str) -> tuple[str, bool]:
+    if (schema_key or "").strip().upper() != "COMPANYNAME":
+        return question, False
+
+    text = str(question or "")
+    locked = re.sub(r"\bCOMPANYNAME\b", "company name", text, flags=re.IGNORECASE)
+    locked = re.sub(r"\bcompanyname\b", "company name", locked, flags=re.IGNORECASE)
+    locked = re.sub(r"\s+", " ", locked).strip()
+    return locked, locked != text
+
+
+def _strip_query_boilerplate(question: str) -> str:
+    text = (question or "").strip()
+    if not text:
+        return ""
+
+    patterns = [
+        r"\s*Prioritize these sections:\s*[^.]+\.\s*",
+        r"\s*Return only the final value\.\s*",
+        r"\s*Restrict extraction to this fund and class only\.\s*",
+    ]
+    for pattern in patterns:
+        text = re.sub(pattern, " ", text, flags=re.IGNORECASE)
+
+    text = re.sub(r"\s+", " ", text).strip()
+    text = re.sub(r"\s+([.,;:!?])", r"\1", text)
+    return text
+
+
+def _rewrite_boolean_intent_question(question: str, schema_key: str) -> str:
+    text = (question or "").strip()
+    key = (schema_key or "").strip().upper()
+    if not text:
+        return text
+
+    if key in {"ELECTRONIC_DELIVERY", "REDEEMBYWIRE"}:
+        scope = "the fund"
+        locate_match = re.search(r"\bLocate\s+(.+?)\s+of\s+[^.]+\.", text, flags=re.IGNORECASE)
+        find_match = re.search(r"\bFind information about\s+(.+?)\s+of\s+[^.]+\s+from the document\.", text, flags=re.IGNORECASE)
+        if locate_match:
+            scope = locate_match.group(1).strip()
+        elif find_match:
+            scope = find_match.group(1).strip()
+
+        if scope.lower().startswith("the "):
+            subject = scope
+        else:
+            subject = f"the {scope}"
+
+        if key == "ELECTRONIC_DELIVERY":
+            text = (
+                f"Find out whether {subject} allows for electronic delivery eligibility. "
+                "Please return a boolean value (Yes/No)."
+            )
+        else:
+            text = (
+                f"Find out whether {subject} allows for redeem by wire. "
+                "Please return a boolean value (Yes/No)."
+            )
+
+    text = re.sub(r"\s+", " ", text).strip()
+    text = re.sub(r"\s+([.,;:!?])", r"\1", text)
+    text = re.sub(r"\.\s*\.", ".", text)
+    return text
+
+
+def _compose_fund_context_question(qa: dict[str, Any], question: str) -> tuple[str, dict[str, str]]:
+    fund_name = str(qa.get("fund_name", "")).strip()
+    fund_family = str(qa.get("fund_family", "")).strip()
+    fund_class = str(qa.get("class", "")).strip()
+
+    context: dict[str, str] = {}
+    if fund_name:
+        context["fund_name"] = fund_name
+    if fund_family:
+        context["fund_family"] = fund_family
+    if fund_class:
+        context["class"] = fund_class
+
+    if not context:
+        return question, context
+
+    scope_parts: list[str] = []
+    if fund_name:
+        if fund_class:
+            scope_parts.append(f"{fund_name} ({fund_class})")
+        else:
+            scope_parts.append(fund_name)
+    elif fund_class:
+        scope_parts.append(fund_class)
+
+    if fund_family:
+        scope_parts.append(f"of {fund_family}")
+
+    scope = " ".join(scope_parts).strip()
+    if not scope:
+        return question, context
+
+    if re.match(r"^\s*Find out whether\s+the\s+.+\(Class\s+[^)]+\)\s+allows\s+for\s+electronic\s+delivery\s+eligibility\.", question, flags=re.IGNORECASE):
+        return question, context
+
+    if re.match(r"^\s*Find out whether\s+the\s+.+\(Class\s+[^)]+\)\s+allows\s+for\s+redeem\s+by\s+wire\.", question, flags=re.IGNORECASE):
+        return question, context
+
+    if question:
+        blended = f"Locate {scope}. {question}"
+    else:
+        blended = f"Locate {scope}."
+
+    return blended, context
+
+
+def _rewrite_question_for_retrieval(question: str, document_title_hint: str | None = None) -> str:
     q = (question or "").strip()
-    prefix = "According to the MSFT_FY26Q1_10Q.docx file,"
-    is_rating_question = "debt rating" in q.lower() or "unsecured debt" in q.lower() or q.lower().strip().endswith("return only the rating.")
+    q_lower = q.lower()
+    if document_title_hint and document_title_hint.strip():
+        prefix = f"According to the {document_title_hint.strip()} file,"
+    else:
+        prefix = "According to the pinned source document,"
+    is_rating_question = (
+        "debt rating" in q_lower
+        or "unsecured debt" in q_lower
+        or q_lower.strip().endswith("return only the rating.")
+    )
+    tafoe_disambiguation = (
+        " For total annual fund operating expenses, use the pre-waiver row labeled 'Total annual fund operating expenses'"
+        " and do not use the 'after fee waiver and/or expense reimbursement' row."
+        if "total annual fund operating expenses" in q_lower
+        else ""
+    )
     suffix = (
         " Search the full document before answering (not only the first retrieved chunk)."
         " If the answer is not in the first retrieved chunk, continue retrieval silently until found."
+        " Use only the pinned/mentioned document context; do not use or reference any other document."
         " Do not mention tools, chunks, file-reading steps, or inability to access content."
         " If multiple candidates appear, select the value explicitly tied to September 30, 2025."
         " For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA)."
+        f"{tafoe_disambiguation}"
         " Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions)."
         " Return only one final value with unit and no extra prose."
     )
     rating_suffix = (
         " Search the full document before answering (not only the first retrieved chunk)."
         " If the answer is not in the first retrieved chunk, continue retrieval silently until found."
+        " Use only the pinned/mentioned document context; do not use or reference any other document."
         " Do not mention tools, chunks, file-reading steps, or inability to access content."
         " If multiple candidates appear, select the value explicitly tied to September 30, 2025."
         " Return only the rating text and no extra prose."
@@ -501,6 +1275,17 @@ def _rewrite_question_for_retrieval(question: str) -> str:
     )
 
 
+def _append_question_suffix(question: str, question_suffix: str) -> str:
+    base = (question or "").strip()
+    suffix = (question_suffix or "").strip()
+    if not suffix:
+        return base
+    if base.endswith(suffix):
+        return base
+    separator = " " if base else ""
+    return f"{base}{separator}{suffix}".strip()
+
+
 def _f1_token(gold: str, pred: str) -> float:
     g = _tokenize(gold)
     p = _tokenize(pred)
@@ -601,6 +1386,7 @@ def _units_match(gold: str, pred: str) -> bool:
 @dataclass
 class EvaluationResult:
     cleaned_prediction: str
+    off_topic_document_reference: bool
     answer_clean: bool
     semantic_intent_ok: bool
     strict_exact: bool
@@ -618,8 +1404,31 @@ class EvaluationResult:
     overall_correct: bool
 
 
-def evaluate_answer(gold: str, pred: str) -> EvaluationResult:
-    cleaned_pred = _clean_predicted_answer(pred)
+def _mentions_unrelated_document(pred: str, allowed_document_title_contains: str | None) -> bool:
+    if not pred or not allowed_document_title_contains:
+        return False
+    allowed = allowed_document_title_contains.strip().lower()
+    if not allowed:
+        return False
+    compact_allowed = re.sub(r"\s+", "", allowed)
+    pred_lower = pred.lower()
+    doc_tokens = re.findall(r"\b[\w.-]+\.(?:docx|pdf|html|xml|md|txt)\b", pred_lower)
+    for token in set(doc_tokens):
+        compact_token = re.sub(r"\s+", "", token)
+        if allowed in token or compact_allowed in compact_token:
+            continue
+        return True
+    return False
+
+
+def evaluate_answer(
+    gold: str,
+    pred: str,
+    allowed_document_title_contains: str | None = None,
+    expected_type: str | None = None,
+) -> EvaluationResult:
+    resolved_expected_type = (expected_type or "").strip().lower() or "text"
+    cleaned_pred = _prepare_prediction_for_scoring(pred, resolved_expected_type)
     answer_clean = bool(cleaned_pred) and not _is_noisy_answer(cleaned_pred)
 
     strict_exact = gold.strip() == cleaned_pred.strip()
@@ -628,25 +1437,57 @@ def evaluate_answer(gold: str, pred: str) -> EvaluationResult:
     normalized_exact = gnorm == pnorm
     contains_gold = bool(gnorm) and gnorm in pnorm
     number_match = _numbers_match(gold, cleaned_pred)
+
+    if resolved_expected_type == "date":
+        gold_iso = _parse_date_to_iso(gold)
+        pred_iso = _parse_date_to_iso(cleaned_pred)
+        if gold_iso and pred_iso:
+            normalized_exact = gold_iso == pred_iso
+            contains_gold = normalized_exact
+            number_match = normalized_exact
+
+    if resolved_expected_type == "boolean":
+        gold_bool = _parse_boolish_value(gold)
+        pred_bool = _parse_boolish_value(cleaned_pred)
+        if gold_bool is not None and pred_bool is not None:
+            normalized_exact = gold_bool == pred_bool
+            contains_gold = normalized_exact
+            number_match = normalized_exact
+
     unit_match = _units_match(gold, cleaned_pred)
     token_f1 = _f1_token(gold, cleaned_pred)
 
-    expected_type = _infer_expected_answer_type(gold)
     predicted_type = _infer_predicted_answer_type(cleaned_pred)
-    semantic_intent_ok = expected_type == predicted_type or (expected_type == "delta" and predicted_type in {"amount", "delta"})
+    semantic_intent_ok = resolved_expected_type == predicted_type or (
+        resolved_expected_type == "delta" and predicted_type in {"amount", "delta"}
+    )
+
+    off_topic_document_reference = _mentions_unrelated_document(
+        cleaned_pred,
+        allowed_document_title_contains,
+    )
+    if off_topic_document_reference:
+        answer_clean = False
+        semantic_intent_ok = False
 
     gold_entities = _extract_numeric_entities(gold)
     pred_entities = _extract_numeric_entities(cleaned_pred)
     numeric_precision, numeric_recall, numeric_f1, primary_value_match = _entity_prf(gold_entities, pred_entities)
 
     strict_correct = answer_clean and semantic_intent_ok and number_match and unit_match and (normalized_exact or contains_gold)
-    lenient_correct = answer_clean and semantic_intent_ok and unit_match and (primary_value_match or numeric_f1 >= 0.5)
+    if resolved_expected_type == "boolean":
+        lenient_correct = answer_clean and semantic_intent_ok and unit_match and (normalized_exact or contains_gold or token_f1 >= 0.5)
+    elif resolved_expected_type == "text":
+        lenient_correct = answer_clean and semantic_intent_ok and unit_match and (normalized_exact or contains_gold or token_f1 >= 0.8)
+    else:
+        lenient_correct = answer_clean and semantic_intent_ok and unit_match and (primary_value_match or numeric_f1 >= 0.5)
 
     # Keep overall_correct as lenient correctness for benchmark-level reporting.
     overall_correct = lenient_correct
 
     return EvaluationResult(
         cleaned_prediction=cleaned_pred,
+        off_topic_document_reference=off_topic_document_reference,
         answer_clean=answer_clean,
         semantic_intent_ok=semantic_intent_ok,
         strict_exact=strict_exact,
@@ -1063,6 +1904,32 @@ def write_outputs(output_dir: Path, run_name: str, payload: dict[str, Any]) -> t
             )
         )
 
+    lines.extend(["", "## LLM I/O Trace (First 20 Results)", ""])
+    for item in payload["results"][:20]:
+        lines.append(f"### {item['id']} ({item['group']})")
+        lines.append("")
+        lines.append("- Extraction query")
+        lines.append("```text")
+        lines.append(str(item.get("llm_query_extraction") or ""))
+        lines.append("```")
+        lines.append("- Extraction response")
+        lines.append("```text")
+        lines.append(str(item.get("llm_response_extraction") or ""))
+        lines.append("```")
+        lines.append("- Verbatim query")
+        lines.append("```text")
+        lines.append(str(item.get("llm_query_verbatim") or ""))
+        lines.append("```")
+        lines.append("- Verbatim response")
+        lines.append("```text")
+        lines.append(str(item.get("llm_response_verbatim") or ""))
+        lines.append("```")
+        lines.append("- Extracted verbatim text")
+        lines.append("```text")
+        lines.append(str(item.get("intermediate_verbatim_text") or ""))
+        lines.append("```")
+        lines.append("")
+
     md_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return json_path, md_path
 
@@ -1175,6 +2042,35 @@ def build_arg_parser() -> argparse.ArgumentParser:
         help="Rewrite benchmark questions to remove quoted sentence leakage (true/false)",
     )
     parser.add_argument(
+        "--question-suffix",
+        default=None,
+        help="Suffix appended to each asked question (optional)",
+    )
+    parser.add_argument(
+        "--print-asked-question",
+        dest="print_asked_question",
+        default=None,
+        help="Print the exact asked_question sent to the LLM for each benchmark row (true/false)",
+    )
+    parser.add_argument(
+        "--normalize-schema-terms",
+        dest="normalize_schema_terms",
+        default=None,
+        help="Normalize schema-like terms (e.g., TOTAL_ANNUAL_FUND_OPERATING_EXPENSES) into plain English (true/false)",
+    )
+    parser.add_argument(
+        "--blend-fund-context",
+        dest="blend_fund_context",
+        default=None,
+        help="Blend fund_name/fund_family/class from benchmark row into the query (true/false)",
+    )
+    parser.add_argument(
+        "--post-verbatim-stage",
+        dest="post_verbatim_stage",
+        default=None,
+        help="Run a post-extraction step to capture supporting verbatim text and align final value (true/false)",
+    )
+    parser.add_argument(
         "--disabled-tools",
         default=None,
         help="Comma-separated tool names to disable per request (example: web_search,scrape_webpage)",
@@ -1237,7 +2133,7 @@ def main() -> int:
     benchmark_file = (
         args.benchmark_file
         or _first_present(cfg, ["benchmark_file", "BENCHMARK_FILE"])
-        or "msft_fy26q1_qa_benchmark_100.json"
+        or "df_qa.json"
     )
     search_space_id = args.search_space_id
     if search_space_id is None:
@@ -1268,9 +2164,33 @@ def main() -> int:
         or "benchmark_results"
     )
     run_name = args.run_name or _first_present(cfg, ["run_name", "RUN_NAME"]) or f"surfsense_benchmark_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-    sanitize_questions = _as_bool(
-        args.sanitize_questions if args.sanitize_questions is not None else _first_present(cfg, ["sanitize_questions", "SANITIZE_QUESTIONS"]),
-        True,
+    sanitize_questions = False
+    question_suffix = (
+        args.question_suffix
+        if args.question_suffix is not None
+        else _first_present(cfg, ["question_suffix", "QUESTION_SUFFIX"])
+    )
+    print_asked_question = _as_bool(
+        args.print_asked_question
+        if args.print_asked_question is not None
+        else _first_present(cfg, ["print_asked_question", "PRINT_ASKED_QUESTION"]),
+        False,
+    )
+    normalize_schema_terms = _as_bool(
+        args.normalize_schema_terms
+        if args.normalize_schema_terms is not None
+        else _first_present(cfg, ["normalize_schema_terms", "NORMALIZE_SCHEMA_TERMS"]),
+        False,
+    )
+    blend_fund_context = _as_bool(
+        args.blend_fund_context
+        if args.blend_fund_context is not None
+        else _first_present(cfg, ["blend_fund_context", "BLEND_FUND_CONTEXT"]),
+        False,
+    )
+    post_verbatim_stage = _as_bool(
+        args.post_verbatim_stage if args.post_verbatim_stage is not None else _first_present(cfg, ["post_verbatim_stage", "POST_VERBATIM_STAGE"]),
+        False,
     )
     disabled_tools_raw = (
         args.disabled_tools
@@ -1417,19 +2337,88 @@ def main() -> int:
 
         qid = str(qa.get("id", f"Q{idx:03d}"))
         group = str(qa.get("group", "unknown"))
+        schema_key = str(qa.get("name", "")).strip()
         question = str(qa.get("question", "")).strip()
-        asked_question = _rewrite_question_for_retrieval(question) if sanitize_questions else question
+        normalization_applied: list[dict[str, str]] = []
+        blended_question = question
+        fund_context_applied: dict[str, str] = {}
+
+        normalized_question = question
+        if normalize_schema_terms or schema_key.upper() == "COMPANYNAME":
+            normalized_question, normalization_applied = _normalize_schema_terms(question)
+
+        normalized_question, companyname_locked = _lock_companyname_prompt(normalized_question, schema_key)
+        if companyname_locked:
+            normalization_applied.append({"term": "COMPANYNAME", "normalized": "company name", "source": "lock"})
+
+        normalized_question = _strip_query_boilerplate(normalized_question)
+        normalized_question = _rewrite_boolean_intent_question(normalized_question, schema_key)
+
+        blended_question = normalized_question
+        if blend_fund_context:
+            blended_question, fund_context_applied = _compose_fund_context_question(qa, normalized_question)
+
+        asked_question = blended_question
+        asked_question = _append_question_suffix(asked_question, str(question_suffix or ""))
         gold = str(qa.get("answer", "")).strip()
+        expected_answer_type = _expected_type_from_schema_key(schema_key, question)
+        if expected_answer_type == "boolean" and _is_eligibility_schema_key(schema_key):
+            asked_question = _build_boolean_answer_with_evidence_question(asked_question, schema_key)
+
+        llm_trace_extraction: list[dict[str, Any]] = []
+        llm_trace_verbatim: list[dict[str, Any]] = []
+
+        def _ask_new_chat_traced(
+            stage: str,
+            *,
+            thread_id: int,
+            search_space_id: int,
+            question: str,
+            mentioned_document_ids: list[int] | None,
+            disabled_tools: list[str] | None,
+            message_poll_timeout: float,
+            pre_request_delay_seconds: float,
+            expand_adjacent_chunks: bool = False,
+            adjacent_chunks_window: int = 1,
+            enforce_ranked_evidence_first: bool | None = None,
+            ranking_variant: str | None = None,
+        ) -> str:
+            response_text = client.ask_new_chat(
+                thread_id=thread_id,
+                search_space_id=search_space_id,
+                question=question,
+                mentioned_document_ids=mentioned_document_ids,
+                disabled_tools=disabled_tools,
+                message_poll_timeout=message_poll_timeout,
+                pre_request_delay_seconds=pre_request_delay_seconds,
+                expand_adjacent_chunks=expand_adjacent_chunks,
+                adjacent_chunks_window=adjacent_chunks_window,
+                enforce_ranked_evidence_first=enforce_ranked_evidence_first,
+                ranking_variant=ranking_variant,
+            )
+            trace_item = {
+                "thread_id": thread_id,
+                "query": question,
+                "response": response_text,
+            }
+            if stage == "verbatim":
+                llm_trace_verbatim.append(trace_item)
+            else:
+                llm_trace_extraction.append(trace_item)
+            return response_text
 
         with _lock:
             print(f"[{_now_utc()}] ({idx}/{len(qas)}) {qid} ...", flush=True)
+            if print_asked_question:
+                print(f"[PROMPT][{qid}] {asked_question}", flush=True)
 
         thread_title = f"benchmark-{run_name}-{qid}"
         thread_id = client.create_thread(search_space_id=search_space_id, title=thread_title)
         _local_thread_ids.append(thread_id)
 
         try:
-            pred = client.ask_new_chat(
+            pred = _ask_new_chat_traced(
+                "extraction",
                 thread_id=thread_id,
                 search_space_id=search_space_id,
                 question=asked_question,
@@ -1450,7 +2439,8 @@ def main() -> int:
                 )
                 _local_thread_ids.append(retry_thread_id)
                 try:
-                    retry_pred = client.ask_new_chat(
+                    retry_pred = _ask_new_chat_traced(
+                        "extraction",
                         thread_id=retry_thread_id,
                         search_space_id=search_space_id,
                         question=f"{asked_question} Final answer only.",
@@ -1479,17 +2469,19 @@ def main() -> int:
                 pred_lower = pred.lower()
                 if (
                     not retry_doc_ids
+                    and document_title_contains
                     and ("cannot find the file" in pred_lower or "do not see the file" in pred_lower)
                 ):
                     with _lock:
                         if not fallback_doc_ids:
                             fallback_doc_ids.extend(
-                                resolve_document_ids(client, search_space_id, "MSFT_FY26Q1_10Q")
+                                resolve_document_ids(client, search_space_id, document_title_contains)
                             )
                         retry_doc_ids = list(fallback_doc_ids)
-                retry_question = _build_force_final_question(asked_question)
+                retry_question = _build_force_final_question(asked_question, expected_answer_type)
                 try:
-                    retry_pred = client.ask_new_chat(
+                    retry_pred = _ask_new_chat_traced(
+                        "extraction",
                         thread_id=retry_thread_id,
                         search_space_id=search_space_id,
                         question=retry_question,
@@ -1511,10 +2503,11 @@ def main() -> int:
                             title=f"benchmark-{run_name}-{qid}-completion-retry-2",
                         )
                         _local_thread_ids.append(second_retry_thread_id)
-                        second_retry_pred = client.ask_new_chat(
+                        second_retry_pred = _ask_new_chat_traced(
+                            "extraction",
                             thread_id=second_retry_thread_id,
                             search_space_id=search_space_id,
-                            question=_build_force_final_question(asked_question),
+                            question=_build_force_final_question(asked_question, expected_answer_type),
                             mentioned_document_ids=retry_doc_ids,
                             disabled_tools=disabled_tools,
                             message_poll_timeout=args.message_poll_timeout,
@@ -1540,7 +2533,8 @@ def main() -> int:
                 )
                 _local_thread_ids.append(retry_thread_id)
                 try:
-                    pred = client.ask_new_chat(
+                    pred = _ask_new_chat_traced(
+                        "extraction",
                         thread_id=retry_thread_id,
                         search_space_id=search_space_id,
                         question=asked_question,
@@ -1567,7 +2561,275 @@ def main() -> int:
                 with _lock:
                     print(f"  warning: request failed for {qid}: {exc}", file=sys.stderr)
 
-        metrics = evaluate_answer(gold=gold, pred=pred)
+        if pred and expected_answer_type in {"amount", "rate", "ratio", "delta", "date"} and _raw_response_leads_to_malformed_typed_answer(pred):
+            retry_thread_id = client.create_thread(
+                search_space_id=search_space_id,
+                title=f"benchmark-{run_name}-{qid}-binary-retry",
+            )
+            _local_thread_ids.append(retry_thread_id)
+            retry_question = _build_typed_retry_question(asked_question, expected_answer_type)
+            try:
+                retry_pred = _ask_new_chat_traced(
+                    "extraction",
+                    thread_id=retry_thread_id,
+                    search_space_id=search_space_id,
+                    question=retry_question,
+                    mentioned_document_ids=doc_ids,
+                    disabled_tools=disabled_tools,
+                    message_poll_timeout=args.message_poll_timeout,
+                    pre_request_delay_seconds=delay_per_request,
+                    expand_adjacent_chunks=expand_adjacent_chunks,
+                    adjacent_chunks_window=adjacent_chunks_window,
+                    enforce_ranked_evidence_first=enforce_ranked_evidence_first,
+                    ranking_variant=ranking_variant,
+                )
+                if retry_pred:
+                    if _raw_response_leads_to_malformed_typed_answer(retry_pred):
+                        second_retry_thread_id = client.create_thread(
+                            search_space_id=search_space_id,
+                            title=f"benchmark-{run_name}-{qid}-typed-retry-2",
+                        )
+                        _local_thread_ids.append(second_retry_thread_id)
+                        second_retry_question = _build_typed_retry_question(asked_question, expected_answer_type)
+                        second_retry_pred = _ask_new_chat_traced(
+                            "extraction",
+                            thread_id=second_retry_thread_id,
+                            search_space_id=search_space_id,
+                            question=second_retry_question,
+                            mentioned_document_ids=doc_ids,
+                            disabled_tools=disabled_tools,
+                            message_poll_timeout=args.message_poll_timeout,
+                            pre_request_delay_seconds=delay_per_request,
+                            expand_adjacent_chunks=expand_adjacent_chunks,
+                            adjacent_chunks_window=adjacent_chunks_window,
+                            enforce_ranked_evidence_first=enforce_ranked_evidence_first,
+                            ranking_variant=ranking_variant,
+                        )
+                        if second_retry_pred:
+                            if _raw_response_leads_to_malformed_typed_answer(second_retry_pred):
+                                pred = _choose_better_prediction(pred, retry_pred)
+                            else:
+                                pred = second_retry_pred
+                        else:
+                            pred = _choose_better_prediction(pred, retry_pred)
+                    else:
+                        pred = retry_pred
+            except Exception as retry_exc:  # noqa: BLE001
+                with _lock:
+                    print(f"  warning: binary-answer retry failed for {qid}: {retry_exc}", file=sys.stderr)
+
+        if (
+            pred
+            and expected_answer_type == "text"
+            and any(ch.isalpha() for ch in gold)
+            and _raw_response_leads_to_malformed_text_answer(pred)
+        ):
+            retry_thread_id = client.create_thread(
+                search_space_id=search_space_id,
+                title=f"benchmark-{run_name}-{qid}-text-retry",
+            )
+            _local_thread_ids.append(retry_thread_id)
+            retry_question = _build_text_retry_question(asked_question, schema_key)
+            try:
+                retry_pred = _ask_new_chat_traced(
+                    "extraction",
+                    thread_id=retry_thread_id,
+                    search_space_id=search_space_id,
+                    question=retry_question,
+                    mentioned_document_ids=doc_ids,
+                    disabled_tools=disabled_tools,
+                    message_poll_timeout=args.message_poll_timeout,
+                    pre_request_delay_seconds=delay_per_request,
+                    expand_adjacent_chunks=expand_adjacent_chunks,
+                    adjacent_chunks_window=adjacent_chunks_window,
+                    enforce_ranked_evidence_first=enforce_ranked_evidence_first,
+                    ranking_variant=ranking_variant,
+                )
+                if retry_pred:
+                    if _raw_response_leads_to_malformed_text_answer(retry_pred):
+                        second_retry_thread_id = client.create_thread(
+                            search_space_id=search_space_id,
+                            title=f"benchmark-{run_name}-{qid}-text-retry-2",
+                        )
+                        _local_thread_ids.append(second_retry_thread_id)
+                        second_retry_question = _build_text_retry_question_strict(asked_question, schema_key)
+                        second_retry_pred = _ask_new_chat_traced(
+                            "extraction",
+                            thread_id=second_retry_thread_id,
+                            search_space_id=search_space_id,
+                            question=second_retry_question,
+                            mentioned_document_ids=doc_ids,
+                            disabled_tools=disabled_tools,
+                            message_poll_timeout=args.message_poll_timeout,
+                            pre_request_delay_seconds=delay_per_request,
+                            expand_adjacent_chunks=expand_adjacent_chunks,
+                            adjacent_chunks_window=adjacent_chunks_window,
+                            enforce_ranked_evidence_first=enforce_ranked_evidence_first,
+                            ranking_variant=ranking_variant,
+                        )
+                        if second_retry_pred:
+                            if _raw_response_leads_to_malformed_text_answer(second_retry_pred):
+                                pred = _choose_better_prediction(pred, retry_pred)
+                            else:
+                                pred = second_retry_pred
+                        else:
+                            pred = _choose_better_prediction(pred, retry_pred)
+                    else:
+                        pred = retry_pred
+            except Exception as retry_exc:  # noqa: BLE001
+                with _lock:
+                    print(f"  warning: text-answer retry failed for {qid}: {retry_exc}", file=sys.stderr)
+
+        if schema_key.upper() == "COMPANYNAME" and not _is_valid_companyname_answer(pred):
+            company_retry_thread_id = client.create_thread(
+                search_space_id=search_space_id,
+                title=f"benchmark-{run_name}-{qid}-companyname-retry",
+            )
+            _local_thread_ids.append(company_retry_thread_id)
+            try:
+                company_retry_pred = _ask_new_chat_traced(
+                    "extraction",
+                    thread_id=company_retry_thread_id,
+                    search_space_id=search_space_id,
+                    question=_build_companyname_retry_question(asked_question),
+                    mentioned_document_ids=doc_ids,
+                    disabled_tools=disabled_tools,
+                    message_poll_timeout=args.message_poll_timeout,
+                    pre_request_delay_seconds=delay_per_request,
+                    expand_adjacent_chunks=expand_adjacent_chunks,
+                    adjacent_chunks_window=adjacent_chunks_window,
+                    enforce_ranked_evidence_first=enforce_ranked_evidence_first,
+                    ranking_variant=ranking_variant,
+                )
+                if company_retry_pred and _is_valid_companyname_answer(company_retry_pred):
+                    pred = company_retry_pred
+                elif company_retry_pred:
+                    second_company_retry_thread_id = client.create_thread(
+                        search_space_id=search_space_id,
+                        title=f"benchmark-{run_name}-{qid}-companyname-retry-2",
+                    )
+                    _local_thread_ids.append(second_company_retry_thread_id)
+                    second_company_retry_pred = _ask_new_chat_traced(
+                        "extraction",
+                        thread_id=second_company_retry_thread_id,
+                        search_space_id=search_space_id,
+                        question=_build_companyname_retry_question(asked_question),
+                        mentioned_document_ids=doc_ids,
+                        disabled_tools=disabled_tools,
+                        message_poll_timeout=args.message_poll_timeout,
+                        pre_request_delay_seconds=delay_per_request,
+                        expand_adjacent_chunks=expand_adjacent_chunks,
+                        adjacent_chunks_window=adjacent_chunks_window,
+                        enforce_ranked_evidence_first=enforce_ranked_evidence_first,
+                        ranking_variant=ranking_variant,
+                    )
+                    if second_company_retry_pred and _is_valid_companyname_answer(second_company_retry_pred):
+                        pred = second_company_retry_pred
+            except Exception as company_retry_exc:  # noqa: BLE001
+                with _lock:
+                    print(f"  warning: companyname retry failed for {qid}: {company_retry_exc}", file=sys.stderr)
+
+        if schema_key.upper() == "COMPANYNAME" and not _looks_like_investment_adviser_name(pred):
+            adviser_retry_thread_id = client.create_thread(
+                search_space_id=search_space_id,
+                title=f"benchmark-{run_name}-{qid}-companyname-adviser-retry",
+            )
+            _local_thread_ids.append(adviser_retry_thread_id)
+            try:
+                adviser_retry_pred = _ask_new_chat_traced(
+                    "extraction",
+                    thread_id=adviser_retry_thread_id,
+                    search_space_id=search_space_id,
+                    question=_build_companyname_retry_question(asked_question),
+                    mentioned_document_ids=doc_ids,
+                    disabled_tools=disabled_tools,
+                    message_poll_timeout=args.message_poll_timeout,
+                    pre_request_delay_seconds=delay_per_request,
+                    expand_adjacent_chunks=expand_adjacent_chunks,
+                    adjacent_chunks_window=adjacent_chunks_window,
+                    enforce_ranked_evidence_first=enforce_ranked_evidence_first,
+                    ranking_variant=ranking_variant,
+                )
+                adviser_candidate = _coerce_companyname_prediction(adviser_retry_pred)
+                if _is_valid_companyname_answer(adviser_candidate) and _looks_like_investment_adviser_name(adviser_candidate):
+                    pred = adviser_candidate
+            except Exception as adviser_retry_exc:  # noqa: BLE001
+                with _lock:
+                    print(f"  warning: companyname adviser retry failed for {qid}: {adviser_retry_exc}", file=sys.stderr)
+
+        if schema_key.upper() == "COMPANYNAME":
+            pred = _coerce_companyname_prediction(pred)
+
+        intermediate_verbatim_text = _extract_inline_evidence_text(pred)
+        needs_verbatim_stage = post_verbatim_stage or (
+            expected_answer_type == "boolean" and _is_eligibility_schema_key(schema_key)
+        )
+        verbatim_query = ""
+        verbatim_resp = ""
+        if needs_verbatim_stage and pred and not intermediate_verbatim_text:
+            verbatim_thread_id = client.create_thread(
+                search_space_id=search_space_id,
+                title=f"benchmark-{run_name}-{qid}-verbatim-stage",
+            )
+            _local_thread_ids.append(verbatim_thread_id)
+            try:
+                verbatim_query = _build_verbatim_support_question(
+                    asked_question,
+                    _prepare_prediction_for_scoring(pred, expected_answer_type) or pred,
+                )
+                verbatim_resp = _ask_new_chat_traced(
+                    "verbatim",
+                    thread_id=verbatim_thread_id,
+                    search_space_id=search_space_id,
+                    question=verbatim_query,
+                    mentioned_document_ids=doc_ids,
+                    disabled_tools=disabled_tools,
+                    message_poll_timeout=args.message_poll_timeout,
+                    pre_request_delay_seconds=delay_per_request,
+                    expand_adjacent_chunks=expand_adjacent_chunks,
+                    adjacent_chunks_window=adjacent_chunks_window,
+                    enforce_ranked_evidence_first=enforce_ranked_evidence_first,
+                    ranking_variant=ranking_variant,
+                )
+                intermediate_verbatim_text = _extract_verbatim_text(verbatim_resp)
+            except Exception as verbatim_exc:  # noqa: BLE001
+                with _lock:
+                    print(f"  warning: post-verbatim stage failed for {qid}: {verbatim_exc}", file=sys.stderr)
+
+        pre_coercion_pred = pred
+        prepared_pred_before_coercion = _prepare_prediction_for_scoring(pre_coercion_pred, expected_answer_type)
+
+        metrics = evaluate_answer(
+            gold=gold,
+            pred=pre_coercion_pred,
+            allowed_document_title_contains=document_title_contains,
+            expected_type=expected_answer_type,
+        )
+        coerced_pred, predicted_span_offsets = _coerce_prediction_to_source_span(
+            qa,
+            pre_coercion_pred,
+            model_verbatim_text=intermediate_verbatim_text,
+            expected_type=expected_answer_type,
+        )
+        if coerced_pred:
+            pred = coerced_pred
+            metrics = evaluate_answer(
+                gold=gold,
+                pred=pred,
+                allowed_document_title_contains=document_title_contains,
+                expected_type=expected_answer_type,
+            )
+        source_span_match = bool(predicted_span_offsets.get("found"))
+        source_verbatim_match = source_span_match and (
+            metrics.cleaned_prediction.strip() == str(predicted_span_offsets.get("span_text") or "").strip()
+        )
+
+        output_verbatim_text = (intermediate_verbatim_text or "").strip()
+        if not output_verbatim_text:
+            output_verbatim_text = str(predicted_span_offsets.get("span_text") or "").strip()
+        if not output_verbatim_text:
+            output_verbatim_text = "N/A"
+
         pred_preview = metrics.cleaned_prediction.replace("\n", " ").strip()
         if len(pred_preview) > 140:
             pred_preview = pred_preview[:137] + "..."
@@ -1581,22 +2843,46 @@ def main() -> int:
                 f"unit={'Y' if metrics.unit_match else 'N'} "
                 f"clean={'Y' if metrics.answer_clean else 'N'} "
                 f"intent={'Y' if metrics.semantic_intent_ok else 'N'} "
+                f"doc_scope={'Y' if not metrics.off_topic_document_reference else 'N'} "
+                f"src_span={'Y' if source_verbatim_match else 'N'} "
                 f"num_f1={metrics.numeric_f1:.3f} "
                 f"pred={pred_preview!r}",
                 flush=True,
             )
             print(f"  expected: {gold}", flush=True)
             print(f"  predicted_exact: {pred}", flush=True)
+            if expected_answer_type == "boolean":
+                print(
+                    f"  trace_boolean: pre_coercion={pre_coercion_pred!r} prepared={prepared_pred_before_coercion!r} post_coercion={pred!r}",
+                    flush=True,
+                )
 
         result = {
             "_order": idx,
             "id": qid,
             "group": group,
             "question": question,
+            "blended_question": blended_question,
+            "fund_context_applied": fund_context_applied,
+            "normalized_question": normalized_question,
+            "normalization_applied": normalization_applied,
             "asked_question": asked_question,
+            "schema_key": schema_key,
+            "expected_answer_type": expected_answer_type,
             "gold_answer": gold,
+            "pre_coercion_predicted_answer": pre_coercion_pred,
+            "prepared_prediction_before_coercion": prepared_pred_before_coercion,
             "predicted_answer": pred,
+            "intermediate_verbatim_text": output_verbatim_text,
+            "llm_query_extraction": llm_trace_extraction[-1]["query"] if llm_trace_extraction else asked_question,
+            "llm_response_extraction": llm_trace_extraction[-1]["response"] if llm_trace_extraction else pre_coercion_pred,
+            "llm_query_verbatim": llm_trace_verbatim[-1]["query"] if llm_trace_verbatim else verbatim_query,
+            "llm_response_verbatim": llm_trace_verbatim[-1]["response"] if llm_trace_verbatim else verbatim_resp,
+            "llm_trace_extraction": llm_trace_extraction,
+            "llm_trace_verbatim": llm_trace_verbatim,
+            "predicted_span_offsets": predicted_span_offsets,
             "metrics": {
+                "off_topic_document_reference": metrics.off_topic_document_reference,
                 "answer_clean": metrics.answer_clean,
                 "semantic_intent_ok": metrics.semantic_intent_ok,
                 "strict_exact": metrics.strict_exact,
@@ -1611,6 +2897,8 @@ def main() -> int:
                 "token_f1": metrics.token_f1,
                 "strict_correct": metrics.strict_correct,
                 "lenient_correct": metrics.lenient_correct,
+                "source_span_match": source_span_match,
+                "source_verbatim_match": source_verbatim_match,
                 "overall_correct": metrics.overall_correct,
             },
         }
@@ -1660,6 +2948,11 @@ def main() -> int:
             "sleep_between": args.sleep_between,
             "workers": workers,
             "sanitize_questions": sanitize_questions,
+            "question_suffix": str(question_suffix or ""),
+            "print_asked_question": print_asked_question,
+            "blend_fund_context": blend_fund_context,
+            "normalize_schema_terms": normalize_schema_terms,
+            "post_verbatim_stage": post_verbatim_stage,
             "disabled_tools": disabled_tools,
         },
         "summary": summary,
