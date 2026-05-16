@@ -84,12 +84,17 @@
       text-transform: lowercase;
     }
     .err { color: #ffb8b8; font-size: 12px; line-height: 1.4; background: #2a1521; border: 1px solid #5c2d44; padding: 8px; border-radius: 6px; }
+    .evidence-table { font-family: monospace; font-size: 11px; border-collapse: collapse; width: 100%; margin: 4px 0; }
+    .evidence-table td, .evidence-table th { border: 1px solid #3a5d95; padding: 3px 6px; text-align: left; color: #dbe5ff; }
+    .evidence-table .matched-cell { background: #ffd84d; color: #111; font-weight: 700; box-shadow: inset 0 0 0 1px #c59a00; }
+    .evidence-table .row-label { color: #b7c9ff; font-weight: 600; }
+    .ev-meta { font-size: 10px; color: #70b0ff; margin-bottom: 4px; }
   </style>
 </head>
 <body>
   <div class="layout">
     <aside class="left">
-      <h2>Q&A Linked List (full43)</h2>
+      <h2>Q&A Linked List (Q01 - Extraction .80, Regex+Enrichment fixed)</h2>
       <p class="hint">Predicted value is matched against verbatim text in the main page. If prediction is wrong or text is not found, <b>Cannot Match</b> is highlighted.</p>
       <div id="summary" class="summary">Loading benchmark results...</div>
       <div class="filters">
@@ -116,8 +121,8 @@
     </main>
   </div>
 
-  <script src="df_html.payload.js?v=20260514-redeembywire-sync-6"></script>
-  <script src="full43_rerun_20260514_apply_fixtures.payload.js?v=20260514-full43-rerun-sync-1"></script>
+  <script src="df_html.payload.js"></script>
+  <script src="q01_final3.payload.js"></script>
   <script src="qa_match_enhancement_rules.js?v=20260514-numeric-boundary-fix-1"></script>
   <script>
     const RESULTS_FILE = 'full43_rerun_20260514_apply_fixtures.json';
@@ -169,11 +174,27 @@
     }
 
     function getEvidenceText(row) {
+      // Evidence text = complete row containing the extraction (e.g. "Total annual fund...| .80 |")
+      const rowText = String(row.intermediate_verbatim_text || '').trim();
+      if (rowText) return rowText;
+      // Fallback: verbatim span or full chunk
       return String(
         row.display_evidence_text ||
-        row.intermediate_verbatim_text ||
         (((row.evidence || {}).text) || '')
       ).trim();
+    }
+
+    function getEvidenceContext(row) {
+      const ctx = row.evidence_context || ((row.predicted_span_offsets || {}).evidence_context) || '';
+      return String(ctx).trim();
+    }
+
+    function getSpanOffsets(row) {
+      const o = row.predicted_span_offsets || {};
+      if (o && typeof o === 'object' && (typeof o.start_offset === 'number' || typeof o.end_offset === 'number')) {
+        return o;
+      }
+      return null;
     }
 
     function getToolVerbatimMatch(row) {
@@ -265,12 +286,222 @@
       return { matched: false, rule: null, text: null };
     }
 
+    function clearAllHighlights(doc) {
+      if (!doc) return;
+      // Remove all highlight marks and unwrap their content
+      doc.querySelectorAll('.qa-hit-pred').forEach(m => {
+        const parent = m.parentNode;
+        if (parent) {
+          while (m.firstChild) parent.insertBefore(m.firstChild, m);
+          parent.removeChild(m);
+        }
+      });
+      // Remove all context highlight classes and inline styles
+      doc.querySelectorAll('.qa-evidence-context, .qa-evidence-context-target, .qa-evidence-col-header, .qa-table-highlight')
+        .forEach(el => {
+          // Save reference first, then remove class
+          el.classList.remove('qa-evidence-context', 'qa-evidence-context-target', 'qa-evidence-col-header', 'qa-table-highlight');
+          // Also clear any inline style that may have been set
+          el.style.cssText = '';
+        });
+    }
+
+    function highlightByTableEvidence(doc, evidenceCtx, markId, level, doScroll) {
+      console.debug('highlightByTableEvidence called', { markId, level });
+      // Parse evidence context
+      const rowMatch = evidenceCtx.match(/row="([^"]+)"/);
+      const colMatch = evidenceCtx.match(/column="([^"]+)"/);
+      const valMatch = evidenceCtx.match(/value="([^"]+)"/);
+      const headersMatch = evidenceCtx.match(/--- Column headers: (.+) ---/);
+      console.debug('parsed evidenceCtx', { rowMatch, colMatch, valMatch });
+      const rowLabel = rowMatch ? rowMatch[1].trim() : '';
+      const colHint = colMatch ? colMatch[1].trim() : '';
+      const value = valMatch ? valMatch[1].trim() : '';
+      const allHeaders = headersMatch ? headersMatch[1].split(' | ').map(s => s.trim()) : [];
+      if (!rowLabel || !colHint || !value) return { matched: false, rule: null, text: null };
+
+      const norm = (s) => String(s || '').replace(/\s+/g, ' ').trim().toLowerCase();
+
+      const tables = doc.querySelectorAll('table');
+      console.debug('tables found', tables.length);
+      for (const table of tables) {
+        const rows = table.querySelectorAll('tr');
+        console.debug('checking table', { rows: rows.length });
+        if (!rows.length) continue;
+
+        // Find target row and column (robust matching)
+        let targetRowIdx = -1, targetCellIdx = -1, headerRowIdx = -1;
+        const rowLabelLower = norm(rowLabel);
+        const colHintLower = norm(colHint);
+
+        // Find the row containing the row label (loose contains)
+          for (let ri = 0; ri < rows.length; ri++) {
+            const cells = rows[ri].querySelectorAll('td, th');
+            for (let ci = 0; ci < cells.length; ci++) {
+              const txt = norm(cells[ci].textContent);
+              if (txt && rowLabelLower && txt.includes(rowLabelLower)) { targetRowIdx = ri; break; }
+            }
+            if (targetRowIdx >= 0) break;
+          }
+        console.debug('targetRowIdx', targetRowIdx);
+        if (targetRowIdx < 0) continue;
+
+        // Try to find header & column index by scanning the whole table (loose contains, whitespace-normalized)
+          for (let ri = 0; ri < rows.length; ri++) {
+            const cells = rows[ri].querySelectorAll('td, th');
+            for (let ci = 0; ci < cells.length; ci++) {
+              const txt = norm(cells[ci].textContent);
+              if (txt && colHintLower && txt.includes(colHintLower)) { headerRowIdx = ri; targetCellIdx = ci; break; }
+            }
+            if (targetCellIdx >= 0) break;
+          }
+
+        const targetRow = rows[targetRowIdx];
+        const targetCells = targetRow ? targetRow.querySelectorAll('td, th') : [];
+
+        // Fallback: if header column not found, locate cell in target row by value matching
+        if (targetCellIdx < 0) {
+          const valueNorm = String(value || '').trim();
+          for (let ci = 0; ci < targetCells.length; ci++) {
+            const txt = (targetCells[ci].textContent || '').replace(/\s+/g, ' ').trim();
+            if (!txt) continue;
+            if (valueNorm && (txt === valueNorm || txt.toLowerCase().includes(valueNorm.toLowerCase()) || (valueNorm.startsWith('.') && txt.includes(valueNorm.slice(1))))) {
+              targetCellIdx = ci; break;
+            }
+          }
+        }
+
+        if (targetRowIdx < 0 || targetCellIdx < 0) continue;
+        console.debug('found targetCellIdx', targetCellIdx, 'headerRowIdx', headerRowIdx, 'targetRowIdx', targetRowIdx);
+
+        const targetCell = targetCells[targetCellIdx];
+        if (!targetCell) continue;
+
+        // LEVEL: table — highlight entire table
+        if (level === 'table') {
+          console.debug('applying table highlight for', { markId, value });
+          table.classList.add('qa-table-highlight');
+          // Inject anchor into table header or first row so we have a scrollable element
+          let firstMark = table.querySelector('caption, thead, tbody > tr:first-child');
+          if (!firstMark) firstMark = table;
+          const anchor = doc.createElement('span');
+          anchor.id = markId;
+          anchor.style.display = 'block';
+          anchor.style.width = '1px';
+          anchor.style.height = '1px';
+          anchor.style.margin = '0';
+          anchor.style.padding = '0';
+          (firstMark.firstChild ? firstMark : firstMark).insertBefore(anchor, firstMark.firstChild || null);
+          if (doScroll !== false) anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return { matched: true, rule: 'table-context', text: value };
+        }
+
+        // LEVEL: row — highlight the row + column header
+        if (level === 'row') {
+          console.debug('applying row highlight for', { markId, value });
+          targetRow.classList.add('qa-evidence-context-target');
+          // Adjacent rows context
+          [
+            rows[Math.max(0, targetRowIdx - 1)],
+            rows[Math.min(rows.length - 1, targetRowIdx + 1)]
+          ].forEach(r => { if (r && r !== targetRow) r.classList.add('qa-evidence-context'); });
+          if (headerRowIdx >= 0) {
+            const hCells = rows[headerRowIdx].querySelectorAll('td, th');
+            if (hCells[targetCellIdx]) hCells[targetCellIdx].classList.add('qa-evidence-col-header');
+          }
+          const ok = _highlightCellText(doc, targetCell, value, markId);
+          // If mark couldn't be created, inject an anchor so scroll and activation work
+          if (!ok) {
+            const anchor = doc.createElement('span');
+            anchor.id = markId;
+            anchor.style.display = 'block';
+            anchor.style.width = '1px';
+            anchor.style.height = '1px';
+            anchor.style.margin = '0';
+            anchor.style.padding = '0';
+            targetCell.insertBefore(anchor, targetCell.firstChild);
+            // Also ensure the contextual classes are present so highlight is visible
+            try {
+              targetRow.classList.add('qa-evidence-context-target');
+              rows[Math.max(0, targetRowIdx - 1)]?.classList.add('qa-evidence-context');
+              rows[Math.min(rows.length - 1, targetRowIdx + 1)]?.classList.add('qa-evidence-context');
+              if (headerRowIdx >= 0) {
+                const hCells2 = rows[headerRowIdx].querySelectorAll('td, th');
+                if (hCells2[targetCellIdx]) hCells2[targetCellIdx].classList.add('qa-evidence-col-header');
+              }
+              const table2 = targetRow.closest('table');
+              if (table2) table2.classList.add('qa-table-highlight');
+            } catch (e) { /* ignore */ }
+          }
+          return { matched: true, rule: `table-row="${rowLabel}" col="${colHint}"`, text: value };
+        }
+
+        // LEVEL: extraction — just the cell value
+        console.debug('applying extraction highlight for', { markId, value });
+        const ok = _highlightCellText(doc, targetCell, value, markId);
+        if (!ok) {
+          // fallback anchor so caller can scroll to something
+          const anchor = doc.createElement('span');
+          anchor.id = markId;
+          anchor.style.display = 'inline-block';
+          anchor.style.width = '1px';
+          anchor.style.height = '1px';
+          anchor.style.margin = '0';
+          anchor.style.padding = '0';
+          targetCell.insertBefore(anchor, targetCell.firstChild);
+          // make sure cell and table show a visible highlight even without a mark
+          try {
+            if (targetCell && targetCell.classList) targetCell.classList.add('qa-evidence-context-target');
+            const t = targetCell.closest('table'); if (t) t.classList.add('qa-table-highlight');
+            const rr = targetCell.closest('tr'); if (rr) { rr.classList.add('qa-evidence-context-target'); rr.previousElementSibling?.classList.add('qa-evidence-context'); rr.nextElementSibling?.classList.add('qa-evidence-context'); }
+            if (headerRowIdx >= 0) { const hCells3 = rows[headerRowIdx].querySelectorAll('td, th'); if (hCells3[targetCellIdx]) hCells3[targetCellIdx].classList.add('qa-evidence-col-header'); }
+          } catch (e) { /* ignore */ }
+        }
+        return { matched: true, rule: `extraction-${value}`, text: value };
+      }
+      return { matched: false, rule: null, text: null };
+    }
+
+    function _highlightCellText(doc, cell, value, markId) {
+      console.debug('_highlightCellText', { markId, value, cell });
+      const textNodes = [];
+      const walker = doc.createTreeWalker(cell, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) textNodes.push(walker.currentNode);
+      for (const node of textNodes) {
+        const text = node.nodeValue; if (!text) continue;
+        let idx = text.indexOf(value);
+        if (idx < 0) idx = text.toLowerCase().indexOf(value.toLowerCase());
+        if (idx < 0 && value.startsWith('.')) { idx = text.indexOf(value.slice(1)); }
+        if (idx < 0) continue;
+        const range = doc.createRange();
+        range.setStart(node, idx);
+        range.setEnd(node, idx + value.length);
+        const mark = doc.createElement('mark');
+        mark.className = 'qa-hit-pred';
+        mark.id = markId;
+        mark.setAttribute('data-prediction', value);
+        console.debug('creating mark', { markId, value });
+        try { range.surroundContents(mark); return true; } catch { continue; }
+      }
+      return false;
+    }
+
     function installHighlightStyle(doc) {
+      // Hide missing images
+      doc.addEventListener('error', (e) => {
+        if (e.target && e.target.tagName === 'IMG') e.target.style.display = 'none';
+      }, true);
       const style = doc.createElement('style');
       style.textContent = `
         .qa-hit-pred{background:#ffd84d;color:#111;padding:1px 2px;border-radius:2px;box-shadow:inset 0 0 0 1px #c79d00;transition:all .2s ease;}
         .qa-hit-pred.qa-hit-muted{opacity:.35;filter:saturate(.65);}
         .qa-hit-pred.qa-hit-active{position:relative;opacity:1;outline:2px solid #00e1ff;outline-offset:3px;box-shadow:0 0 0 2px #001b22,0 0 0 5px rgba(0,225,255,.75),0 0 16px 4px rgba(0,225,255,.5), inset 0 0 0 1px #7d5c00;z-index:2;animation:qaHitPulse 1.25s ease-in-out infinite;}
+        .qa-hit-active{position:relative;outline:2px solid #00e1ff;outline-offset:3px;box-shadow:0 0 0 2px #001b22,0 0 0 5px rgba(0,225,255,.5);z-index:2;}
+        .qa-evidence-context{background:rgba(100,149,237,0.15) !important;}
+        .qa-evidence-context-target{background:rgba(100,149,237,0.30) !important;outline:1px solid rgba(100,149,237,0.5);}
+        .qa-evidence-col-header{background:rgba(100,149,237,0.22) !important;}
+        .qa-table-highlight{background:rgba(100,149,237,0.18) !important;outline:2px solid rgba(100,149,237,0.4);outline-offset:-1px;transition:background .3s ease;}
+        .qa-hit-extraction-only{background:#ffd84d;color:#111;padding:1px 2px;border-radius:2px;box-shadow:inset 0 0 0 1px #c79d00;}
         @keyframes qaHitPulse {
           0%, 100% { box-shadow:0 0 0 2px #001b22,0 0 0 5px rgba(0,225,255,.75),0 0 16px 4px rgba(0,225,255,.5), inset 0 0 0 1px #7d5c00; }
           50% { box-shadow:0 0 0 2px #001b22,0 0 0 7px rgba(0,225,255,.92),0 0 24px 8px rgba(0,225,255,.7), inset 0 0 0 1px #7d5c00; }
@@ -289,12 +520,36 @@
         mark.classList.add('qa-hit-muted');
       });
 
+      // Remove any residual contextual highlight classes
+      doc.querySelectorAll('.qa-evidence-context, .qa-evidence-context-target, .qa-evidence-col-header, .qa-table-highlight')
+        .forEach(el => el.classList.remove('qa-evidence-context', 'qa-evidence-context-target', 'qa-evidence-col-header', 'qa-table-highlight'));
+
       const active = doc.getElementById(markId);
-      if (active) {
+      if (!active) return;
+
+      // If the active element is a mark with qa-hit-pred, use the mark-specific active style
+      if (active.tagName === 'MARK' && active.classList.contains('qa-hit-pred')) {
         active.classList.remove('qa-hit-muted');
         active.classList.add('qa-hit-active');
-        _activeMarkId = markId;
+      } else {
+        // Generic active highlight for injected anchors or table elements
+        active.classList.add('qa-hit-active');
+        // Also highlight surrounding table/row/cell context if present
+        const cell = active.closest('td, th');
+        if (cell) cell.classList.add('qa-evidence-context-target');
+        const row = active.closest('tr');
+        if (row) {
+          row.classList.add('qa-evidence-context-target');
+          const prev = row.previousElementSibling;
+          const next = row.nextElementSibling;
+          if (prev) prev.classList.add('qa-evidence-context');
+          if (next) next.classList.add('qa-evidence-context');
+        }
+        const table = active.closest('table');
+        if (table) table.classList.add('qa-table-highlight');
       }
+
+      _activeMarkId = markId;
     }
 
     function setActiveCard(markId) {
@@ -355,6 +610,40 @@
       }
     }
 
+    function renderEvidenceContext(ctx) {
+      if (!ctx) return '';
+      const tableMatch = ctx.match(/--- Table evidence \(markdown\) ---\n([\s\S]*?)\n--- Match: (.+) ---/);
+      if (tableMatch) {
+        const tableText = tableMatch[1].trim();
+        const matchInfo = tableMatch[2];
+        const rows = tableText.split('\n').map(r => r.split(' | ').map(c => c.trim()));
+        const valueMatch = matchInfo.match(/value="([^"]+)"/);
+        const matchedValue = valueMatch ? valueMatch[1] : '';
+        const metaLine = (ctx.split('\n')[0]) || '';
+        let matchRow = -1, matchCol = -1;
+        for (let ri = 0; ri < rows.length; ri++) {
+          for (let ci = 0; ci < rows[ri].length; ci++) {
+            if (rows[ri][ci] === matchedValue) { matchRow = ri; matchCol = ci; break; }
+          }
+          if (matchRow >= 0) break;
+        }
+        let tableHtml = '<table class="evidence-table">';
+        for (let ri = 0; ri < rows.length; ri++) {
+          tableHtml += '<tr>';
+          for (let ci = 0; ci < rows[ri].length; ci++) {
+            const isMatch = (ri === matchRow && ci === matchCol);
+            const cls = isMatch ? 'matched-cell' : (ci === 0 ? 'row-label' : '');
+            tableHtml += `<td class="${cls}">${escapeHtml(rows[ri][ci])}</td>`;
+          }
+          tableHtml += '</tr>';
+        }
+        tableHtml += '</table>';
+        return `<div class="meta" style="margin-top:4px;background:#0f1729;padding:6px 8px;border-radius:6px;border:1px solid #2c395a;"><div class="ev-meta">${escapeHtml(metaLine)}</div>${tableHtml}<div style="margin-top:4px;font-size:11px;color:#b7c9ff;">${escapeHtml(matchInfo)}</div></div>`;
+      }
+      const truncated = ctx.length > 300 ? ctx.slice(0, 297) + '...' : ctx;
+      return `<div class="meta" style="margin-top:4px;color:#b7c9ff;font-size:11px;line-height:1.4;background:#0f1729;padding:6px 8px;border-radius:6px;border:1px solid #2c395a;"><b>Evidence context:</b> ${escapeHtml(truncated)}</div>`;
+    }
+
     function renderSidebar(results, matchMap) {
       let matchedCount = 0;
       let cannotCount = 0;
@@ -366,11 +655,10 @@
         const markId = `match-q-${String(qNum).padStart(2, '0')}`;
         const matchInfo = matchMap[markId] || { matched: false, rule: null, recoverableByRule: false };
         const matched = !!matchInfo.matched;
-        const wrongPrediction = isWrongPrediction(row);
-        const cannotMatch = wrongPrediction || !matched;
+        const cannotMatch = !matched;
         if (cannotMatch) cannotCount += 1;
         else matchedCount += 1;
-        return { row, idx, qNum, markId, matchInfo, matched, wrongPrediction, cannotMatch };
+        return { row, idx, qNum, markId, matchInfo, matched, cannotMatch };
       });
 
       const filtered = entries.filter((entry) => {
@@ -385,6 +673,8 @@
         const { row, qNum, markId, matchInfo, matched, cannotMatch } = entry;
 
         const evidenceText = getEvidenceText(row);
+        const evidenceCtx = getEvidenceContext(row);
+        const spanOffsets = getSpanOffsets(row);
         const ruleBadge = matched
           ? `<span class="rule-badge">matched by ${escapeHtml(matchInfo.rule || 'exact')}</span>`
           : '';
@@ -397,33 +687,334 @@
           ? '<span class="jump" style="opacity:.8;cursor:default;text-decoration:none;">Cannot Match</span>'
           : `<a class="jump" href="#" data-target="${markId}">Go to matched prediction</a>`;
 
+        const spanDetails = spanOffsets ? `
+          <div class="meta" style="margin-top:6px;padding-top:6px;border-top:1px solid #2c395a;">
+            <b>Verbatim:</b> ${escapeHtml(spanOffsets.span_text || '')}
+            <span style="color:#70b0ff;font-size:11px;">
+              (method: ${spanOffsets.match_method || '?'}, offset: ${spanOffsets.start_offset ?? '?'}-${spanOffsets.end_offset ?? '?'})
+            </span>
+          </div>` : '';
+
+        const extMarkId = `ext-${markId}`;
+        const evtMarkId = `evt-${markId}`;
+        const evcMarkId = `evc-${markId}`;
+
+        const contextHtml = evidenceCtx ? renderEvidenceContext(evidenceCtx) : '';
+        const escapedCtx = escapeHtml(evidenceCtx || '');
+
         return `
-          <div class="qa-card" data-mark-id="${markId}">
+          <div class="qa-card" data-mark-id="${markId}" data-evidence-ctx="${escapedCtx}">
             <div class="meta">Q${qNum.toString().padStart(2, '0')} · ${escapeHtml(row.id || '')} · ${escapeHtml(row.group || '')} ${statusHtml}${ruleBadge}</div>
             <div class="q"><b>Q:</b> ${escapeHtml(row.asked_question || row.blended_question || row.question || '')}</div>
-            <div class="a"><b>Pred:</b> ${escapeHtml(getPredicted(row))}</div>
+            <div class="a"><b>Extraction:</b> <a href="#" class="jump" style="color:#ffd84d;font-weight:700;" onclick="event.preventDefault();handleLevelClick('${extMarkId}','extraction',true)" onmouseenter="handleLevelHover('${extMarkId}','extraction')" onmouseleave="handleLevelLeave()">${escapeHtml(getPredicted(row))}</a></div>
             <div class="a"><b>Gold:</b> ${escapeHtml(row.gold_answer || '')}</div>
-            ${evidenceText ? `<div class="a"><b>Evidence:</b> ${escapeHtml(evidenceText)}</div>` : ''}
-            <div>${actionHtml}</div>
+            ${evidenceText ? `<div class="a"><b>Evidence text:</b> <a href="#" class="jump" onclick="event.preventDefault();handleLevelClick('${evtMarkId}','row',true)" onmouseenter="handleLevelHover('${evtMarkId}','row')" onmouseleave="handleLevelLeave()">${escapeHtml(evidenceText.length > 120 ? evidenceText.slice(0, 117) + '...' : evidenceText)}</a></div>` : ''}
+            ${spanDetails}
+            ${contextHtml}
+            <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;">
+              <a class="jump" href="#" onclick="event.preventDefault();handleLevelClick('${extMarkId}','extraction',true)" onmouseenter="handleLevelHover('${extMarkId}','extraction')" onmouseleave="handleLevelLeave()">🔍 Extraction</a>
+              <a class="jump" href="#" onclick="event.preventDefault();handleLevelClick('${evtMarkId}','row',true)" onmouseenter="handleLevelHover('${evtMarkId}','row')" onmouseleave="handleLevelLeave()">📋 Evidence text</a>
+              <a class="jump" href="#" onclick="event.preventDefault();handleLevelClick('${evcMarkId}','table',true)" onmouseenter="handleLevelHover('${evcMarkId}','table')" onmouseleave="handleLevelLeave()">📊 Evidence context</a>
+            </div>
           </div>`;
       }).join('');
 
       qaList.innerHTML = html;
       summary.textContent = `Questions: ${results.length} · Matched: ${matchedCount} · Cannot Match: ${cannotCount} · Showing: ${filtered.length}`;
 
-      qaList.querySelectorAll('a.jump[data-target]').forEach((link) => {
-        link.addEventListener('click', (event) => {
-          event.preventDefault();
-          scrollToMatch(link.getAttribute('data-target'));
-        });
-      });
+      // Use event delegation for jump links instead of individual listeners
+      qaList.removeEventListener('click', _jumpClickHandler);
+      qaList.addEventListener('click', _jumpClickHandler);
+      _jumpClickHandler_results = results; // keep for handler access
+    }
 
-      if (_activeMarkId) {
-        setActiveCard(_activeMarkId);
+    let _jumpClickHandler_results = [];
+
+    function handleLevelClick(target, level, doScroll) {
+      const doc = mainFrame.contentDocument;
+      if (!doc) return;
+      const _doScroll = doScroll !== false;
+      clearAllHighlights(doc);
+
+      const baseId = target.replace(/^(ext-|evt-|evc-)/, '');
+
+      // Prefer using the loaded results cache to find the row and evidence context
+      let row = null;
+      for (let i = 0; i < _resultsCache.length; i++) {
+        const qNum = i + 1;
+        const markId = `match-q-${String(qNum).padStart(2, '0')}`;
+        if (markId === baseId) { row = _resultsCache[i]; break; }
+      }
+
+      // Fallback: try to read from DOM card attribute
+      if (!row) {
+        const card = Array.from(document.querySelectorAll('.qa-card')).find(c => (c.getAttribute('data-mark-id') || '').endsWith(baseId));
+        if (card) {
+          const rawCtx = card.getAttribute('data-evidence-ctx') || '';
+          const evidenceCtx = rawCtx.replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+          row = { intermediate_verbatim_text: card.querySelector('.a') ? card.querySelector('.a').textContent : '', evidence_context: evidenceCtx, predicted_answer: card.querySelector('.a a') ? card.querySelector('.a a').textContent : '' };
+        }
+      }
+
+      if (!row) return;
+
+      const evidenceCtx = getEvidenceContext(row);
+      console.debug('handleLevelClick', { target, level, baseId, hasEvidenceCtx: !!evidenceCtx });
+
+      let hitInfo = null;
+
+      // For row/table levels, try table-aware matching FIRST (most precise when evidence context exists)
+      if (evidenceCtx && evidenceCtx.includes('--- Table evidence')) {
+        console.debug('handleLevelClick: trying table-aware match first');
+        try {
+          hitInfo = highlightByTableEvidence(doc, evidenceCtx, target, level, _doScroll);
+          console.debug('handleLevelClick: table-aware result', { hitInfo });
+        } catch (err) {
+          console.error('handleLevelClick: table-aware highlight threw', err);
+        }
+      }
+
+      // If clicking Evidence text (row) and table-aware didn't match, try evidenceText string
+      if ((!hitInfo || !hitInfo.matched) && level === 'row') {
+        const evidenceText = getEvidenceText(row);
+        console.debug('handleLevelClick: trying evidenceText match', { evidenceText });
+        if (evidenceText) {
+          const res = highlightByCandidates(doc, [{ text: evidenceText, rule: 'evidence-text' }], target);
+          if (res && res.matched) {
+            hitInfo = res;
+          }
+        }
+      }
+
+      // If table-aware evidence exists and we STILL haven't matched, try table-aware again (e.g. extraction level)
+      if ((!hitInfo || !hitInfo.matched) && evidenceCtx && evidenceCtx.includes('--- Table evidence') && level !== 'row') {
+        console.debug('handleLevelClick: trying table-aware match (second pass)');
+        try {
+          hitInfo = highlightByTableEvidence(doc, evidenceCtx, target, level, _doScroll);
+          console.debug('handleLevelClick: table-aware result', { hitInfo });
+        } catch (err) {
+          console.error('handleLevelClick: table-aware highlight threw', err);
+        }
+      }
+
+      // Fallback to blind candidate matching when nothing else matched (for extraction level)
+      if ((!hitInfo || !hitInfo.matched) && level === 'extraction') {
+        const prediction = String(row.predicted_answer || row.prepared_prediction_before_coercion || '').trim();
+        console.debug('handleLevelClick: fallback extraction match', { prediction });
+        const candidates = buildMatchCandidates(prediction);
+        const res = highlightByCandidates(doc, candidates, target);
+        if (res && res.matched) hitInfo = res;
+      }
+
+      // Activate card and highlight mark if present — only after highlight/anchor was created
+      let el = doc.getElementById(target);
+      if (el) {
+        setActiveHighlight(target);
+        if (_doScroll) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setActiveCard(baseId);
+      } else {
+        console.warn('handleLevelClick: no element found to scroll to for target, attempting table-cell fallback', target, { hitInfo });
+        try {
+          // Parse evidenceCtx for row/column/value hints
+          const rowMatch = evidenceCtx ? evidenceCtx.match(/row="([^"]+)"/) : null;
+          const colMatch = evidenceCtx ? evidenceCtx.match(/column="([^"]+)"/) : null;
+          const valMatch = evidenceCtx ? evidenceCtx.match(/value="([^"]+)"/) : null;
+          const rowLabel = rowMatch ? rowMatch[1].trim().toLowerCase() : null;
+          const colHint = colMatch ? colMatch[1].trim().toLowerCase() : null;
+          const value = valMatch ? valMatch[1].trim() : null;
+
+          if (rowLabel) {
+            const norm = (s) => String(s || '').replace(/\u00A0/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
+            const rowLabelNorm = norm(rowLabel);
+            const colHintNorm = norm(colHint);
+            const valueNorm = String(value || '').trim();
+
+            const tables = doc.querySelectorAll('table');
+            let injected = false;
+
+            // First pass: find a row whose concatenated cell text contains the row label
+            for (const table of tables) {
+              const rows = table.querySelectorAll('tr');
+              for (let ri = 0; ri < rows.length; ri++) {
+                const cells = rows[ri].querySelectorAll('td, th');
+                const rowText = Array.from(cells).map(c => (c.textContent || '').replace(/\u00A0/g, ' ').replace(/\s+/g, ' ').trim()).join(' | ').toLowerCase();
+                if (!rowText || !rowLabelNorm) continue;
+                if (!rowText.includes(rowLabelNorm)) continue;
+
+                // try to find target cell: prefer matching column header, then value, then best-effort by index
+                let targetCi = -1;
+                if (colHintNorm) {
+                  // look for column header in table (scan first 6 rows for headers)
+                  for (let h = 0; h < Math.min(6, rows.length); h++) {
+                    const hcells = rows[h].querySelectorAll('td, th');
+                    for (let ci = 0; ci < hcells.length; ci++) {
+                      const htxt = (hcells[ci].textContent || '').replace(/\u00A0/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
+                      if (htxt && htxt.includes(colHintNorm)) { targetCi = ci; break; }
+                    }
+                    if (targetCi >= 0) break;
+                  }
+                }
+
+                if (targetCi < 0 && valueNorm) {
+                  for (let ci = 0; ci < cells.length; ci++) {
+                    const txt = (cells[ci].textContent || '').replace(/\u00A0/g, ' ').trim();
+                    if (!txt) continue;
+                    if (txt === valueNorm || txt.toLowerCase().includes(valueNorm.toLowerCase()) || (valueNorm.startsWith('.') && txt.includes(valueNorm.slice(1)))) { targetCi = ci; break; }
+                  }
+                }
+
+                if (targetCi < 0) {
+                  // try to guess column index by comparing header and row lengths
+                  const headers = rows[0] ? rows[0].querySelectorAll('td, th') : [];
+                  if (headers.length === cells.length && headers.length > 1) {
+                    // assume same column structure; find the column where the value appears in the header mapping
+                    for (let ci = 0; ci < cells.length; ci++) {
+                      const txt = (cells[ci].textContent || '').trim();
+                      if (txt && valueNorm && (txt === valueNorm || txt.toLowerCase().includes(valueNorm.toLowerCase()))) { targetCi = ci; break; }
+                    }
+                  }
+                }
+
+                // If still not found, try to find any cell in this table that matches the value
+                if (targetCi < 0 && valueNorm) {
+                  const allCells = table.querySelectorAll('td, th');
+                  for (let ci = 0; ci < allCells.length; ci++) {
+                    const txt = (allCells[ci].textContent || '').replace(/\u00A0/g, ' ').trim();
+                    if (!txt) continue;
+                    if (txt === valueNorm || txt.toLowerCase().includes(valueNorm.toLowerCase()) || (valueNorm.startsWith('.') && txt.includes(valueNorm.slice(1)))) { targetCi = ci % cells.length; break; }
+                  }
+                }
+
+                if (targetCi >= 0 && cells[targetCi]) {
+                  const targetCell = cells[targetCi];
+                  const anchor = doc.createElement('span');
+                  anchor.id = target;
+                  anchor.style.display = 'block';
+                  anchor.style.width = '1px';
+                  anchor.style.height = '1px';
+                  anchor.style.margin = '0';
+                  anchor.style.padding = '0';
+                  targetCell.insertBefore(anchor, targetCell.firstChild);
+                  targetCell.classList.add('qa-evidence-context-target');
+                  table.classList.add('qa-table-highlight');
+                  injected = true; break;
+                }
+              }
+              if (injected) break;
+            }
+            if (injected) {
+              el = doc.getElementById(target);
+              if (el) { setActiveHighlight(target); if (_doScroll) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); setActiveCard(baseId); return; }
+            }
+            // Aggressive fallback: scan every table cell for the value or row label
+            if (!injected) {
+              const allCells = doc.querySelectorAll('td, th');
+              for (let ci = 0; ci < allCells.length; ci++) {
+                const c = allCells[ci];
+                const txt = (c.textContent || '').replace(/\u00A0/g, ' ').replace(/\s+/g, ' ').trim();
+                if (!txt) continue;
+                // match value first (exact or contains), then row label contained in the row text
+                if (valueNorm && (txt === valueNorm || txt.toLowerCase().includes(valueNorm.toLowerCase()) || (valueNorm.startsWith('.') && txt.includes(valueNorm.slice(1))))) {
+                  const anchor = doc.createElement('span');
+                  anchor.id = target;
+                  anchor.style.display = 'block';
+                  anchor.style.width = '1px';
+                  anchor.style.height = '1px';
+                  anchor.style.margin = '0';
+                  anchor.style.padding = '0';
+                  c.insertBefore(anchor, c.firstChild);
+                  c.classList.add('qa-evidence-context-target');
+                  const t = c.closest('table'); if (t) t.classList.add('qa-table-highlight');
+                  injected = true; break;
+                }
+                if (!injected && rowLabelNorm) {
+                  const prow = c.closest('tr');
+                  const prowText = prow ? Array.from(prow.querySelectorAll('td, th')).map(x => (x.textContent||'').replace(/\u00A0/g,' ').replace(/\s+/g,' ').trim()).join(' | ').toLowerCase() : '';
+                  if (prowText && prowText.includes(rowLabelNorm)) {
+                    const anchor2 = doc.createElement('span');
+                    anchor2.id = target;
+                    anchor2.style.display = 'block';
+                    anchor2.style.width = '1px';
+                    anchor2.style.height = '1px';
+                    anchor2.style.margin = '0';
+                    anchor2.style.padding = '0';
+                    c.insertBefore(anchor2, c.firstChild);
+                    c.classList.add('qa-evidence-context-target');
+                    const t2 = c.closest('table'); if (t2) t2.classList.add('qa-table-highlight');
+                    injected = true; break;
+                  }
+                }
+              }
+              if (injected) { el = doc.getElementById(target); if (el) { setActiveHighlight(target); if (_doScroll) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); setActiveCard(baseId); return; } }
+            }
+          }
+
+          // last-resort: insert at top so something is visible
+          const fallback = doc.createElement('div');
+          fallback.id = target;
+          fallback.style.minHeight = '1px';
+          fallback.style.width = '1px';
+          fallback.style.display = 'block';
+          doc.body.insertBefore(fallback, doc.body.firstChild);
+          el = doc.getElementById(target);
+          if (el) { setActiveHighlight(target); if (_doScroll) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); setActiveCard(baseId); }
+        } catch (err) {
+          console.error('handleLevelClick: failed to create fallback anchor', err);
+        }
+      }
+    }
+
+    function handleLevelHover(target, level) {
+      handleLevelClick(target, level, false);
+    }
+
+    function handleLevelLeave() {
+      const doc = mainFrame.contentDocument;
+      if (doc) clearAllHighlights(doc);
+    }
+
+    function _jumpClickHandler(event) {
+      const link = event.target.closest('a.jump[data-target]');
+      if (!link) return;
+      event.preventDefault();
+      const target = link.getAttribute('data-target');
+      const doc = mainFrame.contentDocument;
+      if (!doc) return;
+
+      clearAllHighlights(doc);
+
+      // Determine which level to highlight
+      let level = 'row';
+      if (target.startsWith('ext-')) level = 'extraction';
+      else if (target.startsWith('evt-')) level = 'row';
+      else if (target.startsWith('evc-')) level = 'table';
+
+      // Find matching result
+      const baseId = target.replace(/^(ext-|evt-|evc-)/, '');
+      for (let i = 0; i < _jumpClickHandler_results.length; i++) {
+        const row = _jumpClickHandler_results[i];
+        const qNum = i + 1;
+        const markId = `match-q-${String(qNum).padStart(2, '0')}`;
+        if (markId !== baseId) continue;
+        const evidenceCtx = getEvidenceContext(row);
+        if (evidenceCtx && evidenceCtx.includes('--- Table evidence')) {
+          highlightByTableEvidence(doc, evidenceCtx, target, level);
+        }
+        break;
+      }
+
+      // Scroll to the highlighted element
+      const el = doc.getElementById(target);
+      if (el) {
+        setActiveHighlight(target);
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Also highlight active card
+        setActiveCard(baseId);
       }
     }
 
     function renderSidebarFromCache() {
+      _jumpClickHandler_results = _resultsCache;
       renderSidebar(_resultsCache, _matchMapCache);
     }
 
@@ -495,8 +1086,8 @@
             return;
           }
 
-          const wrongPrediction = isWrongPrediction(row);
-          if (wrongPrediction || !canAttemptMatch(row)) {
+          // Always attempt matching — don't skip based on benchmark score
+          if (!canAttemptMatch(row)) {
             matchMap[markId] = { matched: false, rule: null, text: null };
             return;
           }
@@ -504,12 +1095,26 @@
           const directPredictionMatch = hasTextOccurrence(doc, prediction);
           const candidates = [];
           const evidenceText = getEvidenceText(row);
+          const evidenceCtx = getEvidenceContext(row);
           if (evidenceText) {
             candidates.push({ text: evidenceText, rule: isEligibilityRow(row) ? 'evidence-verbatim' : 'evidence-fallback' });
             candidates.push({ text: evidenceText.replace(/\s+/g, ' '), rule: 'evidence-whitespace-normalized' });
           }
           candidates.push(...buildMatchCandidates(prediction));
-          const matchedInfo = highlightByCandidates(doc, candidates, markId);
+          let matchedInfo = { matched: false, rule: null, text: null };
+
+          // When structured table evidence exists, prefer table-aware DOM matching
+          if (evidenceCtx && evidenceCtx.includes('--- Table evidence')) {
+            const tableHit = highlightByTableEvidence(doc, evidenceCtx, markId, 'row');
+            if (tableHit.matched) {
+              matchedInfo = tableHit;
+            }
+          }
+
+          // Fallback: blind text search if table-aware didn't match
+          if (!matchedInfo.matched) {
+            matchedInfo = highlightByCandidates(doc, candidates, markId);
+          }
           matchedInfo.directPredictionMatch = directPredictionMatch;
           matchedInfo.recoverableByRule = !!(matchedInfo.matched && !directPredictionMatch);
           matchMap[markId] = matchedInfo;

@@ -1,4 +1,4 @@
-{
+window.__QA_FRAME_PAYLOAD__ = {
   "generated_at_utc": "2026-05-15T20:12:17Z",
   "config": {
     "base_url": "http://localhost:8930",
@@ -154,4 +154,4 @@
       "display_evidence_text": "|  |  |  |  |  |\n| --- | --- | --- | --- | --- |\n|  |  |  |  |  |\n| Annual Fund Operating Expenses\u00a0(expenses that you pay each year as a percentage of the value of your investment) | | | | |\n|  | Class A | Class C | Class I | Class Y |\n| Management fees | .70 | .70 | .70 | .70 |\n| Distribution (12b-1) fees | none | .75 | none | none |\n| Other expenses: |  |  |  |  |\n| Shareholder services fees | .25 | .25 | none | none |\n| Miscellaneous other expenses | .07 | .11 | .10 | .05 |\n| Total other expenses | .32 | .36 | .10 | .05 |\n| Total annual fund operating expenses | 1.02 | 1.81 | .80 | .75 |\n| Fee waiver and/or expense reimbursement\\*\\* | - | (.03) | (.02) | - |\n| Total annual fund operating expenses (after fee waiver and/or expense reimbursement) | 1.02 | 1.78 | .78 | .75 |\n\\*"
     }
   ]
-}
+};

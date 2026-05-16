@@ -1,0 +1,145 @@
+{
+  "generated_at_utc": "2026-05-15T13:08:50Z",
+  "config": {
+    "base_url": "http://localhost:8930",
+    "search_space_id": 1,
+    "threading_mode": "per_question",
+    "benchmark_file": "df_santic_qa.json",
+    "document_title_contains": "df.html",
+    "mentioned_document_ids": [
+      391
+    ],
+    "max_questions": 1,
+    "sleep_between": 0.0,
+    "workers": 1,
+    "sanitize_questions": false,
+    "question_suffix": "",
+    "print_asked_question": false,
+    "blend_fund_context": true,
+    "normalize_schema_terms": true,
+    "post_verbatim_stage": false,
+    "disabled_tools": [
+      "web_search",
+      "scrape_webpage"
+    ]
+  },
+  "summary": {
+    "run": 1,
+    "overall_correct_count": 0,
+    "overall_correct_rate": 0.0,
+    "normalized_exact_count": 0,
+    "normalized_exact_rate": 0.0,
+    "number_match_count": 1,
+    "number_match_rate": 1.0,
+    "unit_match_count": 1,
+    "unit_match_rate": 1.0,
+    "mean_token_f1": 0.0,
+    "questions_total": 43,
+    "questions_run": 1,
+    "request_failures": 0,
+    "context_overflow_failures": 0
+  },
+  "by_group": {
+    "Level1": {
+      "run": 1,
+      "overall_correct_count": 0,
+      "overall_correct_rate": 0.0,
+      "normalized_exact_count": 0,
+      "normalized_exact_rate": 0.0,
+      "number_match_count": 1,
+      "number_match_rate": 1.0,
+      "unit_match_count": 1,
+      "unit_match_rate": 1.0,
+      "mean_token_f1": 0.0
+    }
+  },
+  "thread_ids_used": [
+    4035,
+    4036,
+    4037
+  ],
+  "results": [
+    {
+      "id": "L1-003",
+      "group": "Level1",
+      "question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for TOTAL_ANNUAL_FUND_OPERATING_EXPENSES from the fund document. Prioritize these sections: summary. Return only the final value. Please return the number only. Do not include any unit or scaling unit.",
+      "blended_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "fund_context_applied": {
+        "fund_name": "BNY Mellon Equity Income Fund",
+        "fund_family": "BNY Mellon Funds",
+        "class": "Class I"
+      },
+      "normalized_question": "Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "normalization_applied": [
+        {
+          "term": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+          "normalized": "total annual fund operating expenses"
+        }
+      ],
+      "asked_question": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+      "schema_key": "TOTAL_ANNUAL_FUND_OPERATING_EXPENSES",
+      "expected_answer_type": "rate",
+      "gold_answer": "0.8",
+      "pre_coercion_predicted_answer": "The user is asking me to look at a specific document (df.html.xml) to find the total annual fund operating expenses for BNY Mellon Equity Income Fund (Class I). Let me first search for this in the document.The grep didn't find \"BNY Mellon Equity Income\". Let me search more broadly. Maybe the document uses a slightly different name. Let me read the document directly.The document is quite large. Let me search for \"BNY\" or \"Mellon\" in the document to find the relevant section more quickly.The grep didn't find any matches. Let me try different search terms. Maybe the document uses slightly different formatting. Let me search for \"Equity\" or \"Income\" or \"Fund\" or \"total annual fund operating expenses\"Found the relevant chunks. Let me read those chunks to find the total annual fund operating expenses for Class I.I can see that for Class I, the \"Total annual fund operating expenses\" is **.80** (on line 1104, column for Class I).\n\nLet me also verify by looking at the table. The table shows:\n- Class A: 1.02\n- Class C: 1.81\n- Class I: .80\n- Class Y: .75\n\nSo the total annual fund operating expenses for BNY Mellon Equity Income Fund (Class I) is 0.80.\n\nLet me also verify which fund this table belongs to by looking for the fund name earlier in the document.Let me verify which fund this table belongs to.Good. The document is indeed about the BNY Mellon Equity Income Fund. The table shows that for Class I, the total annual fund operating expenses are 0.80 (as a percentage).\n\nThe user asked for the number only, no unit or scaling unit. So I should return 0.80.0.80",
+      "prepared_prediction_before_coercion": "0.80",
+      "predicted_answer": "0.80",
+      "intermediate_verbatim_text": "N/A",
+      "llm_query_extraction": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit. Final answer now. Return only one concise text value (not a number unless the source value itself is numeric). Use only the pinned document context and search_surfsense_docs. Do not ask follow-up questions. Do not suggest web search. If the value is not found, return exactly N/A. Return exactly one concrete numeric value with unit. Do not answer Yes, No, True, or False. If the value is not found, return exactly N/A.",
+      "llm_response_extraction": "The user wants me to find the total annual fund operating expenses for BNY Mellon Equity Income Fund (Class I) from the pinned document `df.html.xml`. Let me read this document first.The document is quite large. Let me search for \"BNY Mellon Equity Income Fund\" and \"total annual fund operating expenses\" in this document to find the relevant information.No direct match. Let me try searching for other related terms like \"Equity Income\" or \"BNY Mellon\".I found the relevant data. Let me look at line 1104 to understand the full context:\n\nLine 1104: `| Total annual fund operating expenses | 1.02 | 1.81 | .80 | .75 |`\n\nAnd at line 1106: `| Total annual fund operating expenses (after fee waiver and/or expense reimbursement) | 1.02 | 1.78 | .78 | .75 |`\n\nThe columns are: Class A, Class C, Class I, Class Y.\n\nSo for Class I, the total annual fund operating expenses are .80 (or 0.80%).\n\nLet me read the chunk around line 1100 to confirm.\n\nWait, but I also need to check \u2014 the user asked for \"BNY Mellon Equity Income Fund (Class I)\". Let me look at the header line to confirm the column ordering.The table clearly shows:\n\nFor Class I of BNY Mellon Equity Income Fund:\n- Total annual fund operating expenses: .80 (0.80%)\n\nThe value is 0.80 (as a percentage). The user asked for the number only, no unit or scaling unit. The value is .80 which represents 0.80%.\n\nLet me return just that value..80",
+      "llm_query_verbatim": "",
+      "llm_response_verbatim": "",
+      "llm_trace_extraction": [
+        {
+          "thread_id": 4035,
+          "query": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.",
+          "response": "The user is asking me to look at a specific document (df.html.xml) to find the total annual fund operating expenses for BNY Mellon Equity Income Fund (Class I). Let me first search for this in the document.The grep didn't find \"BNY Mellon Equity Income\". Let me search more broadly. Maybe the document uses a slightly different name. Let me read the document directly.The document is quite large. Let me search for \"BNY\" or \"Mellon\" in the document to find the relevant section more quickly.The grep didn't find any matches. Let me try different search terms. Maybe the document uses slightly different formatting. Let me search for \"Equity\" or \"Income\" or \"Fund\" or \"total annual fund operating expenses\"Found the relevant chunks. Let me read those chunks to find the total annual fund operating expenses for Class I.I can see that for Class I, the \"Total annual fund operating expenses\" is **.80** (on line 1104, column for Class I).\n\nLet me also verify by looking at the table. The table shows:\n- Class A: 1.02\n- Class C: 1.81\n- Class I: .80\n- Class Y: .75\n\nSo the total annual fund operating expenses for BNY Mellon Equity Income Fund (Class I) is 0.80.\n\nLet me also verify which fund this table belongs to by looking for the fund name earlier in the document.Let me verify which fund this table belongs to.Good. The document is indeed about the BNY Mellon Equity Income Fund. The table shows that for Class I, the total annual fund operating expenses are 0.80 (as a percentage).\n\nThe user asked for the number only, no unit or scaling unit. So I should return 0.80.0.80"
+        },
+        {
+          "thread_id": 4036,
+          "query": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit. Final answer now. Return only one concise text value (not a number unless the source value itself is numeric). Use only the pinned document context and search_surfsense_docs. Do not ask follow-up questions. Do not suggest web search. If the value is not found, return exactly N/A. Return exactly one concrete numeric value with unit. Do not answer Yes, No, True, or False. If the value is not found, return exactly N/A.",
+          "response": "The user wants me to find the \"total annual fund operating expenses\" for BNY Mellon Equity Income Fund (Class I) from their documents. Let me start by reading the pinned/priority document `df.html.xml` since it's the most relevant one.\n\nLet me also search the documents for this information.Let me search for \"BNY Mellon Equity Income\" in this document to find the relevant section.Hmm, no direct match. Let me try a broader search - maybe just \"Equity Income\" or \"BNY Mellon\".Good, there are matches. Let me read the first chunk (chunk_id 614544) which mentions \"BNY Mellon Equity Income Fund Prospectus\" and is about the prospectus. Let me read around line 977.Good, I can see that Class I has ticker DQIRX. Let me search for \"total annual fund operating expenses\" or \"operating expenses\" in the document.Let me read the first match (chunk_id 614564) to see the fee table for Class I.From the table at line 1104, I can see the \"Total annual fund operating expenses\" for Class I is **.80** (i.e., 0.80%). The user asked for \"total annual fund operating expenses\" and specifically mentioned \"Class I\" of BNY Mellon Equity Income Fund.\n\nThe value from the document is .80 (which is 0.80%). The user asked to \"return the number only\" and \"do not include any unit or scaling unit.\" So I should return `.80` since that's exactly what appears in the document.\n\nWait, let me re-read: \"Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit.\"\n\nThe table shows `.80` for Class I under \"Total annual fund operating expenses\". So the answer is `.80`..80"
+        },
+        {
+          "thread_id": 4037,
+          "query": "Locate BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds. Find information about BNY Mellon Equity Income Fund (Class I) of BNY Mellon Funds from the document. Extract the value for total annual fund operating expenses from the fund document. Please return the number only. Do not include any unit or scaling unit. Final answer now. Return only one concise text value (not a number unless the source value itself is numeric). Use only the pinned document context and search_surfsense_docs. Do not ask follow-up questions. Do not suggest web search. If the value is not found, return exactly N/A. Return exactly one concrete numeric value with unit. Do not answer Yes, No, True, or False. If the value is not found, return exactly N/A.",
+          "response": "The user wants me to find the total annual fund operating expenses for BNY Mellon Equity Income Fund (Class I) from the pinned document `df.html.xml`. Let me read this document first.The document is quite large. Let me search for \"BNY Mellon Equity Income Fund\" and \"total annual fund operating expenses\" in this document to find the relevant information.No direct match. Let me try searching for other related terms like \"Equity Income\" or \"BNY Mellon\".I found the relevant data. Let me look at line 1104 to understand the full context:\n\nLine 1104: `| Total annual fund operating expenses | 1.02 | 1.81 | .80 | .75 |`\n\nAnd at line 1106: `| Total annual fund operating expenses (after fee waiver and/or expense reimbursement) | 1.02 | 1.78 | .78 | .75 |`\n\nThe columns are: Class A, Class C, Class I, Class Y.\n\nSo for Class I, the total annual fund operating expenses are .80 (or 0.80%).\n\nLet me read the chunk around line 1100 to confirm.\n\nWait, but I also need to check \u2014 the user asked for \"BNY Mellon Equity Income Fund (Class I)\". Let me look at the header line to confirm the column ordering.The table clearly shows:\n\nFor Class I of BNY Mellon Equity Income Fund:\n- Total annual fund operating expenses: .80 (0.80%)\n\nThe value is 0.80 (as a percentage). The user asked for the number only, no unit or scaling unit. The value is .80 which represents 0.80%.\n\nLet me return just that value..80"
+        }
+      ],
+      "llm_trace_verbatim": [],
+      "predicted_span_offsets": {
+        "found": false,
+        "match_method": null,
+        "start_offset": null,
+        "end_offset": null,
+        "offset_convention": {
+          "reference": "evidence_text",
+          "library": "python3-str",
+          "unit": "unicode_codepoint",
+          "index_base": 0,
+          "range": "[start_offset, end_offset)"
+        },
+        "span_text": null
+      },
+      "metrics": {
+        "off_topic_document_reference": false,
+        "answer_clean": true,
+        "semantic_intent_ok": false,
+        "strict_exact": false,
+        "normalized_exact": false,
+        "contains_gold": true,
+        "number_match": true,
+        "unit_match": true,
+        "numeric_precision": 1.0,
+        "numeric_recall": 1.0,
+        "numeric_f1": 1.0,
+        "primary_value_match": true,
+        "token_f1": 0.0,
+        "strict_correct": false,
+        "lenient_correct": false,
+        "source_span_match": false,
+        "source_verbatim_match": false,
+        "overall_correct": false
+      }
+    }
+  ]
+}

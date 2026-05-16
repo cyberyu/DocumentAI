@@ -173,26 +173,12 @@ def _raw_response_leads_to_malformed_text_answer(value: str) -> bool:
 
 
 def _build_typed_retry_question(base_question: str, expected_type: str) -> str:
+    base = _build_force_final_question(base_question)
     if expected_type == "date":
-        return (
-            f"{_build_force_final_question(base_question)} "
-            "Return exactly one date exactly as it appears in the source text. "
-            "Do not answer Yes, No, True, or False. "
-            "Keep the original date format from the document. "
-            "If the date is not found, return exactly N/A."
-        )
+        return f"{base} Return the date exactly as it appears in the source. Do not convert format."
     if expected_type in {"amount", "rate", "ratio", "delta"}:
-        return (
-            f"{_build_force_final_question(base_question)} "
-            "Return exactly one concrete numeric value with unit. "
-            "Do not answer Yes, No, True, or False. "
-            "If the value is not found, return exactly N/A."
-        )
-    return (
-        f"{_build_force_final_question(base_question)} "
-        "Do not answer Yes, No, True, or False. "
-        "Return exactly one concrete value, or N/A only if the value is not found."
-    )
+        return f"{base} Return the number exactly as it appears in the source. Do not normalize."
+    return f"{base} Return the value exactly as it appears in the source. If not found, return N/A."
 
 
 def _build_text_retry_question(base_question: str, schema_key: str = "") -> str:
@@ -253,22 +239,12 @@ def _build_text_verbatim_answer_question(base_question: str, schema_key: str = "
 
 
 def _build_force_final_question(base_question: str, expected_type: str | None = None) -> str:
-    resolved_expected_type = (expected_type or "").strip().lower() or "text"
-
-    if resolved_expected_type == "boolean":
-        answer_rule = "Return exactly one boolean value: Yes or No."
-    elif resolved_expected_type == "text":
-        answer_rule = "Return only one concise text value (not a number unless the source value itself is numeric)."
-    elif resolved_expected_type == "date":
-        answer_rule = "Return only one date exactly as shown in the source document."
-    else:
-        answer_rule = "Return only one concrete value with unit."
-
+    """Append final-answer: return value exactly as in source, no normalization."""
     return (
-        f"{base_question} Final answer now. {answer_rule} "
-        "Use only the pinned document context and search_surfsense_docs. "
-        "Do not ask follow-up questions. Do not suggest web search. "
-        "If the value is not found, return exactly N/A."
+        f"{base_question} "
+        "Return the value exactly as it appears in the source. "
+        "Do not normalize, convert, or reformat. "
+        "If not found, return N/A."
     )
 
 
@@ -374,6 +350,10 @@ def _extract_final_value_candidate(text: str) -> str:
     if not cleaned:
         return ""
 
+    # Strip trailing concatenation artifacts: "..80" or ".80.80" at end
+    cleaned = re.sub(r'\.\.\d+(?:\.\d+)*$', '', cleaned).strip()
+    cleaned = re.sub(r'\.\d+\.\d+$', '', cleaned).strip()
+
     bool_matches = list(re.finditer(r"\b(?:yes|no|true|false|n/?a)\b", cleaned, flags=re.IGNORECASE))
     if bool_matches:
         return bool_matches[-1].group(0)
@@ -382,6 +362,7 @@ def _extract_final_value_candidate(text: str) -> str:
         re.finditer(
             r"[$\u20ac\u00a3\u00a5]?[-+]?\d{1,3}(?:,\d{3})*(?:\.\d+)?"
             r"(?:\s*(?:billion|million|thousand|percent|%|bps|basis points|usd|dollars?))?"
+            r"|\.\d+"
             r"|[$\u20ac\u00a3\u00a5]?[-+]?\d+(?:\.\d+)?"
             r"(?:\s*(?:billion|million|thousand|percent|%|bps|basis points|usd|dollars?))?",
             cleaned,
@@ -389,7 +370,10 @@ def _extract_final_value_candidate(text: str) -> str:
         )
     )
     if value_matches:
-        return value_matches[-1].group(0).strip(" .,:;")
+        raw = value_matches[-1].group(0).strip()
+        # Truncate trailing junk but preserve leading decimal point
+        raw = re.sub(r'[.,:;]+$', '', raw)
+        return raw
 
     chunks = [chunk.strip() for chunk in re.split(r"[\n\r]+", cleaned) if chunk.strip()]
     if chunks:
@@ -464,6 +448,7 @@ def _extract_final_numeric_candidate(text: str) -> str:
     value_matches = list(
         re.finditer(
             r"[$\u20ac\u00a3\u00a5]?[-+]?\d{1,3}(?:,\d{3})*(?:\.\d+)?"
+            r"|\.\d+"
             r"(?:\s*(?:billion|million|thousand|percent|%|bps|basis points|usd|dollars?))?"
             r"|[$\u20ac\u00a3\u00a5]?[-+]?\d+(?:\.\d+)?"
             r"(?:\s*(?:billion|million|thousand|percent|%|bps|basis points|usd|dollars?))?",
@@ -473,7 +458,9 @@ def _extract_final_numeric_candidate(text: str) -> str:
     )
     if not value_matches:
         return ""
-    return value_matches[-1].group(0).strip(" .,:;")
+    raw = value_matches[-1].group(0).strip()
+    raw = re.sub(r'[.,:;]+$', '', raw)
+    return raw
 
 
 def _extract_final_date_candidate(text: str) -> str:
@@ -803,6 +790,7 @@ def _unit_type(window: str) -> str:
 _SIGNED_NUM_RE = re.compile(
     r"\(?[-+]?[$\u20ac\u00a3\u00a5]?\d{1,3}(?:,\d{3})*(?:\.\d+)?\)?"
     r"|[-+]?[$\u20ac\u00a3\u00a5]?\d+(?:\.\d+)?"
+    r"|\(?\.\d+\)?"
 )
 
 
@@ -1149,23 +1137,15 @@ def _rewrite_question_for_retrieval(question: str, document_title_hint: str | No
         else ""
     )
     suffix = (
-        " Search the full document before answering (not only the first retrieved chunk)."
-        " If the answer is not in the first retrieved chunk, continue retrieval silently until found."
-        " Use only the pinned/mentioned document context; do not use or reference any other document."
-        " Do not mention tools, chunks, file-reading steps, or inability to access content."
-        " If multiple candidates appear, select the value explicitly tied to September 30, 2025."
-        " For amount-or-rate questions, return a numeric amount or percentage, not qualitative labels (e.g., not AAA)."
-        f"{tafoe_disambiguation}"
-        " Report monetary values in the exact unit and scale used in the source document (e.g., USD millions). Do not round or restate values in a different scale (e.g., do not convert millions to billions)."
-        " Return only one final value with unit and no extra prose."
+        " Search the full document before answering."
+        " Do not mention tools or retrieval steps."
+        " Return only the final value — no unit, no explanation."
+        " If not found, return N/A."
     )
     rating_suffix = (
-        " Search the full document before answering (not only the first retrieved chunk)."
-        " If the answer is not in the first retrieved chunk, continue retrieval silently until found."
-        " Use only the pinned/mentioned document context; do not use or reference any other document."
-        " Do not mention tools, chunks, file-reading steps, or inability to access content."
-        " If multiple candidates appear, select the value explicitly tied to September 30, 2025."
-        " Return only the rating text and no extra prose."
+        " Search the full document before answering."
+        " Return only the rating text."
+        " If not found, return N/A."
     )
 
     q_lower = q.lower()

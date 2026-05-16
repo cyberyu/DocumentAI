@@ -62,6 +62,21 @@ def _find_text_span(haystack: str, needle: str) -> tuple[int, int, str] | None:
     start_lower = source.lower().find(target.lower())
     if start_lower >= 0:
         return start_lower, start_lower + len(target), "case_insensitive"
+
+    # Try stripping leading zero for decimal values (e.g. "0.80" vs ".80")
+    if target.startswith("0") and len(target) > 1 and target[1] == ".":
+        stripped = target[1:]
+        start = source.find(stripped)
+        if start >= 0:
+            return start, start + len(stripped), "stripped_leading_zero"
+
+    # Try adding leading zero (e.g. ".80" in source, "0.80" predicted)
+    if target.startswith("."):
+        with_zero = "0" + target
+        start = source.find(with_zero)
+        if start >= 0:
+            return start, start + len(with_zero), "added_leading_zero"
+
     return None
 
 
@@ -166,7 +181,8 @@ def create_source_verbatim_tool():
             strict_exact: When true, only exact source span text is considered verbatim.
 
         Returns:
-            Dict containing normalized value, span text, start/end offsets, and match flags.
+            Dict containing normalized value, span text, start/end offsets, match flags,
+            and evidence_context (2-3 sentences of surrounding source text).
         """
         cleaned_pred = _clean_text(predicted_answer)
         final_candidate = _extract_final_value_candidate(cleaned_pred)
@@ -186,23 +202,54 @@ def create_source_verbatim_tool():
         source_span_match = False
         source_verbatim_match = False
 
+        if span is not None:
+            start_offset, end_offset, match_method = span
+            span_text = source[start_offset:end_offset]
+            source_span_match = True
+            source_verbatim_match = (
+                match_method == "exact" or
+                (match_method == "case_insensitive" and not strict_exact)
+            )
 
-        # Extract evidence context: full sentence or chunk containing the match
+        # Extract evidence context: 2-3 sentences around the match
         evidence_context = None
         if span is not None and start_offset is not None and end_offset is not None:
-            # Try to extract the full sentence containing the match
-            import re
-            # Find sentence boundaries (simple heuristic: ., !, ? followed by space or end)
-            before = source[:start_offset]
-            after = source[end_offset:]
-            sent_start = max(before.rfind('.'), before.rfind('!'), before.rfind('?')) + 1
-            sent_end_rel = min([i for i in [after.find('.'), after.find('!'), after.find('?')] if i != -1] + [len(after)])
-            sent_end = end_offset + sent_end_rel if sent_end_rel != -1 else len(source)
-            context = source[sent_start:sent_end].strip()
-            # If sentence is too short or boundaries not found, fallback to full chunk
-            if len(context) < 16:
-                # Use up to 120 chars before/after as fallback
-                context = source[max(0, start_offset-120):min(len(source), end_offset+120)].strip()
+            # Split source into sentences (simple heuristic: . ! ? followed by space/end)
+            sent_ends = [m.end() for m in re.finditer(r'(?<=[.!?])\s+|(?<=[.!?])$', source)]
+            sent_starts = [0] + sent_ends[:-1]
+
+            # Find which sentence indices contain the match
+            match_sents = []
+            for i, (ss, se) in enumerate(zip(sent_starts, sent_ends)):
+                if ss <= start_offset < se:
+                    match_sents.append(i)
+                elif ss <= end_offset <= se:
+                    match_sents.append(i)
+
+            if match_sents:
+                # Expand: take the sentence with the match, plus one before and one after
+                primary = match_sents[0]
+                start_idx = max(0, primary - 1)
+                end_idx = min(len(sent_starts), primary + 2)  # 2-3 sentences total
+                # If end_idx didn't advance past primary, extend to primary+1
+                if end_idx <= primary + 1:
+                    end_idx = min(len(sent_starts), primary + 2)
+
+                ctx_start = sent_starts[start_idx]
+                ctx_end = sent_ends[end_idx - 1]
+                context = source[ctx_start:ctx_end].strip()
+
+                # If sentence boundaries are unreliable (< 16 chars), fallback to char window
+                if len(context) < 16:
+                    ctx_start = max(0, start_offset - 200)
+                    ctx_end = min(len(source), end_offset + 300)
+                    context = source[ctx_start:ctx_end].strip()
+            else:
+                # Fallback: use 200 chars before / 300 chars after the match
+                ctx_start = max(0, start_offset - 200)
+                ctx_end = min(len(source), end_offset + 300)
+                context = source[ctx_start:ctx_end].strip()
+
             evidence_context = context
 
         normalized_value = span_text if source_verbatim_match and span_text is not None else value_to_match
